@@ -19,6 +19,20 @@ app.use('/api/doctors', doctorRouter);
 app.use('/api/admin', adminRouter);
 
 
+
+
+/* ---------- Mount the error handling middleware ---------- */
+
+app.use((req, res, next) => {
+    res.status(404).json({ message: '404 Not Found' });
+});
+app.use((error, req, res, next) => {
+    console.log(error);
+    res.status(500).json({ error: error.toString() });
+})
+
+
+
 /* ---------- Establish the server & database connections ---------- */
 connectToDatabase(config.DB.URL);
 app.listen(config.APP.PORT, () => console.log(`Server is listening on http://localhost:${config.APP.PORT}`));
