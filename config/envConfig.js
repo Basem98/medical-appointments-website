@@ -8,5 +8,7 @@ module.exports = {
     PORT: process.env.PORT
   },
   /* ----- Database-related environment variables ----- */
-  DB: {}
+  DB: {
+    URL: process.env.DB_URL
+  }
 }
