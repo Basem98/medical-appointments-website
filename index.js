@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const config = require('./config/envConfig');
 
 
-app.listen(5000, () => console.log(`Server is listening on port 5000`));
+app.listen(config.APP.PORT, () => console.log(`Server is listening on http://localhost:${config.APP.PORT}`));
