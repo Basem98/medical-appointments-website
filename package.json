@@ -1,0 +1,19 @@
+{
+  "name": "root",
+  "version": "1.0.0",
+  "description": "The root folder configuration in our medical appointments website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Basem98/medical-appointments-website.git"
+  },
+  "author": "Basem Mostafa, Belal Mosaad, Ahmed Mostafa, Mohamed Okasha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Basem98/medical-appointments-website/issues"
+  },
+  "homepage": "https://github.com/Basem98/medical-appointments-website#readme"
+}
