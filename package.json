@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Basem98/medical-appointments-website/issues"
   },
-  "homepage": "https://github.com/Basem98/medical-appointments-website#readme"
+  "homepage": "https://github.com/Basem98/medical-appointments-website#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
 }
