@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
         let errorMesaages = validation.errors.reduce((current, error) => {
             return current + error.msg + " , "
         }, "");
-        res.status(400).json({ message: errorMesaages });
+        return res.status(400).json({ message: errorMesaages });
     }
     next();
 }
