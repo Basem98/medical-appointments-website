@@ -52,7 +52,7 @@ module.exports.loginUser = (req, res, next) => {
                     let token = jwt.sign({
                         id: data._id,
                         role: 'user'
-                    }, envConfig.AUTH.SECRET_KEY);
+                    }, envConfig.AUTH.SECRET_KEY, {expiresIn: "1h"});
                     res.status(200).json({ token });
                 })
                 .catch((error) => next(error))
