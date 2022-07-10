@@ -7,5 +7,7 @@ const validationMiddleware = require('../middleware/validation.middleware');
 userRouter.route('/')
     .post(userController.validateUserData(), validationMiddleware, userController.addUser)
 
+userRouter.route('/login')
+    .post(userController.loginUser)
 
 module.exports = userRouter;
