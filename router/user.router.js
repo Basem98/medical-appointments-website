@@ -13,6 +13,7 @@ userRouter.route('/login')
 
 userRouter.route('/:id')
     .get(authorizationMiddleware, userController.getUserById)
-    .delete(authorizationMiddleware, userController.deleteUserById);
+    .delete(authorizationMiddleware, userController.deleteUserById)
+    .patch(authorizationMiddleware, userController.validateUserData(), validationMiddleware, userController.updateUserById)
 
 module.exports = userRouter;
