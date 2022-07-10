@@ -19,7 +19,7 @@ module.exports.addUser = (req, res, next) => {
 
 module.exports.getUserById = (req, res, next) => {
     if (!mongoose.isValidObjectId(req.params.id)) {
-        return res.status(404).json({ message: 'User if Not Found' });
+        return res.status(404).json({ message: 'User is Not Found' });
     }
     User.findOne({ _id: mongoose.Types.ObjectId(req.params.id) })
         .then((data) => {
