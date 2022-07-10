@@ -4,7 +4,7 @@
   "description": "The root folder configuration in our medical appointments website",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "concurrently \"nodemon index.js\" \"cd view && npm start\""
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,9 @@
     "express-validator": "^6.14.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.4.4"
+  },
+  "devDependencies": {
+    "concurrently": "^7.2.2",
+    "nodemon": "^2.0.19"
   }
 }
