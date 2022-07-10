@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const envConfig = require('../config/envConfig');
+const envConfig = require('../../config/envConfig');
 
 module.exports = (req, res, next) => {
     try {
