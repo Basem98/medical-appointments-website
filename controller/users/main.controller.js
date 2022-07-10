@@ -14,6 +14,7 @@ module.exports.addUser = (req, res, next) => {
                 .then((data) => res.status(201).json({ message: 'User added successfully' }))
                 .catch(error => {
                     error.statusCode = 500;
+                    error.message = "Password is Missing"
                     next(error)
                 });
         })
