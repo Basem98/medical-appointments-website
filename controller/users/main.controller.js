@@ -3,6 +3,7 @@ const User = require('../../model/user.model');
 const bycrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const envConfig = require('../../config/envConfig');
+const { default: mongoose } = require('mongoose');
 
 module.exports.addUser = (req, res, next) => {
     let newUser = new User(req.body);
@@ -12,6 +13,27 @@ module.exports.addUser = (req, res, next) => {
             newUser.save()
                 .then((data) => res.status(201).json({ message: 'User added successfully' }))
                 .catch(error => next(error))
+        })
+        .catch(error => next(error))
+}
+
+module.exports.getUserById = (req, res, next) => {
+    if(!mongoose.isValidObjectId(req.params.id)) {
+        let error = new Error('User not found');
+        next(error);
+    }
+    User.findOne({ _id: mongoose.Types.ObjectId(req.params.id) })
+        .then((data) => {
+            if (!data) {
+                throw new Error('User is Not Found');
+            }
+            if(req.params.id.toString() == req.body.id) {
+                data.password = undefined; // Exclude user password from retrieved data
+                res.status(200).json(data);
+            }
+            else {
+                throw new Error('User is Not authorized');
+            }
         })
         .catch(error => next(error))
 }
