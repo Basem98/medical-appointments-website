@@ -19,20 +19,19 @@ module.exports.addUser = (req, res, next) => {
 
 module.exports.getUserById = (req, res, next) => {
     if(!mongoose.isValidObjectId(req.params.id)) {
-        let error = new Error('User not found');
-        next(error);
+        res.status(404).json({message: 'User if Not Found'});
     }
     User.findOne({ _id: mongoose.Types.ObjectId(req.params.id) })
         .then((data) => {
             if (!data) {
-                throw new Error('User is Not Found');
+                res.status(404).json({message: 'User is Not Found'})
             }
             if(req.params.id.toString() == req.body.id) {
                 data.password = undefined; // Exclude user password from retrieved data
                 res.status(200).json(data);
             }
             else {
-                throw new Error('User is Not authorized');
+                res.status(401).json({message: 'Unauthorized to show user data'});
             }
         })
         .catch(error => next(error))
