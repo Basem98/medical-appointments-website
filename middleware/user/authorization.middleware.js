@@ -11,6 +11,7 @@ module.exports = (req, res, next) => {
     }
     catch (error) {
         error.message = 'Authorization header missing';
+        error.statusCode = 401;
         next(error);
     }
 }

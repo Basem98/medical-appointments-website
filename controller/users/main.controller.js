@@ -12,9 +12,15 @@ module.exports.addUser = (req, res, next) => {
             newUser.password = hashedPassword;
             newUser.save()
                 .then((data) => res.status(201).json({ message: 'User added successfully' }))
-                .catch(error => next(error))
+                .catch(error => {
+                    error.statusCode = 500;
+                    next(error)
+                });
         })
-        .catch(error => next(error))
+        .catch(error => {
+            error.statusCode = 500;
+            next(error);
+        });
 }
 
 module.exports.getUserById = (req, res, next) => {
@@ -34,7 +40,10 @@ module.exports.getUserById = (req, res, next) => {
                 return res.status(401).json({ message: 'Unauthorized to show user data' });
             }
         })
-        .catch(error => next(error))
+        .catch(error => {
+            error.statusCode = 500;
+            next(error);
+        });
 }
 
 module.exports.loginUser = (req, res, next) => {
@@ -54,9 +63,15 @@ module.exports.loginUser = (req, res, next) => {
                     }, envConfig.AUTH.SECRET_KEY, { expiresIn: "1h" });
                     return res.status(200).json({ token });
                 })
-                .catch((error) => next(error))
+                .catch((error) => {
+                    error.statusCode = 500;
+                    next(error);
+                });
         })
-        .catch((error) => next(error))
+        .catch((error) => {
+            error.statusCode = 500;
+            next(error);
+        })
 }
 
 //returns validation array

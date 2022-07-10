@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 });
 app.use((error, req, res, next) => {
     console.log(error);
-    res.status(500).json({ error: error.toString() });
+    res.status(error.statusCode).json({ error: error.toString() });
 })
 
 
