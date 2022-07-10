@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
         req.body.role = decodedToken.id;
         next();
     }
-    catch(error) {
+    catch (error) {
         error.message = 'Authorization header missing';
         next(error);
     }

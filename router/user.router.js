@@ -12,6 +12,6 @@ userRouter.route('/login')
     .post(userController.loginUser)
 
 userRouter.route('/:id')
-    .get(authorizationMiddleware,userController.getUserById)
+    .get(authorizationMiddleware, userController.getUserById)
 
 module.exports = userRouter;

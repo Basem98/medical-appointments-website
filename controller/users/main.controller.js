@@ -18,20 +18,20 @@ module.exports.addUser = (req, res, next) => {
 }
 
 module.exports.getUserById = (req, res, next) => {
-    if(!mongoose.isValidObjectId(req.params.id)) {
-        res.status(404).json({message: 'User if Not Found'});
+    if (!mongoose.isValidObjectId(req.params.id)) {
+        res.status(404).json({ message: 'User if Not Found' });
     }
     User.findOne({ _id: mongoose.Types.ObjectId(req.params.id) })
         .then((data) => {
             if (!data) {
-                res.status(404).json({message: 'User is Not Found'})
+                res.status(404).json({ message: 'User is Not Found' })
             }
-            if(req.params.id.toString() == req.body.id) {
+            if (req.params.id.toString() == req.body.id) {
                 data.password = undefined; // Exclude user password from retrieved data
                 res.status(200).json(data);
             }
             else {
-                res.status(401).json({message: 'Unauthorized to show user data'});
+                res.status(401).json({ message: 'Unauthorized to show user data' });
             }
         })
         .catch(error => next(error))
@@ -41,17 +41,17 @@ module.exports.loginUser = (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then((data) => {
             if (!data) {
-                res.status(400).json({message: 'Incorrect email or password'});
+                res.status(400).json({ message: 'Incorrect email or password' });
             }
             bycrypt.compare(req.body.password, data.password)
                 .then((isCorrectPassword) => {
                     if (!isCorrectPassword) {
-                        res.status(400).json({message: 'Incorrect email or password'});
+                        res.status(400).json({ message: 'Incorrect email or password' });
                     }
                     let token = jwt.sign({
                         id: data._id,
                         role: 'user'
-                    }, envConfig.AUTH.SECRET_KEY, {expiresIn: "1h"});
+                    }, envConfig.AUTH.SECRET_KEY, { expiresIn: "1h" });
                     res.status(200).json({ token });
                 })
                 .catch((error) => next(error))
