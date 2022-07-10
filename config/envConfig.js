@@ -10,5 +10,9 @@ module.exports = {
   /* ----- Database-related environment variables ----- */
   DB: {
     URL: process.env.DB_URL
+  },
+  /* ----- Auth-related environment variables ----- */
+  AUTH: {
+    SECRET_KEY: process.env.SECRET_KEY
   }
 }
