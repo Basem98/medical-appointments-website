@@ -13,5 +13,6 @@ userRouter.route('/login')
 
 userRouter.route('/:id')
     .get(authorizationMiddleware, userController.getUserById)
+    .delete(authorizationMiddleware, userController.deleteUserById);
 
 module.exports = userRouter;
