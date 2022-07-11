@@ -46,7 +46,7 @@ async function verifyEmail(req, res, next) {
     if (!tokenData)
       throw new Error("Couldn't generate verification token");
 
-    await sendVerificationEmail(req.body.email, req.body.firstName, req.body.id, tokenData.token);
+    sendVerificationEmail(req.body.email, req.body.firstName, req.body.id, tokenData.token);
     res.status(201).json({ message: 'Document added to database successfully. Check email for verification' });
   } catch (err) {
     console.error(err);
