@@ -8,6 +8,11 @@ const tokenSchema = new mongoose.Schema({
   token: {
     type: String
   },
+  userRole: {
+    type: String,
+    enum: ['User', 'Doctor', 'Admin'],
+    default: 'User'
+  },
   expireAt: {
     type: Date,
     expires: 21600
