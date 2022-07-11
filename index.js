@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const config = require('./config/envConfig');
 const { connectToDatabase } = require('./config/dbConnection');
-const { userRouter, doctorRouter, adminRouter } = require('./router/main.router');
+const { baseRouter, userRouter, doctorRouter, adminRouter } = require('./router/main.router');
 
 
 /* ---------- Mount the parsing middleware ---------- */
@@ -14,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 /* ---------- Mount the routers middleware ---------- */
+app.use('/api', baseRouter);
 app.use('/api/users', userRouter);
 app.use('/api/doctors', doctorRouter);
 app.use('/api/admin', adminRouter);
