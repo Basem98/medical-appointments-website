@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@mui/system";
 import { ThemeProvider } from "@mui/material";
-import { theme } from "../../Helper/CustomTheme";
+import theme from "../../Helper/CustomTheme";
 
 export default function PopupForm() {
     return (
