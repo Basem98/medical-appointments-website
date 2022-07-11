@@ -13,6 +13,6 @@ module.exports = {
   },
   /* ----- Auth-related environment variables ----- */
   AUTH: {
-    SECRET_KEY: process.env.SECRET_KEY
+    USER_SECRET: process.env.USER_SECRET
   }
 }

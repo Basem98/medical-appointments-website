@@ -4,7 +4,7 @@ const envConfig = require('../../config/envConfig');
 module.exports = (req, res, next) => {
     try {
         let tokenInRequestHeader = req.get('Authorization').split(' ')[1];
-        let decodedToken = jwt.verify(tokenInRequestHeader, envConfig.AUTH.SECRET_KEY);
+        let decodedToken = jwt.verify(tokenInRequestHeader, envConfig.AUTH.USER_SECRET);
         req.body.id = decodedToken.id;
         req.body.role = decodedToken.id;
         next();
