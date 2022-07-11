@@ -32,16 +32,17 @@ Kind Regards, MAW`
   });
 }
 
-function genVerificationToken(id) {
+function genVerificationToken(id, role) {
   const tokenData = new Token({
-    userId: id
+    userId: id,
+    userRole: role
   });
   return tokenData.save();
 }
 
 async function verifyEmail(req, res, next) {
   try {
-    const tokenData = await genVerificationToken(req.body.id);
+    const tokenData = await genVerificationToken(req.body.id, req.body.role);
     if (!tokenData)
       throw new Error("Couldn't generate verification token");
 

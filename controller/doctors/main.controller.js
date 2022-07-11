@@ -9,6 +9,7 @@ async function signUp(req, res, next) {
     }
     await newDoctor.save();
     req.body.id = newDoctor._id;
+    req.body.role = 'Doctor';
     next();
   } catch (err) {
     console.error(err);
