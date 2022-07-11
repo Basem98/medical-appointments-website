@@ -10,7 +10,7 @@ const tokenSchema = new mongoose.Schema({
   },
   userRole: {
     type: String,
-    enum: ['User', 'Doctor', 'Admin'],
+    enum: ['User', 'Doctor'],
     default: 'User'
   },
   expireAt: {

@@ -1,6 +1,5 @@
 const Doctor = require('../model/doctor.model');
 const User = require('../model/user.model');
-const Admin = require('../model/admin.model');
 const Token = require('../model/token.model');
 
 const customErr = {msg: ''};
