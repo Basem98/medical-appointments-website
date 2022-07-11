@@ -11,7 +11,11 @@ module.exports.addUser = (req, res, next) => {
         .then((hashedPassword) => {
             newUser.password = hashedPassword;
             newUser.save()
-                .then((data) => res.status(201).json({ message: 'User added successfully' }))
+                .then((data) => {
+                    req.body.id = data._id;
+                    req.body.role = 'User';
+                    next();
+                })
                 .catch(error => {
                     error.statusCode = 500;
                     next(error)
