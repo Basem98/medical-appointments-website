@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const schema = new mongoose.Schema({
 
@@ -131,5 +132,17 @@ const schema = new mongoose.Schema({
 });
 
 schema.virtual('fullName').get(() => `${this.firstName} ${this.lastName}`);
+
+/* ---------- Hash the doctor's password if it's a new/updated collection ---------- */
+schema.pre('save', async function (next) {
+    let newDoctor = this;
+    /** Only hash the password if it was new or modified */
+    if (newDoctor.isNew || newDoctor.isModified('password')) {
+        const salt = await bcrypt.genSalt(10);
+        newDoctor.password = await bcrypt.hash(newDoctor.password, salt);
+        next();
+    }
+    return next();
+});
 
 module.exports = mongoose.model('Doctor', schema);
