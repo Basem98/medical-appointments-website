@@ -3,10 +3,11 @@ const userRouter = express.Router();
 const userController = require('../controller/users/main.controller');
 const authorizationMiddleware = require('../middleware/user/authorization.middleware');
 const validationMiddleware = require('../middleware/user/validation.middleware');
+const { verifyEmail } = require('../middleware/verification.middleware');
 
 
 userRouter.route('/')
-    .post(userController.validateUserData(), validationMiddleware, userController.addUser)
+    .post(userController.validateUserData(), validationMiddleware, userController.addUser, verifyEmail)
 
 userRouter.route('/login')
     .post(userController.loginUser)

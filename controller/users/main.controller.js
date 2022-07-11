@@ -11,7 +11,11 @@ module.exports.addUser = (req, res, next) => {
         .then((hashedPassword) => {
             newUser.password = hashedPassword;
             newUser.save()
-                .then((data) => res.status(201).json({ message: 'User added successfully' }))
+                .then((data) => {
+                    req.body.id = data._id;
+                    req.body.role = 'User';
+                    next();
+                })
                 .catch(error => {
                     error.statusCode = 500;
                     next(error)
@@ -102,7 +106,7 @@ module.exports.loginUser = (req, res, next) => {
                     let token = jwt.sign({
                         id: data._id,
                         role: 'user'
-                    }, envConfig.AUTH.SECRET_KEY, { expiresIn: "1h" });
+                    }, envConfig.AUTH.USER_SECRET, { expiresIn: "1h" });
                     return res.status(200).json({ token });
                 })
                 .catch((error) => {
