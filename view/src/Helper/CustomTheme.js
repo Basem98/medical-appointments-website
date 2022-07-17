@@ -1,5 +1,6 @@
 import { createTheme } from "@mui/material";
 
+
 const theme = createTheme({
     palette: {
         primaryBg: {
@@ -12,8 +13,7 @@ const theme = createTheme({
             main: '#D9D9D9'
         },
         text: {
-            primary: '#2E4046',
-            secondary: '#FFFFFF'
+            primary: '#2E4046'
         },
         highlight: {
             main: '#3AC99E'
@@ -29,8 +29,28 @@ const theme = createTheme({
         }
     },
     typography: {
-
-    }
+        fontFamily: `'Outfit', sans-serif`,
+        h1: {
+            fontSize: 56,
+            fontWeight: 'bolder'
+        },
+        h2: {
+            fontSize: 38,
+            fontWeight: '800',
+            textTransform: 'capitalize'
+        },
+        body1: {
+            fontSize: 20,
+            fontWeight: 'bold'
+        },
+        body2: {
+            fontSize: 16,
+            fontWeight: 'normal'
+        }
+    },
+    shadows: {
+        main: '0px 4px 4px rgba(0, 0, 0, 0.25);'
+}
 });
 
 export default theme;
