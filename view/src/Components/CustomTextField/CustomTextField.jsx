@@ -28,6 +28,9 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
   },
   '& label.Mui-focused': {
     color: `${theme.palette.text.primary} !important`,
+  },
+  '& .MuiFormHelperText-root.Mui-error': {
+    color: 'red'
   }
 }))
 
