@@ -40,7 +40,7 @@ const MultiStepForm = ({ children, initialValues, onSubmit }) => {
 
 
   return (
-    <Grid container sx={{ background: theme.palette.linearFormBg.main, borderRadius: '20px', boxShadow: theme.shadows.main }} justifyContent='center'>
+    <Grid container sx={{ background: theme.palette.linearFormBg.main, borderRadius: '20px', boxShadow: theme.shadows[5] }} justifyContent='center'>
       <Grid item xs={12} justifyContent='center'>
         <h2 style={{ ...theme.typography.h2, color: theme.palette.text.primary, textAlign: 'center' }}>Join Us</h2>
       </Grid>
@@ -53,11 +53,11 @@ const MultiStepForm = ({ children, initialValues, onSubmit }) => {
           ))}
         </CustomFormStepper>
       </Grid>
-      <Formik initialValues={valuesSnapshot} validationSchema={currentStep.props.validationSchema} onSubmit={handleSubmit}>
+      <Formik initialValues={valuesSnapshot} validationSchema={currentStep.props.validationSchema} onSubmit={handleSubmit} enableReinitialize={true}>
         {
           (formik) => (
             <Form>
-              {currentStep}
+              {React.cloneElement(currentStep, { changeSnapshot: (newValues) => setValuesSnapshot(newValues), valuesSnapshot: formik.values })}
               <FormNavigator goBack={() => prevStep(formik.values)} hasPreviousStep={stepNumber > 0} isLastStep={isLastStep} />
             </Form>
           )
