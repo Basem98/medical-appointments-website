@@ -47,10 +47,7 @@ const theme = createTheme({
             fontSize: 16,
             fontWeight: 'normal'
         }
-    },
-    shadows: {
-        main: '0px 4px 4px rgba(0, 0, 0, 0.25);'
-}
+    }
 });
 
 export default theme;
