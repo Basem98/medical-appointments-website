@@ -14,6 +14,10 @@ const CustomFormButton = styled(Button)(({ theme }) => ({
   '&.MuiButton-outlined': {
     borderColor: theme.palette.highlight.main,
     color: theme.palette.highlight.main
+  },
+  '&.Mui-disabled': {
+    backgroundColor: theme.palette.grey.main,
+    color: theme.palette.text.primary
   }
 }));
 
