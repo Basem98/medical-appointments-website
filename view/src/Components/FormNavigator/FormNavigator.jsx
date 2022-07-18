@@ -3,7 +3,7 @@ import CustomFormButton from '../CustomFormButton/CustomFormButton';
 
 
 
-const FormNavigator = ({ hasPreviousStep, goBack, isLastStep }) => {
+const FormNavigator = ({ hasPreviousStep, goBack, isLastStep, isFormValid }) => {
   return (
     <Grid container item xs={12} justifyContent='space-around' marginY='50px'>
       {
@@ -16,7 +16,7 @@ const FormNavigator = ({ hasPreviousStep, goBack, isLastStep }) => {
         )
       }
       <Grid item xs={hasPreviousStep ? 4 : 6}>
-        <CustomFormButton type="submit" variant='contained' fullWidth>
+        <CustomFormButton type="submit" variant='contained' disabled={!isFormValid} fullWidth>
           {isLastStep ? 'Submit' : 'Next'}
         </CustomFormButton>
       </Grid>
