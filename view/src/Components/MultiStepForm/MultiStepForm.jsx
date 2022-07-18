@@ -58,7 +58,7 @@ const MultiStepForm = ({ children, initialValues, onSubmit }) => {
           (formik) => (
             <Form>
               {React.cloneElement(currentStep, { changeSnapshot: (newValues) => setValuesSnapshot(newValues), valuesSnapshot: formik.values })}
-              <FormNavigator goBack={() => prevStep(formik.values)} hasPreviousStep={stepNumber > 0} isLastStep={isLastStep} />
+              <FormNavigator goBack={() => prevStep(formik.values)} hasPreviousStep={stepNumber > 0} isLastStep={isLastStep} isFormValid={formik.isValid} />
             </Form>
           )
         }
