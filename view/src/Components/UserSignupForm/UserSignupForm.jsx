@@ -37,7 +37,7 @@ export default function UserSignupForm() {
                             phoneNumber: '',
                             email: '',
                             password: '',
-                            confirmPassword: ''
+                            passwordConfirmation: ''
 
                         }}
                         validationSchema={personalFormStepValidation}
@@ -84,7 +84,7 @@ export default function UserSignupForm() {
                                             </InputField>
                                         </Grid>
                                         <Grid item xs={10} sx={{ marginTop: '25px' }}>
-                                            <InputField label='Confirm Password' name='confirmPassword' placeholder='Confirm Password'
+                                            <InputField label='Confirm Password' name='passwordConfirmation' placeholder='Confirm Password'
                                                 type={showPassword ? "text" : "password"}
                                             >
                                                 <VpnKeyIcon></VpnKeyIcon>
