@@ -6,13 +6,13 @@
  * @param {*} expandedStateListSetter The React state setter for the expandedStateList field
  * @param {*} arrayFieldSetter The React state setter for the array field you're targetting in the form
  */
-export const RemoveLastEntry = (formValues, formValuesSetter, expandedStateList, expandedStateListSetter, arrayFieldSetter) => {
+export const RemoveLastEntry = (fieldName, formValues, formValuesSetter, expandedStateList, expandedStateListSetter, arrayFieldSetter) => {
   let newSnapshot = formValues;
-  newSnapshot.education.pop();
+  newSnapshot[fieldName].pop();
   let newExpandedList = [...expandedStateList];
   newExpandedList.pop();
   expandedStateListSetter([...newExpandedList]);
-  arrayFieldSetter([...newSnapshot.education]);
+  arrayFieldSetter([...newSnapshot[fieldName]]);
   formValuesSetter(newSnapshot);
 };
 
@@ -25,13 +25,13 @@ export const RemoveLastEntry = (formValues, formValuesSetter, expandedStateList,
  * @param {*} arrayFieldSetter The React state setter for the array field you're targetting in the form
  * @param {*} fieldToAdd The object field you want to add to the array in your form
  */
-export const AddAnotherEntry = (formValues, formValuesSetter, expandedStateList, expandedStateListSetter, arrayFieldSetter, fieldToAdd) => {
+export const AddAnotherEntry = (fieldName, formValues, formValuesSetter, expandedStateList, expandedStateListSetter, arrayFieldSetter, fieldToAdd) => {
   let newSnapshot = formValues;
-  newSnapshot.education.push(fieldToAdd);
+  newSnapshot[fieldName].push(fieldToAdd);
   let newExpandedList = [...expandedStateList];
   newExpandedList[newExpandedList.length - 1] = false;
   newExpandedList.push(true);
   expandedStateListSetter([...newExpandedList]);
-  arrayFieldSetter([...newSnapshot.education]);
+  arrayFieldSetter([...newSnapshot[fieldName]]);
   formValuesSetter(newSnapshot);
 };
