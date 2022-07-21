@@ -19,3 +19,31 @@ export const educationFormStepValidation = Yup.object({
       .matches(/^((0[1-9])|(1[0-2]))\/((19[0-9][0-9])|(20[0-2][0-9]))$/, { message: 'Your issue date must have this date format 07/2005 and the year must be before 2022' })
   }))
 });
+
+export const experienceFormStepValidation = Yup.object({
+  experiences: Yup.array().of(
+    Yup.object({
+      title: Yup.string().required('This field is required'),
+      workplace: Yup.string().required('This field is required'),
+      location: Yup.object({
+        city: Yup.string().required('This field is required'),
+        country: Yup.string().required('This field is required')
+      }),
+      startDate: Yup.object({
+        month: Yup.string().required('This field is required'),
+        year: Yup.string().required('This field is required')
+      }),
+      isCurrentlyWorking: Yup.boolean(),
+      endDate: Yup.object({
+        month: Yup.string(),
+        year: Yup.string()
+      }).when('isCurrentlyWorking', {
+        is: false,
+        then: Yup.object({
+          month: Yup.string().required('This field is required'),
+          year: Yup.string().required('This field is required')
+        }).required('You must enter the end date or check the \'I am currently working theme\' checkbox')
+      })
+    })
+  )
+})
