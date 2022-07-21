@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Grid, Divider, Collapse } from '@mui/material';
 import WorkIcon from '@mui/icons-material/Work';
 import ApartmentIcon from '@mui/icons-material/Apartment';
@@ -16,7 +16,7 @@ import { handleCollapse } from '../../Helper/CustomCollapseHandler';
 
 
 
-const ExperienceFormStep = ({ valuesSnapshot, changeSnapshot }) => {
+const ExperienceFormStep = ({ valuesSnapshot, changeSnapshot, getStepKeys}) => {
   const [isExpanded, setIsExpanded] = useState([true]);
   const [experiences, changeExperiences] = useState([...valuesSnapshot.experiences]);
   const years = getYearsUpTillNow();
@@ -39,6 +39,9 @@ const ExperienceFormStep = ({ valuesSnapshot, changeSnapshot }) => {
     isCurrentlyWorking: false
   };
 
+  useEffect(() => {
+    getStepKeys(['experiences']);
+  });
 
   return (
     <Grid container item xs={12} justifyContent='center'>

@@ -1,4 +1,5 @@
-import { Grid, Divider, Pagination, Collapse } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Grid, Divider, Collapse } from '@mui/material';
 import CustomFormButton from '../CustomFormButton/CustomFormButton';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
@@ -8,7 +9,6 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
 import InputField from "../InputField/InputField";
-import { useState } from 'react';
 import DropdownField from '../DropdownField/DropdownField';
 import CustomCollapseListItem from '../CustomCollapseListItem/CustomCollapseListItem';
 import { AddAnotherEntry, RemoveLastEntry } from '../../Helper/FormFieldAdder';
@@ -16,7 +16,7 @@ import { handleCollapse } from '../../Helper/CustomCollapseHandler';
 import { months, getYearsUpTillNow } from '../../Helper/DateOptions';
 
 
-const EducationFormStep = ({ valuesSnapshot, changeSnapshot }) => {
+const EducationFormStep = ({ valuesSnapshot, changeSnapshot, getStepKeys }) => {
   const [isExpanded, setIsExpanded] = useState([true]);
   const [education, changeEducation] = useState([...valuesSnapshot.education]);
 
@@ -75,6 +75,10 @@ const EducationFormStep = ({ valuesSnapshot, changeSnapshot }) => {
   ];
 
   const years = getYearsUpTillNow();
+
+  useEffect(() => {
+    getStepKeys(['specialization', 'education']);
+  });
 
   return (
     <Grid container item justifyContent='center'>
