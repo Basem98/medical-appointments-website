@@ -25,11 +25,16 @@ const DropdownField = ({ label, children, options, ...props }) => {
       >
         {
           options.map(option => (
-            <MenuItem value={option} key={option} sx={{ fontSize: theme.typography.body2 }}>{option}</MenuItem>
+            <MenuItem
+              value={option.value ? option.value : option}
+              key={option.value ? option.value : option}
+              sx={{ fontSize: theme.typography.body2 }}>
+              {option.label ? option.label : option}
+            </MenuItem>
           ))
         }
       </Select>
-      {meta.touched && <FormHelperText sx={{color: 'red'}}>{meta.error}</FormHelperText>}
+      {meta.touched && <FormHelperText sx={{ color: 'red' }}>{meta.error}</FormHelperText>}
     </CustomFormControl>
   );
 }
