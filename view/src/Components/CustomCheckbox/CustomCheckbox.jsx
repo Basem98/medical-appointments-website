@@ -14,7 +14,7 @@ const CustomCheckbox = ({ label, ...props }) => {
 
   return (
     <FormControlLabel
-      control={<Checkbox size='small' sx={{
+      control={<Checkbox checked={field.value} size='small' sx={{
         color: theme.palette.highlight.main,
         '&.Mui-checked': {
           color: theme.palette.highlight.main,
