@@ -1,7 +1,8 @@
-import { Grid, Divider, Pagination } from '@mui/material';
+import { Grid, Divider, Pagination, Collapse } from '@mui/material';
 import CustomFormButton from '../CustomFormButton/CustomFormButton';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
+import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 import SchoolIcon from '@mui/icons-material/School';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -9,11 +10,16 @@ import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
 import InputField from "../InputField/InputField";
 import { useState } from 'react';
 import DropdownField from '../DropdownField/DropdownField';
+import CustomCollapseListItem from '../CustomCollapseListItem/CustomCollapseListItem';
+import { AddAnotherEntry, RemoveLastEntry } from '../../Helper/FormFieldAdder';
+import { handleCollapse } from '../../Helper/CustomCollapseHandler';
+
 
 
 const EducationFormStep = ({ valuesSnapshot, changeSnapshot }) => {
-  const [numOfSections, incrementNumOfSections] = useState(valuesSnapshot.education.length);
-  const [currentSection, setCurrentSection] = useState(0);
+  const [isExpanded, setIsExpanded] = useState([true]);
+  const [education, changeEducation] = useState([...valuesSnapshot.education]);
+
   const fieldObjectToAdd = {
     degree: '',
     granter: '',
@@ -64,6 +70,7 @@ const EducationFormStep = ({ valuesSnapshot, changeSnapshot }) => {
     'Urology',
     'Vascular Surgery'
   ]
+
   return (
     <Grid container item justifyContent='center'>
       <Grid item xs={10} marginTop='25px'>
@@ -76,76 +83,79 @@ const EducationFormStep = ({ valuesSnapshot, changeSnapshot }) => {
           <MedicalInformationIcon />
         </DropdownField>
       </Grid>
-
-      <Grid container item xs={12} justifyContent='center'>
-        <Grid item xs={10} marginTop='10px'>
-          <Divider flexItem={true} sx={{ width: '100%' }}></Divider>
-        </Grid>
-        <Grid item xs={10} marginTop='25px'>
-          <DropdownField
-            label="Degree"
-            name={`education[${currentSection}].degree`}
-            type="text"
-            options={["Bachelor's Degree (BSc)", "Master's Degree (MSc)", "Doctor of Medicine (MD)"]}
-          >
-            <SchoolIcon />
-          </DropdownField>
-        </Grid>
-        <Grid item xs={10} marginTop='25px'>
-          <InputField
-            label="Institute"
-            name={`education[${currentSection}].granter`}
-            type="text"
-            placeholder="Cairo University"
-          >
-            <AccountBalanceIcon />
-          </InputField>
-        </Grid>
-        <Grid item xs={10} marginTop='25px'>
-          <InputField
-            label="Issue Date"
-            name={`education[${currentSection}].issueDate`}
-            type="text"
-            placeholder="Month/Year (07/2005)">
-            <CalendarMonthIcon />
-          </InputField>
-        </Grid>
+      <Grid item xs={10} marginY='10px'>
+        <Divider flexItem={true} sx={{ width: '100%' }}></Divider>
       </Grid>
+      {
+        education.map((edu, index) => (
+          <Grid container item xs={12} justifyContent='center' key={index} margin='5px'>
+            <Grid item xs={10}>
+              <CustomCollapseListItem onClick={() => handleCollapse(index, isExpanded, setIsExpanded)}>
+                <span>
+                  {index + 1}. Education Entry
+                </span>
+                {isExpanded[index] ? <ArrowDropUp /> : <ArrowDropDown />}
+              </CustomCollapseListItem>
+            </Grid>
+            <Collapse in={isExpanded[index]} sx={{ width: '100%' }}>
+              <Grid container item xs={12} justifyContent='center'>
+                <Grid item xs={10} marginTop='25px'>
+                  <DropdownField
+                    label="Degree"
+                    name={`education[${index}].degree`}
+                    type="text"
+                    options={["Bachelor's Degree (BSc)", "Master's Degree (MSc)", "Doctor of Medicine (MD)"]}
+                  >
+                    <SchoolIcon />
+                  </DropdownField>
+                </Grid>
+                <Grid item xs={10} marginTop='25px'>
+                  <InputField
+                    label="Institute"
+                    name={`education[${index}].granter`}
+                    type="text"
+                    placeholder="Cairo University"
+                  >
+                    <AccountBalanceIcon />
+                  </InputField>
+                </Grid>
+                <Grid item xs={10} marginTop='25px'>
+                  <InputField
+                    label="Issue Date"
+                    name={`education[${index}].issueDate`}
+                    type="text"
+                    placeholder="Month/Year (07/2005)">
+                    <CalendarMonthIcon />
+                  </InputField>
+                </Grid>
+                <Grid item xs={10} marginY='10px'>
+                  <Divider flexItem={true} sx={{ width: '100%' }}></Divider>
+                </Grid>
+              </Grid>
+            </Collapse>
+          </Grid>
+        )
+        )
+      }
 
       <Grid container item xs={6} marginY='25px' justifyContent='center'>
         {
-          numOfSections > 1 &&
+          education.length > 1 &&
           <CustomFormButton
             variant='outlined'
             sx={{ marginTop: '5px', color: 'red !important', borderColor: 'red !important' }}
             startIcon={<RemoveCircleOutlineRoundedIcon sx={{ fill: 'red' }} />}
-            onClick={() => {
-              if (numOfSections > 1) {
-                incrementNumOfSections( numOfSections - 1);
-                setCurrentSection(0);
-                let newSnapshot = valuesSnapshot;
-                newSnapshot.education.pop();
-                changeSnapshot(newSnapshot);
-              }
-            }}>
-            Remove Last Qualification
+            onClick={() => RemoveLastEntry('education', valuesSnapshot, changeSnapshot, isExpanded, setIsExpanded, changeEducation)}>
+            Remove Last Entry
           </CustomFormButton>
         }
         <CustomFormButton
           variant='outlined'
           sx={{ marginTop: '5px' }}
           startIcon={<AddCircleOutlineRoundedIcon />}
-          onClick={() => {
-            incrementNumOfSections(numOfSections + 1);
-            let newSnapshot = valuesSnapshot;
-            newSnapshot.education.push(fieldObjectToAdd);
-            changeSnapshot(newSnapshot);
-          }}>
-          Add Another Qualification
+          onClick={() => AddAnotherEntry('education', valuesSnapshot, changeSnapshot, isExpanded, setIsExpanded, changeEducation, fieldObjectToAdd)}>
+          Add Another Entry
         </CustomFormButton>
-      </Grid>
-      <Grid container item xs={10} justifyContent='center'>
-        <Pagination color='highlight' count={numOfSections} page={currentSection + 1} onChange={(e, p) => { setCurrentSection(p - 1) }} size="small" />
       </Grid>
     </Grid >
   );
