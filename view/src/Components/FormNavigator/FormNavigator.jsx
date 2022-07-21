@@ -9,14 +9,14 @@ const FormNavigator = ({ hasPreviousStep, goBack, isLastStep, isFormValid }) => 
       {
         hasPreviousStep && (
           <Grid item xs={4}>
-            <CustomFormButton type='button' onClick={goBack} variant='outlined' fullWidth>
+            <CustomFormButton type='button' onClick={() => {goBack();}} variant='outlined' fullWidth>
               Back
             </CustomFormButton>
           </Grid>
         )
       }
-      <Grid item xs={hasPreviousStep ? 4 : 6}>
-        <CustomFormButton type="submit" variant='contained' disabled={!isFormValid} fullWidth>
+      <Grid item xs={4}>
+        <CustomFormButton type="submit" variant='contained' disabled={!isFormValid()} fullWidth>
           {isLastStep ? 'Submit' : 'Next'}
         </CustomFormButton>
       </Grid>
