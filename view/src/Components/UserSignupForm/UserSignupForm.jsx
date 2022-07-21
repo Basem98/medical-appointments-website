@@ -11,13 +11,12 @@ import EmailIcon from '@mui/icons-material/Email';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { personalFormStepValidation } from "../../Helper/ValidationSchema";
+import {personalFormStepValidation } from "../../Helper/ValidationSchema";
 
 export default function UserSignupForm() {
 
     const [showPassword, setShowPassword] = useState(false);
     const handleShowPasswordToggle = () => setShowPassword(!showPassword);
-
 
     return (
         <>
@@ -44,16 +43,13 @@ export default function UserSignupForm() {
                     >
                         {
                             (props) => (
-                                <Form onSubmit={props.handleSubmit}>
+                                <Form>
                                     <Grid container justifyContent='center' alignItems='center'>
                                         <Grid item xs={10} md={5} sx={{ marginTop: '25px' }}>
                                             <InputField 
                                             label='First Name' 
                                             name='firstName' 
                                             placeholder='First Name' 
-                                            onChange={props.handleChange}
-                                            onBlur={props.handleBlur}
-                                            value={props.values.firstName}
                                             >
                                                 <PersonIcon></PersonIcon>
                                             </InputField>
