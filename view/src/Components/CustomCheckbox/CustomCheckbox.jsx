@@ -9,7 +9,7 @@ import { useField } from 'formik';
  * @returns A <FormControlLabel> component that's used to create a customized Checkbox component with our wireframe's design
  */
 const CustomCheckbox = ({ label, ...props }) => {
-  const [field, meta] = useField(props);
+  const [field] = useField(props);
   const theme = useTheme();
 
   return (
