@@ -22,6 +22,17 @@ export const educationFormStepValidation = Yup.object({
   }))
 });
 
+export const certificationsFormStepValidation = Yup.object({
+  certifications: Yup.array().of(Yup.object({
+    title: Yup.string().required('This field is required'),
+    granter: Yup.string().required('This field is required'),
+    issueDate: Yup.object({
+      month: Yup.string().required('This field is required'),
+      year: Yup.string().required('This field is required')
+    })
+  }))
+});
+
 export const experienceFormStepValidation = Yup.object({
   experiences: Yup.array().of(
     Yup.object({
