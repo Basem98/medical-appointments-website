@@ -13,7 +13,7 @@ import DropdownField from '../DropdownField/DropdownField';
 import CustomCollapseListItem from '../CustomCollapseListItem/CustomCollapseListItem';
 import { AddAnotherEntry, RemoveLastEntry } from '../../Helper/FormFieldAdder';
 import { handleCollapse } from '../../Helper/CustomCollapseHandler';
-
+import { months, getYearsUpTillNow } from '../../Helper/DateOptions';
 
 
 const EducationFormStep = ({ valuesSnapshot, changeSnapshot }) => {
@@ -23,7 +23,10 @@ const EducationFormStep = ({ valuesSnapshot, changeSnapshot }) => {
   const fieldObjectToAdd = {
     degree: '',
     granter: '',
-    issueDate: ''
+    issueDate: {
+      month: '',
+      year: ''
+    }
   };
   const specialties = [
     'Dermatology',
@@ -69,7 +72,9 @@ const EducationFormStep = ({ valuesSnapshot, changeSnapshot }) => {
     'Spinal Surgery',
     'Urology',
     'Vascular Surgery'
-  ]
+  ];
+
+  const years = getYearsUpTillNow();
 
   return (
     <Grid container item justifyContent='center'>
@@ -119,14 +124,15 @@ const EducationFormStep = ({ valuesSnapshot, changeSnapshot }) => {
                     <AccountBalanceIcon />
                   </InputField>
                 </Grid>
-                <Grid item xs={10} marginTop='25px'>
-                  <InputField
-                    label="Issue Date"
-                    name={`education[${index}].issueDate`}
-                    type="text"
-                    placeholder="Month/Year (07/2005)">
+                <Grid item xs={10} md={5} marginTop='25px'>
+                  <DropdownField label='Month' name={`education[${index}].issueDate.month`} options={months}>
                     <CalendarMonthIcon />
-                  </InputField>
+                  </DropdownField>
+                </Grid>
+                <Grid item xs={10} md={5} marginTop='25px'>
+                  <DropdownField label='Year' name={`education[${index}].issueDate.year`} options={years}>
+                    <CalendarMonthIcon />
+                  </DropdownField>
                 </Grid>
                 <Grid item xs={10} marginY='10px'>
                   <Divider flexItem={true} sx={{ width: '100%' }}></Divider>

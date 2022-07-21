@@ -15,8 +15,10 @@ export const educationFormStepValidation = Yup.object({
   education: Yup.array().of(Yup.object({
     degree: Yup.string().required('This field is required'),
     granter: Yup.string().required('This field is required'),
-    issueDate: Yup.string().required('This field is required')
-      .matches(/^((0[1-9])|(1[0-2]))\/((19[0-9][0-9])|(20[0-2][0-9]))$/, { message: 'Your issue date must have this date format 07/2005 and the year must be before 2022' })
+    issueDate: Yup.object({
+      month: Yup.string().required('This field is required'),
+      year: Yup.string().required('This field is required')
+    })
   }))
 });
 
