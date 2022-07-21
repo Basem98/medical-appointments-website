@@ -53,16 +53,18 @@ const MultiStepForm = ({ children, initialValues, onSubmit }) => {
           ))}
         </CustomFormStepper>
       </Grid>
-      <Formik initialValues={valuesSnapshot} validationSchema={currentStep.props.validationSchema} onSubmit={handleSubmit} enableReinitialize={true}>
-        {
-          (formik) => (
-            <Form>
-              {React.cloneElement(currentStep, { changeSnapshot: (newValues) => setValuesSnapshot(newValues), valuesSnapshot: formik.values })}
-              <FormNavigator goBack={() => prevStep(formik.values)} hasPreviousStep={stepNumber > 0} isLastStep={isLastStep} isFormValid={formik.isValid} />
-            </Form>
-          )
-        }
-      </Formik>
+      <Grid item xs={12}>
+        <Formik initialValues={valuesSnapshot} validationSchema={currentStep.props.validationSchema} onSubmit={handleSubmit}>
+          {
+            (formik) => (
+              <Form>
+                {React.cloneElement(currentStep, { changeSnapshot: (newValues) => setValuesSnapshot(newValues), valuesSnapshot: formik.values })}
+                <FormNavigator goBack={() => prevStep(formik.values)} hasPreviousStep={stepNumber > 0} isLastStep={isLastStep} isFormValid={formik.isValid} />
+              </Form>
+            )
+          }
+        </Formik>
+      </Grid>
     </Grid>
   );
 }
