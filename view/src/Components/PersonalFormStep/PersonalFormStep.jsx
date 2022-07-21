@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
 import InputField from "../InputField/InputField";
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
@@ -6,10 +7,12 @@ import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import VpnKeyRoundedIcon from '@mui/icons-material/VpnKeyRounded';
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
-import { useState } from 'react';
 
-const PersonalFormStep = () => {
+const PersonalFormStep = ({ getStepKeys }) => {
   const [passwordVisibility, togglePasswordVisibility] = useState(false);
+  useEffect(() => {
+    getStepKeys(['firstName', 'lastName', 'phoneNumber', 'email', 'password', 'passwordConfirmation']);
+  });
 
   return (
     <Grid container item justifyContent='center'>

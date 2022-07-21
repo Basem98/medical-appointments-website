@@ -38,6 +38,21 @@ const MultiStepForm = ({ children, initialValues, onSubmit }) => {
     setStepNumber(stepNumber - 1);
   }
 
+  let currentStepKeys = [];
+
+  const getCurrentStepKeys = (stepKeys) => { currentStepKeys = stepKeys };
+
+  const isCurrentFormStepValid = (formErrors) => {
+    let isStepValid = true;
+    Object.keys(formErrors).forEach(errKey => {
+      if (currentStepKeys.includes(errKey)) {
+        isStepValid = false;
+      }
+    })
+    return isStepValid;
+  }
+
+
 
   return (
     <Grid container sx={{ background: theme.palette.linearFormBg.main, borderRadius: '20px', boxShadow: theme.shadows[5] }} justifyContent='center'>
@@ -53,16 +68,27 @@ const MultiStepForm = ({ children, initialValues, onSubmit }) => {
           ))}
         </CustomFormStepper>
       </Grid>
-      <Formik initialValues={valuesSnapshot} validationSchema={currentStep.props.validationSchema} onSubmit={handleSubmit} enableReinitialize={true}>
-        {
-          (formik) => (
-            <Form>
-              {React.cloneElement(currentStep, { changeSnapshot: (newValues) => setValuesSnapshot(newValues), valuesSnapshot: formik.values })}
-              <FormNavigator goBack={() => prevStep(formik.values)} hasPreviousStep={stepNumber > 0} isLastStep={isLastStep} isFormValid={formik.isValid} />
-            </Form>
-          )
-        }
-      </Formik>
+      <Grid item xs={12}>
+        <Formik initialValues={valuesSnapshot} validationSchema={currentStep.props.validationSchema} onSubmit={handleSubmit}>
+          {
+            (formik) => (
+              <Form>
+                {
+                  React.cloneElement(currentStep, {
+                    changeSnapshot: (newValues) => setValuesSnapshot(newValues),
+                    valuesSnapshot: formik.values,
+                    getStepKeys: (stepKeys) => getCurrentStepKeys(stepKeys)
+                  })
+                }
+                <FormNavigator
+                  goBack={() => prevStep(formik.values)}
+                  hasPreviousStep={stepNumber > 0}
+                  isLastStep={isLastStep} isFormValid={() => isCurrentFormStepValid(formik.errors)}/>
+              </Form>
+            )
+          }
+        </Formik>
+      </Grid>
     </Grid>
   );
 }
