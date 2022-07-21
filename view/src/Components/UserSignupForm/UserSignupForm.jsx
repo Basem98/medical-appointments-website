@@ -41,7 +41,7 @@ export default function UserSignupForm() {
                         }}
                     >
                         {
-                            (formik) => (
+                            (props) => (
                                 <Form>
                                     <Grid container justifyContent='center' alignItems='center'>
                                         <Grid item xs={10} md={5} sx={{ marginTop: '25px' }}>
