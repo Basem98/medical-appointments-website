@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./UserSignupForm.css"
 import { Grid } from "@mui/material";
 import InputField from '../InputField/InputField'
@@ -18,6 +18,19 @@ export default function UserSignupForm() {
     const [showPassword, setShowPassword] = useState(false);
     const handleShowPasswordToggle = () => setShowPassword(!showPassword);
 
+    const formRef = useRef(null);
+
+    const handleSubmit = () => {
+        const {
+            firstName,
+            lastName,
+            phoneNumber,
+            email,
+            password
+        } = formRef.current.values;
+
+
+    }
     return (
         <>
             <Grid container height='100vh' justifyContent='center' alignItems='center' sx={{ backgroundColor: 'rgba(249, 249, 249, 0.5)', marginY: -1 }}>
@@ -40,6 +53,8 @@ export default function UserSignupForm() {
 
                         }}
                         validationSchema={personalFormStepValidation}
+                        onSubmit = {handleSubmit}
+                        innerRef = {formRef}
                     >
                         {
                             (props) => (
