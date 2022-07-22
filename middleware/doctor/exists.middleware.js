@@ -14,13 +14,6 @@ async function isAlreadyInDb(req, res, next) {
       customErr.msg = `The phone number ${req.body.phoneNumber} is already in use`;
       return next(customErr);
     }
-    req.body.clinics.forEach(async (clinic) => {
-      const clinicPhoneExists = await Doctor.findOne({clinics: {$elemMatch: {phone: clinic.phone}}});
-      if (clinicPhoneExists) {
-        customErr.msg = `The clinic's phone number ${clinic.phone} is already in use`;
-        return next(customErr);
-      }
-    });
     next();
   } catch (err) {
     console.error(err);
