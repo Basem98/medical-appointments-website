@@ -4,7 +4,7 @@ const experienceFieldKeys = ['title', 'workplace', 'location', 'startDate'];
 const educationFieldKeys = ['degree', 'granter', 'issueDate'];
 const certificationsFieldKeys = ['title', 'granter', 'issueDate'];
 const clinicsFieldKeys = ['name', 'address', 'phone'];
-const addressKeys = ['city', 'country', 'buildingNo', 'streetName'];
+const addressKeys = ['city', 'country', 'governorate', 'buildingNo', 'streetName'];
 const locationKeys = ['city', 'country'];
 // const clinicPhoneKeys = ['mobile', 'landline'];
 
