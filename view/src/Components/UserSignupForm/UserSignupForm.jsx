@@ -21,15 +21,14 @@ export default function UserSignupForm() {
     const formRef = useRef(null);
 
     const handleSubmit = () => {
-        const {
-            firstName,
-            lastName,
-            phoneNumber,
-            email,
-            password
-        } = formRef.current.values;
-
-
+        const formValues = formRef.current.values;
+        const userData = {
+            firstName: formValues.firstName,
+            lastName: formValues.lastName,
+            phoneNumber: formValues.phoneNumber,
+            email: formValues.email,
+            password: formValues.password
+        };
     }
     return (
         <>
