@@ -80,3 +80,8 @@ export const clinicsFormStepValidation = Yup.object({
     })
   )
 });
+
+export const imagesFormStepValidation = Yup.object({
+  profilePicture: Yup.string().required('This field is required'),
+  professionalLicense: Yup.string().required('This field is required')
+})
