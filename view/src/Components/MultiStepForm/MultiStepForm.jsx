@@ -60,11 +60,11 @@ const MultiStepForm = ({ children, initialValues, onSubmit }) => {
         <h2 style={{ ...theme.typography.h2, color: theme.palette.text.primary, textAlign: 'center' }}>Join Us</h2>
       </Grid>
       <Grid item xs={12} marginBottom='25px'>
-        <CustomFormStepper activeStep={stepNumber} alternativeLabel>
-          {formSteps.map((step, index) => (
+        <CustomFormStepper activeStep={stepNumber > 4 ? 4 : stepNumber} alternativeLabel>
+          {formSteps.slice(0, 5).map((step, index) => (
             <Step key={step.props.stepName}>
-              <StepLabel 
-              sx={stepNumber !== index ? { '& .MuiStepLabel-labelContainer': { display: { xs: 'none', lg: 'flex' }, justifyContent: 'center' }, '&.Mui-active': { display: 'flex' } } : {}}
+              <StepLabel
+                sx={stepNumber !== index ? { '& .MuiStepLabel-labelContainer': { display: { xs: 'none', lg: 'flex' }, justifyContent: 'center' }, '&.Mui-active': { display: 'flex' } } : {}}
               >{step.props.stepName}</StepLabel>
             </Step>
           ))}
