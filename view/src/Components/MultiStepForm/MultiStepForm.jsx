@@ -79,7 +79,9 @@ const MultiStepForm = ({ children, initialValues, onSubmit }) => {
                   React.cloneElement(currentStep, {
                     changeSnapshot: (newValues) => setValuesSnapshot(newValues),
                     valuesSnapshot: formik.values,
-                    getStepKeys: (stepKeys) => getCurrentStepKeys(stepKeys)
+                    getStepKeys: (stepKeys) => getCurrentStepKeys(stepKeys),
+                    setFormikFieldValue: formik.setFieldValue,
+                    errors: formik.errors
                   })
                 }
                 <FormNavigator
