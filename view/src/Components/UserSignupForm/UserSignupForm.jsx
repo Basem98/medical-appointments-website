@@ -12,6 +12,7 @@ import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {personalFormStepValidation } from "../../Helper/ValidationSchema";
+import submitUserData from "../../Network/Users/register";
 
 export default function UserSignupForm() {
 
@@ -29,6 +30,7 @@ export default function UserSignupForm() {
             email: formValues.email,
             password: formValues.password
         };
+        submitUserData(userData);
     }
     return (
         <>
