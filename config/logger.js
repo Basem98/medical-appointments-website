@@ -13,7 +13,7 @@ const severityLevels = {
 
 
 /* ---------- Define the server's current severity level based on mode ---------- */
-const currentLevel = () => (APP.NODE_ENV === 'development' ? 'debug' : 'warn');
+const currentLevel = () => (APP.NODE_ENV === 'development' ? 'debug' : 'http');
 
 
 /* ---------- Define the log colors based on severity ---------- */
