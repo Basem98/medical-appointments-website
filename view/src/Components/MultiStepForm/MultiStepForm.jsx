@@ -61,9 +61,11 @@ const MultiStepForm = ({ children, initialValues, onSubmit }) => {
       </Grid>
       <Grid item xs={12} marginBottom='25px'>
         <CustomFormStepper activeStep={stepNumber} alternativeLabel>
-          {formSteps.map(step => (
+          {formSteps.map((step, index) => (
             <Step key={step.props.stepName}>
-              <StepLabel>{step.props.stepName}</StepLabel>
+              <StepLabel 
+              sx={stepNumber !== index ? { '& .MuiStepLabel-labelContainer': { display: { xs: 'none', lg: 'flex' }, justifyContent: 'center' }, '&.Mui-active': { display: 'flex' } } : {}}
+              >{step.props.stepName}</StepLabel>
             </Step>
           ))}
         </CustomFormStepper>
@@ -83,7 +85,7 @@ const MultiStepForm = ({ children, initialValues, onSubmit }) => {
                 <FormNavigator
                   goBack={() => prevStep(formik.values)}
                   hasPreviousStep={stepNumber > 0}
-                  isLastStep={isLastStep} isFormValid={() => isCurrentFormStepValid(formik.errors)}/>
+                  isLastStep={isLastStep} isFormValid={() => isCurrentFormStepValid(formik.errors)} />
               </Form>
             )
           }
