@@ -24,11 +24,11 @@ export const educationFormStepValidation = Yup.object({
 
 export const certificationsFormStepValidation = Yup.object({
   certifications: Yup.array().of(Yup.object({
-    title: Yup.string().required('This field is required'),
-    granter: Yup.string().required('This field is required'),
+    title: Yup.string(),
+    granter: Yup.string(),
     issueDate: Yup.object({
-      month: Yup.string().required('This field is required'),
-      year: Yup.string().required('This field is required')
+      month: Yup.string(),
+      year: Yup.string()
     })
   }))
 });
@@ -59,4 +59,29 @@ export const experienceFormStepValidation = Yup.object({
       })
     })
   )
+});
+
+export const clinicsFormStepValidation = Yup.object({
+  clinics: Yup.array().of(
+    Yup.object({
+      name: Yup.string().required('This field is required').matches(/[a-z0-9]{2,50}/g, { message: 'Your clinic\'s name must be between 2 and 50 characters and it can only consist of letters and numbers' }),
+      phone: Yup.object({
+        mobile: Yup.string().required('This field is required').matches(/^01[0125][0-9]{8}$/g, { message: 'You must type a valid Egyptian number' }),
+        landline: Yup.string().matches(/^0[1-9][0-9]{7,8}$/, { message: 'You must type a valid Egyptian landline number with the governorate code' })
+      }),
+      address: Yup.object({
+        city: Yup.string().required('This field is required').matches(/[a-z]{2,100}/g, {message: 'You must enter a valid city/locality name'}),
+        country: Yup.string(),
+        governorate: Yup.string().required('This field is required').matches(/[a-z]{2,100}/g, {message: 'You must enter a valid governorate name'}),
+        buildingNo: Yup.string().required('This field is required').matches(/^[0-9]{1,9}$/, {message: 'You must enter your clinic\'s valid building number'}),
+        streetName: Yup.string().required('This field is required'),
+        postalCode: Yup.string()
+      })
+    })
+  )
+});
+
+export const imagesFormStepValidation = Yup.object({
+  profilePicture: Yup.string().required('This field is required'),
+  professionalLicense: Yup.string().required('This field is required')
 })

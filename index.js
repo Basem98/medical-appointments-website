@@ -1,8 +1,15 @@
 const express = require('express');
 const app = express();
 const config = require('./config/envConfig');
+const cors = require('./config/corsConfig');
 const { connectToDatabase } = require('./config/dbConnection');
 const { baseRouter, userRouter, doctorRouter, adminRouter } = require('./router/main.router');
+
+
+/* ---------- Mount the CORS configuration middleware ---------- */
+app.use(cors());
+
+
 
 
 /* ---------- Mount the parsing middleware ---------- */

@@ -102,9 +102,24 @@ const schema = new mongoose.Schema({
                 type: String,
                 required: true
             },
+            governorate: {
+                type: String,
+                required: true
+            },
             country: {
                 type: String,
                 required: true
+            },
+            buildingNo: {
+                type: Number,
+                required: true
+            },
+            streetName: {
+                type: String,
+                required: true
+            },
+            postalCode: {
+                type: Number
             }
         },
         geoLocation: {
@@ -112,9 +127,13 @@ const schema = new mongoose.Schema({
             latitude: String
         },
         phone: {
-            type: String,
-            required: true,
-            unique: true
+            mobile: {
+                type: String,
+                required: true
+            },
+            landline: {
+                type: String
+            }
         }
     }],
     profilePicture: {
