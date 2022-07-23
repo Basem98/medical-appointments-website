@@ -13,10 +13,12 @@ const initialDoctorFormValues = {
       city: '',
       country: ''
     },
+    /* Transfer this into a Date object */
     startDate: {
       month: '',
       year: ''
     },
+    /* Transfer this into a Date object */
     endDate: {
       month: '',
       year: ''
@@ -26,6 +28,7 @@ const initialDoctorFormValues = {
   education: [{
     degree: '',
     granter: '',
+    /* Transfer this into a Date object */
     issueDate: {
       month: '',
       year: ''
@@ -34,6 +37,7 @@ const initialDoctorFormValues = {
   certifications: [{
     title: '',
     granter: '',
+    /* Transfer this into a Date object */
     issueDate: {
       month: '',
       year: ''
