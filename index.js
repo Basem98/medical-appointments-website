@@ -4,20 +4,22 @@ const config = require('./config/envConfig');
 const cors = require('./config/corsConfig');
 const { connectToDatabase } = require('./config/dbConnection');
 const { baseRouter, userRouter, doctorRouter, adminRouter } = require('./router/main.router');
+const morganMiddleware = require('./middleware/logging.middleware');
+const logger = require('./config/logger');
+
+
+
+/* ---------- Mount the morgan logging middleware ---------- */
+app.use(morganMiddleware);
 
 
 /* ---------- Mount the CORS configuration middleware ---------- */
 app.use(cors());
 
 
-
-
 /* ---------- Mount the parsing middleware ---------- */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-
-
 
 
 /* ---------- Mount the routers middleware ---------- */
@@ -27,15 +29,12 @@ app.use('/api/doctors', doctorRouter);
 app.use('/api/admin', adminRouter);
 
 
-
-
 /* ---------- Mount the error handling middleware ---------- */
-
 app.use((req, res, next) => {
     res.status(404).json({ message: '404 Not Found' });
 });
 app.use((error, req, res, next) => {
-    console.log(error);
+    logger.error(`${req.ip} ${req.method} ${req.path} ${error.statusCode} - ${error.toString()}`);
     res.status(error.statusCode).json({ error: error.toString() });
 })
 
