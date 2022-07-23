@@ -6,7 +6,8 @@ module.exports = {
   /* ----- App-related environment variables ----- */
   APP: {
     PORT: process.env.PORT,
-    BASE_URL: process.env.BASE_URL
+    BASE_URL: process.env.BASE_URL,
+    ALLOWED_ORIGIN: process.env.ALLOWED_ORIGIN
   },
   /* ----- Database-related environment variables ----- */
   DB: {
