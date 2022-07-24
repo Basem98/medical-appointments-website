@@ -11,7 +11,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import {personalFormStepValidation } from "../../Helper/ValidationSchema";
+import { personalFormStepValidation } from "../../Helper/ValidationSchema";
 import submitUserData from "../../Network/Users/register";
 
 export default function UserSignupForm() {
@@ -30,8 +30,9 @@ export default function UserSignupForm() {
             email: formValues.email,
             password: formValues.password
         };
-        submitUserData(userData);
+        submitUserData(userData)
     }
+    
     return (
         <>
             <Grid container height='100vh' justifyContent='center' alignItems='center' sx={{ backgroundColor: 'rgba(249, 249, 249, 0.5)', marginY: -1 }}>
@@ -54,18 +55,18 @@ export default function UserSignupForm() {
 
                         }}
                         validationSchema={personalFormStepValidation}
-                        onSubmit = {handleSubmit}
-                        innerRef = {formRef}
+                        onSubmit={handleSubmit}
+                        innerRef={formRef}
                     >
                         {
                             (props) => (
                                 <Form>
                                     <Grid container justifyContent='center' alignItems='center'>
                                         <Grid item xs={10} md={5} sx={{ marginTop: '25px' }}>
-                                            <InputField 
-                                            label='First Name' 
-                                            name='firstName' 
-                                            placeholder='First Name' 
+                                            <InputField
+                                                label='First Name'
+                                                name='firstName'
+                                                placeholder='First Name'
                                             >
                                                 <PersonIcon></PersonIcon>
                                             </InputField>
