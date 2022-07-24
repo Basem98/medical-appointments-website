@@ -31,14 +31,16 @@ const DropdownField = ({ label, children, options, ...props }) => {
         error={meta.touched && Boolean(meta.error)}
       >
         {
-          options.map(option => (
-            <MenuItem
-              value={option.value ? option.value : option}
-              key={option.value ? option.value : option}
-              sx={{ fontSize: theme.typography.body2 }}>
-              {option.label ? option.label : option}
-            </MenuItem>
-          ))
+          options.map(option => {
+            return (
+              <MenuItem
+                value={!isNaN(option.value) ? option.value : option}
+                key={!isNaN(option.value) ? option.value : option}
+                sx={{ fontSize: theme.typography.body2 }}>
+                {option.label ? option.label : option}
+              </MenuItem>
+            )
+          })
         }
       </Select>
       {meta.touched && <FormHelperText sx={{ color: 'red' }}>{meta.error}</FormHelperText>}

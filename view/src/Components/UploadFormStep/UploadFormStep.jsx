@@ -9,16 +9,31 @@ const UploadFormStep = ({ setFormikFieldValue, errors }) => {
       </Grid>
       <Grid item xs={10} marginTop='25px' justifyContent='center'>
         <InputLabel htmlFor='personalImg' error={Boolean(errors.profilePicture)}>Personal Picture</InputLabel>
-        <Input type='file' id='personalImg' error={Boolean(errors.profilePicture)} onChange={(event) => {
-          setFormikFieldValue('profilePicture', event.target.value)
-        }} fullWidth />
+
+        <Input
+          type='file'
+          accept='images/*'
+          id='personalImg'
+          name='images'
+          error={Boolean(errors.profilePicture)}
+          onChange={(event) => {
+            setFormikFieldValue('profilePicture', event.target.files[0])
+          }} fullWidth />
+
         <FormHelperText error={true}>{errors.profilePicture}</FormHelperText>
       </Grid>
       <Grid item xs={10} marginTop='25px' justifyContent='center'>
         <InputLabel htmlFor='licenseImg' error={Boolean(errors.professionalLicense)}>Professional Practitioner's License</InputLabel>
-        <Input type='file' id='licenseImg' error={Boolean(errors.professionalLicense)} onChange={(event) => {
-          setFormikFieldValue('professionalLicense', event.target.value)
-        }} fullWidth />
+
+        <Input type='file'
+          accept='images/*'
+          id='licenseImg'
+          name='images'
+          error={Boolean(errors.professionalLicense)}
+          onChange={(event) => {
+            setFormikFieldValue('professionalLicense', event.target.files[0])
+          }} fullWidth />
+
         <FormHelperText error={true}>{errors.professionalLicense}</FormHelperText>
       </Grid>
     </Grid>

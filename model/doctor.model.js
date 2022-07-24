@@ -137,8 +137,12 @@ const schema = new mongoose.Schema({
         }
     }],
     profilePicture: {
-        data: Buffer,
-        contentType: String
+        type: String,
+        required: true
+    },
+    professionalLicense: {
+        type: String,
+        required: true
     },
     isVerified: {
         type: Boolean,

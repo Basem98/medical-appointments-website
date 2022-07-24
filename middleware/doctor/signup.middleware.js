@@ -44,10 +44,10 @@ function doElementsContainKeys(arrInput = [{}], requiredKeys = [''], fieldName =
  */
 function doesFieldContainKeys(arrInput = [{}], requiredKeys = [''], subFieldName = '') {
   for (let i = 0; i < arrInput.length; i++) {
-    Object.keys(arrInput[i][subFieldName]).forEach(key => {
-      if (!requiredKeys.includes(key))
-        throw new Error(`The ${subFieldName} should contain a ${key} property`);
-    })
+    requiredKeys.forEach(key => {
+      if (!arrInput[i][subFieldName].hasOwnProperty(key))
+        throw new Error(`The ${subFieldName} field must contain the ${key} property`);
+    });
   }
 
   return true
