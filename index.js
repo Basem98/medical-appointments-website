@@ -6,6 +6,7 @@ const { connectToDatabase } = require('./config/dbConnection');
 const { baseRouter, userRouter, doctorRouter, adminRouter } = require('./router/main.router');
 const morganMiddleware = require('./middleware/logging.middleware');
 const logger = require('./config/logger');
+const { cloudinaryConfig } = require('./config/cloudinaryConfig');
 
 
 
@@ -20,6 +21,10 @@ app.use(cors());
 /* ---------- Mount the parsing middleware ---------- */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+
+/* ---------- Mount the Cloudinary configuration middleware ---------- */
+app.use('*', (req, res, next) => { cloudinaryConfig(); next(); });
 
 
 /* ---------- Mount the routers middleware ---------- */
