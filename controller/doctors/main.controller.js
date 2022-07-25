@@ -20,7 +20,7 @@ async function signUp(req, res, next) {
 }
 
 
-const getDotorById = async (req, res, next) => {
+const getDoctorById = async (req, res, next) => {
   let doctorId = req.params.id;
   if (!mongoose.isValidObjectId(doctorId)) {
     res.status(404).json({ message: 'Doctor is Not Found' });
@@ -45,5 +45,5 @@ const getDotorById = async (req, res, next) => {
 
 module.exports = {
   signUp,
-  getDotorById,
+  getDoctorById,
 }
