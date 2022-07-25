@@ -1,3 +1,4 @@
+const { default: mongoose } = require('mongoose');
 const Doctor = require('../../model/doctor.model');
 
 
@@ -19,7 +20,30 @@ async function signUp(req, res, next) {
 }
 
 
+const getDotorById = async (req, res, next) => {
+  let doctorId = req.params.id;
+  if (!mongoose.isValidObjectId(doctorId)) {
+    res.status(404).json({ message: 'Doctor is Not Found' });
+  }
+  await Doctor.findOne({ _id: doctorId })
+    .then((data) => {
+      if (data) {
+        // Execluding password from the retrieved data
+        data.password = undefined;
+        res.status(200).json({ message: data })
+      }
+      res.status(404).json({ message: 'Doctor is Not Found' });
+    })
+    .catch(error => {
+      console.log(error);
+      error.statusCode = 500;
+      next(error);
+    })
+}
+
+
 
 module.exports = {
-  signUp
+  signUp,
+  getDotorById,
 }
