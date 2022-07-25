@@ -1,10 +1,9 @@
-import './App.css';
-import UserSignupForm from './Components/UserSignupForm/UserSignupForm';
-
+import "./App.css";
+import Home from "./Pages/Home/Home";
 
 function App() {
   return (
-    <UserSignupForm />
+    <Home />
   );
 }
 
