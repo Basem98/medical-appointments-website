@@ -13,11 +13,27 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { personalFormStepValidation } from "../../Helper/ValidationSchema";
 import submitUserData from "../../Network/Users/register";
+import CustomAlert from "../CustomAlert/CustomAlert";
 
 export default function UserSignupForm() {
 
     const [showPassword, setShowPassword] = useState(false);
+    const [isDuplicated, setIsDuplicated] = useState(false);
+    const [duplicationErrorsArray, setDuplicationErrorsArray] = useState([]);
+
     const handleShowPasswordToggle = () => setShowPassword(!showPassword);
+    const handleDuplicationError = () => {
+        return duplicationErrorsArray.map((errorMessage, index) => {
+            return (
+                <CustomAlert
+                    severity="error"
+                    key={index}
+                >
+                    {errorMessage}
+                </CustomAlert>
+            );
+        });
+    }
 
     const formRef = useRef(null);
 
@@ -31,8 +47,14 @@ export default function UserSignupForm() {
             password: formValues.password
         };
         submitUserData(userData)
+            .then((response) => console.log(response))
+            .catch((error) => {
+                setIsDuplicated(true);
+                let errorMessagesArray = JSON.parse(error.response.data.error);
+                setDuplicationErrorsArray(errorMessagesArray);
+            })
     }
-    
+
     return (
         <>
             <Grid container height='100vh' justifyContent='center' alignItems='center' sx={{ backgroundColor: 'rgba(249, 249, 249, 0.5)', marginY: -1 }}>
@@ -44,6 +66,14 @@ export default function UserSignupForm() {
                     <Grid item sx={{ width: '100%' }}>
                         <h2 style={{ ...theme.typography.h2, textAlign: 'center' }}>Sign Up</h2>
                     </Grid>
+
+                    <Grid item xs={10} sx={{ margin: '0 auto' }}>
+                        {
+                            isDuplicated &&
+                            handleDuplicationError()
+                        }
+                    </Grid>
+
                     <Formik
                         initialValues={{
                             firstName: '',
