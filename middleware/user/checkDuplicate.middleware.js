@@ -14,7 +14,6 @@ const checkDuplicate = async (req, res, next) => {
             }
         })
         .catch((error) => console.log(error))
-    next();
 
     // Check Duplication for email
     await User.findOne({ email: enteredEmail }).count()
@@ -26,6 +25,8 @@ const checkDuplicate = async (req, res, next) => {
             }
         })
         .catch(error => console.log(error))
+
+    next();
 
 }
 
