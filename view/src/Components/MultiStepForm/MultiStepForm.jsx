@@ -1,25 +1,26 @@
 import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
 import FormNavigator from '../FormNavigator/FormNavigator';
-import { useTheme, Grid, Step, StepLabel } from '@mui/material';
+import { useTheme, Grid, Step, StepLabel, CircularProgress } from '@mui/material';
 import CustomFormStepper from '../CustomFormStepper/CustomFormStepper';
+import CustomAlert from '../CustomAlert/CustomAlert';
+import { isEmailDuplicated, isPhoneDuplicated } from '../../Network/Doctors/validate';
 
-
-
-const MultiStepForm = ({ children, initialValues, onSubmit }) => {
+const MultiStepForm = ({ children, initialValues, onSubmit, serverResponse, setServerResponse }) => {
   const theme = useTheme();
   const [stepNumber, setStepNumber] = useState(0);
   const [valuesSnapshot, setValuesSnapshot] = useState(initialValues);
+  const [isFormSubmitted, setFormSubmitted] = useState(false);
 
   const formSteps = React.Children.toArray(children);
   const currentStep = formSteps[stepNumber];
   const numberOfSteps = formSteps.length;
   const isLastStep = stepNumber === numberOfSteps - 1;
 
-
-  const handleSubmit = async (values, actions) => {
+  const submitStepHandler = (values, actions) => {
+    if (isLastStep) setFormSubmitted(true);
     if (currentStep.props.onSubmit) {
-      await currentStep.props.onSubmit(values, actions);
+      currentStep.props.onSubmit(values, actions);
     }
     if (isLastStep) {
       return onSubmit(values, actions);
@@ -29,11 +30,40 @@ const MultiStepForm = ({ children, initialValues, onSubmit }) => {
     }
   }
 
+  const handleSubmit = (values, actions) => {
+    if (stepNumber == 0) {
+      let emailDuplicated = false;
+      isEmailDuplicated(values['email'])
+        .then(response => {
+          if (response.data.itExists) {
+            actions.setFieldError('email', 'The email you entered is already taken!');
+            emailDuplicated = true;
+          }
+        })
+        .then(() => {
+          return isPhoneDuplicated(values['phoneNumber'])
+        })
+        .then(response => {
+          if (response.data.itExists) {
+            actions.setFieldError('phoneNumber', 'The phone number you entered is already taken!');
+            throw new Error('Invalid value');
+          } else if (emailDuplicated) {
+            throw new Error('Invalid value');
+          }
+        })
+        .then(() => submitStepHandler(values, actions))
+        .catch(err => console.error(err));
+    } else
+      submitStepHandler(values, actions);
+  }
+
   const nextStep = (currentFormValues) => {
     setValuesSnapshot(currentFormValues);
     setStepNumber(stepNumber + 1);
   }
   const prevStep = (currentFormValues) => {
+    setServerResponse({ success: false, msg: '' });
+    setFormSubmitted(false);
     setValuesSnapshot(currentFormValues);
     setStepNumber(stepNumber - 1);
   }
@@ -70,6 +100,20 @@ const MultiStepForm = ({ children, initialValues, onSubmit }) => {
           ))}
         </CustomFormStepper>
       </Grid>
+      <Grid item xs={10} justifyContent='center' textAlign='center'>
+        {
+          serverResponse.msg && isFormSubmitted ? <CustomAlert
+            severity={serverResponse.success ? 'success' : 'error'}
+            sx={{ boxShadow: theme.shadows[1] }}
+            onClose={() => {
+              setServerResponse({ success: false, msg: '' });
+              setFormSubmitted(false);
+            }}>
+            {serverResponse.msg}
+          </CustomAlert>
+            : isFormSubmitted && <CircularProgress color='highlight' sx={{ marginY: '10px' }} />
+        }
+      </Grid>
       <Grid item xs={12}>
         <Formik initialValues={valuesSnapshot} validationSchema={currentStep.props.validationSchema} onSubmit={handleSubmit}>
           {
@@ -87,7 +131,9 @@ const MultiStepForm = ({ children, initialValues, onSubmit }) => {
                 <FormNavigator
                   goBack={() => prevStep(formik.values)}
                   hasPreviousStep={stepNumber > 0}
-                  isLastStep={isLastStep} isFormValid={() => isCurrentFormStepValid(formik.errors)} />
+                  isLastStep={isLastStep}
+                  isFormValid={() => isCurrentFormStepValid(formik.errors)}
+                />
               </Form>
             )
           }
