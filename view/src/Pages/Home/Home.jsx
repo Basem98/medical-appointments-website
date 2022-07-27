@@ -1,9 +1,9 @@
 import React from "react";
 import { Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
-import NavBar from "./NavBar";
+import NavBar from "../../Components/Navbar/NavBar";
 import CustomFormButton from "./../../Components/CustomFormButton/CustomFormButton";
 import SearchBar from "./SearchBar";
-import DoctorCard from "./DoctorCard";
+import DoctorCard from "../../Components/DoctorCard/DoctorCard";
 import heroBg from "../../Assets/Images/HeroBg.png";
 import sectionBg from "../../Assets/Images/SectionBg.png";
 

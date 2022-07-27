@@ -2,7 +2,7 @@ import { Typography, Grid, useTheme, Container } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import drImage from "../../Assets/Images/pic-black-white.jpg";
-import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton";
+import CustomFormButton from "../CustomFormButton/CustomFormButton";
 
 const DoctorCard = () => {
   const theme = useTheme();
