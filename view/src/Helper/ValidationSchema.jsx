@@ -70,10 +70,10 @@ export const clinicsFormStepValidation = Yup.object({
         landline: Yup.string().matches(/^0[1-9][0-9]{7,8}$/, { message: 'You must type a valid Egyptian landline number with the governorate code' })
       }),
       address: Yup.object({
-        city: Yup.string().required('This field is required').matches(/[a-z]{2,100}/g, {message: 'You must enter a valid city/locality name'}),
+        city: Yup.string().required('This field is required').matches(/[a-z]{2,100}/g, { message: 'You must enter a valid city/locality name' }),
         country: Yup.string(),
-        governorate: Yup.string().required('This field is required').matches(/[a-z]{2,100}/g, {message: 'You must enter a valid governorate name'}),
-        buildingNo: Yup.string().required('This field is required').matches(/^[0-9]{1,9}$/, {message: 'You must enter your clinic\'s valid building number'}),
+        governorate: Yup.string().required('This field is required').matches(/[a-z]{2,100}/g, { message: 'You must enter a valid governorate name' }),
+        buildingNo: Yup.string().required('This field is required').matches(/^[0-9]{1,9}$/, { message: 'You must enter your clinic\'s valid building number' }),
         streetName: Yup.string().required('This field is required'),
         postalCode: Yup.string()
       })
