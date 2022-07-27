@@ -4,7 +4,6 @@ import {
   IconButton,
   Toolbar,
   Typography,
-  Button,
   Grid,
   Link,
   useMediaQuery,
@@ -12,22 +11,30 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { useTheme } from "@emotion/react";
 import { useState } from "react";
-const NavBar = () => {
+const NavBar = ({ backgroundColor }) => {
   const theme = useTheme();
   const isTabletMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const [showMenue, setShowMenu] = useState(false);
   return (
     <>
       <AppBar
-        sx={{ background: "none", color: "black", position: "static" }}
+        sx={{
+          backgroundColor: backgroundColor ? backgroundColor : "inherit",
+          color: theme.palette.text.primary,
+          position: "static",
+        }}
         elevation={0}
       >
         <Toolbar>
-          <Grid container>
+          <Grid container alignItems="center">
             <Grid item xs={4} md={4}>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Logo
-              </Typography>
+              <Link
+                href="/home"
+                underline="none"
+                style={{ color: theme.palette.text.primary }}
+              >
+                LOGO
+              </Link>
             </Grid>
 
             {isTabletMobile ? (
@@ -58,7 +65,7 @@ const NavBar = () => {
                           href="#"
                           underline="none"
                           style={{
-                            color: theme.palette.text.primary,
+                            // color: color ? color : theme.palette.text.primary,
                             fontSize: theme.typography.body1.fontSize,
                           }}
                         >
@@ -70,7 +77,7 @@ const NavBar = () => {
                           href="#"
                           underline="none"
                           style={{
-                            color: theme.palette.text.primary,
+                            // color: color ? color : theme.palette.text.primary,
                             fontSize: "21px",
                           }}
                         >
@@ -82,7 +89,7 @@ const NavBar = () => {
                           href="#"
                           underline="none"
                           style={{
-                            color: theme.palette.text.primary,
+                            // color: color ? color : theme.palette.text.primary,
                             fontSize: "21px",
                           }}
                         >
@@ -108,10 +115,11 @@ const NavBar = () => {
               </Grid>
             ) : (
               <>
-                <Grid item md={2}>
-                  {/* <Typography sx={{ color: theme.palette.text.primary }}>
-                  Specialists
-                </Typography> */}
+                <Grid
+                  item
+                  md={2}
+                  sx={{ display: "flex", justifyContent: "center" }}
+                >
                   <Link
                     href="#"
                     underline="none"
@@ -120,7 +128,11 @@ const NavBar = () => {
                     Our Specialists
                   </Link>
                 </Grid>
-                <Grid item md={2}>
+                <Grid
+                  item
+                  md={2}
+                  sx={{ display: "flex", justifyContent: "center" }}
+                >
                   <Link
                     href="#"
                     underline="none"
@@ -129,7 +141,11 @@ const NavBar = () => {
                     About Us
                   </Link>
                 </Grid>
-                <Grid item md={2}>
+                <Grid
+                  item
+                  md={2}
+                  sx={{ display: "flex", justifyContent: "center" }}
+                >
                   <Link
                     href="#"
                     underline="none"
@@ -138,7 +154,11 @@ const NavBar = () => {
                     Sign In
                   </Link>
                 </Grid>
-                <Grid item md={2}>
+                <Grid
+                  item
+                  md={2}
+                  sx={{ display: "flex", justifyContent: "center" }}
+                >
                   <Link
                     href="#"
                     underline="none"

@@ -1,5 +1,4 @@
 import { Typography, Grid, useTheme, Container } from "@mui/material";
-import { borderRadius } from "@mui/system";
 import StarIcon from "@mui/icons-material/Star";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import drImage from "../../Assets/Images/pic-black-white.jpg";
@@ -8,10 +7,8 @@ import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton
 const DoctorCard = () => {
   const theme = useTheme();
   return (
-    <Grid
-      item
-      xs={9}
-      md={2}
+    <Container
+      disableGutters
       sx={{
         backgroundColor: "white",
         // maxWidth: "300px",
@@ -29,6 +26,7 @@ const DoctorCard = () => {
         style={{ borderRadius: "50%", maxWidth: "195px" }}
       />
       <Container
+        disableGutters
         sx={{
           my: 4,
           display: "flex",
@@ -41,8 +39,10 @@ const DoctorCard = () => {
         <StarIcon sx={{ color: theme.palette.ratingGold.main }} />
         <StarHalfIcon sx={{ color: theme.palette.ratingGold.main }} />
       </Container>
-      <Typography variant="h5">Dr. Mohamed Ahmed</Typography>
-      <Typography variant="h6" align="center" sx={{ my: 2 }}>
+      <Typography variant="h5" align="center">
+        Dr. Mohamed Ahmed
+      </Typography>
+      <Typography variant="h6" align="center" sx={{ my: 2, p: 0 }}>
         Specialized in Dermatology Cairo University
       </Typography>
       <CustomFormButton
@@ -54,7 +54,7 @@ const DoctorCard = () => {
       >
         More Info
       </CustomFormButton>
-    </Grid>
+    </Container>
   );
 };
 
