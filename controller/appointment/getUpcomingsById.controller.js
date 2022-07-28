@@ -2,6 +2,12 @@ const { default: mongoose } = require('mongoose');
 const Appointment = require('../../model/appointment.model');
 
 const getUpcomingsById = (req, res, next) => {
+    if(!mongoose.isValidObjectId(req.params)) {
+        return res.status(404).send({message: 'Appointment Not Found'});
+    }
+    if(req.body.id != req.params.id.toString()) {
+        return res.status(401).send({message: 'Not Authorized to see this appointment'});
+    }
     Appointment.find({
         "$or": [
             {'time.userId': req.params.id},
