@@ -49,7 +49,7 @@ const ExperienceFormStep = ({ valuesSnapshot, changeSnapshot, getStepKeys}) => {
       {
         experiences.map((experience, index) => (
           <Grid container item xs={12} justifyContent='center' key={index} margin='5px'>
-            <Grid item xs={10}>
+            <Grid item xs={10} marginTop='25px'>
               <CustomCollapseListItem onClick={() => handleCollapse(index, isExpanded, setIsExpanded)}>
                 <span>
                   {index + 1}. Experience Entry

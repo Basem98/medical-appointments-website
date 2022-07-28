@@ -134,8 +134,16 @@ const schema = new mongoose.Schema({
             landline: {
                 type: String
             }
+        },
+        fees: {
+            type: Number,
+            required: true
         }
     }],
+    rating: {
+        type: Number,
+        default: 0
+    },
     profilePicture: {
         type: String,
         required: true

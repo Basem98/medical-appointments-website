@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Grid, Divider, Collapse } from '@mui/material';
+import { Grid, Collapse } from '@mui/material';
 import InputField from '../InputField/InputField';
 import {
   ViewHeadlineRounded, PhoneRounded, TtyRounded, LocalConvenienceStoreRounded, FollowTheSignsRounded,
@@ -43,7 +43,7 @@ const ClinicsFormStep = ({ valuesSnapshot, changeSnapshot, getStepKeys }) => {
       {
         clinics.map((clinic, index) => (
           <Grid container item xs={12} justifyContent='center' key={index}>
-            <Grid item xs={10}>
+            <Grid item xs={10} marginTop='25px'>
               <CustomCollapseListItem onClick={() => handleCollapse(index, isExpanded, setIsExpanded)}>
                 <span>
                   {index + 1}. Clinic Entry
@@ -56,6 +56,11 @@ const ClinicsFormStep = ({ valuesSnapshot, changeSnapshot, getStepKeys }) => {
                 <Grid item xs={10} marginTop='25px'>
                   <InputField label="Clinic Name" name={`clinics[${index}].name`} placeholder='Clinic Name'>
                     <ViewHeadlineRounded />
+                  </InputField>
+                </Grid>
+                <Grid item xs={10} marginTop='25px'>
+                  <InputField label='Clinic Fees (In EGP)' name={`clinics[${index}].fees`} placeholder='Clinic Fees'>
+                    <PhoneRounded />
                   </InputField>
                 </Grid>
                 <Grid item xs={10} marginTop='25px'>
