@@ -85,6 +85,7 @@ export const clinicsFormStepValidation = Yup.object({
   clinics: Yup.array().of(
     Yup.object({
       name: Yup.string().required('This field is required').matches(/[a-z0-9]{2,50}/g, { message: 'Your clinic\'s name must be between 2 and 50 characters and it can only consist of letters and numbers' }),
+      fees: Yup.number().min(1, `Your clinic's fees should be more than a 0, obviously.`).required('This field is required'),
       phone: Yup.object({
         mobile: Yup.string().required('This field is required').matches(/^01[0125][0-9]{8}$/g, { message: 'You must type a valid Egyptian number' }),
         landline: Yup.string().matches(/^0[1-9][0-9]{7,8}$/, { message: 'You must type a valid Egyptian landline number with the governorate code' })

@@ -59,6 +59,11 @@ const ClinicsFormStep = ({ valuesSnapshot, changeSnapshot, getStepKeys }) => {
                   </InputField>
                 </Grid>
                 <Grid item xs={10} marginTop='25px'>
+                  <InputField label='Clinic Fees (In EGP)' name={`clinics[${index}].fees`} placeholder='Clinic Fees'>
+                    <PhoneRounded />
+                  </InputField>
+                </Grid>
+                <Grid item xs={10} marginTop='25px'>
                   <InputField label='Mobile Number' name={`clinics[${index}].phone.mobile`} placeholder='Mobile Number'>
                     <PhoneRounded />
                   </InputField>

@@ -45,6 +45,7 @@ const initialDoctorFormValues = {
   }],
   clinics: [{
     name: '',
+    fees: '',
     address: {
       city: '',
       country: 'Egypt',
