@@ -7,6 +7,7 @@ const getDoctorById = async (req, res, next) => {
         return res.status(404).json({ message: 'Doctor is Not Found' });
     }
     await Doctor.findOne({ _id: doctorId })
+        .populate('appointments')
         .then((data) => {
             if (data) {
                 // Execluding password from the retrieved data
