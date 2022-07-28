@@ -94,7 +94,7 @@ const MultiStepForm = ({ children, initialValues, onSubmit, serverResponse, setS
           {formSteps.slice(0, 5).map((step, index) => (
             <Step key={step.props.stepName}>
               <StepLabel
-                sx={stepNumber !== index ? { '& .MuiStepLabel-labelContainer': { display: { xs: 'none', lg: 'flex' }, justifyContent: 'center' }, '&.Mui-active': { display: 'flex' } } : {}}
+                sx={stepNumber !== index ? { '& .MuiStepLabel-labelContainer': { display: { xs: 'none', xl: 'flex' }, justifyContent: 'center' }, '&.Mui-active': { display: 'flex' } } : {}}
               >{step.props.stepName}</StepLabel>
             </Step>
           ))}
@@ -115,7 +115,9 @@ const MultiStepForm = ({ children, initialValues, onSubmit, serverResponse, setS
         }
       </Grid>
       <Grid item xs={12}>
-        <Formik initialValues={valuesSnapshot} validationSchema={currentStep.props.validationSchema} onSubmit={handleSubmit}>
+        <Formik initialValues={valuesSnapshot} validationSchema={currentStep.props.validationSchema}
+          validate={currentStep.props.validate ? currentStep.props.validate : null}
+          onSubmit={handleSubmit}>
           {
             (formik) => (
               <Form>
