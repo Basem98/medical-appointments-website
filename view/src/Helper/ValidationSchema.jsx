@@ -23,7 +23,7 @@ export const educationFormStepValidation = Yup.object({
 });
 
 export const certificationsFormStepValidation = Yup.object({
-  certifications: Yup.array().of(Yup.object({
+  certifications: Yup.array().of(Yup.object().shape({
     title: Yup.string(),
     granter: Yup.string(),
     issueDate: Yup.object({
@@ -32,6 +32,37 @@ export const certificationsFormStepValidation = Yup.object({
     })
   }))
 });
+
+const isCertificationValid = (certifications) => {
+  let isValid = true;
+  let someFieldIsFilled = false;
+  certifications.forEach(({ title, granter, issueDate }) => {
+    if (title || granter || issueDate.month || issueDate.year) someFieldIsFilled = true;
+    if (someFieldIsFilled) {
+      isValid = title && title.length > 0 && granter && granter.length > 0 && issueDate.month && issueDate.year;
+    }
+  });
+  return isValid;
+}
+
+export const validateCertifications = (values) => {
+  const errors = {};
+  if (isCertificationValid(values['certifications'])) return errors;
+  errors.certifications = [];
+  const errMsg = 'This field is required, if you want to add a certificate';
+  values['certifications'].forEach((cert, index) => {
+    if (!isCertificationValid([cert])) {
+      const newCertObj = { title: '', granter: '', issueDate: { month: '', year: '' } };
+      newCertObj.title = cert.title ? null : errMsg;
+      newCertObj.granter = cert.granter ? null : errMsg;
+      newCertObj.issueDate.month = cert.issueDate.month ? null : errMsg;
+      newCertObj.issueDate.year = cert.issueDate.year ? null : errMsg;
+      errors.certifications[index] = newCertObj;
+    }
+  });
+  if (errors.certifications.length < 1) return {};
+  return errors;
+}
 
 export const experienceFormStepValidation = Yup.object({
   experiences: Yup.array().of(
