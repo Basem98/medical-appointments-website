@@ -1,25 +1,9 @@
-const Doctor = require('../../model/doctor.model');
-
-
-async function signUp(req, res, next) {
-  try {
-    const newDoctor = new Doctor(req.body);
-    if (!newDoctor) {
-      throw new Error('Failed to create a new document');
-    }
-    await newDoctor.save();
-    req.body.id = newDoctor._id;
-    req.body.role = 'Doctor';
-    next();
-  } catch (err) {
-    console.error(err);
-    err.statusCode = 500;
-    next(err);
-  }
-}
-
-
+const signUp = require('./signup.controller');
+const getDoctorById = require('./getDoctorById.controller');
+const {uploadImages} = require('./files.controller');
 
 module.exports = {
-  signUp
+  signUp,
+  getDoctorById,
+  uploadImages
 }
