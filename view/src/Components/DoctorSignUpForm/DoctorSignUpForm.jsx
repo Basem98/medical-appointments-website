@@ -6,14 +6,13 @@ import CertificationsFormStep from "../CertificationsFormStep/CertificationsForm
 import ClinicsFormStep from "../ClinicsFormStep/ClinicsFormStep";
 import UploadFormStep from "../UploadFormStep/UploadFormStep";
 import initialDoctorFormValues from "../../Helper/InitialDocFormValues";
-import CustomAlert from '../CustomAlert/CustomAlert';
 import {
   personalFormStepValidation,
   educationFormStepValidation,
   experienceFormStepValidation,
-  certificationsFormStepValidation,
   clinicsFormStepValidation,
-  imagesFormStepValidation
+  imagesFormStepValidation,
+  validateCertifications
 } from '../../Helper/ValidationSchema';
 import submitDoctorApplication from "../../Network/Doctors/register";
 import { useState } from "react";
@@ -81,7 +80,7 @@ const DoctorSignUpForm = () => {
         />
         <CertificationsFormStep
           stepName={`Certifications\n(optional)`}
-          validationSchema={certificationsFormStepValidation}
+          validate={validateCertifications}
         />
         <ExperienceFormStep
           stepName="Experience"
