@@ -11,6 +11,7 @@ module.exports.getUserById = (req, res, next) => {
         return res.status(401).json({ message: 'Unauthorized to show user data' });
     }
     User.findOne({ _id: mongoose.Types.ObjectId(req.params.id) })
+        .populate('appointments')
         .then((data) => {
             if (!data) {
                 return res.status(404).json({ message: 'User is Not Found' })
