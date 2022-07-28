@@ -22,17 +22,6 @@ export const educationFormStepValidation = Yup.object({
   }))
 });
 
-export const certificationsFormStepValidation = Yup.object({
-  certifications: Yup.array().of(Yup.object().shape({
-    title: Yup.string(),
-    granter: Yup.string(),
-    issueDate: Yup.object({
-      month: Yup.string(),
-      year: Yup.string()
-    })
-  }))
-});
-
 const isCertificationValid = (certifications) => {
   let isValid = true;
   let someFieldIsFilled = false;
