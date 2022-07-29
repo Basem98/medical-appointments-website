@@ -3,7 +3,6 @@ import { Card, CardActions, CardContent, Grid, Typography } from "@mui/material"
 import {useTheme }from "@mui/material";
 const AppointmentsTable = ({ appointments }) => {
     const theme = useTheme();
-    console.log(theme);
     return (
         <Grid
             container
@@ -13,7 +12,7 @@ const AppointmentsTable = ({ appointments }) => {
         >
             {
                 appointments?.map((appointment, index) => {
-                    console.log(appointment.time.doctorId.firstName)
+                    console.log(appointment.doctor.firstName)
                     return (
                         <Grid item key={index} xs={12} sm={10}>
                             <Card sx={{boxShadow: `1px 1px 1px 1px ${theme.palette.highlight.main}`}}>
