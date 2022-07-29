@@ -1,9 +1,9 @@
 import React from "react"
-const AppointmentsTable = ({ upcomings }) => {
+const AppointmentsTable = ({ appointments }) => {
 
-    return upcomings?.map((upcoming, index) => {
+    return appointments?.map((appointment, index) => {
         return (
-            <div key={index}>{upcoming.date}</div>
+            <div key={index}>{appointment.date}</div>
         );
     })
 
