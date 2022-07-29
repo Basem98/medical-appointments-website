@@ -3,9 +3,7 @@ const Appointment = require('../../model/appointment.model');
 
 const getUpcomings = (req, res, next) => {
     let currentDate = new Date().toISOString();
-    let currentHour = parseInt(new Date().getUTCHours());
-    let currentMinute = parseInt(new Date().getUTCMinutes());
-
+        
     if(!mongoose.isValidObjectId(req.params)) {
         return res.status(404).send({message: 'Appointment Not Found'});
     }
@@ -17,9 +15,7 @@ const getUpcomings = (req, res, next) => {
             {'time.userId': req.params.id},
             {'time.doctorId': req.params.id}
         ],
-        date: {"$gt": currentDate},
-        'time.hour': {"$gt": currentHour},
-        'time.minutes': {"$gt": currentMinute}
+        date: {"$gt": currentDate}
     })
     .populate('time.userId')
     .populate('time.doctorId')
