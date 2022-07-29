@@ -1,10 +1,11 @@
-import { CardContent, CircularProgress, Typography } from "@mui/material";
+import { CardContent, CircularProgress, Typography, useTheme } from "@mui/material";
 import React from "react";
 import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton";
 import InfoCard from "../../Components/InfoCard/InfoCard";
 import Grid from "@mui/material/Grid";
 
 const Welcome = ({ userData }) => {
+    const theme= useTheme();
     const isUpcomingAppointment = (index) => {
         let currentDate = new Date();
         let now = {
@@ -63,7 +64,9 @@ const Welcome = ({ userData }) => {
                         </InfoCard>
                         :
                         <Grid item xs={10} sx={{ textAlign: "center" }}>
-                            <CircularProgress color="primary" />
+                            <CircularProgress sx={{
+                                color: theme.palette.highlight.main
+                            }} />
                         </Grid>
                 }
             </Grid>
