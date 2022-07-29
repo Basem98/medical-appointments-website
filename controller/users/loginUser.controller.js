@@ -17,7 +17,7 @@ module.exports.loginUser = (req, res, next) => {
                     let token = jwt.sign({
                         id: data._id,
                         role: 'user'
-                    }, envConfig.AUTH.USER_SECRET, { expiresIn: "1h" });
+                    }, envConfig.AUTH.USER_SECRET, { expiresIn: "24h" });
                     return res.status(200).json({ token });
                 })
                 .catch((error) => {
