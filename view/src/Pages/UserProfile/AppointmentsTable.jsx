@@ -3,8 +3,79 @@ import { Card, CardActions, CardContent, Grid, Typography, Link, Button } from "
 import { useTheme } from "@mui/material";
 import moment from "moment";
 
-const AppointmentsTable = ({ appointments }) => {
+const AppointmentsTable = ({ appointments, role }) => {
     const theme = useTheme();
+    const displayAccordingToRole = (appointment) => {
+        return role === 'user' ?
+            (
+                <>
+                    <Typography
+                        marginTop={10}
+                    >
+                        <>With </>
+                        <Link
+                            sx={{
+                                color: theme.palette.highlight.main,
+                                '&:hover': {
+                                    cursor: 'pointer'
+                                }
+                            }}
+                            href='#'
+                        >Dr. {appointment.doctor.firstName} {appointment.doctor.lastName}
+                        </Link>
+                    </Typography>
+                </>)
+            : role === 'doctor' ?
+                (
+                    <>
+                        <Typography
+                            marginTop={10}
+                        >
+                            <>With </>
+                            <Link
+                                sx={{
+                                    color: theme.palette.highlight.main,
+                                    '&:hover': {
+                                        cursor: 'pointer'
+                                    }
+                                }}
+                                href='#'
+                            >Mr. {appointment.user.firstName} {appointment.user.lastName}
+                            </Link>
+                        </Typography>
+                    </>)
+                : role === 'admin' ?
+                    (
+                        <>
+                            <Typography
+                                marginTop={10}
+                            >
+                                <Link
+                                    sx={{
+                                        color: theme.palette.highlight.main,
+                                        '&:hover': {
+                                            cursor: 'pointer'
+                                        }
+                                    }}
+                                    href='#'
+                                >Dr. {appointment.doctor.firstName} {appointment.doctor.lastName}
+                                </Link>
+                                <> Examines </>
+                                <Link
+                                    sx={{
+                                        color: theme.palette.highlight.main,
+                                        '&:hover': {
+                                            cursor: 'pointer'
+                                        }
+                                    }}
+                                    href='#'
+                                >Mr. {appointment.user.firstName} {appointment.user.lastName}
+                                </Link>
+                            </Typography>
+                        </>)
+                    :
+                    (<></>)
+    }
     return (
         <Grid
             container
@@ -45,21 +116,9 @@ const AppointmentsTable = ({ appointments }) => {
                                                     moment(appointment.date).fromNow()
                                                 }
                                             </Typography>
-                                            <Typography
-                                                marginTop={10}
-                                            >
-                                                <>With </>
-                                                <Link
-                                                    sx={{
-                                                        color: theme.palette.highlight.main,
-                                                        '&:hover': {
-                                                            cursor: 'pointer'
-                                                        }
-                                                    }}
-                                                    href='#'
-                                                >Dr. {appointment.doctor.firstName} {appointment.doctor.lastName}
-                                                </Link>
-                                            </Typography>
+
+                                            {displayAccordingToRole(appointment)}
+
                                         </CardContent>
                                     </Grid>
                                     <Grid item alignSelf="center" width="25%">
