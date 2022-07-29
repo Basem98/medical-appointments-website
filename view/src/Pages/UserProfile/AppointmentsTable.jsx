@@ -76,80 +76,117 @@ const AppointmentsTable = ({ appointments, role }) => {
                     :
                     (<></>)
     }
-    return (
-        <Grid
-            container
-            spacing={6}
-            marginTop={2}
-            justifyContent="center"
-        >
-            {
-                appointments?.map((appointment, index) => {
-                    return (
-                        <Grid item key={index} xs={12} md={10}>
-                            <Card sx={{ boxShadow: `1px 1px 1px 1px ${theme.palette.highlight.main}` }}>
-                                <Grid container>
-                                    <Grid item width="70%">
-                                        <CardContent>
-                                            <Grid>
-                                                <Typography display="inline" variant="h4">
-                                                    {moment(appointment.date.split('T')[0]).format('dddd, MMMM Do YYYY')}
+    return appointments?.length === 0 ?
+        (
+            <>
+                <Grid
+                    container
+                    justifyContent="center"
+                    marginTop={10}
+                >
+                    <Grid item xs={10} textAlign="center">
+                        <Typography>
+                            No appointments to show.
+                        </Typography>
+                    </Grid>
+                    {
+                        role === 'user' ?
+                            <Grid item xs={10} textAlign="center" marginTop={3}>
+                                <Button
+                                    sx={{
+                                        backgroundColor: theme.palette.highlight.main,
+                                        fontWeight: 'bold',
+                                        padding: "20px",
+                                        borderRadius: "20px",
+                                        ':hover': {
+                                            backgroundColor: theme.palette.highlight.main,
+                                            opacity: 0.8,
+                                            transform: 'scale(1.05)'
+                                        }
+                                    }}
+                                    variant="contained"
+                                >
+                                    Book Now!
+                                </Button>
+                            </Grid> : <></>
+                    }
+                </Grid>
+            </>)
+        :
+        (
+            <Grid
+                container
+                spacing={6}
+                marginTop={2}
+                justifyContent="center"
+            >
+                {
+                    appointments?.map((appointment, index) => {
+                        return (
+                            <Grid item key={index} xs={12} md={10}>
+                                <Card sx={{ boxShadow: `1px 1px 1px 1px ${theme.palette.highlight.main}` }}>
+                                    <Grid container>
+                                        <Grid item width="70%">
+                                            <CardContent>
+                                                <Grid>
+                                                    <Typography display="inline" variant="h4">
+                                                        {moment(appointment.date.split('T')[0]).format('dddd, MMMM Do YYYY')}
+                                                    </Typography>
+                                                    <Typography
+                                                        display="inline"
+                                                        color={theme.palette.grey[500]}
+                                                    > at {appointment.time.hour}
+                                                        : {appointment.time.minute}
+                                                    </Typography>
+                                                </Grid>
+                                                <Typography
+                                                    variant="body2"
+                                                    color={theme.palette.grey[500]}
+                                                >
+                                                    Lasts for {appointment.time.duration} minutes
                                                 </Typography>
                                                 <Typography
-                                                    display="inline"
                                                     color={theme.palette.grey[500]}
-                                                > at {appointment.time.hour}
-                                                    : {appointment.time.minute}
-                                                </Typography>
-                                            </Grid>
-                                            <Typography
-                                                variant="body2"
-                                                color={theme.palette.grey[500]}
-                                            >
-                                                Lasts for {appointment.time.duration} minutes
-                                            </Typography>
-                                            <Typography
-                                                color={theme.palette.grey[500]}
-                                                marginTop={3}
-                                            >
-                                                {
-                                                    moment(appointment.date).fromNow()
-                                                }
-                                            </Typography>
-
-                                            {displayAccordingToRole(appointment)}
-
-                                        </CardContent>
-                                    </Grid>
-                                    <Grid item alignSelf="center" width="25%">
-                                        <CardActions>
-                                            <Button
-                                                sx={{
-                                                    backgroundColor: theme.palette.highlight.main,
-                                                    fontWeight: 'bold',
-                                                    padding: "15px",
-                                                    borderRadius: "20px",
-                                                    width: "100%",
-                                                    ':hover': {
-                                                        backgroundColor: theme.palette.highlight.main,
-                                                        opacity: 0.8,
-                                                        transform: 'scale(1.05)'
+                                                    marginTop={3}
+                                                >
+                                                    {
+                                                        moment(appointment.date).fromNow()
                                                     }
-                                                }}
-                                                variant="contained"
-                                            >
-                                                See Details
-                                            </Button>
-                                        </CardActions>
+                                                </Typography>
+
+                                                {displayAccordingToRole(appointment)}
+
+                                            </CardContent>
+                                        </Grid>
+                                        <Grid item alignSelf="center" width="25%">
+                                            <CardActions>
+                                                <Button
+                                                    sx={{
+                                                        backgroundColor: theme.palette.highlight.main,
+                                                        fontWeight: 'bold',
+                                                        padding: "15px",
+                                                        borderRadius: "20px",
+                                                        width: "100%",
+                                                        ':hover': {
+                                                            backgroundColor: theme.palette.highlight.main,
+                                                            opacity: 0.8,
+                                                            transform: 'scale(1.05)'
+                                                        }
+                                                    }}
+                                                    variant="contained"
+                                                >
+                                                    See Details
+                                                </Button>
+                                            </CardActions>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                            </Card>
-                        </Grid>
-                    );
-                })
-            }
-        </Grid>
-    );
+                                </Card>
+                            </Grid>
+                        );
+                    })
+                }
+            </Grid>
+        );
 }
 
 export default AppointmentsTable;
