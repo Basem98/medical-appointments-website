@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardActions, CardContent, Grid, Typography, Link, Button } from "@mui/material";
+import { Card, CardActions, CardContent, Grid, Typography, Link, Button, CircularProgress } from "@mui/material";
 import { useTheme } from "@mui/material";
 import moment from "moment";
 
@@ -75,6 +75,20 @@ const AppointmentsTable = ({ appointments, role }) => {
                         </>)
                     :
                     (<></>)
+    }
+    if (!appointments) {
+        return (
+            <>
+                <Grid item xs={10} sx={{
+                    textAlign: "center",
+                    marginTop: 10
+                }}>
+                    <CircularProgress sx={{
+                        color: theme.palette.highlight.main
+                    }} />
+                </Grid>
+            </>
+        );
     }
     return appointments?.length === 0 ?
         (
