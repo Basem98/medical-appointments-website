@@ -3,7 +3,7 @@ const app = express();
 const config = require('./config/envConfig');
 const cors = require('./config/corsConfig');
 const { connectToDatabase } = require('./config/dbConnection');
-const { baseRouter, userRouter, doctorRouter, adminRouter } = require('./router/main.router');
+const { baseRouter, userRouter, doctorRouter, adminRouter, appointmentRouter } = require('./router/main.router');
 const morganMiddleware = require('./middleware/logging.middleware');
 const logger = require('./config/logger');
 const { cloudinaryConfig } = require('./config/cloudinaryConfig');
@@ -32,6 +32,7 @@ app.use('/api', baseRouter);
 app.use('/api/users', userRouter);
 app.use('/api/doctors', doctorRouter);
 app.use('/api/admin', adminRouter);
+app.use('/api/appointments', appointmentRouter)
 
 
 /* ---------- Mount the error handling middleware ---------- */
