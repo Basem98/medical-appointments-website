@@ -7,7 +7,7 @@ import getUpcomings from "../../Network/Users/getUpcomings";
 const Appointments = () => {
     let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZGY3MDE0ODc4MTIyNjU5NzcxMDA3ZSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjU5MTA4NjExLCJleHAiOjE2NTkxOTUwMTF9.0W0n9b4h5ZOnMwQ8tNbb7If75t8Obq6ue8-jKwweg4I";
     const [upcomingAppointments, setUpcomingAppointments] = useState([]);
-    const content = [
+    const titles = [
         "Upcoming Appointments",
         "Past Appointments",
         "Cancelled Appointments"
@@ -26,7 +26,7 @@ const Appointments = () => {
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
     return (
         <>
-            <ContentToggler data={data} content={content} />
+            <ContentToggler data={data} titles={titles} />
         </>
     );
 }
