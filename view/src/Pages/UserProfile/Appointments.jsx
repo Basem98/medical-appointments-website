@@ -26,7 +26,7 @@ const Appointments = () => {
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
     return (
         <>
-            <ContentToggler data={data} titles={titles} />
+            <ContentToggler data={data} titles={titles} role="user"/>
         </>
     );
 }

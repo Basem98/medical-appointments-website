@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import AppointmentsTable from "../../Pages/UserProfile/AppointmentsTable";
 
-const ContentToggler = ({ titles, data }) => {
+const ContentToggler = ({ titles, data, role }) => {
     const theme = useTheme();
     const selectedColor = theme.palette.highlight.main;
     const unselectedColor = theme.palette.grey[500];
@@ -60,7 +60,7 @@ const ContentToggler = ({ titles, data }) => {
                 }
             </Grid>
             <Grid item>
-                <AppointmentsTable appointments={data[selectedIndex]} role="admin" />
+                <AppointmentsTable appointments={data[selectedIndex]} role={role} />
             </Grid>
         </>
     );
