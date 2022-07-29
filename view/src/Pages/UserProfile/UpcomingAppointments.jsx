@@ -3,9 +3,7 @@ const UpcomingAppointments = ({ upcomings }) => {
 
     return upcomings.map((upcoming, index) => {
         return (
-            <>
-                <div key={index}>{upcoming.date}</div>
-            </>
+            <div key={index}>{upcoming.date}</div>
         );
     })
 
