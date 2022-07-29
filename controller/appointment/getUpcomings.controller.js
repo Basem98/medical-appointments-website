@@ -1,7 +1,7 @@
 const { default: mongoose } = require('mongoose');
 const Appointment = require('../../model/appointment.model');
 
-const getUpcomingsById = (req, res, next) => {
+const getUpcomings = (req, res, next) => {
     if(!mongoose.isValidObjectId(req.params)) {
         return res.status(404).send({message: 'Appointment Not Found'});
     }
@@ -28,4 +28,4 @@ const getUpcomingsById = (req, res, next) => {
     })
 }
 
-module.exports={getUpcomingsById};
+module.exports={getUpcomings};

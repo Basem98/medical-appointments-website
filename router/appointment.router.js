@@ -7,6 +7,6 @@ appointmentRouter.route('/')
     .post(appointmentController.addAppointment)
 
 appointmentRouter.route('/upcomings/:id')
-    .get(authorizationMiddleware, appointmentController.getUpcomingsById);
+    .get(authorizationMiddleware, appointmentController.getUpcomings);
 
 module.exports = appointmentRouter;

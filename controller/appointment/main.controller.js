@@ -1,7 +1,7 @@
 const { addAppointment } = require('./addAppointment.controller');
-const { getUpcomingsById } = require('./getUpcomingsById.controller');
+const { getUpcomings } = require('./getUpcomings.controller');
 
 module.exports = {
     addAppointment,
-    getUpcomingsById
+    getUpcomings
 }
