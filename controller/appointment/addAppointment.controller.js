@@ -6,17 +6,17 @@ const addAppointment = (req, res, next) => {
     let newAppointment = new Appointment(req.body);
     newAppointment.save()
         .then((response) => {
-            let userId = response.time.userId;
-            let doctorId = response.time.doctorId;
+            let user = response.user;
+            let doctor = response.doctor;
 
-            User.findByIdAndUpdate(userId, { $push: { appointments: newAppointment._id } })
+            User.findByIdAndUpdate(user, { $push: { appointments: newAppointment._id } })
                 .then()
                 .catch((error) => {
                     error.statusCode = 500;
                     next(error);
                 });
 
-            Doctor.findByIdAndUpdate(doctorId, { $push: { appointments: newAppointment._id } })
+            Doctor.findByIdAndUpdate(doctor, { $push: { appointments: newAppointment._id } })
             .then()
             .catch((error) => {
                 error.statusCode = 500;

@@ -1,8 +1,9 @@
 import { Grid, Typography, useTheme } from "@mui/material";
 import React from "react";
 import { useState } from "react";
+import AppointmentsTable from "../../Pages/UserProfile/AppointmentsTable";
 
-const ContentToggler = ({ content }) => {
+const ContentToggler = ({ titles, data, role }) => {
     const theme = useTheme();
     const selectedColor = theme.palette.highlight.main;
     const unselectedColor = theme.palette.grey[500];
@@ -30,7 +31,7 @@ const ContentToggler = ({ content }) => {
         <>
             <Grid container spacing={2} justifyContent="center">
                 {
-                    content.map((item, index) => {
+                    titles.map((item, index) => {
                         return index === selectedIndex ?
 
                             <Grid
@@ -57,6 +58,9 @@ const ContentToggler = ({ content }) => {
                             </Grid>
                     })
                 }
+            </Grid>
+            <Grid item>
+                <AppointmentsTable appointments={data[selectedIndex]} role={role} />
             </Grid>
         </>
     );
