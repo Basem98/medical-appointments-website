@@ -18,7 +18,10 @@ module.exports.loginUser = (req, res, next) => {
                         id: data._id,
                         role: 'user'
                     }, envConfig.AUTH.USER_SECRET, { expiresIn: "24h" });
-                    return res.status(200).json({ token });
+                    return res.status(200).json({
+                        token,
+                        id: data._id
+                    });
                 })
                 .catch((error) => {
                     error.statusCode = 500;
