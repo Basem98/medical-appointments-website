@@ -4,7 +4,14 @@ const getDoctorsByPage = async (req, res, next) => {
   try {
     const page = req.query.page || 0;
     const limit = req.query.limit || 9;
-    const doctors = await Doctor.find({ isAccepted: true, isVerified: true }, '-professionalLicense')
+    const { specialization, dateFrom, dateTo, feesFrom, feesTo } = req.query;
+    let filters = { isAccepted: true, isVerified: true };
+    if (specialization) filters.specialization = specialization;
+    if (dateFrom) filters.appointments = { $elemMatch: { date: { $gte: dateFrom } } };
+    if (dateTo) filters.appointments = { $elemMatch: { date: { $lte: dateTo } } };
+    if (feesFrom) filters.clinics = { $elemMatch: { fees: { $gte: feesFrom } } };
+    if (feesTo) filters.clinics = { $elemMatch: { fees: { $lte: feesTo } } };
+    const doctors = await Doctor.find(filters, '-professionalLicense')
       .sort('-rating')
       .skip(page * limit)
       .limit(limit);
