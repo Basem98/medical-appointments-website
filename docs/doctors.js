@@ -76,6 +76,46 @@ module.exports = {
           "schema": {
             "type": "integer"
           }
+        },
+        {
+          "name": "specialization",
+          "in": "query",
+          "description": "A parameter that filters the doctors by their specialization",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "dateFrom",
+          "in": "query",
+          "description": "A parameter that filters the doctors by the start date of their appointments",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "dateTo",
+          "in": "query",
+          "description": "A parameter that filters the doctors by the end date of their appointments",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "feesFrom",
+          "in": "query",
+          "description": "A parameter that filters the doctors by the starting fees of their clinic",
+          "schema": {
+            "type": "number"
+          }
+        },
+        {
+          "name": "feesTo",
+          "in": "query",
+          "description": "A parameter that filters the doctors by the maximum fees of their clinic",
+          "schema": {
+            "type": "number"
+          }
         }
       ],
       "responses": {
