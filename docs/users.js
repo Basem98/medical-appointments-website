@@ -152,5 +152,88 @@ module.exports = {
                 }
             }
         }
+    },
+    "/users/{id}": {
+        "get": {
+            "tags": ["User"],
+            "description": "An endpoint to retrieve user's data for authorized roles only",
+            "parameters": [
+                {
+                    "name": "id",
+                    "description": "Id of the user to retrive his data",
+                    "required": "ture",
+                    "in": "path",
+                    "schema": {
+                        "type": "string"
+                    },
+                },
+                {
+                    "name": "authentication header",
+                    "description": "Json Web Token to authorize the request sender",
+                    "required": "true",
+                    "in": "header",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "A response that contains the user's data",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "_id": {
+                                        "type": "string",
+                                        "description": "Retrieved user's id"
+                                    },
+                                    "firstName": userModel.schema.firstName,
+                                    "lastName": userModel.schema.lastName,
+                                    "email": userModel.schema.email,
+                                    "phoneNumber": userModel.schema.phoneNumber,
+                                    "appointments": userModel.schema.appointments,
+                                    "isVerified": userModel.schema.isVerified
+                                }
+                            }
+                        }
+                    }
+                },
+                "401": {
+                    "description": "A response that contains message of authorization error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "description": "Authorization error message"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "404": {
+                    "description": "A response that contains message saying that user is not found",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "description": "User is not found error message"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
+

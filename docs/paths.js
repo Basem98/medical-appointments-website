@@ -7,5 +7,6 @@ module.exports = {
   "/doctors/": doctors["/doctors/"],
   "/doctors/all": doctors["/doctors/all"],
   "/users/": users["/users/"],
-  "/users/login": users["/users/login/"]
+  "/users/login": users["/users/login/"],
+  "/users/{id}": users["/users/{id}"]
 }
