@@ -1,5 +1,5 @@
-const { password, ...userData } = require("./user");
-const { password, ...doctorData } = require("./doctor");
+const { userPassword, ...userData } = require("./user");
+const { doctorPassword, ...doctorData } = require("./doctor");
 
 module.exports = {
     required: [
