@@ -55,5 +55,67 @@ module.exports = {
         }
       }
     }
+  },
+  "/doctors/all": {
+    "get": {
+      "tags": ["Doctor"],
+      "description": "An endpoint used to get a paginated list of doctors without any filters",
+      "parameters": [
+        {
+          "name": "page",
+          "in": "query",
+          "description": "A parameter that specifies the desired page. Default value is 0",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "description": "A parameter that specifies the number of documents per page. Default value is 9",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "A list of the required page of doctors",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties":
+                {
+                  "doctors":
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": doctorModel.schema
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "A message specifies the reason why the request failed to find resources",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
