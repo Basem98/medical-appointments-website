@@ -9,5 +9,6 @@ module.exports = {
   "/users/": users["/users/"],
   "/users/login": users["/users/login/"],
   "/users/{id}": users["/users/{id}"],
-  "/appointments/": appointments["/appointments/"]
+  "/appointments/": appointments["/appointments/"],
+  "/appointments/upcomings/{id}": appointments["/appointments/upcomings/{id}"]
 }
