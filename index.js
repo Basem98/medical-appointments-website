@@ -7,7 +7,7 @@ const { baseRouter, userRouter, doctorRouter, adminRouter, appointmentRouter } =
 const morganMiddleware = require('./middleware/logging.middleware');
 const logger = require('./config/logger');
 const { cloudinaryConfig } = require('./config/cloudinaryConfig');
-
+const mountSwaggerDocsRoute = require('./config/swaggerConfig');
 
 
 /* ---------- Mount the morgan logging middleware ---------- */
@@ -27,12 +27,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use('*', (req, res, next) => { cloudinaryConfig(); next(); });
 
 
+/* ---------- Mount the Swagger documentation route ---------- */
+app.use('/docs', ...mountSwaggerDocsRoute);
+
+
 /* ---------- Mount the routers middleware ---------- */
 app.use('/api', baseRouter);
 app.use('/api/users', userRouter);
 app.use('/api/doctors', doctorRouter);
 app.use('/api/admin', adminRouter);
-app.use('/api/appointments', appointmentRouter)
+app.use('/api/appointments', appointmentRouter);
 
 
 /* ---------- Mount the error handling middleware ---------- */
@@ -42,7 +46,9 @@ app.use((req, res, next) => {
 app.use((error, req, res, next) => {
     logger.error(`${req.ip} ${req.method} ${req.path} ${error.statusCode} - ${error.toString()}`);
     res.status(error.statusCode).json({ error: error.toString() });
-})
+});
+
+
 
 
 
