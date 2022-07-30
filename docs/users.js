@@ -168,7 +168,7 @@ module.exports = {
                     },
                 },
                 {
-                    "name": "authentication header",
+                    "name": "Authorization header",
                     "description": "Json Web Token to authorize the request sender",
                     "required": "true",
                     "in": "header",
@@ -226,6 +226,213 @@ module.exports = {
                                     "message": {
                                         "type": "string",
                                         "description": "User is not found error message"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "A response that indicates that an error occured in runtime",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "description": "Internal Error message"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "delete": {
+            "tags": ["User"],
+            "description": "An endpoint to delete user's data from database",
+            "parameters": [
+                {
+                    "name": "id",
+                    "description": "Id of the user to delete his data",
+                    "required": "true",
+                    "in": "path",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "Authorication header",
+                    "description": "Json Web token to authorize the request sender",
+                    "required": "true",
+                    "in": "header",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "A response indicate that the user's data is deleted successfully",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "decription": "Message saying that the user's data is deleted successfullty"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "401": {
+                    "description": "A response that contains message of authorization error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "description": "Authorization error message"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "404": {
+                    "description": "A response that contains message saying that user is not found",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "description": "User is not found error message"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "A response that indicates that an error occured in runtime",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "description": "Internal Error message"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "patch": {
+            "tags": ["User"],
+            "description": "An endpoint to update user's data",
+            "parameters": [
+                {
+                    "name": "id",
+                    "description": "Id of the user to update his data",
+                    "required": "true",
+                    "in": "path",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "Authorication header",
+                    "description": "Json Web token to authorize the request sender",
+                    "required": "true",
+                    "in": "header",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "requestBody": {
+                "description": "The field/fields of the user's data to be updated.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": userModel.schema
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "A response that indicates that the user's data is updates successfully",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "object",
+                                        "description": "Message saying that the user's data is updated successfully"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "401": {
+                    "description": "A response that contains message of authorization error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "description": "Authorization error message"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "404": {
+                    "description": "A response that contains message saying that user is not found",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "description": "User is not found error message"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "A response that indicates that an error occured in runtime",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "description": "Internal Error message"
                                     }
                                 }
                             }
