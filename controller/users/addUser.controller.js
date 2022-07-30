@@ -19,7 +19,7 @@ module.exports.addUser = (req, res, next) => {
                 });
         })
         .catch(error => {
-            error.statusCode = 500;
+            error.statusCode = 400;
             error.message = "Password is Missing"
             next(error);
         });
