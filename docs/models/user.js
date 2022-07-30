@@ -25,7 +25,7 @@ module.exports = {
         "appointments": {
             "type": "array",
             "description": "An array of mongo object ids. Each Id refers to an appointment in the database.",
-            "item": {
+            "items": {
                 "type": "string"
             }
         },
