@@ -77,7 +77,7 @@ module.exports = {
     },
     "/appointments/upcomings/{id}": {
         "get": {
-            "tags": ["Appointments"],
+            "tags": ["Appointment"],
             "description": "An endpoint that fetches the upcoming appointments of the user or the doctor based on the given id",
             "security": [
                 {
