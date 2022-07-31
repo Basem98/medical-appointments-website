@@ -107,8 +107,96 @@ module.exports = {
                                 "type": "object",
                                 "properties": {
                                     "message": {
+                                        "type": "array",
+                                        "description": "An array that contains the upcomint appointments"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "401": {
+                    "description": "A response that contains message of authorization error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
                                         "type": "string",
-                                        "description": "Message saying that the data is retrieved successfully"
+                                        "description": "Authorization error message"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "404": {
+                    "description": "A response that contains message saying that appointment is not found",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "description": "Appointment is not found error message"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "A response that indicates that an error occured in runtime",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "description": "Internal Error message"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/appointments/previous/{id}": {
+        "get": {
+            "tags": ["Appointment"],
+            "description": "An endpoint to fetch the previous appointments base on the given id of the user or the doctor",
+            "security": [
+                {
+                    "bearerToken": []
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "id",
+                    "description": "The id of the user or the doctor to get their appointments based on the given id",
+                    "in": "path",
+                    "requires": "true",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "A response indicating that the data is fetched successfully",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "array",
+                                        "desxription": "Array of the previous appointments"
                                     }
                                 }
                             }
