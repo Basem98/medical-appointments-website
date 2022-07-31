@@ -3,15 +3,14 @@ import {
   AppBar,
   IconButton,
   Toolbar,
-  Typography,
   Grid,
-  Link,
   useMediaQuery,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useTheme } from "@emotion/react";
 import { useState } from "react";
-const NavBar = ({ backgroundColor }) => {
+import { Link } from "react-router-dom";
+const NavBar = ({ backgroundColor, color, position }) => {
   const theme = useTheme();
   const isTabletMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const [showMenue, setShowMenu] = useState(false);
@@ -21,7 +20,10 @@ const NavBar = ({ backgroundColor }) => {
         sx={{
           backgroundColor: backgroundColor ? backgroundColor : "inherit",
           color: theme.palette.text.primary,
-          position: "static",
+          position: position ? position : "static",
+          // padding: `0 ${paddingX ? paddingX : 0}px`,
+          padding: `0 70px`,
+          marginBottom: position === "fixed" ? "50px" : "0",
         }}
         elevation={0}
       >
@@ -29,9 +31,11 @@ const NavBar = ({ backgroundColor }) => {
           <Grid container alignItems="center">
             <Grid item xs={4} md={4}>
               <Link
-                href="/home"
-                underline="none"
-                style={{ color: theme.palette.text.primary }}
+                to="/home"
+                style={{
+                  color: color ? color : theme.palette.text.primary,
+                  textDecoration: "none",
+                }}
               >
                 LOGO
               </Link>
@@ -62,11 +66,11 @@ const NavBar = ({ backgroundColor }) => {
                     >
                       <Grid item>
                         <Link
-                          href="#"
-                          underline="none"
+                          to="/specialists"
                           style={{
-                            // color: color ? color : theme.palette.text.primary,
+                            color: color ? color : theme.palette.text.primary,
                             fontSize: theme.typography.body1.fontSize,
+                            textDecoration: "none",
                           }}
                         >
                           Our Specialists
@@ -74,11 +78,11 @@ const NavBar = ({ backgroundColor }) => {
                       </Grid>
                       <Grid item>
                         <Link
-                          href="#"
-                          underline="none"
+                          to="/about"
                           style={{
-                            // color: color ? color : theme.palette.text.primary,
+                            color: color ? color : theme.palette.text.primary,
                             fontSize: "21px",
+                            textDecoration: "none",
                           }}
                         >
                           About US
@@ -86,11 +90,11 @@ const NavBar = ({ backgroundColor }) => {
                       </Grid>
                       <Grid item>
                         <Link
-                          href="#"
-                          underline="none"
+                          to="#"
                           style={{
-                            // color: color ? color : theme.palette.text.primary,
+                            color: color ? color : theme.palette.text.primary,
                             fontSize: "21px",
+                            textDecoration: "none",
                           }}
                         >
                           Sign In
@@ -121,9 +125,11 @@ const NavBar = ({ backgroundColor }) => {
                   sx={{ display: "flex", justifyContent: "center" }}
                 >
                   <Link
-                    href="#"
-                    underline="none"
-                    style={{ color: theme.palette.text.primary }}
+                    to="/specialists"
+                    style={{
+                      color: color ? color : theme.palette.text.primary,
+                      textDecoration: "none",
+                    }}
                   >
                     Our Specialists
                   </Link>
@@ -134,9 +140,11 @@ const NavBar = ({ backgroundColor }) => {
                   sx={{ display: "flex", justifyContent: "center" }}
                 >
                   <Link
-                    href="#"
-                    underline="none"
-                    style={{ color: theme.palette.text.primary }}
+                    to="/about"
+                    style={{
+                      color: color ? color : theme.palette.text.primary,
+                      textDecoration: "none",
+                    }}
                   >
                     About Us
                   </Link>
@@ -147,9 +155,11 @@ const NavBar = ({ backgroundColor }) => {
                   sx={{ display: "flex", justifyContent: "center" }}
                 >
                   <Link
-                    href="#"
-                    underline="none"
-                    style={{ color: theme.palette.text.primary }}
+                    to="#"
+                    style={{
+                      color: color ? color : theme.palette.text.primary,
+                      textDecoration: "none",
+                    }}
                   >
                     Sign In
                   </Link>
@@ -160,9 +170,11 @@ const NavBar = ({ backgroundColor }) => {
                   sx={{ display: "flex", justifyContent: "center" }}
                 >
                   <Link
-                    href="#"
-                    underline="none"
-                    style={{ color: theme.palette.text.primary }}
+                    to="#"
+                    style={{
+                      color: color ? color : theme.palette.text.primary,
+                      textDecoration: "none",
+                    }}
                   >
                     العربية
                   </Link>
