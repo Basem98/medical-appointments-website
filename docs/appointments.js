@@ -108,7 +108,7 @@ module.exports = {
                                 "properties": {
                                     "message": {
                                         "type": "array",
-                                        "description": "An array that contains the upcomint appointments"
+                                        "description": "An array of the upcoming appointments"
                                     }
                                 }
                             }
@@ -196,7 +196,7 @@ module.exports = {
                                 "properties": {
                                     "message": {
                                         "type": "array",
-                                        "desxription": "Array of the previous appointments"
+                                        "desxription": "An array of the previous appointments"
                                     }
                                 }
                             }
