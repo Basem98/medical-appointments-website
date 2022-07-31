@@ -5,6 +5,11 @@ module.exports = {
         "post": {
             "tags": ["Appointment"],
             "description": "An endpoint to add new appointment to database",
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ],
             "requestBody": {
                 "description": "Json object contains the appointment details",
                 "required": "true",
@@ -18,17 +23,6 @@ module.exports = {
                     }
                 }
             },
-            "parameters": [
-                {
-                    "name": "Authorization header",
-                    "in": "header",
-                    "required": "true",
-                    "description": "Json web token to authorize user/doctor before making and appointment",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-            ],
             "reponseses": {
                 "201": {
                     "description": "A response that indicates adding an appointment successfully",
@@ -85,6 +79,11 @@ module.exports = {
         "get": {
             "tags": ["Appointments"],
             "description": "An endpoint that fetches the upcoming appointments of the user or the doctor based on the given id",
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ],
             "parameters": [
                 {
                     "name": "id",
