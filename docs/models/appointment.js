@@ -1,6 +1,3 @@
-const { userPassword, ...userData } = require("./user");
-const { doctorPassword, ...doctorData } = require("./doctor");
-
 module.exports = {
     required: [
         "date",
@@ -28,14 +25,12 @@ module.exports = {
             }
         },
         "user": {
-            "type": "object",
-            "description": "Object contains the data of the user who booked the appointment",
-            "properties": userData
+            "type": "string",
+            "description": "Id of the examinee user"
         },
         "doctor": {
-            "type": "object",
-            "description": "Object contains the data of the doctor who will examiner doctor",
-            "properties": doctorData
+            "type": "string",
+            "description": "Id of the examiner doctor",
         },
         "info": {
             "type": "object",
