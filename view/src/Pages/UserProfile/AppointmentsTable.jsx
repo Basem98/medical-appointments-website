@@ -21,7 +21,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                                 }
                             }}
                             href='#'
-                        >Dr. {appointment.doctor.firstName} {appointment.doctor.lastName}
+                        >Dr. {appointment?.doctor.firstName} {appointment?.doctor.lastName}
                         </Link>
                     </Typography>
                 </>)
@@ -40,7 +40,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                                     }
                                 }}
                                 href='#'
-                            >Mr. {appointment.user.firstName} {appointment.user.lastName}
+                            >Mr. {appointment?.user.firstName} {appointment?.user.lastName}
                             </Link>
                         </Typography>
                     </>)
@@ -58,7 +58,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                                         }
                                     }}
                                     href='#'
-                                >Dr. {appointment.doctor.firstName} {appointment.doctor.lastName}
+                                >Dr. {appointment?.doctor.firstName} {appointment?.doctor.lastName}
                                 </Link>
                                 <> Examines </>
                                 <Link
@@ -69,7 +69,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                                         }
                                     }}
                                     href='#'
-                                >Mr. {appointment.user.firstName} {appointment.user.lastName}
+                                >Mr. {appointment?.user.firstName} {appointment?.user.lastName}
                                 </Link>
                             </Typography>
                         </>)
