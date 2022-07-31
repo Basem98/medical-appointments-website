@@ -140,7 +140,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                             <Grid item key={index} xs={12} md={10}>
                                 <Card sx={{ boxShadow: `1px 1px 1px 1px ${theme.palette.highlight.main}` }}>
                                     <Grid container>
-                                        <Grid item width="70%">
+                                        <Grid item width="75%">
                                             <CardContent>
                                                 <Grid>
                                                     <Typography display="inline" variant="h4">
@@ -173,7 +173,7 @@ const AppointmentsTable = ({ appointments, role }) => {
 
                                             </CardContent>
                                         </Grid>
-                                        <Grid item alignSelf="center" width="30%">
+                                        <Grid item alignSelf="center" width="25%">
                                             <CardActions>
                                                 <Button
                                                     sx={{
@@ -181,7 +181,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                                                         fontWeight: 'bold',
                                                         padding: "15px",
                                                         borderRadius: "20px",
-                                                        width: "100%",
+                                                        width: "90%",
                                                         ':hover': {
                                                             backgroundColor: theme.palette.highlight.main,
                                                             opacity: 0.8,
