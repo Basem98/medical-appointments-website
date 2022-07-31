@@ -9,4 +9,7 @@ appointmentRouter.route('/')
 appointmentRouter.route('/upcomings/:id')
     .get(authorizationMiddleware, appointmentController.getUpcomings);
 
+appointmentRouter.route('/previous/:id')
+    .get(authorizationMiddleware, appointmentController.getPrevious);
+
 module.exports = appointmentRouter;
