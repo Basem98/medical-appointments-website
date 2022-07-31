@@ -23,7 +23,7 @@ module.exports = {
                     }
                 }
             },
-            "reponses": {
+            "responses": {
                 "201": {
                     "description": "A response that indicates adding an appointment successfully",
                     "content": {
