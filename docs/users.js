@@ -157,21 +157,17 @@ module.exports = {
         "get": {
             "tags": ["User"],
             "description": "An endpoint to retrieve user's data for authorized roles only",
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ],
             "parameters": [
                 {
                     "name": "id",
                     "description": "Id of the user to retrive his data",
                     "required": "ture",
                     "in": "path",
-                    "schema": {
-                        "type": "string"
-                    },
-                },
-                {
-                    "name": "Authorization header",
-                    "description": "Json Web Token to authorize the request sender",
-                    "required": "true",
-                    "in": "header",
                     "schema": {
                         "type": "string"
                     }
@@ -253,21 +249,17 @@ module.exports = {
         "delete": {
             "tags": ["User"],
             "description": "An endpoint to delete user's data from database",
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ],
             "parameters": [
                 {
                     "name": "id",
                     "description": "Id of the user to delete his data",
                     "required": "true",
                     "in": "path",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
-                    "name": "Authorication header",
-                    "description": "Json Web token to authorize the request sender",
-                    "required": "true",
-                    "in": "header",
                     "schema": {
                         "type": "string"
                     }
@@ -343,21 +335,17 @@ module.exports = {
         "patch": {
             "tags": ["User"],
             "description": "An endpoint to update user's data",
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ],
             "parameters": [
                 {
                     "name": "id",
                     "description": "Id of the user to update his data",
                     "required": "true",
                     "in": "path",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
-                    "name": "Authorication header",
-                    "description": "Json Web token to authorize the request sender",
-                    "required": "true",
-                    "in": "header",
                     "schema": {
                         "type": "string"
                     }
