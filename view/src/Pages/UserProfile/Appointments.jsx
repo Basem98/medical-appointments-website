@@ -13,7 +13,7 @@ const Appointments = () => {
 
     const titles = [
         "Upcoming Appointments",
-        "Past Appointments"
+        "Previous Appointments"
     ]
     const data = [
         upcomingAppointments,
