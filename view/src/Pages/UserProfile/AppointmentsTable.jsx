@@ -149,6 +149,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                                                     <Typography
                                                         display="inline"
                                                         color={theme.palette.grey[500]}
+                                                        noWrap
                                                     > at {appointment.time.hour}
                                                         : {appointment.time.minute}
                                                     </Typography>
@@ -172,7 +173,7 @@ const AppointmentsTable = ({ appointments, role }) => {
 
                                             </CardContent>
                                         </Grid>
-                                        <Grid item alignSelf="center" width="25%">
+                                        <Grid item alignSelf="center" width="30%">
                                             <CardActions>
                                                 <Button
                                                     sx={{
