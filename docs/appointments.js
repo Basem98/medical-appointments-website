@@ -18,7 +18,10 @@ module.exports = {
                         "schema": {
                             "type": "object",
                             "required": appointmentModel.required,
-                            "properties": appointmentModel.schema
+                            "properties": {
+                                "date": appointmentModel.schema.date,
+                                "time": appointmentModel.schema.time
+                            }
                         }
                     }
                 }
