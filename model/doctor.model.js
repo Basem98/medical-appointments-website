@@ -26,8 +26,15 @@ const schema = new mongoose.Schema({
         unique: true
     },
     appointments: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Appointment'
+        _id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Appointment',
+            required: true
+        },
+        date: {
+            type: Date,
+            required: true
+        }
     }],
     specialization: {
         type: String,
