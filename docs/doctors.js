@@ -86,6 +86,14 @@ module.exports = {
           }
         },
         {
+          "name": "governorate",
+          "in": "query",
+          "description": "A parameter that filters the doctors by their clinic's governorate",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
           "name": "dateFrom",
           "in": "query",
           "description": "A parameter that filters the doctors by the start date of their appointments",
