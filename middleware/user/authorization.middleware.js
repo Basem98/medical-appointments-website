@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
         let tokenInRequestHeader = req.get('Authorization').split(' ')[1];
         let decodedToken = jwt.verify(tokenInRequestHeader, envConfig.AUTH.USER_SECRET);
         req.body.id = decodedToken.id;
-        req.body.role = decodedToken.id;
+        req.body.role = decodedToken.role;
         next();
     }
     catch (error) {

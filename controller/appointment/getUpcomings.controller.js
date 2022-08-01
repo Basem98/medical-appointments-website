@@ -23,7 +23,7 @@ const getUpcomings = (req, res, next) => {
         if(!data) {
             return res.status(404).send({message: 'Appointment Not Found'});
         }
-        res.status(200).json({message: data})
+        return res.status(200).json({message: data})
     })
     .catch(error => {
         error.statusCode = 500

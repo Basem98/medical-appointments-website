@@ -23,7 +23,11 @@ module.exports.updateUserById = async (req, res, next) => {
             });
     }
     User.findByIdAndUpdate(req.body.id, { $set: req.body })
-        .then(() => {
+        .then((data) => {
+            if (!data) {
+                console.log(data);
+                return res.status(404).json({ message: 'User is not found' });
+            }
             return res.status(200).json({ message: 'User updated successfully' });
         })
         .catch(error => next(error))

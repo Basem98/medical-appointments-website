@@ -45,5 +45,14 @@ module.exports = {
       "url": "http://localhost:8080/api",
       "description": "Development Server"
     }],
-  "paths": paths
+  "paths": paths,
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
 }

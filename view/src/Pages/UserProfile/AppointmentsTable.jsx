@@ -21,7 +21,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                                 }
                             }}
                             href='#'
-                        >Dr. {appointment.doctor.firstName} {appointment.doctor.lastName}
+                        >Dr. {appointment?.doctor.firstName} {appointment?.doctor.lastName}
                         </Link>
                     </Typography>
                 </>)
@@ -40,7 +40,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                                     }
                                 }}
                                 href='#'
-                            >Mr. {appointment.user.firstName} {appointment.user.lastName}
+                            >Mr. {appointment?.user.firstName} {appointment?.user.lastName}
                             </Link>
                         </Typography>
                     </>)
@@ -58,7 +58,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                                         }
                                     }}
                                     href='#'
-                                >Dr. {appointment.doctor.firstName} {appointment.doctor.lastName}
+                                >Dr. {appointment?.doctor.firstName} {appointment?.doctor.lastName}
                                 </Link>
                                 <> Examines </>
                                 <Link
@@ -69,7 +69,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                                         }
                                     }}
                                     href='#'
-                                >Mr. {appointment.user.firstName} {appointment.user.lastName}
+                                >Mr. {appointment?.user.firstName} {appointment?.user.lastName}
                                 </Link>
                             </Typography>
                         </>)
@@ -140,7 +140,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                             <Grid item key={index} xs={12} md={10}>
                                 <Card sx={{ boxShadow: `1px 1px 1px 1px ${theme.palette.highlight.main}` }}>
                                     <Grid container>
-                                        <Grid item width="70%">
+                                        <Grid item width="75%">
                                             <CardContent>
                                                 <Grid>
                                                     <Typography display="inline" variant="h4">
@@ -149,6 +149,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                                                     <Typography
                                                         display="inline"
                                                         color={theme.palette.grey[500]}
+                                                        noWrap
                                                     > at {appointment.time.hour}
                                                         : {appointment.time.minute}
                                                     </Typography>
@@ -180,7 +181,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                                                         fontWeight: 'bold',
                                                         padding: "15px",
                                                         borderRadius: "20px",
-                                                        width: "100%",
+                                                        width: "90%",
                                                         ':hover': {
                                                             backgroundColor: theme.palette.highlight.main,
                                                             opacity: 0.8,

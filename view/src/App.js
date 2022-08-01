@@ -3,14 +3,32 @@ import "./App.css";
 import Home from "./Pages/Home/Home";
 import Footer from "./Components/Footer/Footer";
 import Specialists from "./Pages/Specialists/Specialists";
+import NavBar from "./Components/Navbar/NavBar";
+import { useState } from "react";
 
 function App() {
+  const [navbarStyle, setNavbarStyle] = useState({
+    backgroundColor: "inherit",
+    position: "fixed",
+  });
+
+  const handleNavbarStyle = (navbarStyle) => {
+    setNavbarStyle(navbarStyle);
+  };
+
   return (
     <>
+      <NavBar {...navbarStyle} />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={<Home handleNavbarStyle={handleNavbarStyle} />}
+        />
         <Route path="/home" element={<Navigate to="/" />} />
-        <Route path="/specialists" element={<Specialists />} />
+        <Route
+          path="/specialists"
+          element={<Specialists handleNavbarStyle={handleNavbarStyle} />}
+        />
       </Routes>
       <Footer />
     </>
