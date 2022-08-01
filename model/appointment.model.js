@@ -37,7 +37,8 @@ const schema = new mongoose.Schema({
     },
     doctor: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Doctor'
+        ref: 'Doctor',
+        required: true
     },
     info: {
         prescription: [{
