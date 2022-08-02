@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import "./UserSignupForm.css"
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import InputField from '../InputField/InputField'
 import { Formik, Form } from "formik";
 import theme from "../../Helper/CustomTheme";
@@ -64,7 +64,7 @@ export default function UserSignupForm() {
                     borderRadius: '20px'
                 }}>
                     <Grid item sx={{ width: '100%' }}>
-                        <h2 style={{ ...theme.typography.h2, textAlign: 'center' }}>Sign Up</h2>
+                        <Typography variant='h2' style={{ textAlign: 'center' }}>Sign Up</Typography>
                     </Grid>
 
                     <Grid item xs={10} sx={{ margin: '0 auto' }}>
