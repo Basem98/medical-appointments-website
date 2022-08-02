@@ -1,7 +1,7 @@
 import { Grid, Typography, useTheme } from "@mui/material";
 import React from "react";
 import { useState } from "react";
-import AppointmentsTable from "../../Pages/UserProfile/AppointmentsTable";
+import AppointmentsTable from "../AppointmentsTable/AppointmentsTable";
 
 const ContentToggler = ({ titles, data, role }) => {
     const theme = useTheme();
