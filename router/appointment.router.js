@@ -6,6 +6,9 @@ const authorizationMiddleware = require("../middleware/user/authorization.middle
 appointmentRouter.route('/')
     .post(authorizationMiddleware, appointmentController.addAppointment)
 
+appointmentRouter.route('/book/:id')
+    .post(authorizationMiddleware, appointmentController.bookAppointment)
+
 appointmentRouter.route('/upcomings/:id')
     .get(authorizationMiddleware, appointmentController.getUpcomings);
 
