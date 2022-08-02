@@ -1,8 +1,11 @@
-import { Grid, Link, Typography, useMediaQuery, List, ListItem } from '@mui/material';
+import { Grid, Link, Typography, useMediaQuery, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import CustomFormButton from '../../Components/CustomFormButton/CustomFormButton';
 import StarIcon from "@mui/icons-material/Star";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import drImage from "../../Assets/Images/HeroBg1.png";
+import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
+import EmailIcon from '@mui/icons-material/Email';
+import PublicIcon from '@mui/icons-material/Public';
 import { useTheme } from '@mui/material';
 import NavBar from '../Home/NavBar';
 import React from 'react'
@@ -14,6 +17,13 @@ function DoctorDetails() {
             degree: "Fellow of the american university",
             university: "University of colorado",
             date: "May 2019 - June 2021"
+        }
+    ]
+    const docContacts = [
+        {
+            phone: "01004206969",
+            mail: "bruh@gmail.com",
+            website: "www.doctor.com"
         }
     ]
     const isMobile = useMediaQuery((Theme) => Theme.breakpoints.down("sm"));
@@ -237,13 +247,60 @@ function DoctorDetails() {
                     </Typography>
                 </Grid>
             </Grid>
+            {/* doctr's contacts */}
+            <Grid container justifyContent={'center'} style={{ width: "100%" }}>
+                <Grid container item maxWidth="md" style={{ marginTop: 20 }} justifyContent='flex-start'
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column'
+                    }}>
+                    <Typography style={{
+                        ...Theme.typography.h2,
+                        color: Theme.palette.text.primary,
+                    }}
+                    >
+                        Contact information
+                    </Typography>
+                    <List>
+                        {docContacts.map(item => (
+                            <>
+                            
+                                <ListItem style={{
+                                    ...Theme.typography.body2,
+                                    color: Theme.palette.text.primary,
+                                }}
+                                >
+                                    <ListItemIcon><PhoneAndroidIcon/></ListItemIcon>
+                            <ListItemText primary={item.phone}/>
+                                </ListItem>
+                                <ListItem style={{
+                                    ...Theme.typography.body2,
+                                    color: Theme.palette.text.primary,
+                                }}
+                                >
+                                    <ListItemIcon><EmailIcon/></ListItemIcon>
+                            <ListItemText primary={item.mail}/>
+                                </ListItem>
+                                <ListItem style={{
+                                    ...Theme.typography.body2,
+                                    color: Theme.palette.text.primary,
+                                }}
+                                >
+                                    <ListItemIcon><PublicIcon/></ListItemIcon>
+                            <ListItemText primary={item.website}/>
+                                </ListItem>
+                            </>
+                        ))}
+                    </List>
+                </Grid>
+            </Grid>
             {/* Booking information */}
             <Grid container
                 justifyContent={'center'}
                 style={{
                     width: "100%",
                 }}>
-                <Grid container item maxWidth="md" style={{ marginTop: 20 }} justifyContent='space-between'
+                <Grid container item maxWidth="md" style={{ marginTop: 30 }} justifyContent='space-between'
                     sx={{
                         display: 'flex',
                         flexDirection: 'row'
