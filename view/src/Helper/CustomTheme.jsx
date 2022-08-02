@@ -42,7 +42,7 @@ theme = createTheme({
                 fontSize: 46,
             },
             [theme.breakpoints.up('lg')]: {
-                fontSize: 56,
+                fontSize: 50,
             },
         },
         h2: {
