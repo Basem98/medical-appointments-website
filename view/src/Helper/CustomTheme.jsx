@@ -43,9 +43,17 @@ const theme = createTheme({
             fontSize: 20,
             fontWeight: 'bold'
         },
+        bode1reg: {
+            fontSize: 20
+        },
         body2: {
             fontSize: 16,
             fontWeight: 'normal'
+        },
+        largerButtonText: {
+            fontSize: 20,
+            fontWeight: 'bold',
+            textTransform: 'uppercase'
         }
     }
 });
