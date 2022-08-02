@@ -29,23 +29,24 @@ const schema = new mongoose.Schema({
         duration: {
             type: Number,
             required: true
-        },
-        userId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
-        },
-        doctorId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Doctor'
-        },
-        info: {
-            prescription: [{
-                drugName: String,
-                dosage: String
-            }],
-            diagnosis: String,
-            nextVisit: this
         }
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    doctor: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Doctor',
+        required: true
+    },
+    info: {
+        prescription: [{
+            drugName: String,
+            dosage: String
+        }],
+        diagnosis: String,
+        nextVisit: this
     }
 });
 

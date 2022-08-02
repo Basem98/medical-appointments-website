@@ -22,16 +22,36 @@ export const educationFormStepValidation = Yup.object({
   }))
 });
 
-export const certificationsFormStepValidation = Yup.object({
-  certifications: Yup.array().of(Yup.object({
-    title: Yup.string(),
-    granter: Yup.string(),
-    issueDate: Yup.object({
-      month: Yup.string(),
-      year: Yup.string()
-    })
-  }))
-});
+const isCertificationValid = (certifications) => {
+  let isValid = true;
+  let someFieldIsFilled = false;
+  certifications.forEach(({ title, granter, issueDate }) => {
+    if (title || granter || issueDate.month || issueDate.year) someFieldIsFilled = true;
+    if (someFieldIsFilled) {
+      isValid = title && title.length > 0 && granter && granter.length > 0 && issueDate.month && issueDate.year;
+    }
+  });
+  return isValid;
+}
+
+export const validateCertifications = (values) => {
+  const errors = {};
+  if (isCertificationValid(values['certifications'])) return errors;
+  errors.certifications = [];
+  const errMsg = 'This field is required, if you want to add a certificate';
+  values['certifications'].forEach((cert, index) => {
+    if (!isCertificationValid([cert])) {
+      const newCertObj = { title: '', granter: '', issueDate: { month: '', year: '' } };
+      newCertObj.title = cert.title ? null : errMsg;
+      newCertObj.granter = cert.granter ? null : errMsg;
+      newCertObj.issueDate.month = cert.issueDate.month ? null : errMsg;
+      newCertObj.issueDate.year = cert.issueDate.year ? null : errMsg;
+      errors.certifications[index] = newCertObj;
+    }
+  });
+  if (errors.certifications.length < 1) return {};
+  return errors;
+}
 
 export const experienceFormStepValidation = Yup.object({
   experiences: Yup.array().of(
@@ -65,15 +85,16 @@ export const clinicsFormStepValidation = Yup.object({
   clinics: Yup.array().of(
     Yup.object({
       name: Yup.string().required('This field is required').matches(/[a-z0-9]{2,50}/g, { message: 'Your clinic\'s name must be between 2 and 50 characters and it can only consist of letters and numbers' }),
+      fees: Yup.number().min(1, `Your clinic's fees should be more than a 0, obviously.`).required('This field is required'),
       phone: Yup.object({
         mobile: Yup.string().required('This field is required').matches(/^01[0125][0-9]{8}$/g, { message: 'You must type a valid Egyptian number' }),
         landline: Yup.string().matches(/^0[1-9][0-9]{7,8}$/, { message: 'You must type a valid Egyptian landline number with the governorate code' })
       }),
       address: Yup.object({
-        city: Yup.string().required('This field is required').matches(/[a-z]{2,100}/g, {message: 'You must enter a valid city/locality name'}),
+        city: Yup.string().required('This field is required').matches(/[a-z]{2,100}/g, { message: 'You must enter a valid city/locality name' }),
         country: Yup.string(),
-        governorate: Yup.string().required('This field is required').matches(/[a-z]{2,100}/g, {message: 'You must enter a valid governorate name'}),
-        buildingNo: Yup.string().required('This field is required').matches(/^[0-9]{1,9}$/, {message: 'You must enter your clinic\'s valid building number'}),
+        governorate: Yup.string().required('This field is required').matches(/[a-z]{2,100}/g, { message: 'You must enter a valid governorate name' }),
+        buildingNo: Yup.string().required('This field is required').matches(/^[0-9]{1,9}$/, { message: 'You must enter your clinic\'s valid building number' }),
         streetName: Yup.string().required('This field is required'),
         postalCode: Yup.string()
       })

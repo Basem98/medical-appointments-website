@@ -1,20 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
-import NavBar from "./NavBar";
 import CustomFormButton from "./../../Components/CustomFormButton/CustomFormButton";
 import SearchBar from "./SearchBar";
-import DoctorCard from "./DoctorCard";
-import Footer from "./Footer";
+import DoctorCard from "../../Components/DoctorCard/DoctorCard";
+import heroBg from "../../Assets/Images/HeroBg.png";
+import sectionBg from "../../Assets/Images/SectionBg.png";
+import { useEffect } from "react";
 
-function Home() {
+function Home({ handleNavbarStyle }) {
   const theme = useTheme();
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+
+  useEffect(() => {
+    handleNavbarStyle({
+      backgroundColor: "inherit",
+      position: "fixed",
+      color: "",
+    });
+  }, []);
+
+  const handleNavbarScroll = (e) => {
+    handleNavbarStyle({
+      backgroundColor:
+        window.scrollY > 400 ? theme.palette.highlight.main : "inherit",
+      position: "fixed",
+      color: window.scrollY > 400 ? "white" : "",
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", (e) => handleNavbarScroll(e));
+    return () => {
+      window.removeEventListener("scroll", (e) => handleNavbarScroll(e));
+    };
+  }, [window.scrollY]);
+  const isTabletMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
   return (
     <div
       style={{
         color: theme.palette.text.primary,
         backgroundColor: theme.palette.primaryBg.main,
       }}
+      onScroll={() => console.log("scrolling")}
     >
       {/* Hero Section */}
       <Grid
@@ -23,16 +50,14 @@ function Home() {
           background: "linear-gradient(#F8FBFC, #A6E0D6)",
           // height: "300px",
           // padding: "10px 130px",
+          padding: `0px ${!isTabletMobile ? "70px" : "0px"}`,
           width: "100%",
         }}
         // justifyContent="center"
       >
-        <Grid item xs={12}>
-          <NavBar />
-        </Grid>
         <Grid item xs={12} md={6} style={{}}>
           <Typography
-            variant={isMobile ? "h4" : "h1"}
+            variant={isTabletMobile ? "h4" : "h1"}
             sx={{
               // color: theme.palette.text.primary,
               maxWidth: "560px",
@@ -42,8 +67,6 @@ function Home() {
           >
             Medical Appointments now with the click of A Button
           </Typography>
-        </Grid>
-        <Grid item xs={12}>
           <CustomFormButton
             variant="contained"
             sx={{
@@ -65,13 +88,28 @@ function Home() {
             Sign Up
           </CustomFormButton>
         </Grid>
+        {!isTabletMobile && (
+          <Grid item md={6} justifyContent="center">
+            <img
+              src={heroBg}
+              alt="heroBg"
+              style={{
+                width: "270px",
+                position: "relative",
+                top: "120px",
+                left: "350px",
+                bottom: "0px",
+              }}
+            />
+          </Grid>
+        )}
         <Grid item xs={12}>
           <SearchBar />
         </Grid>
       </Grid>
 
       {/* Top Rated Section */}
-      <Grid container sx={{ mt: 15 }}>
+      <Grid container sx={{ mt: 5, py: 7 }}>
         <Grid
           item
           md={12}
@@ -79,14 +117,14 @@ function Home() {
           // alignItems="center"
           container
         >
-          <Grid item md={5}>
+          <Grid item xs={8} md={5}>
             <Typography variant="h2" align="center">
               Don’t know where to start? check our top rated specialists
             </Typography>
           </Grid>
         </Grid>
         <Grid item md={12} justifyContent="center" container sx={{ mt: 3 }}>
-          <Grid item md={5}>
+          <Grid item xs={10} md={5}>
             <Typography variant="h6" align="center">
               Our platform helps you find the best professionals out there in
               the field in a short time, and these are our top rated stars so
@@ -100,16 +138,20 @@ function Home() {
           container
           justifyContent="space-around"
           sx={{ mt: 9 }}
-          // spacing={3}
-          rowSpacing={3}
-          // columnSpacing={{ xs: 3 }}
+          rowSpacing={9}
         >
-          <DoctorCard />
-          <DoctorCard />
-          <DoctorCard />
+          <Grid item xs={8} md={3}>
+            <DoctorCard />
+          </Grid>
+          <Grid item xs={8} md={3}>
+            <DoctorCard />
+          </Grid>
+          <Grid item xs={8} md={3}>
+            <DoctorCard />
+          </Grid>
         </Grid>
-        <Grid item md={12} container justifyContent="center" sx={{ mt: 11 }}>
-          <Grid item md={5}>
+        <Grid item xs={12} container justifyContent="center" sx={{ mt: 11 }}>
+          <Grid item md={5} xs={10}>
             <Typography
               variant="h5"
               align="center"
@@ -123,7 +165,7 @@ function Home() {
         </Grid>
         <Grid
           item
-          md={12}
+          xs={12}
           style={{ display: "flex", justifyContent: "center" }}
         >
           <CustomFormButton
@@ -143,17 +185,28 @@ function Home() {
         container
         justifyContent="space-around"
         sx={{
-          mt: 9,
-          py: 11,
+          // mt: 9,
+          py: 5,
           backgroundColor: theme.palette.secondaryBg.main,
         }}
       >
-        <Grid item xs={12} md={4}>
-          {/* dr image */}
-        </Grid>
+        {!isTabletMobile && (
+          <Grid item md={4}>
+            {/* dr image */}
+            <img
+              src={sectionBg}
+              alt="dr sectionBg"
+              style={{
+                width: "400px",
+                position: "relative",
+                top: "44px",
+              }}
+            />
+          </Grid>
+        )}
         <Grid
           item
-          xs={12}
+          xs={10}
           md={5}
           sx={{
             display: "flex",
@@ -199,13 +252,13 @@ function Home() {
         container
         justifyContent="space-around"
         sx={{
-          // mt: 9,
-          py: 15,
+          mt: 0,
+          py: 9,
           backgroundColor: "white",
         }}
       >
-        <Grid item xs={10} md={4}>
-          <Typography variant="h2">
+        <Grid item xs={10} md={4} sx={{ mb: 3 }}>
+          <Typography variant="h2" align="center">
             Do you have any inquiry?
             <span style={{ display: "block", marginTop: "20px" }}>
               Contact us!
@@ -217,7 +270,7 @@ function Home() {
           xs={10}
           md={5}
           display="flex"
-          direction="column"
+          flexDirection="column"
           justifyContent="center"
         >
           <Typography
@@ -238,7 +291,7 @@ function Home() {
             variant="contained"
             sx={{
               padding: "10px 40px",
-              mt: 7,
+              my: 5,
               fontSize: theme.typography.body1.fontSize,
               width: "fit-content",
               alignSelf: "center",
@@ -248,7 +301,6 @@ function Home() {
           </CustomFormButton>
         </Grid>
       </Grid>
-      <Footer />
     </div>
   );
 }

@@ -14,7 +14,9 @@ const CustomFormControl = styled(FormControl)(({ theme }) => ({
     fontWeight: 'lighter',
     '& .MuiSelect-select': {
       height: 26,
-      padding: '5px 15px'
+      padding: '5px 15px',
+      display: 'flex',
+      alignItems: 'flex-end'
     },
     '& fieldset': {
       borderColor: 'transparent',

@@ -1,7 +1,10 @@
-import { createTheme } from "@mui/material";
+import { createTheme, responsiveFontSizes } from "@mui/material";
 
 
-const theme = createTheme({
+let theme = createTheme();
+theme = responsiveFontSizes(theme);
+
+theme = createTheme({
     palette: {
         primaryBg: {
             main: '#F9F9F9',
@@ -31,20 +34,37 @@ const theme = createTheme({
     typography: {
         fontFamily: `'Outfit', sans-serif`,
         h1: {
-            fontSize: 56,
-            fontWeight: 'bolder'
+            fontWeight: 'bolder',
+            [theme.breakpoints.up('xs')]: {
+                fontSize: 36,
+            },
+            [theme.breakpoints.up('md')]: {
+                fontSize: 46,
+            },
+            [theme.breakpoints.up('lg')]: {
+                fontSize: 56,
+            },
         },
         h2: {
-            fontSize: 38,
-            fontWeight: '800',
-            textTransform: 'capitalize'
+            fontWeight: 'bolder',
+            [theme.breakpoints.up('xs')]: {
+                fontSize: 32
+            },
+            [theme.breakpoints.up('md')]: {
+                fontSize: 34
+            },
+            [theme.breakpoints.up('lg')]: {
+                fontSize: 38
+            }
         },
         body1: {
-            fontSize: 20,
-            fontWeight: 'bold'
-        },
-        bode1reg: {
-            fontSize: 20
+            fontWeight: 'bold',
+            [theme.breakpoints.up('xs')]: {
+                fontSize: 16
+            },
+            [theme.breakpoints.up('md')]: {
+                fontSize: 20,
+            }
         },
         body2: {
             fontSize: 16,

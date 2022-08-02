@@ -14,7 +14,7 @@ import CustomCollapseListItem from '../CustomCollapseListItem/CustomCollapseList
 import { AddAnotherEntry, RemoveLastEntry } from '../../Helper/FormFieldAdder';
 import { handleCollapse } from '../../Helper/CustomCollapseHandler';
 import { months, getYearsUpTillNow } from '../../Helper/DateOptions';
-
+import specialties from '../../Helper/SpecialtiesOptions';
 
 const EducationFormStep = ({ valuesSnapshot, changeSnapshot, getStepKeys }) => {
   const [isExpanded, setIsExpanded] = useState([true]);
@@ -28,51 +28,6 @@ const EducationFormStep = ({ valuesSnapshot, changeSnapshot, getStepKeys }) => {
       year: ''
     }
   };
-  const specialties = [
-    'Dermatology',
-    'Dentistry',
-    'Psychiatry',
-    'Pediatrics and New Born',
-    'Neurology',
-    'Orthopedics',
-    'Gynaecology and Infertility',
-    'Ear, Nose and Throat',
-    'Cardiology and Vascular Disease',
-    'Allergy and Immunology',
-    'Andrology and Male Infertility',
-    'Audiology',
-    'Cardiology and Thoracic Surgery',
-    'Chest and Respiratory',
-    'Diabetes and Endocrinology',
-    'Diagnostic Radiology',
-    'Dietitian and Nutrition',
-    'Family Medicine',
-    'Gastroenterology and Endoscopy',
-    'General Practice',
-    'General Surgery',
-    'Geriatrics',
-    'Hematology',
-    'Hepatology',
-    'Internal Medicine',
-    'IVF and Infertility',
-    'Laboratories',
-    'Nephrology',
-    'Neurosurgery',
-    'Obesity and Laparoscopic Surgery',
-    'Oncology',
-    'Oncology Surgery',
-    'Ophthalmology',
-    'Osteopathy',
-    'Pain Management',
-    'Pediatric Surgery',
-    'Phoniatrics',
-    'Physiotherapy and Sport Injuries',
-    'Plastic Surgery',
-    'Rheumatology',
-    'Spinal Surgery',
-    'Urology',
-    'Vascular Surgery'
-  ];
 
   const years = getYearsUpTillNow();
 
@@ -98,7 +53,7 @@ const EducationFormStep = ({ valuesSnapshot, changeSnapshot, getStepKeys }) => {
       {
         education.map((edu, index) => (
           <Grid container item xs={12} justifyContent='center' key={index} margin='5px'>
-            <Grid item xs={10}>
+            <Grid item xs={10}  marginTop='25px'>
               <CustomCollapseListItem onClick={() => handleCollapse(index, isExpanded, setIsExpanded)}>
                 <span>
                   {index + 1}. Education Entry

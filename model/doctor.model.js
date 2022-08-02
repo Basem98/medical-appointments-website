@@ -26,8 +26,15 @@ const schema = new mongoose.Schema({
         unique: true
     },
     appointments: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Appointment'
+        _id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Appointment',
+            required: true
+        },
+        date: {
+            type: Date,
+            required: true
+        }
     }],
     specialization: {
         type: String,
@@ -134,8 +141,16 @@ const schema = new mongoose.Schema({
             landline: {
                 type: String
             }
+        },
+        fees: {
+            type: Number,
+            required: true
         }
     }],
+    rating: {
+        type: Number,
+        default: 0
+    },
     profilePicture: {
         type: String,
         required: true

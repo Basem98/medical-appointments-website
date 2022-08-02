@@ -1,9 +1,10 @@
 import axios from 'axios';
 
 
-const baseServerUrl = 'http://localhost:8080/';
+const baseLocalUrl = 'http://localhost:8080/';
+const baseRemoteUrl = 'https://maw-api.herokuapp.com/';
 const axiosClient = axios.create({
-  baseURL: baseServerUrl
+  baseURL: baseRemoteUrl
 });
 
 
