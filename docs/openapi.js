@@ -44,7 +44,12 @@ module.exports = {
     {
       "url": "http://localhost:8080/api",
       "description": "Development Server"
-    }],
+    },
+    {
+      "url": "https://maw-api.herokuapp.com/api",
+      "description": "Production Server"
+    }
+  ],
   "paths": paths,
   "components": {
     "securitySchemes": {
