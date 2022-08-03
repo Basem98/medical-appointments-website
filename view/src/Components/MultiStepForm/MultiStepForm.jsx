@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
 import FormNavigator from '../FormNavigator/FormNavigator';
-import { useTheme, Grid, Step, StepLabel, CircularProgress } from '@mui/material';
+import { useTheme, Grid, Step, StepLabel, CircularProgress, Typography } from '@mui/material';
 import CustomFormStepper from '../CustomFormStepper/CustomFormStepper';
 import CustomAlert from '../CustomAlert/CustomAlert';
 import { isEmailDuplicated, isPhoneDuplicated } from '../../Network/Doctors/validate';
@@ -87,7 +87,7 @@ const MultiStepForm = ({ children, initialValues, onSubmit, serverResponse, setS
   return (
     <Grid container sx={{ background: theme.palette.linearFormBg.main, borderRadius: '20px', boxShadow: theme.shadows[5] }} justifyContent='center'>
       <Grid item xs={12} justifyContent='center'>
-        <h2 style={{ ...theme.typography.h2, color: theme.palette.text.primary, textAlign: 'center' }}>Join Us</h2>
+        <Typography variant='h2' style={{ color: theme.palette.text.primary, textAlign: 'center' }}>Join Us</Typography>
       </Grid>
       <Grid item xs={12} marginBottom='25px'>
         <CustomFormStepper activeStep={stepNumber > 4 ? 4 : stepNumber} alternativeLabel>

@@ -1,9 +1,10 @@
 const cors = require('cors');
-const {APP} = require('./envConfig');
+const { APP } = require('./envConfig');
 
-module.exports = function() {
+module.exports = function () {
   let options = {
     origin: APP.ALLOWED_ORIGIN
   }
-  return cors(options);
+  // return cors(options);
+  return cors();
 }
