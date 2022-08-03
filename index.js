@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cookieParser = require('cookie-parser');
 const config = require('./config/envConfig');
 const cors = require('./config/corsConfig');
 const { connectToDatabase } = require('./config/dbConnection');
@@ -21,6 +22,7 @@ app.use(cors());
 /* ---------- Mount the parsing middleware ---------- */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 
 /* ---------- Mount the Cloudinary configuration middleware ---------- */
