@@ -1,7 +1,7 @@
 import { Grid, Typography, useTheme } from "@mui/material";
 import React from "react";
 import { useState } from "react";
-import AppointmentsTable from "../../Pages/UserProfile/AppointmentsTable";
+import AppointmentsTable from "../AppointmentsTable/AppointmentsTable";
 
 const ContentToggler = ({ titles, data, role }) => {
     const theme = useTheme();
@@ -13,6 +13,7 @@ const ContentToggler = ({ titles, data, role }) => {
         "&:hover": {
             cursor: "pointer"
         },
+        textAlign: 'center'
     }
     const unselectedStyle = {
         borderBottom: `2px solid ${unselectedColor}`,
@@ -20,6 +21,7 @@ const ContentToggler = ({ titles, data, role }) => {
         "&:hover": {
             cursor: "pointer"
         },
+        textAlign: 'center'
     }
     const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -39,6 +41,7 @@ const ContentToggler = ({ titles, data, role }) => {
                                 key={item}
                                 sx={{ color: selectedColor }}
                                 onClick={() => { handleSelected(index) }}
+                                xs={5}
                             >
                                 <Typography sx={selectedStyle}>
                                     {item}
@@ -51,6 +54,7 @@ const ContentToggler = ({ titles, data, role }) => {
                                 key={item}
                                 sx={{ color: unselectedColor }}
                                 onClick={() => { handleSelected(index) }}
+                                xs={5}
                             >
                                 <Typography sx={unselectedStyle}>
                                     {item}
