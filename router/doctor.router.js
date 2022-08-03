@@ -24,7 +24,7 @@ doctorRouter.post('/validate/email', isEmailAlreadyInDb);
 doctorRouter.post('/validate/phone', isPhoneAlreadyInDb);
 
 /* ---------- An endpoint to get a list of doctors (with pagination based on page/limit queries) ---------- */
-doctorRouter.get('/all', protectDoctorsRoute, getDoctorsByPage);
+doctorRouter.get('/all', getDoctorsByPage);
 
 /* ---------- An endpoint to get a specific doctor document by its id ---------- */
 doctorRouter.route('/:id').get(getDoctorById);
