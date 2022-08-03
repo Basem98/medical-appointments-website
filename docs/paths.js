@@ -5,6 +5,7 @@ const appointments = require('./appointments.js');
 module.exports = {
   "/verify": base["/verify"],
   "/doctors/": doctors["/doctors/"],
+  "/doctors/login": doctors["/doctors/login"],
   "/doctors/all": doctors["/doctors/all"],
   "/users/": users["/users/"],
   "/users/login": users["/users/login/"],
