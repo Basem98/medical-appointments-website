@@ -9,7 +9,8 @@ import {
     Grid,
     Typography,
     Box,
-    useTheme
+    useTheme,
+    Link
 }
     from "@mui/material";
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
@@ -20,6 +21,7 @@ import ApartmentIcon from '@mui/icons-material/Apartment';
 import MedicationIcon from '@mui/icons-material/Medication';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
+import PersonIcon from '@mui/icons-material/Person';
 import moment from "moment";
 
 const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawer }) => {
@@ -72,44 +74,69 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                 }}
             >
                 <Grid container justifyContent="flex-start" padding={2} spacing={2}>
-                    <Grid
-                        item
-                        container
-                        xs={12}
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Grid item xs={6}>
-                            <Box
-                                component="img"
-                                sx={{
-                                    borderRadius: '50%',
-                                    width: '200px',
-                                    height: '200px',
-                                    objectFit: 'contain'
-                                }}
-                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSleborUKlDqo2xbo3qSyXDV1Fs8B-4M9v6og&usqp=CAU"
-                            />
-                        </Grid>
-                        <Grid container item xs={6}>
-                            <Grid item xs={12}>
-                                <Typography
-                                >Dr. {appointmentDetails?.doctor.firstName} {appointmentDetails?.doctor.lastName}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Typography
-                                    sx={{
-                                        color: theme.palette.grey[500]
-                                    }}
-                                >{appointmentDetails?.doctor.specialization}
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                    </Grid>
 
+                    {
+                        role === "user" ?
+
+                            <Grid
+                                item
+                                container
+                                xs={12}
+                                sx={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <Grid item xs={6}>
+                                    <Box
+                                        component="img"
+                                        sx={{
+                                            borderRadius: '50%',
+                                            width: '200px',
+                                            height: '200px',
+                                            objectFit: 'contain'
+                                        }}
+                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSleborUKlDqo2xbo3qSyXDV1Fs8B-4M9v6og&usqp=CAU"
+                                    />
+                                </Grid>
+                                <Grid container item xs={6}>
+                                    <Grid item xs={12}>
+                                        <Typography
+                                        >Dr. {appointmentDetails?.doctor.firstName} {appointmentDetails?.doctor.lastName}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Typography
+                                            sx={{
+                                                color: theme.palette.grey[500]
+                                            }}
+                                        >{appointmentDetails?.doctor.specialization}
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+
+                            : role === "doctor" ?
+
+                                <AppointmentDetail
+                                    detail={<Link
+                                        href="#"
+                                        sx={{
+                                            color: theme.palette.highlight.main
+                                        }}>
+                                        Mr. {appointmentDetails?.user.firstName} {appointmentDetails?.user.lastName}
+                                    </Link>}
+                                >
+                                    <PersonIcon
+                                        fontSize="medium"
+                                        sx={{
+                                            color: theme.palette.highlight.main,
+                                            marginRight: 3
+                                        }}
+                                    />
+                                </AppointmentDetail>
+                                : <></>
+                    }
                     <AppointmentDetail
                         detail={moment(appointmentDetails?.date.split('T')[0])
                             .format('dddd, MMMM Do YYYY')}
@@ -174,33 +201,35 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                             }}
                         />
                     </AppointmentDetail>
-                    <AppointmentDetail
-                        detail={appointmentDetails?.doctor.clinics?.[0].phone.mobile}
-                    >
-                        <LocalPhoneIcon
-                            fontSize="medium"
-                            sx={{
-                                color: theme.palette.highlight.main,
-                                marginRight: 3
-                            }}
-                        />
-
-                    </AppointmentDetail>
                     {
-                        (appointmentDetails?.doctor.clinics?.[0].phone.landline)
-                        &&
-                        <AppointmentDetail
-                            detail={appointmentDetails?.doctor.clinics?.[0].phone.landline}
-                        >
-                            <LocalPhoneIcon
-                                fontSize="medium"
-                                sx={{
-                                    color: theme.palette.highlight.main,
-                                    marginRight: 3
-                                }}
-                            />
-                        </AppointmentDetail>
+                        role === "user" ?
+                            <AppointmentDetail
+                                detail={appointmentDetails?.doctor.clinics?.[0].phone.mobile}
+                            >
+                                <LocalPhoneIcon
+                                    fontSize="medium"
+                                    sx={{
+                                        color: theme.palette.highlight.main,
+                                        marginRight: 3
+                                    }}
+                                />
 
+                            </AppointmentDetail>
+
+                            : role === "doctor" ?
+                                <AppointmentDetail
+                                    detail={appointmentDetails?.user.phoneNumber}
+                                >
+                                    <LocalPhoneIcon
+                                        fontSize="medium"
+                                        sx={{
+                                            color: theme.palette.highlight.main,
+                                            marginRight: 3
+                                        }}
+                                    />
+
+                                </AppointmentDetail>
+                                : <></>
                     }
                     <AppointmentDetail
                         detail={"Some diagnosis Some diagnosis Some diagnosis Some diagnosis Some diagnosis Some diagnosis Some diagnosis Some diagnosisSome diagnosis Some diagnosis Some diagnosis"}
