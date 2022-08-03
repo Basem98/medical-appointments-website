@@ -12,7 +12,6 @@ import {
     useTheme
 }
     from "@mui/material";
-import { useState } from "react";
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
 import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
@@ -30,6 +29,36 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
         { drugName: 'Some strange drug name', dosage: '2 times a day' }
     ];
     const theme = useTheme();
+    const AppointmentDetail = (props) => {
+        return (
+
+            <Grid
+                container item
+                xs={10}
+            >
+                <Grid
+                    item
+                    xs={1}
+                >
+                    {props.children}
+                </Grid>
+                <Grid
+                    item
+                    xs={11}
+                >
+                    <Typography
+                        variant="body2"
+                        sx={{
+                            fontSize: 20
+                        }}
+                    >
+                        {props.detail}
+                    </Typography>
+                </Grid>
+            </Grid>
+
+        )
+    }
     return (
         <>
             <Drawer
@@ -80,13 +109,10 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item
-                        xs={10}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            flexWrap: 'wrap'
-                        }}
+
+                    <AppointmentDetail
+                        detail={moment(appointmentDetails?.date.split('T')[0])
+                            .format('dddd, MMMM Do YYYY')}
                     >
                         <CalendarTodayIcon
                             fontSize="medium"
@@ -95,23 +121,10 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                                 marginRight: 3
                             }}
                         />
-                        <Typography
-                            variant="body2"
-                            sx={{
-                                fontSize: 20
-                            }}
-                        >
-                            {moment(appointmentDetails?.date.split('T')[0])
-                                .format('dddd, MMMM Do YYYY')}
-                        </Typography>
-                    </Grid>
-                    <Grid item
-                        xs={10}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            flexWrap: 'wrap'
-                        }}
+                    </AppointmentDetail>
+                    <AppointmentDetail
+                        detail={`at ${appointmentDetails?.time.hour}
+                        : ${appointmentDetails?.time.minute}`}
                     >
                         <QueryBuilderIcon
                             fontSize="medium"
@@ -120,23 +133,9 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                                 marginRight: 3
                             }}
                         />
-                        <Typography
-                            variant="body2"
-                            sx={{
-                                fontSize: 20
-                            }}
-                        >
-                            at {appointmentDetails?.time.hour}
-                            : {appointmentDetails?.time.minute}
-                        </Typography>
-                    </Grid>
-                    <Grid item
-                        xs={10}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            flexWrap: 'wrap'
-                        }}
+                    </AppointmentDetail>
+                    <AppointmentDetail
+                        detail={`Duration: ${appointmentDetails?.time.duration} minutes`}
                     >
                         <HourglassBottomIcon
                             fontSize="medium"
@@ -145,22 +144,16 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                                 marginRight: 3
                             }}
                         />
-                        <Typography
-                            variant="body2"
-                            sx={{
-                                fontSize: 20
-                            }}
-                        >
-                            Duration: {appointmentDetails?.time.duration} minutes
-                        </Typography>
-                    </Grid>
-                    <Grid item
-                        xs={10}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            flexWrap: 'wrap'
-                        }}
+                    </AppointmentDetail>
+                    <AppointmentDetail
+                        detail={
+                            <>
+                                <>{appointmentDetails?.doctor.clinics?.[0].address.streetName}, </>
+                                <>{appointmentDetails?.doctor.clinics?.[0].address.city}, </>
+                                <>{appointmentDetails?.doctor.clinics?.[0].address.governorate}, </>
+                                <>{appointmentDetails?.doctor.clinics?.[0].address.country} </>
+                            </>
+                        }
                     >
                         <LocationOnIcon
                             fontSize="medium"
@@ -169,25 +162,9 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                                 marginRight: 3
                             }}
                         />
-                        <Typography
-                            variant="body2"
-                            sx={{
-                                fontSize: 20
-                            }}
-                        >
-                            <>{appointmentDetails?.doctor.clinics?.[0].address.streetName}, </>
-                            <>{appointmentDetails?.doctor.clinics?.[0].address.city}, </>
-                            <>{appointmentDetails?.doctor.clinics?.[0].address.governorate}, </>
-                            <>{appointmentDetails?.doctor.clinics?.[0].address.country} </>
-                        </Typography>
-                    </Grid>
-                    <Grid item
-                        xs={10}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            flexWrap: 'wrap'
-                        }}
+                    </AppointmentDetail>
+                    <AppointmentDetail
+                        detail={`Building No. ${appointmentDetails?.doctor.clinics?.[0].address.buildingNo}`}
                     >
                         <ApartmentIcon
                             fontSize="medium"
@@ -196,22 +173,9 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                                 marginRight: 3
                             }}
                         />
-                        <Typography
-                            variant="body2"
-                            sx={{
-                                fontSize: 20
-                            }}
-                        >
-                            Building No. {appointmentDetails?.doctor.clinics?.[0].address.buildingNo}
-                        </Typography>
-                    </Grid>
-                    <Grid item
-                        xs={10}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            flexWrap: 'wrap'
-                        }}
+                    </AppointmentDetail>
+                    <AppointmentDetail
+                        detail={appointmentDetails?.doctor.clinics?.[0].phone.mobile}
                     >
                         <LocalPhoneIcon
                             fontSize="medium"
@@ -220,48 +184,13 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                                 marginRight: 3
                             }}
                         />
-                        <Typography
-                            variant="body2"
-                            sx={{
-                                fontSize: 20
-                            }}
-                        >
-                            {appointmentDetails?.doctor.clinics?.[0].phone.mobile}
-                        </Typography>
-                    </Grid>
-                    <Grid container item
-                        xs={12}
-                    >
-                        <Grid item xs={1}>
-                            <MonitorHeartIcon
-                                fontSize="medium"
-                                sx={{
-                                    color: theme.palette.highlight.main,
-                                    marginRight: 3
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={11}>
-                            <Typography
-                                variant="body2"
-                                sx={{
-                                    fontSize: 20
-                                }}
-                            >
-                                Some diagnosis Some diagnosis Some diagnosis Some diagnosis Some diagnosis Some diagnosis Some diagnosis Some diagnosisSome diagnosis Some diagnosis Some diagnosis
-                            </Typography>
-                        </Grid>
-                    </Grid>
+
+                    </AppointmentDetail>
                     {
                         (appointmentDetails?.doctor.clinics?.[0].phone.landline)
                         &&
-                        <Grid item
-                            xs={10}
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                flexWrap: 'wrap'
-                            }}
+                        <AppointmentDetail
+                            detail={appointmentDetails?.doctor.clinics?.[0].phone.landline}
                         >
                             <LocalPhoneIcon
                                 fontSize="medium"
@@ -270,17 +199,20 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                                     marginRight: 3
                                 }}
                             />
-                            <Typography
-                                variant="body2"
-                                sx={{
-                                    fontSize: 20
-                                }}
-                            >
-                                {appointmentDetails?.doctor.clinics?.[0].phone.mobile}
-                            </Typography>
-                        </Grid>
+                        </AppointmentDetail>
 
                     }
+                    <AppointmentDetail
+                        detail={"Some diagnosis Some diagnosis Some diagnosis Some diagnosis Some diagnosis Some diagnosis Some diagnosis Some diagnosisSome diagnosis Some diagnosis Some diagnosis"}
+                    >
+                        <MonitorHeartIcon
+                            fontSize="medium"
+                            sx={{
+                                color: theme.palette.highlight.main,
+                                marginRight: 3
+                            }}
+                        />
+                    </AppointmentDetail>
                     <Grid item
                         xs={10}
                         style={{
