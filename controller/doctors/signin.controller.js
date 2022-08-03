@@ -18,7 +18,7 @@ const login = async (req, res, next) => {
     /* Check if the password is accurate */
     const isPasswordAccurate = await bcrypt.compare(password, doctorData.password);
     if (!isPasswordAccurate) {
-      signInErr.statusCode = 401
+      signInErr.statusCode = 404
       signInErr.message = 'Incorrect email or password';
       throw signInErr;
     }
@@ -28,8 +28,6 @@ const login = async (req, res, next) => {
     const tokenOptions = { expiresIn: 3600 };
     tokenOptions.expiresIn = rememberMe ? (30 * 24 * 60 * 60) : tokenOptions.expiresIn;
     const accessToken = jwt.sign(tokenIdentity, config.AUTH.DOCTOR_SECRET, tokenOptions);
-    /* Set the response headers to configure cookeis */
-    const responseHeaders = { 'Set-Cookie': `accessToken=${accessToken}; Max-Age=${tokenOptions.expiresIn}; Secure; HttpOnly;` };
     /* Send a response to client to confirm the signing in success and set the cookie */
     res
       .status(200)
