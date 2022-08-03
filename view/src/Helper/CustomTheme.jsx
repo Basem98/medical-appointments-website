@@ -69,6 +69,11 @@ theme = createTheme({
         body2: {
             fontSize: 16,
             fontWeight: 'normal'
+        },
+        largerButtonText: {
+            fontSize: 20,
+            fontWeight: 'bold',
+            textTransform: 'uppercase'
         }
     }
 });

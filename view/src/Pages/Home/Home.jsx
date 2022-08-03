@@ -1,21 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
-import NavBar from "../../Components/Navbar/NavBar";
 import CustomFormButton from "./../../Components/CustomFormButton/CustomFormButton";
 import SearchBar from "./SearchBar";
 import DoctorCard from "../../Components/DoctorCard/DoctorCard";
 import heroBg from "../../Assets/Images/HeroBg.png";
 import sectionBg from "../../Assets/Images/SectionBg.png";
+import { useEffect } from "react";
 
-function Home() {
+function Home({ handleNavbarStyle }) {
   const theme = useTheme();
+
+  useEffect(() => {
+    handleNavbarStyle({
+      backgroundColor: "inherit",
+      position: "fixed",
+      color: "",
+    });
+  }, []);
+
+  const handleNavbarScroll = (e) => {
+    handleNavbarStyle({
+      backgroundColor:
+        window.scrollY > 400 ? theme.palette.highlight.main : "inherit",
+      position: "fixed",
+      color: window.scrollY > 400 ? "white" : "",
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", (e) => handleNavbarScroll(e));
+    return () => {
+      window.removeEventListener("scroll", (e) => handleNavbarScroll(e));
+    };
+  }, [window.scrollY]);
   const isTabletMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
   return (
     <div
       style={{
         color: theme.palette.text.primary,
         backgroundColor: theme.palette.primaryBg.main,
       }}
+      onScroll={() => console.log("scrolling")}
     >
       {/* Hero Section */}
       <Grid
@@ -29,9 +55,6 @@ function Home() {
         }}
         // justifyContent="center"
       >
-        <Grid item xs={12} sx={{ mb: 3 }}>
-          <NavBar />
-        </Grid>
         <Grid item xs={12} md={6} style={{}}>
           <Typography
             variant={isTabletMobile ? "h4" : "h1"}
