@@ -10,5 +10,6 @@ module.exports = {
   "/users/login": users["/users/login/"],
   "/users/{id}": users["/users/{id}"],
   "/appointments/": appointments["/appointments/"],
-  "/appointments/upcomings/{id}": appointments["/appointments/upcomings/{id}"]
+  "/appointments/upcomings/{id}": appointments["/appointments/upcomings/{id}"],
+  "/appointments/book/{id}": appointments["/appointments/book/{id}"]
 }
