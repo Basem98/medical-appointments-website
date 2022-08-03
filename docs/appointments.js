@@ -180,7 +180,7 @@ module.exports = {
                     "name": "id",
                     "description": "The id of the user or the doctor to get their appointments based on the given id",
                     "in": "path",
-                    "requires": "true",
+                    "required": "true",
                     "schema": {
                         "type": "string"
                     }
@@ -196,7 +196,7 @@ module.exports = {
                                 "properties": {
                                     "message": {
                                         "type": "array",
-                                        "desxription": "An array of the previous appointments"
+                                        "description": "An array of the previous appointments"
                                     }
                                 }
                             }
