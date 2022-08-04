@@ -4,7 +4,7 @@ const loginUser = (id, token) => {
     const config = {
         headers: { Authorization: `Bearer ${token}` }
     }
-    return axiosClient.get(`/api/users/${id}`, config);
+    return axiosClient.get(`/users/${id}`, config);
 }
 
 export default loginUser;
