@@ -165,5 +165,80 @@ module.exports = {
         }
       }
     }
+  },
+  "/doctors/login": {
+    "post": {
+      "tags": [
+        "Doctor"
+      ],
+      "description": "An endpoint to sign doctors in",
+      "requestBody": {
+        "description": "An object that has two properties; an email and a password",
+        "required": "true",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": ["email", "password"],
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "A message that confirms the sign in and the doctor's data",
+          "headers": {
+            "Set-Cookie": {
+              "schema": {
+                "type": "string",
+                "description": "A header that allows the server to store a cookie in the client's browser to be used as a store for the access token",
+                "emaple": "accessToken=sdfweqgf123as; Path=/; Max-Age=2104; HttpOnly; Secure;"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "description": "Authentication status"
+                  },
+                  "data": {
+                    "type": "string",
+                    "description": "The signed-in doctor's data"
+                  },
+                }
+              }
+            }
+          },
+        },
+        "404": {
+          "description": "A message that explains where the sign in process failed",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "description": "Validation status"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

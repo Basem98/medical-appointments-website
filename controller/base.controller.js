@@ -2,12 +2,12 @@ const Doctor = require('../model/doctor.model');
 const User = require('../model/user.model');
 const Token = require('../model/token.model');
 
-const customErr = {msg: ''};
-customErr.toString = function() {return this.msg}
+const customErr = { msg: '' };
+customErr.toString = function () { return this.msg }
 
 async function verifyToken(req, res, next) {
   try {
-    const tokenData = await Token.findOne({token: req.query.token, userId: req.query.id});
+    const tokenData = await Token.findOne({ token: req.query.token, userId: req.query.id });
     if (!tokenData) {
       customErr.msg = 'This token does not exist or it has expired';
       customErr.statusCode = 404;
@@ -24,7 +24,7 @@ async function verifyToken(req, res, next) {
     tokenUser.isVerified = true;
     await tokenUser.save();
     await Token.findByIdAndDelete(tokenData._id);
-    res.status(200).json({message: 'Email verified successfully'});
+    res.status(200).json({ message: 'Email verified successfully' });
   } catch (err) {
     console.error(err);
     err.statusCode = 500;
@@ -32,7 +32,23 @@ async function verifyToken(req, res, next) {
   }
 }
 
+function logout(req, res, next) {
+  try {
+    res
+      .cookie('accessToken', null, {
+        maxAge: 0,
+        secure: true,
+        httpOnly: true
+      })
+      .status(200)
+      .json({ message: 'Signed out successfully' });
+  } catch (err) {
+    err.statusCode = 500;
+    next(err);
+  }
+}
 
 module.exports = {
-  verifyToken
+  verifyToken,
+  logout
 }

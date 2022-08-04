@@ -58,6 +58,11 @@ module.exports = {
         "scheme": "bearer",
         "bearerFormat": "JWT"
       }
+    },
+    "cookieAuth": {
+      "type": "http-only",
+      "in": "cookie",
+      "name": "accessToken"
     }
   }
 }

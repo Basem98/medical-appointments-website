@@ -4,10 +4,12 @@ const userRouter = require('./user.router');
 const doctorRouter = require('./doctor.router');
 const adminRouter = require('./admin.router');
 const appointmentRouter = require('./appointment.router');
-const {verifyToken} = require('../controller/base.controller');
+const {verifyToken, logout} = require('../controller/base.controller');
 
 
 baseRouter.put('/verify', verifyToken);
+
+baseRouter.get('/logout', logout);
 
 module.exports = {
   baseRouter,
