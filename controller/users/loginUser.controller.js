@@ -14,14 +14,19 @@ module.exports.loginUser = (req, res, next) => {
                     if (!isCorrectPassword) {
                         return res.status(400).json({ message: 'Incorrect email or password' });
                     }
+                    const tokenOptions = { expiresIn: "24h" };
+                    tokenOptions.expiresIn = rememberMe ? ("30d") : tokenOptions.expiresIn;
                     let token = jwt.sign({
                         id: data._id,
                         role: 'user'
-                    }, envConfig.AUTH.USER_SECRET, { expiresIn: "24h" });
-                    return res.status(200).json({
-                        token,
-                        id: data._id
-                    });
+                    }, envConfig.AUTH.USER_SECRET, tokenOptions);
+                    return res.status(200)
+                        .cookie('accessToken', token, {
+                            maxAge: tokenOptions.expiresIn,
+                            secure: true,
+                            httpOnly: true,
+                        })
+                        .json({message: 'Signed in successfully', id: data._id})
                 })
                 .catch((error) => {
                     error.statusCode = 500;
