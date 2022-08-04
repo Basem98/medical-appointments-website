@@ -50,9 +50,7 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                 >
                     <Typography
                         variant="body2"
-                        sx={{
-                            fontSize: 20
-                        }}
+                        paddingLeft={2}
                     >
                         {props.detail}
                     </Typography>
@@ -99,7 +97,7 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSleborUKlDqo2xbo3qSyXDV1Fs8B-4M9v6og&usqp=CAU"
                                     />
                                 </Grid>
-                                <Grid container item xs={6}>
+                                <Grid container item xs={6} paddingLeft="inherit">
                                     <Grid item xs={12}>
                                         <Typography
                                         >Dr. {appointmentDetails?.doctor.firstName} {appointmentDetails?.doctor.lastName}
@@ -242,7 +240,9 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                             }}
                         />
                     </AppointmentDetail>
-                    <Grid item
+                    <Grid
+                        container
+                        item
                         xs={10}
                         style={{
                             display: 'flex',
@@ -250,21 +250,22 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                             flexWrap: 'wrap'
                         }}
                     >
-                        <MedicationIcon
-                            fontSize="medium"
-                            sx={{
-                                color: theme.palette.highlight.main,
-                                marginRight: 3
-                            }}
-                        />
-                        <Typography
-                            variant="body2"
-                            sx={{
-                                fontSize: 20
-                            }}
-                        >
-                            Prescription
-                        </Typography>
+                        <Grid item xs={1}>
+                            <MedicationIcon
+                                fontSize="medium"
+                                sx={{
+                                    color: theme.palette.highlight.main,
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={1}>
+                            <Typography
+                                variant="body2"
+                                paddingLeft={2}
+                            >
+                                Prescription
+                            </Typography>
+                        </Grid>
                         <TableContainer>
                             <Table sx={{ maxWidth: 400 }} aria-label="Prescription">
                                 <TableHead>
