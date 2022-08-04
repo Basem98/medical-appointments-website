@@ -2,17 +2,16 @@ import React from "react";
 import { useState } from "react";
 import CustomAlert from "../../Components/CustomAlert/CustomAlert";
 import loginUser from "../../Network/Users/login";
-import NavBar from "../Home/NavBar";
 import Grid from "@mui/material/Grid";
 import Welcome from "./Welcome";
 import { useEffect } from "react";
 
 const UserProfile = () => {
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTBmYTUwMWI1ZmUxYTVhZmNlMmI0ZSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjU5MDMyMjQ3LCJleHAiOjE2NTkwMzU4NDd9.CVLKDpvWDjpvxZ1O3h4wGr3j-El2EFdiW82GMuXiIx4";
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZThkMzkzMWRiMDg4NmQ5ZDAxNzJlNyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjU5NDI1OTczLCJleHAiOjE2NTk1MTIzNzN9.a5Hm7AUjZ28-lVchOrTfBmsbtSHLa-AwjrISIt7xDMI";
     const [userData, setUserData] = useState({});
 
     useEffect(() => {
-        loginUser("62e0fa501b5fe1a5afce2b4e", token)
+        loginUser("62e8d3931db0886d9d0172e7", token)
             .then((response) => {
                 setUserData(response.data);
             })
@@ -21,7 +20,6 @@ const UserProfile = () => {
 
     return (
         <>
-            <NavBar></NavBar>
             <Grid width='90%' container spacing={2} justifyContent='flex-end'>
                 {
                     !userData.isVerified &&

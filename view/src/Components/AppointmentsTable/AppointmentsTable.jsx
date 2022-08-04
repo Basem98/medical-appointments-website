@@ -1,10 +1,24 @@
 import React from "react";
-import { Card, CardActions, CardContent, Grid, Typography, Link, Button, CircularProgress } from "@mui/material";
+import {
+    Card,
+    CardActions,
+    CardContent,
+    Grid,
+    Typography,
+    Link,
+    Button,
+    CircularProgress
+}
+    from "@mui/material";
 import { useTheme } from "@mui/material";
 import moment from "moment";
+import { useState } from "react";
+import AppointmentDetails from "../AppointmentDetails/AppointmentDetails";
 
 const AppointmentsTable = ({ appointments, role }) => {
     const theme = useTheme();
+    const [appointmentDetails, setAppointmentDetails] = useState();
+    const [openDrawer, setOpenDrawer] = useState(false);
     const displayAccordingToRole = (appointment) => {
         return role === 'user' ?
             (
@@ -189,6 +203,10 @@ const AppointmentsTable = ({ appointments, role }) => {
                                                         }
                                                     }}
                                                     variant="contained"
+                                                    onClick={() => {
+                                                        setOpenDrawer(!openDrawer);
+                                                        setAppointmentDetails(appointment)
+                                                    }}
                                                 >
                                                     See Details
                                                 </Button>
@@ -196,6 +214,12 @@ const AppointmentsTable = ({ appointments, role }) => {
                                         </Grid>
                                     </Grid>
                                 </Card>
+                                <AppointmentDetails
+                                    appointmentDetails={appointmentDetails}
+                                    role="user"
+                                    openDrawer={openDrawer}
+                                    setOpenDrawer={setOpenDrawer}
+                                />
                             </Grid>
                         );
                     })

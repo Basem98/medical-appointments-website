@@ -2,7 +2,8 @@ const express = require('express');
 const doctorRouter = express.Router();
 const { validateUserData } = require('../middleware/doctor/signup.middleware');
 const validationResult = require('../middleware/user/validation.middleware');
-const { signUp, getDoctorById, uploadImages, getDoctorsByPage } = require('../controller/doctors/main.controller');
+const { signUp, login, getDoctorById, uploadImages, getDoctorsByPage } = require('../controller/doctors/main.controller');
+const protectDoctorsRoute = require('../middleware/doctor/auth.middleware');
 const { verifyEmail } = require('../middleware/verification.middleware');
 const { isAlreadyInDb } = require('../middleware/doctor/exists.middleware');
 const multerUpload = require('../middleware/multer.middleware');
@@ -27,5 +28,9 @@ doctorRouter.get('/all', getDoctorsByPage);
 
 /* ---------- An endpoint to get a specific doctor document by its id ---------- */
 doctorRouter.route('/:id').get(getDoctorById);
+
+/* ---------- An endpoint to sign in doctors ---------- */
+doctorRouter.post('/login', login);
+
 
 module.exports = doctorRouter;

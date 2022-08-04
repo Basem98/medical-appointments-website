@@ -180,7 +180,7 @@ module.exports = {
                     "name": "id",
                     "description": "The id of the user or the doctor to get their appointments based on the given id",
                     "in": "path",
-                    "requires": "true",
+                    "required": "true",
                     "schema": {
                         "type": "string"
                     }
@@ -196,7 +196,7 @@ module.exports = {
                                 "properties": {
                                     "message": {
                                         "type": "array",
-                                        "desxription": "An array of the previous appointments"
+                                        "description": "An array of the previous appointments"
                                     }
                                 }
                             }
@@ -229,6 +229,93 @@ module.exports = {
                                     "message": {
                                         "type": "string",
                                         "description": "Appointment is not found error message"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "A response that indicates that an error occured in runtime",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "description": "Internal Error message"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/appointments/book/{id}": {
+        "post": {
+            "tags": ["Appointment"],
+            "description": "An endpoint that allows user to book an appointment",
+            "security": {
+                "bearerAuth": []
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "description": "The id of the appointment to book",
+                    "required": "true",
+                    "in": "path",
+                    "schema": {
+                        "type": "true"
+                    }
+
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "A response that indicates that the appointment is booked successfully",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "description": "A message saying that the appointment is booked successfully"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "404": {
+                    "description": "A response that contains message saying that appointment is not found",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "description": "Appointment is not found error message"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "409": {
+                    "description": "A response indicating that the appointment is taken",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "description": "A message saying that the appointment is already taken"
                                     }
                                 }
                             }
