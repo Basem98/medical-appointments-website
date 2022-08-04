@@ -1,6 +1,7 @@
 import { StaticDatePicker, DesktopDatePicker } from '@mui/x-date-pickers';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import TextField from '@mui/material/TextField';
 
 import { useState } from 'react';
@@ -10,7 +11,7 @@ function CustomCalender() {
   const [value, setValue] = useState(new Date());
   return (
     // import moment.js to use it in the data adapter
-    <LocalizationProvider dateAdapter={}>
+    <LocalizationProvider dateAdapter={AdapterMoment}>
       <StyledEngineProvider injectFirst>
         < StaticDatePicker
           component="div"
