@@ -20,7 +20,7 @@ const protectDoctorsRoute = async (req, res, next) => {
     } catch (err) {
       err.statusCode = 401;
       next(err);
-    } 
+    }
     /* Check if the doctor's id in the payload is valid */
     const doctorData = await Doctor.findById(tokenPayload.id);
     if (!doctorData) {
@@ -33,6 +33,16 @@ const protectDoctorsRoute = async (req, res, next) => {
       authError.message = "Insufficient access permissions";
       authError.statusCode = 401;
       throw authError;
+    }
+    if (tokenPayload.exp - tokenPayload.iat === 3600) {
+      // Reset the token & cookie's timer with each request as long as the user is active
+      const tokenIdentity = { id: tokenPayload.id, role: tokenPayload.role };
+      const rolledToken = jwt.sign(tokenIdentity, config.AUTH.DOCTOR_SECRET, { expiresIn: 3600 });
+      res.cookie('accessToken', rolledToken, {
+        maxAge: 3600 * 1000,
+        secure: true,
+        httpOnly: true
+      });
     }
     req.doctor = doctorData;
     next();
