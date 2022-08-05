@@ -11,6 +11,7 @@ import drImage from "../../Assets/Images/pic-black-white.jpg";
 import CustomFormButton from "../CustomFormButton/CustomFormButton";
 
 const DoctorCard = ({ cardData }) => {
+  console.log(cardData)
   const theme = useTheme();
   return (
     <Container
@@ -29,9 +30,9 @@ const DoctorCard = ({ cardData }) => {
       {cardData ? (
         <>
           <img
-            src={drImage}
+            src={cardData.profilePicture}
             alt="doctorImage"
-            style={{ borderRadius: "50%", maxWidth: "195px" }}
+            style={{ borderRadius: "50%", maxWidth: "80%" }}
           />
           <Container
             disableGutters
@@ -47,11 +48,11 @@ const DoctorCard = ({ cardData }) => {
             <StarIcon sx={{ color: theme.palette.ratingGold.main }} />
             <StarHalfIcon sx={{ color: theme.palette.ratingGold.main }} />
           </Container>
-          <Typography variant="h5" align="center">
-            Dr. Mohamed Ahmed
+          <Typography variant="h4" align="center">
+            Dr. {cardData.firstName + ' ' + cardData.lastName}
           </Typography>
           <Typography variant="h6" align="center" sx={{ my: 2, p: 0 }}>
-            Specialized in Dermatology Cairo University
+            Specialized in {cardData.specialization}
           </Typography>
           <CustomFormButton
             variant="contained"
@@ -59,6 +60,7 @@ const DoctorCard = ({ cardData }) => {
               padding: "10px 30px",
               fontSize: theme.typography.body1.fontSize,
             }}
+            onClick={() => { }}
           >
             More Info
           </CustomFormButton>
