@@ -48,7 +48,29 @@ function logout(req, res, next) {
   }
 }
 
+async function verifyBeforeForgetPassword(req, res, next) {
+  try {
+    const { email, role } = req.body;
+    const modelToUse = role === 'User' ? User : Doctor;
+    const data = await modelToUse.findOne({ email });
+    if (!data) {
+      const err = new Error('User not found');
+      err.statusCode = 404;
+      throw err;
+    }
+    delete data.password;
+    req.body = data;
+    req.body.id = data._id;
+    req.body.role = role;
+    next();
+  } catch (err) {
+    next(err);
+  }
+}
+
+
 module.exports = {
   verifyToken,
-  logout
+  logout,
+  verifyBeforeForgetPassword
 }
