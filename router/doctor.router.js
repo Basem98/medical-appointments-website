@@ -3,16 +3,16 @@ const doctorRouter = express.Router();
 const { validateUserData } = require('../middleware/doctor/signup.middleware');
 const validationResult = require('../middleware/user/validation.middleware');
 const { signUp, login, getDoctorById, uploadImages, getDoctorsByPage } = require('../controller/doctors/main.controller');
-const protectDoctorsRoute = require('../middleware/doctor/auth.middleware');
-const { verifyEmail } = require('../middleware/verification.middleware');
+const { generateVerificationToken, genSignUpEmailBody } = require('../middleware/verification.middleware');
 const { isAlreadyInDb } = require('../middleware/doctor/exists.middleware');
 const multerUpload = require('../middleware/multer.middleware');
 const bufferFileToString = require('../middleware/bufToString.middleware');
 const { isEmailAlreadyInDb, isPhoneAlreadyInDb } = require('../controller/doctors/exists.controller');
+const { sendMail } = require('../controller/doctors/emails.controller');
 
 
 /* ---------- An endpoint to register new doctors ---------- */
-doctorRouter.post('/', validateUserData(), validationResult, isAlreadyInDb, signUp, verifyEmail);
+doctorRouter.post('/', validateUserData(), validationResult, isAlreadyInDb, signUp, generateVerificationToken, genSignUpEmailBody, sendMail);
 
 /* ---------- An endpoint to upload the new doctor's profile picture & professional license ---------- */
 doctorRouter.post('/upload/images', multerUpload.array('images', 2), bufferFileToString, uploadImages);
