@@ -3,7 +3,7 @@ import axiosClient from '../axiosClient';
 
 export function isEmailDuplicated(email) {
   try {
-    return axiosClient.post('/api/doctors/validate/email', { email });
+    return axiosClient.post('/doctors/validate/email', { email });
   } catch (err) {
     console.error(err);
   }
@@ -12,7 +12,7 @@ export function isEmailDuplicated(email) {
 
 export function isPhoneDuplicated(phone) {
   try {
-    return axiosClient.post('/api/doctors/validate/phone', { phone });
+    return axiosClient.post('/doctors/validate/phone', { phone });
   } catch (err) {
     console.error(err);
   }
