@@ -147,7 +147,7 @@ const UserSignInForm = ({ open, handleClose }) => {
                                 <FormGroup>
                                     <CustomCheckbox label="Remember me" name='rememberMe' />
                                 </FormGroup>
-                                <Link href="#" style={{ ...theme.typography.body2, alignSelf: 'center', color: theme.palette.highlight.main }}>
+                                <Link href="/verify" style={{ ...theme.typography.body2, alignSelf: 'center', color: theme.palette.highlight.main }}>
                                     Forgot password?
                                 </Link>
                             </Grid>
@@ -159,7 +159,6 @@ const UserSignInForm = ({ open, handleClose }) => {
                         </Grid>
                     </Form >)}
                 </Formik >
-
             </Grid >
         </Modal>
     )
