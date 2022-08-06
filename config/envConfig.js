@@ -24,7 +24,8 @@ module.exports = {
     HOST: process.env.EMAIL_HOST,
     SERVICE: process.env.EMAIL_SERVICE,
     USER: process.env.EMAIL_USER,
-    PASS: process.env.EMAIL_PASS
+    PASS: process.env.EMAIL_PASS,
+    AT: process.env.EMAIL_AT
   },
   /* ----- Cloudinary-related environment variables */
   CLOUDINARY: {
