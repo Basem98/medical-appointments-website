@@ -7,7 +7,7 @@ customErr.toString = function () { return this.msg }
 
 async function verifyToken(req, res, next) {
   try {
-    const tokenData = await Token.findOne({ token: req.query.token, userId: req.query.id });
+    const tokenData = await Token.findOne({ token: req.params.token });
     if (!tokenData) {
       customErr.msg = 'This token does not exist or it has expired';
       customErr.statusCode = 404;

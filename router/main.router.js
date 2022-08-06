@@ -7,7 +7,7 @@ const appointmentRouter = require('./appointment.router');
 const {verifyToken, logout} = require('../controller/base.controller');
 
 /* ---------- An endpoint to verify the user's email ---------- */
-baseRouter.put('/verify', verifyToken);
+baseRouter.put('/verify/:token', verifyToken);
 
 /* ---------- An endpoint to logout users & delete their cookies ---------- */
 baseRouter.get('/logout', logout);
