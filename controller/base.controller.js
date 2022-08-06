@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const Doctor = require('../model/doctor.model');
 const User = require('../model/user.model');
 const Token = require('../model/token.model');
@@ -24,7 +25,7 @@ async function verifyToken(req, res, next) {
     tokenUser.isVerified = true;
     await tokenUser.save();
     await Token.findByIdAndDelete(tokenData._id);
-    res.status(200).json({ message: 'Email verified successfully' });
+    res.status(200).json({ message: 'Email verified successfully', data: { email: tokenUser.email, role: tokenData.userRole } });
   } catch (err) {
     console.error(err);
     err.statusCode = 500;
@@ -69,8 +70,33 @@ async function verifyBeforeForgetPassword(req, res, next) {
 }
 
 
+async function updatePassword(req, res, next) {
+  try {
+    const { email, role, oldPassword, newPassword } = req.body;
+    const modelToUse = role === 'User' ? User : Doctor;
+    const data = await modelToUse.findOne({ email });
+    if (!data) {
+      const err = new Error('User not found');
+      err.statusCode = 404;
+      throw err;
+    }
+    if (!(await bcrypt.compare(oldPassword, data.password))) {
+      const err = new Error('Wrong password');
+      err.statusCode = 403;
+      throw err;
+    }
+    data.password = newPassword;
+    await data.save();
+    res.status(200).json({ message: 'Password updated successfully' });
+  } catch (err) {
+    next(err);
+  }
+}
+
+
 module.exports = {
   verifyToken,
   logout,
-  verifyBeforeForgetPassword
+  verifyBeforeForgetPassword,
+  updatePassword
 }
