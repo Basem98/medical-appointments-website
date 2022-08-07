@@ -3,9 +3,9 @@ import axiosClient from "../axiosClient";
 const submitUserData = (userData) => {
   let body = { ...userData };
   let path = '/login'
-  if (body.role === 'user')
+  if (body.role === 'User')
     path = '/users' + path;
-  else if (body.role === 'doctor')
+  else if (body.role === 'Doctor')
     path = '/doctors' + path;
 
   delete body.role;
