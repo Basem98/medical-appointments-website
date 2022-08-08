@@ -24,7 +24,6 @@ async function verifyToken(req, res, next) {
 
     tokenUser.isVerified = true;
     await tokenUser.save();
-    await Token.findByIdAndDelete(tokenData._id);
     res.status(200).json({ message: 'Email verified successfully', data: { email: tokenUser.email, role: tokenData.userRole } });
   } catch (err) {
     console.error(err);
