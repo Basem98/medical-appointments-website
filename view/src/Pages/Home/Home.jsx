@@ -6,9 +6,11 @@ import DoctorCard from "../../Components/DoctorCard/DoctorCard";
 import heroBg from "../../Assets/Images/HeroBg.png";
 import sectionBg from "../../Assets/Images/SectionBg.png";
 import { useEffect } from "react";
+import getTopDoctors from '../../Network/Doctors/getTopDoctors'
 
 function Home({ handleNavbarStyle }) {
   const theme = useTheme();
+  const [topDoctorsData, setTopDoctorsData] = useState([])
 
   useEffect(() => {
     handleNavbarStyle({
@@ -18,6 +20,7 @@ function Home({ handleNavbarStyle }) {
     });
 
     //call api for top 3 rated
+    handleGetTopDoctors()
   }, []);
 
   const handleNavbarScroll = (e) => {
@@ -37,6 +40,11 @@ function Home({ handleNavbarStyle }) {
   }, [window.scrollY]);
   const isTabletMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
+  const handleGetTopDoctors = () => {
+    getTopDoctors()
+      .then(res => setTopDoctorsData(res.data.data))
+      .catch(err => console.log(err))
+  }
   return (
     <div
       style={{
@@ -143,15 +151,11 @@ function Home({ handleNavbarStyle }) {
           sx={{ mt: 9 }}
           rowSpacing={9}
         >
-          <Grid item xs={8} md={3}>
-            <DoctorCard />
-          </Grid>
-          <Grid item xs={8} md={3}>
-            <DoctorCard />
-          </Grid>
-          <Grid item xs={8} md={3}>
-            <DoctorCard />
-          </Grid>
+          {topDoctorsData.length && topDoctorsData.map(cardData => (
+            <Grid key={cardData._id} item xs={8} md={3}>
+              <DoctorCard cardData={cardData} />
+            </Grid>
+          ))}
         </Grid>
         <Grid item xs={12} container justifyContent="center" sx={{ mt: 11 }}>
           <Grid item md={5} xs={10}>
