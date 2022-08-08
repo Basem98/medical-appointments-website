@@ -33,7 +33,7 @@ const getDoctorsByPage = async (req, res, next) => {
     const doctors = await Doctor.aggregate([
       // 1. Don't send the professionalLicense image source along with the data
       {
-        $project: { professionalLicense: 0 },
+        $project: { professionalLicense: 0, password: 0 },
       },
       // 2. Filter out documents based on the recieved query strings
       ...filteringStage,
