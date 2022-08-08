@@ -123,7 +123,7 @@ function Footer() {
             fontWeight: theme.typography.body1.fontWeight,
           }}
         >
-          Dyou need help?
+          Do you need help?
         </Typography>
         <Link
           href="#"
