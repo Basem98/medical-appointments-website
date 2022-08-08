@@ -6,9 +6,11 @@ import DoctorCard from "../../Components/DoctorCard/DoctorCard";
 import heroBg from "../../Assets/Images/HeroBg.png";
 import sectionBg from "../../Assets/Images/SectionBg.png";
 import { useEffect } from "react";
+import getTopDoctors from '../../Network/Doctors/getTopDoctors'
 
 function Home({ handleNavbarStyle }) {
   const theme = useTheme();
+  const [topDoctorsData, setTopDoctorsData] = useState([])
 
   useEffect(() => {
     handleNavbarStyle({
@@ -16,6 +18,9 @@ function Home({ handleNavbarStyle }) {
       position: "fixed",
       color: "",
     });
+
+    //call api for top 3 rated
+    handleGetTopDoctors()
   }, []);
 
   const handleNavbarScroll = (e) => {
@@ -35,6 +40,11 @@ function Home({ handleNavbarStyle }) {
   }, [window.scrollY]);
   const isTabletMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
+  const handleGetTopDoctors = () => {
+    getTopDoctors()
+      .then(res => setTopDoctorsData(res.data.data))
+      .catch(err => console.log(err))
+  }
   return (
     <div
       style={{
@@ -53,9 +63,9 @@ function Home({ handleNavbarStyle }) {
           padding: `0px ${!isTabletMobile ? "70px" : "0px"}`,
           width: "100%",
         }}
-        // justifyContent="center"
+      // justifyContent="center"
       >
-        <Grid item xs={12} md={6} style={{}}>
+        <Grid item xs={12} md={6} sx={{}}>
           <Typography
             variant={isTabletMobile ? "h4" : "h1"}
             sx={{
@@ -63,6 +73,7 @@ function Home({ handleNavbarStyle }) {
               maxWidth: "560px",
               m: 2,
               my: 7,
+              pt: 5
             }}
           >
             Medical Appointments now with the click of A Button
@@ -140,15 +151,11 @@ function Home({ handleNavbarStyle }) {
           sx={{ mt: 9 }}
           rowSpacing={9}
         >
-          <Grid item xs={8} md={3}>
-            <DoctorCard />
-          </Grid>
-          <Grid item xs={8} md={3}>
-            <DoctorCard />
-          </Grid>
-          <Grid item xs={8} md={3}>
-            <DoctorCard />
-          </Grid>
+          {topDoctorsData.length && topDoctorsData.map(cardData => (
+            <Grid key={cardData._id} item xs={8} md={3}>
+              <DoctorCard cardData={cardData} />
+            </Grid>
+          ))}
         </Grid>
         <Grid item xs={12} container justifyContent="center" sx={{ mt: 11 }}>
           <Grid item md={5} xs={10}>

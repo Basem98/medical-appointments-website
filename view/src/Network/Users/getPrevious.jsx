@@ -6,7 +6,7 @@ const getPrevious = (id, token) => {
             'Authorization': `Bearer ${token}`
         }
     }
-    return axiosClient.get(`/api/appointments/previous/${id}`, config);
+    return axiosClient.get(`/appointments/previous/${id}`, config);
 }
 
 export default getPrevious;

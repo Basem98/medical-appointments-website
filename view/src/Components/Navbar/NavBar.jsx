@@ -10,10 +10,25 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useTheme } from "@emotion/react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import UserLoginForm from "../UserLoginForm/UserLoginForm";
+import { useSelector, useDispatch } from "react-redux";
+import { removeUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
+
 const NavBar = ({ backgroundColor, color, position }) => {
   const theme = useTheme();
   const isTabletMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const [showMenue, setShowMenu] = useState(false);
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const userDetails = useSelector((state) => state.userDetails);
+  const dispatch = useDispatch();
   return (
     <>
       <AppBar
@@ -149,21 +164,25 @@ const NavBar = ({ backgroundColor, color, position }) => {
                     About Us
                   </Link>
                 </Grid>
-                <Grid
-                  item
-                  md={2}
-                  sx={{ display: "flex", justifyContent: "center" }}
-                >
-                  <Link
-                    to="#"
-                    style={{
-                      color: color ? color : theme.palette.text.primary,
-                      textDecoration: "none",
-                    }}
+                {!userDetails?.loggedIn && (
+                  <Grid
+                    item
+                    md={2}
+                    sx={{ display: "flex", justifyContent: "center" }}
                   >
-                    Sign In
-                  </Link>
-                </Grid>
+                    <Link
+                      to="#"
+                      style={{
+                        color: color ? color : theme.palette.text.primary,
+                        textDecoration: "none",
+                      }}
+                      onClick={() => handleOpen()}
+                    >
+                      Sign In
+                    </Link>
+                    <UserLoginForm open={open} handleClose={handleClose} />
+                  </Grid>
+                )}
                 <Grid
                   item
                   md={2}
@@ -179,6 +198,25 @@ const NavBar = ({ backgroundColor, color, position }) => {
                     العربية
                   </Link>
                 </Grid>
+
+                {userDetails?.loggedIn && (
+                  <Grid
+                    item
+                    md={2}
+                    sx={{ display: "felx", justifyContent: "center" }}
+                  >
+                    <Link
+                      to="#"
+                      style={{
+                        color: color ? color : theme.palette.text.primary,
+                        textDecoration: "none",
+                      }}
+                      onClick={() => dispatch(removeUserDetails())}
+                    >
+                      Welcome, {userDetails.email}
+                    </Link>
+                  </Grid>
+                )}
               </>
             )}
           </Grid>

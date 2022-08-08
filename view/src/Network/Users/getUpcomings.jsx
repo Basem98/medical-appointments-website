@@ -6,7 +6,7 @@ const getUpcomings = (id, token) => {
             'Authorization': `Bearer ${token}`
         }
     }
-    return axiosClient.get(`/api/appointments/upcomings/${id}`, config);
+    return axiosClient.get(`/appointments/upcomings/${id}`, config);
 }
 
 export default getUpcomings;
