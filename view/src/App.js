@@ -5,6 +5,7 @@ import Footer from "./Components/Footer/Footer";
 import Specialists from "./Pages/Specialists/Specialists";
 import NavBar from "./Components/Navbar/NavBar";
 import { useState } from "react";
+import { Grid } from "@mui/material";
 import PasswordChangeForm from './Components/PasswordChangeForm/PasswordChangeForm';
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
   };
 
   return (
-    <>
+    <Grid container sx={{minHeight: '100vh'}}>
       <NavBar {...navbarStyle} />
       <Routes>
         <Route
@@ -36,7 +37,7 @@ function App() {
         />
       </Routes>
       <Footer />
-    </>
+    </Grid>
   );
 }
 

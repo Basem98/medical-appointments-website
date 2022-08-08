@@ -7,7 +7,8 @@ function Footer() {
     <Grid
       container
       justifyContent="space-around"
-      sx={{ backgroundColor: theme.palette.secondaryBg.main, py: 5 }}
+      sx={{ backgroundColor: theme.palette.secondaryBg.main, py: 5}}
+      alignSelf="flex-end"
       rowSpacing={5}
     >
       <Grid
