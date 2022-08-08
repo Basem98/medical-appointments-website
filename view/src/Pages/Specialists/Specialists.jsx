@@ -1,6 +1,7 @@
 import { Typography, Grid, useTheme, FormHelperText } from "@mui/material";
 import { Form, Formik } from "formik";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import DropdownField from "../../Components/DropdownField/DropdownField";
 import InputField from "../../Components/InputField/InputField";
 import DoctorCard from "../../Components/DoctorCard/DoctorCard";
@@ -14,13 +15,31 @@ import getAllDoctorsData from "../../Network/Doctors/getAllDoctors"
 
 function Specialists({ handleNavbarStyle }) {
   const theme = useTheme();
+  const location = useLocation();
+  const [formInitialValues, setFormInitialValues] = useState({
+    specialization: "",
+    governorate: "",
+    dateFromMonth: "",
+    dateFromDay: "",
+    dateToMonth: "",
+    dateToDay: "",
+    priceFrom: "",
+    priceTo: "",
+  })
   useEffect(() => {
     handleNavbarStyle({
       backgroundColor: theme.palette.highlight.main,
       position: "static",
       color: "white",
     });
-    getAllSpecialists();
+    if (location.state) {
+      console.log("locaition: ", location);
+      getAllSpecialists(location.state);
+      setFormInitialValues({ ...formInitialValues, ...location.state })
+    }
+    else {
+      getAllSpecialists()
+    }
   }, []);
   const [specialistsData, setSpecialistsData] = useState([]);
 
@@ -146,17 +165,11 @@ function Specialists({ handleNavbarStyle }) {
               <Grid item xs={12}>
                 <Formik
                   initialValues={{
-                    specialization: "",
-                    governorate: "",
-                    dateFromMonth: "",
-                    dateFromDay: "",
-                    dateToMonth: "",
-                    dateToDay: "",
-                    priceFrom: "",
-                    priceTo: "",
+                    ...formInitialValues
                   }}
                   validate={validateForm}
                   onSubmit={getAllSpecialists}
+                  enableReinitialize
                 >
                   {(formik) =>
                   (<Form style={{ width: "100%", marginTop: "50px" }}>
@@ -390,7 +403,7 @@ function Specialists({ handleNavbarStyle }) {
               (
                 <Grid item md={12} container rowSpacing={3} columnSpacing={{ xs: 7 }}>
                   {specialistsData.map((cardData) => (
-                    <Grid item lg={4} md={5} key={cardData.id}>
+                    <Grid item lg={4} md={5} key={cardData._id}>
                       <DoctorCard cardData={cardData} />
                     </Grid>
                   ))}

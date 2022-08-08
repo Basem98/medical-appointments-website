@@ -16,6 +16,8 @@ function Home({ handleNavbarStyle }) {
       position: "fixed",
       color: "",
     });
+
+    //call api for top 3 rated
   }, []);
 
   const handleNavbarScroll = (e) => {
@@ -53,9 +55,9 @@ function Home({ handleNavbarStyle }) {
           padding: `0px ${!isTabletMobile ? "70px" : "0px"}`,
           width: "100%",
         }}
-        // justifyContent="center"
+      // justifyContent="center"
       >
-        <Grid item xs={12} md={6} style={{}}>
+        <Grid item xs={12} md={6} sx={{}}>
           <Typography
             variant={isTabletMobile ? "h4" : "h1"}
             sx={{
@@ -63,6 +65,7 @@ function Home({ handleNavbarStyle }) {
               maxWidth: "560px",
               m: 2,
               my: 7,
+              pt: 5
             }}
           >
             Medical Appointments now with the click of A Button
