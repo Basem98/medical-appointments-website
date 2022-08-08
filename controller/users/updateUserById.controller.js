@@ -12,16 +12,46 @@ module.exports.updateUserById = async (req, res, next) => {
     if (req.params.id.toString() != req.body.id) {
         return res.status(401).json({ message: 'Unauthorized to update user data' });
     }
-    if (req.body.password) {
-        await bycrypt.hash(req.body.password, 10)
-            .then((hashedPassword) => {
-                req.body.password = hashedPassword;
-            })
-            .catch(error => {
-                error.statusCode = 500;
-                next(error);
-            });
+    try {
+        let userData = await User.findById(req.body.id);
+    } catch (error) {
+        error.statusCode = 404;
+        error.message = "User is not found";
     }
+
+    if (req.body.newPassword) {
+
+        /** Check if the provided current password is the same password in the database */
+        User.findById(req.params.id)
+            .then((userData) => {
+                bycrypt.compare(userData.password, req.body.password)
+                    .then((isCorrectPassword) => {
+                        if (!isCorrectPassword) {
+                            return res.status(401).json({ message: 'The entered password is wrong' })
+                        }
+                    })
+                    .catch((error) => {
+                        error.statusCode = 500;
+                        error.message = "Password is missing";
+                        return next(error);
+                    });
+
+                /** If the password is correct, encrypt the new password */
+                bycrypt.hash(req.body.newPassword, 10)
+                    .then(async (hashedNewPassword) => {
+                        userData.password = hashedNewPassword;
+                        console.log(req.body.newPassword);
+                        console.log(hashedNewPassword);
+                        userData.save();
+                        return res.status(200).json({ message: 'Data updated successfully' })
+                    })
+                    .catch(error => {
+                        error.statusCode = 500;
+                        return next(error);
+                    });
+            })
+    }
+    console.log(55555);
     User.findByIdAndUpdate(req.body.id, { $set: req.body })
         .then((data) => {
             if (!data) {
