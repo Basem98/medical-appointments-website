@@ -20,7 +20,7 @@ baseRouter.get('/logout', logout);
 baseRouter.post('/verify-old', verifyBeforeForgetPassword, generateVerificationToken, genForgetPassEmailBody, sendMail);
 
 /* ---------- An endpoint to change a doctor's password ---------- */
-doctorRouter.post('/change-password', validateBeforeChangingPassword, validationResult, updatePassword);
+baseRouter.post('/change-password', validateBeforeChangingPassword, validationResult, updatePassword);
 
 
 module.exports = {
