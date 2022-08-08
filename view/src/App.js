@@ -5,6 +5,7 @@ import Footer from "./Components/Footer/Footer";
 import Specialists from "./Pages/Specialists/Specialists";
 import NavBar from "./Components/Navbar/NavBar";
 import { useState } from "react";
+import PasswordChangeForm from './Components/PasswordChangeForm/PasswordChangeForm';
 
 function App() {
   const [navbarStyle, setNavbarStyle] = useState({
@@ -28,6 +29,10 @@ function App() {
         <Route
           path="/specialists"
           element={<Specialists handleNavbarStyle={handleNavbarStyle} />}
+        />
+        <Route
+          path="/forgotpassword/:token"
+          element={<PasswordChangeForm />}
         />
       </Routes>
       <Footer />
