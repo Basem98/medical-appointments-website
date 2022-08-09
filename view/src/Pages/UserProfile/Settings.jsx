@@ -42,7 +42,6 @@ const Settings = ({ userData }) => {
             lastName: formValues.lastName,
             phoneNumber: formValues.phoneNumber,
             email: formValues.email,
-            password: formValues.password
         };
         submitUserData(userData)
             .then((response) => console.log(response))
@@ -58,10 +57,7 @@ const Settings = ({ userData }) => {
                 firstName: userData.firstName,
                 lastName: userData.lastName,
                 phoneNumber: userData.phoneNumber,
-                email: userData.email,
-                password: userData.password,
-                passwordConfirmation: ''
-
+                email: userData.email
             }}
             validationSchema={personalFormStepValidation}
             onSubmit={handleSubmit}
@@ -93,28 +89,6 @@ const Settings = ({ userData }) => {
                             <Grid item xs={10} sx={{ marginTop: '25px' }}>
                                 <InputField label='Email' name='email' placeholder='Enter Your Email'>
                                     <EmailIcon></EmailIcon>
-                                </InputField>
-                            </Grid>
-                            <Grid item xs={10} sx={{ marginTop: '25px' }}>
-                                <InputField label='Password' name='password' placeholder='Password'
-                                    type={showPassword}
-                                >
-                                    <VpnKeyIcon></VpnKeyIcon>
-                                    {showPassword === 'password' ?
-                                        <VisibilityIcon onClick={() => setShowPassword('text')} cursor='pointer' />
-                                        : <VisibilityOffIcon onClick={() => setShowPassword('password')} cursor='pointer' />
-                                    }
-                                </InputField>
-                            </Grid>
-                            <Grid item xs={10} sx={{ marginTop: '25px' }}>
-                                <InputField label='Confirm Password' name='passwordConfirmation' placeholder='Confirm Password'
-                                    type={showConfirmPassword}
-                                >
-                                    <VpnKeyIcon></VpnKeyIcon>
-                                    {showConfirmPassword === 'password' ?
-                                        <VisibilityIcon onClick={() => setShowConfirmPassword('text')} cursor='pointer' />
-                                        : <VisibilityOffIcon onClick={() => setShowConfirmPassword('password')} cursor='pointer' />
-                                    }
                                 </InputField>
                             </Grid>
                             <Grid item xs={8} sx={{ marginTop: '25px' }}>
