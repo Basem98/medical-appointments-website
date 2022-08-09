@@ -7,11 +7,11 @@ import Welcome from "./Welcome";
 import { useEffect } from "react";
 
 const UserProfile = () => {
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZThkMzkzMWRiMDg4NmQ5ZDAxNzJlNyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjU5NDI1OTczLCJleHAiOjE2NTk1MTIzNzN9.a5Hm7AUjZ28-lVchOrTfBmsbtSHLa-AwjrISIt7xDMI";
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTg4ZWM1MWI1NTc5NzZjYmU5ZTFmOSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjU5NjA0ODQwLCJleHAiOjE2NjIxOTY4NDB9.oOF8svSwyQAJK2MiPaz369XvDXUDUIGm9UBj7IjotuE";
     const [userData, setUserData] = useState({});
 
     useEffect(() => {
-        loginUser("62e8d3931db0886d9d0172e7", token)
+        loginUser("62e88ec51b557976cbe9e1f9", token)
             .then((response) => {
                 setUserData(response.data);
             })
@@ -20,7 +20,12 @@ const UserProfile = () => {
 
     return (
         <>
-            <Grid width='90%' container spacing={2} justifyContent='flex-end'>
+            <Grid
+                width='90%'
+                container
+                spacing={2}
+                justifyContent='flex-end'
+            >
                 {
                     !userData.isVerified &&
                     <Grid item xs={9} md={9} sx={{ marginTop: '10px' }}>
