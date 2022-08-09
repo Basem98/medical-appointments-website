@@ -53,7 +53,7 @@ const PasswordChangeForm = () => {
 
 
   return (
-    <Grid container style={{ background: theme.palette.linearFormBg.main, minHeight: '700px', paddingTop: '50px' }} flexDirection='column' justifyContent='center' alignItems='center'>
+    <Grid container style={{ background: theme.palette.linearFormBg.main, minHeight: '700px', paddingTop: '100px' }} flexDirection='column' justifyContent='center' alignItems='center'>
       <Typography variant='h2' style={{ textAlign: 'center', color: theme.palette.text.primary }}>
         Update Password
       </Typography>
