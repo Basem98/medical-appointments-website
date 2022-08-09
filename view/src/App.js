@@ -10,12 +10,11 @@ import PasswordChangeForm from './Components/PasswordChangeForm/PasswordChangeFo
 import SvgError from './Assets/Images/pagenotfound.svg';
 import MailSent from './Assets/Images/mailsent.svg';
 import Feedback from "./Components/Feedback/Feedback";
+import UserProfile from "./Pages/UserProfile/UserProfile";
+import Appointments from "./Pages/UserProfile/Appointments";
 
 const errMsg = "Oops! Looks like the page you're looking for couldn't be found.";
 const verificationMsg = "Congratulations! Your email has been verified successfully! You can now sign into your account."
-
-import UserProfile from "./Pages/UserProfile/UserProfile";
-import Appointments from "./Pages/UserProfile/Appointments";
 
 function App() {
   const [navbarStyle, setNavbarStyle] = useState({
