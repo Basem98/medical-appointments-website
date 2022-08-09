@@ -44,7 +44,7 @@ function App() {
           element={<PasswordChangeForm />}
         />
         <Route
-          path="/verification/:token"
+          path="/verification/:role/:token/:userId"
           element={<Feedback msg={verificationMsg}><MailSent/></Feedback>}
         />
         <Route
