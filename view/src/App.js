@@ -7,6 +7,13 @@ import NavBar from "./Components/Navbar/NavBar";
 import { useState } from "react";
 import { Grid } from "@mui/material";
 import PasswordChangeForm from './Components/PasswordChangeForm/PasswordChangeForm';
+import SvgError from './Assets/Images/pagenotfound.svg';
+import MailSent from './Assets/Images/mailsent.svg';
+import Feedback from "./Components/Feedback/Feedback";
+
+const errMsg = "Oops! Looks like the page you're looking for couldn't be found.";
+const verificationMsg = "Congratulations! Your email has been verified successfully! You can now sign into your account."
+
 
 function App() {
   const [navbarStyle, setNavbarStyle] = useState({
@@ -19,7 +26,7 @@ function App() {
   };
 
   return (
-    <Grid container sx={{minHeight: '100vh'}}>
+    <Grid container sx={{ minHeight: '100vh' }}>
       <NavBar {...navbarStyle} />
       <Routes>
         <Route
@@ -34,6 +41,14 @@ function App() {
         <Route
           path="/forgotpassword/:token"
           element={<PasswordChangeForm />}
+        />
+        <Route
+          path="/verification/:token"
+          element={<Feedback msg={verificationMsg}><MailSent/></Feedback>}
+        />
+        <Route
+          path="*"
+          element={<Feedback msg={errMsg}><SvgError/></Feedback>}
         />
       </Routes>
       <Footer />
