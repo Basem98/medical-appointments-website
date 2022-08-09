@@ -14,6 +14,8 @@ import Feedback from "./Components/Feedback/Feedback";
 const errMsg = "Oops! Looks like the page you're looking for couldn't be found.";
 const verificationMsg = "Congratulations! Your email has been verified successfully! You can now sign into your account."
 
+import UserProfile from "./Pages/UserProfile/UserProfile";
+import Appointments from "./Pages/UserProfile/Appointments";
 
 function App() {
   const [navbarStyle, setNavbarStyle] = useState({
@@ -49,6 +51,14 @@ function App() {
         <Route
           path="*"
           element={<Feedback msg={errMsg}><SvgError/></Feedback>}
+        />
+        <Route 
+          path="/users/:id/profile"
+          element={<UserProfile />}
+        />
+        <Route 
+          path="/users/:id/appointments"
+          element={<Appointments />}
         />
       </Routes>
       <Footer />
