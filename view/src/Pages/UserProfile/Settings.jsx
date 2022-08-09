@@ -5,7 +5,6 @@ import { Formik, Form } from "formik";
 import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton";
 import PersonIcon from '@mui/icons-material/Person';
 import PhoneIcon from '@mui/icons-material/Phone';
-import EmailIcon from '@mui/icons-material/Email';
 import { personalFormStepValidation } from "../../Helper/ValidationSchema";
 import submitUserData from "../../Network/Users/register";
 import CustomAlert from "../../Components/CustomAlert/CustomAlert";
@@ -36,7 +35,6 @@ const Settings = ({ userData }) => {
             firstName: formValues.firstName,
             lastName: formValues.lastName,
             phoneNumber: formValues.phoneNumber,
-            email: formValues.email,
         };
         submitUserData(userData)
             .then((response) => console.log(response))
@@ -66,7 +64,6 @@ const Settings = ({ userData }) => {
                             firstName: userData.firstName,
                             lastName: userData.lastName,
                             phoneNumber: userData.phoneNumber,
-                            email: userData.email
                         }}
                         validationSchema={personalFormStepValidation}
                         onSubmit={handleSubmit}
@@ -93,11 +90,6 @@ const Settings = ({ userData }) => {
                                         <Grid item xs={10} sx={{ marginTop: '25px' }}>
                                             <InputField label='Phone Number' name='phoneNumber' placeholder='Phone Number'>
                                                 <PhoneIcon></PhoneIcon>
-                                            </InputField>
-                                        </Grid>
-                                        <Grid item xs={10} sx={{ marginTop: '25px' }}>
-                                            <InputField label='Email' name='email' placeholder='Enter Your Email'>
-                                                <EmailIcon></EmailIcon>
                                             </InputField>
                                         </Grid>
                                         <Grid item xs={8} sx={{ marginTop: '25px' }}>
