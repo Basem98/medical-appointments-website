@@ -46,12 +46,14 @@ const Settings = ({ userData }) => {
                 handleRedirect();
             })
             .catch((error) => {
-                console.log(error);
+                setIsDuplicated(true);
+                let errorMessagesArray = JSON.parse(error.response.data.error);
+                setDuplicationErrorsArray(errorMessagesArray);
             })
     }
 
     const handleRedirect = () => {
-        navigate("/users/:id/profile", {replace: true})
+        navigate("/users/:id/profile", { replace: true })
     }
     return (
 
