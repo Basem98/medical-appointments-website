@@ -6,7 +6,7 @@ const updateData = (id, token, data) => {
             'Authorization': `Bearer ${token}`
         }
     }
-    axiosClient.patch(`/users/${id}`, data, config);
+    return axiosClient.patch(`/users/${id}`, data, config);
 }
 
 export default updateData;
