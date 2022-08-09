@@ -55,11 +55,11 @@ const Settings = ({ userData }) => {
     return (
         <Formik
             initialValues={{
-                firstName: '',
-                lastName: '',
-                phoneNumber: '',
-                email: '',
-                password: '',
+                firstName: userData.firstName,
+                lastName: userData.lastName,
+                phoneNumber: userData.phoneNumber,
+                email: userData.email,
+                password: userData.password,
                 passwordConfirmation: ''
 
             }}
