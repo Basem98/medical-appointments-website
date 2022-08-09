@@ -6,9 +6,6 @@ import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton
 import PersonIcon from '@mui/icons-material/Person';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
-import VpnKeyIcon from '@mui/icons-material/VpnKey';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { personalFormStepValidation } from "../../Helper/ValidationSchema";
 import submitUserData from "../../Network/Users/register";
 import CustomAlert from "../../Components/CustomAlert/CustomAlert";
@@ -17,8 +14,6 @@ import CustomAlert from "../../Components/CustomAlert/CustomAlert";
 const Settings = ({ userData }) => {
     const formRef = useRef(null);
 
-    const [showPassword, setShowPassword] = useState('password');
-    const [showConfirmPassword, setShowConfirmPassword] = useState('password');
     const [isDuplicated, setIsDuplicated] = useState(false);
     const [duplicationErrorsArray, setDuplicationErrorsArray] = useState([]);
 
