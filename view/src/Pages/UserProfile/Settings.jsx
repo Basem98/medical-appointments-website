@@ -6,11 +6,14 @@ import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton
 import PersonIcon from '@mui/icons-material/Person';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { personalFormStepValidation } from "../../Helper/ValidationSchema";
-import submitUserData from "../../Network/Users/register";
 import CustomAlert from "../../Components/CustomAlert/CustomAlert";
+import updateData from "../../Network/Users/updateData";
 
 
 const Settings = ({ userData }) => {
+    const id = "62e88ec51b557976cbe9e1f9";
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTg4ZWM1MWI1NTc5NzZjYmU5ZTFmOSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjYwMDMwOTk4LCJleHAiOjE2NjI2MjI5OTh9.S3t7uv5S6h9AJyrBSGUtwCn1xiT_D5_3GQciKy0TCK0";
+
     const formRef = useRef(null);
 
     const [isDuplicated, setIsDuplicated] = useState(false);
@@ -36,12 +39,12 @@ const Settings = ({ userData }) => {
             lastName: formValues.lastName,
             phoneNumber: formValues.phoneNumber,
         };
-        submitUserData(userData)
-            .then((response) => console.log(response))
+        updateData(id, token, userData)
+            .then((response) => {
+                console.log(response);
+            })
             .catch((error) => {
-                setIsDuplicated(true);
-                let errorMessagesArray = JSON.parse(error.response.data.error);
-                setDuplicationErrorsArray(errorMessagesArray);
+                console.log(error);
             })
     }
     return (
