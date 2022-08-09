@@ -8,13 +8,14 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import { personalFormStepValidation } from "../../Helper/ValidationSchema";
 import CustomAlert from "../../Components/CustomAlert/CustomAlert";
 import updateData from "../../Network/Users/updateData";
-
+import { useNavigate } from "react-router-dom"
 
 const Settings = ({ userData }) => {
     const id = "62e88ec51b557976cbe9e1f9";
     const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTg4ZWM1MWI1NTc5NzZjYmU5ZTFmOSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjYwMDMwOTk4LCJleHAiOjE2NjI2MjI5OTh9.S3t7uv5S6h9AJyrBSGUtwCn1xiT_D5_3GQciKy0TCK0";
 
     const formRef = useRef(null);
+    const navigate = useNavigate();
 
     const [isDuplicated, setIsDuplicated] = useState(false);
     const [duplicationErrorsArray, setDuplicationErrorsArray] = useState([]);
@@ -32,7 +33,8 @@ const Settings = ({ userData }) => {
         });
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
         const formValues = formRef.current.values;
         const userData = {
             firstName: formValues.firstName,
@@ -41,11 +43,15 @@ const Settings = ({ userData }) => {
         };
         updateData(id, token, userData)
             .then((response) => {
-                console.log(response);
+                handleRedirect();
             })
             .catch((error) => {
                 console.log(error);
             })
+    }
+
+    const handleRedirect = () => {
+        navigate("/users/:id/profile", {replace: true})
     }
     return (
 
@@ -70,12 +76,11 @@ const Settings = ({ userData }) => {
                             phoneNumber: userData.phoneNumber,
                         }}
                         validationSchema={personalFormStepValidation}
-                        onSubmit={handleSubmit}
                         innerRef={formRef}
                     >
                         {
                             (props) => (
-                                <Form>
+                                <Form onSubmit={handleSubmit}>
                                     <Grid container justifyContent='center' alignItems='center'>
                                         <Grid item xs={10} md={5} sx={{ marginTop: '25px' }}>
                                             <InputField
