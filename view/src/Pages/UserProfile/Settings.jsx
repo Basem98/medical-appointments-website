@@ -47,54 +47,71 @@ const Settings = ({ userData }) => {
             })
     }
     return (
-        <Formik
-            initialValues={{
-                firstName: userData.firstName,
-                lastName: userData.lastName,
-                phoneNumber: userData.phoneNumber,
-                email: userData.email
-            }}
-            validationSchema={personalFormStepValidation}
-            onSubmit={handleSubmit}
-            innerRef={formRef}
-        >
-            {
-                (props) => (
-                    <Form>
-                        <Grid container justifyContent='center' alignItems='center'>
-                            <Grid item xs={10} md={5} sx={{ marginTop: '25px' }}>
-                                <InputField
-                                    label='First Name'
-                                    name='firstName'
-                                    placeholder='First Name'
-                                >
-                                    <PersonIcon></PersonIcon>
-                                </InputField>
-                            </Grid>
-                            <Grid item xs={10} md={5} sx={{ marginTop: '25px', ml: '1px' }}>
-                                <InputField label='Last Name' name='lastName' placeholder='Last Name' >
-                                    <PersonIcon></PersonIcon>
-                                </InputField>
-                            </Grid>
-                            <Grid item xs={10} sx={{ marginTop: '25px' }}>
-                                <InputField label='Phone Number' name='phoneNumber' placeholder='Phone Number'>
-                                    <PhoneIcon></PhoneIcon>
-                                </InputField>
-                            </Grid>
-                            <Grid item xs={10} sx={{ marginTop: '25px' }}>
-                                <InputField label='Email' name='email' placeholder='Enter Your Email'>
-                                    <EmailIcon></EmailIcon>
-                                </InputField>
-                            </Grid>
-                            <Grid item xs={8} sx={{ marginTop: '25px' }}>
-                                <CustomFormButton variant="contained" type="submit" xs={8} sx={{ width: '100%', mb: '50px' }}>Submit</CustomFormButton>
-                            </Grid>
-                        </Grid>
-                    </Form>
-                )
-            }
 
-        </Formik>
+        <>
+            <Grid
+                container
+            >
+                <Grid item xs={10} sx={{ margin: '0 auto' }}>
+                    {
+                        isDuplicated &&
+                        handleDuplicationError()
+                    }
+                </Grid>
+                <Grid
+                    item
+                >
+                    <Formik
+                        initialValues={{
+                            firstName: userData.firstName,
+                            lastName: userData.lastName,
+                            phoneNumber: userData.phoneNumber,
+                            email: userData.email
+                        }}
+                        validationSchema={personalFormStepValidation}
+                        onSubmit={handleSubmit}
+                        innerRef={formRef}
+                    >
+                        {
+                            (props) => (
+                                <Form>
+                                    <Grid container justifyContent='center' alignItems='center'>
+                                        <Grid item xs={10} md={5} sx={{ marginTop: '25px' }}>
+                                            <InputField
+                                                label='First Name'
+                                                name='firstName'
+                                                placeholder='First Name'
+                                            >
+                                                <PersonIcon></PersonIcon>
+                                            </InputField>
+                                        </Grid>
+                                        <Grid item xs={10} md={5} sx={{ marginTop: '25px', ml: '1px' }}>
+                                            <InputField label='Last Name' name='lastName' placeholder='Last Name' >
+                                                <PersonIcon></PersonIcon>
+                                            </InputField>
+                                        </Grid>
+                                        <Grid item xs={10} sx={{ marginTop: '25px' }}>
+                                            <InputField label='Phone Number' name='phoneNumber' placeholder='Phone Number'>
+                                                <PhoneIcon></PhoneIcon>
+                                            </InputField>
+                                        </Grid>
+                                        <Grid item xs={10} sx={{ marginTop: '25px' }}>
+                                            <InputField label='Email' name='email' placeholder='Enter Your Email'>
+                                                <EmailIcon></EmailIcon>
+                                            </InputField>
+                                        </Grid>
+                                        <Grid item xs={8} sx={{ marginTop: '25px' }}>
+                                            <CustomFormButton variant="contained" type="submit" xs={8} sx={{ width: '100%', mb: '50px' }}>Submit</CustomFormButton>
+                                        </Grid>
+                                    </Grid>
+                                </Form>
+                            )
+                        }
+
+                    </Formik>
+                </Grid>
+            </Grid>
+        </>
     );
 }
 
