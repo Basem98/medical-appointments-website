@@ -16,8 +16,8 @@ baseRouter.put('/verify/:token', verifyToken);
 /* ---------- An endpoint to logout users & delete their cookies ---------- */
 baseRouter.get('/logout', logout);
 
-/* ---------- An endpoint to logout users & delete their cookies ---------- */
-baseRouter.post('/verify-old', verifyBeforeForgetPassword, generateVerificationToken, genForgetPassEmailBody, sendMail);
+/* ---------- An endpoint to request a verification token to change password ---------- */
+baseRouter.post('/send-password-change', verifyBeforeForgetPassword, generateVerificationToken, genForgetPassEmailBody, sendMail);
 
 /* ---------- An endpoint to change a doctor's password ---------- */
 baseRouter.post('/change-password', validateBeforeChangingPassword, validationResult, updatePassword);
