@@ -21,14 +21,19 @@ const UserProfile = () => {
     return (
         <>
             <Grid
-                width='90%'
                 container
                 spacing={2}
                 justifyContent='flex-end'
+                sx={{
+                    width: {
+                        'xs': '100%',
+                        'md': '90%'
+                    }
+                }}
             >
                 {
                     !userData.isVerified &&
-                    <Grid item xs={9} md={9} sx={{ marginTop: '10px' }}>
+                    <Grid item xs={12} md={9} sx={{ marginTop: '10px' }}>
                         <CustomAlert
                             severity="warning"
                         >
@@ -37,7 +42,7 @@ const UserProfile = () => {
                         </CustomAlert>
                     </Grid>
                 }
-                <Grid item xs={9} md={9}>
+                <Grid item xs={12} md={9}>
                     <Welcome
                         userData={userData}
                     />
