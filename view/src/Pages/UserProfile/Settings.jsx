@@ -52,6 +52,7 @@ const Settings = ({ userData }) => {
         <>
             <Grid
                 container
+                justifyContent="center"
             >
                 <Grid item xs={10} sx={{ margin: '0 auto' }}>
                     {
