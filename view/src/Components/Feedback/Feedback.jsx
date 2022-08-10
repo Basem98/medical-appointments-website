@@ -1,6 +1,6 @@
 import { CircularProgress, Grid, Typography, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import TroubleshootingSvg from '../../Assets/Images/error.svg';
 import resendVerification from '../../Network/Base/resendVerification';
 import verifyToken from '../../Network/Base/verifyToken';
@@ -13,12 +13,12 @@ import CustomFormButton from '../CustomFormButton/CustomFormButton';
 const Feedback = ({ msg, isConfirmed, children }) => {
   const theme = useTheme();
   const { pathname } = useLocation();
-  const { token, userId, role} = useParams();
+  const { token, userId, role } = useParams();
   const [showMsg, setShowMsg] = useState(false);
   const [errMsg, setErrMsg] = useState('');
   const [serverResponse, setServerResponse] = useState({ success: false, msg: '' });
   const [isResendClicked, setIsResendClicked] = useState(false);
-  // Add a function that calls the /verify-old endpoint to regenerate a token and bind it to the button's onClick listener
+
   const isConfirmation = () => {
     if (/^\/verification\//.test(pathname)) {
       verifyToken(token)
@@ -78,18 +78,35 @@ const Feedback = ({ msg, isConfirmed, children }) => {
                 </Typography>
               </Grid>
               {
-                errMsg &&
-                <Grid container item xs={12} justifyContent={{ xs: 'center', lg: 'space-between' }}>
-                  <Grid item xs={3} marginTop='25px'>
-                    <CustomFormButton variant='contained' fullWidth onClick={resendVerificationEmail}>Resend Mail</CustomFormButton>
-                  </Grid>
-                  {
-                    isResendClicked &&
-                    <Grid marginLeft='5px' display='flex' alignItems='flex-end'>
-                      <CircularProgress color='highlight' />
+                (/^\/verification\//.test(pathname)) && errMsg ?
+                  <>
+                    {
+                      
+                      <Grid container item xs={12} justifyContent={{ xs: 'center', lg: 'space-between' }}>
+                        <Grid item xs={3} marginTop='25px'>
+                          <CustomFormButton variant='contained' fullWidth onClick={resendVerificationEmail}>Resend Mail</CustomFormButton>
+                        </Grid>
+                        {
+                          isResendClicked &&
+                          <Grid marginLeft='5px' display='flex' alignItems='flex-end'>
+                            <CircularProgress color='highlight' />
+                          </Grid>
+                        }
+                      </Grid>
+                    }
+                  </>
+                  :
+                  <Grid container item xs={12} justifyContent={{ xs: 'center', lg: 'space-between' }}>
+                    <Grid item xs={4} marginTop='25px'>
+                      <CustomFormButton variant='contained' fullWidth>
+                        <Link to="/"
+                          style={{
+                            color: '#fff',
+                            textDecoration: "none",
+                          }}>Go Back Home</Link>
+                      </CustomFormButton>
                     </Grid>
-                  }
-                </Grid>
+                  </Grid>
               }
             </Grid>
           </>
