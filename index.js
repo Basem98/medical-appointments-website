@@ -37,7 +37,7 @@ app.use('/docs', ...mountSwaggerDocsRoute);
 app.use('/api', baseRouter);
 app.use('/api/users', userRouter);
 app.use('/api/doctors', doctorRouter);
-app.use('/api/admin', adminRouter);
+app.use('/api/admins', adminRouter);
 app.use('/api/appointments', appointmentRouter);
 
 
