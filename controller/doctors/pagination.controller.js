@@ -31,21 +31,25 @@ const getDoctorsByPage = async (req, res, next) => {
     }
 
     const doctors = await Doctor.aggregate([
-      // 1. Don't send the professionalLicense image source along with the data
+      // 1. Only get doctors who have verified their email and been reviewed & accepted
+      {
+        $match: { isAccepted: true, isVerified: true }
+      },
+      // 2. Don't send the professionalLicense image source along with the data
       {
         $project: { professionalLicense: 0, password: 0 },
       },
-      // 2. Filter out documents based on the recieved query strings
+      // 3. Filter out documents based on the recieved query strings
       ...filteringStage,
-      // 3. Sort the documents descendingly by the rating field
+      // 4. Sort the documents descendingly by the rating field
       {
         $sort: { rating: -1 }
       },
-      // 4. Set the offset to the product of the page number and the limit
+      // 5. Set the offset to the product of the page number and the limit
       {
         $skip: page * limit
       },
-      // 5. Limit the number of returned documents based on the recieved limit query string
+      // 6. Limit the number of returned documents based on the recieved limit query string
       {
         $limit: limit
       }
