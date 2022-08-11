@@ -12,7 +12,6 @@ import { useNavigate } from "react-router-dom"
 
 const Settings = ({ userData }) => {
     const id = "62e88ec51b557976cbe9e1f9";
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTg4ZWM1MWI1NTc5NzZjYmU5ZTFmOSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjYwMDMwOTk4LCJleHAiOjE2NjI2MjI5OTh9.S3t7uv5S6h9AJyrBSGUtwCn1xiT_D5_3GQciKy0TCK0";
 
     const formRef = useRef(null);
     const navigate = useNavigate();
@@ -40,7 +39,7 @@ const Settings = ({ userData }) => {
             lastName: formValues.lastName,
             phoneNumber: formValues.phoneNumber,
         };
-        updateData(id, token, userData)
+        updateData(id, userData)
             .then((response) => {
                 handleRedirect();
             })

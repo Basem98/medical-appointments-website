@@ -6,7 +6,6 @@ import getUpcomings from "../../Network/Users/getUpcomings";
 import getPrevious from "../../Network/Users/getPrevious";
 
 const Appointments = () => {
-    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTg4ZWM1MWI1NTc5NzZjYmU5ZTFmOSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjU5NTMyOTk0LCJleHAiOjE2NTk2MTkzOTR9.XSAk_6hQEBDtiHYZ0CDQ4L_CCsjN9Gip_a3jICIYMa8";
 
     const [upcomingAppointments, setUpcomingAppointments] = useState();
     const [previousAppointments, setPreviousAppointments] = useState();
@@ -22,7 +21,7 @@ const Appointments = () => {
 
 
     useEffect(() => {
-        getUpcomings("62e88ec51b557976cbe9e1f9", token)
+        getUpcomings("62e88ec51b557976cbe9e1f9")
             .then((response) => {
                 setUpcomingAppointments(response.data.message);
             })
@@ -32,7 +31,7 @@ const Appointments = () => {
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        getPrevious("62e88ec51b557976cbe9e1f9", token)
+        getPrevious("62e88ec51b557976cbe9e1f9")
             .then((response) => {
                 setPreviousAppointments(response.data.message);
             })

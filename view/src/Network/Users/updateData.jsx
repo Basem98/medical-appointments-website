@@ -1,12 +1,8 @@
 import axiosClient from "../axiosClient";
 
-const updateData = (id, token, data) => {
-    const config = {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    }
-    return axiosClient.patch(`/users/${id}`, data, config);
+const updateData = (id, data) => {
+
+    return axiosClient.patch(`/users/${id}`, data);
 }
 
 export default updateData;
