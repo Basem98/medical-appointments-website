@@ -60,7 +60,7 @@ const Welcome = ({ userData }) => {
                                             </Grid>
                                             :
                                             <Grid item xs={10}>
-                                                <Typography>You have {upcomingAppointments?.length} upcoming appointments.</Typography>
+                                                <Typography>You have {upcomingAppointments?.length} upcoming appointment(s).</Typography>
                                                 <Grid item xs={10} marginTop={4}>
                                                     <Link
                                                         to="/users/appoinmtments"
