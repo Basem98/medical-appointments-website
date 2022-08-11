@@ -79,10 +79,11 @@ const Settings = ({ userData }) => {
                         }}
                         validationSchema={personalFormStepValidation}
                         innerRef={formRef}
+                        onSubmit={handleSubmit}
                     >
                         {
                             (props) => (
-                                <Form onSubmit={handleSubmit}>
+                                <Form>
                                     <Grid container justifyContent='center' alignItems='center'>
                                         <Grid item xs={10} md={5} sx={{ marginTop: '25px' }}>
                                             <InputField
