@@ -24,7 +24,7 @@ const ChangePassword = () => {
         e.preventDefault();
         const formValues = formRef.current.values;
         const data = {
-            newPassword: formValues.newPassword,
+            password: formValues.newPassword,
             currentPassword: formValues.currentPassword,
         };
         changePassword("62f24fa482a4ca4ed4c2fa03", data)
