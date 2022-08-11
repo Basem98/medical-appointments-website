@@ -21,7 +21,6 @@ const ChangePassword = () => {
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         const formValues = formRef.current.values;
         const data = {
             password: formValues.newPassword,

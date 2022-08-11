@@ -34,7 +34,6 @@ const Settings = ({ userData }) => {
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         const formValues = formRef.current.values;
         const userData = {
             firstName: formValues.firstName,
