@@ -17,7 +17,8 @@ module.exports = {
   /* ----- Auth-related environment variables ----- */
   AUTH: {
     USER_SECRET: process.env.USER_SECRET,
-    DOCTOR_SECRET: process.env.DOCTOR_SECRET
+    DOCTOR_SECRET: process.env.DOCTOR_SECRET,
+    ADMIN_SECRET: process.env.ADMIN_SECRET
   },
   /* ----- Email-related environment variables */
   EMAIL: {

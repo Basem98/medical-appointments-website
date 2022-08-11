@@ -30,6 +30,7 @@ function App() {
 
   return (
     <Grid container sx={{ minHeight: '100vh' }}>
+      <NavBar {...navbarStyle} />
       <Routes>
         <Route
           path="/"
@@ -45,8 +46,8 @@ function App() {
           element={<PasswordChangeForm />}
         />
         <Route
-          path="/verification/:token"
-          element={<Feedback msg={verificationMsg}><MailSent /></Feedback>}
+          path="/verification/:role/:token/:userId"
+          element={<Feedback msg={verificationMsg}><MailSent/></Feedback>}
         />
         <Route
           path="*"

@@ -69,6 +69,28 @@ async function verifyBeforeForgetPassword(req, res, next) {
 }
 
 
+async function prepareBodyBeforeTokenRegen(req, res, next) {
+  try {
+    const { id, role } = req.body;
+    const modelToUse = role === 'User' ? User : Doctor;
+    const data = await modelToUse.findById(id);
+    console.log(data)
+    if (!data) {
+      const err = new Error('User not found');
+      err.statusCode = 404;
+      throw err;
+    }
+    delete data.password;
+    req.body = data;
+    req.body.id = data._id;
+    req.body.role = role;
+    next();
+  } catch (err) {
+    next(err);
+  }
+}
+
+
 async function updatePassword(req, res, next) {
   try {
     const { email, role, oldPassword, newPassword } = req.body;
@@ -97,5 +119,6 @@ module.exports = {
   verifyToken,
   logout,
   verifyBeforeForgetPassword,
+  prepareBodyBeforeTokenRegen,
   updatePassword
 }
