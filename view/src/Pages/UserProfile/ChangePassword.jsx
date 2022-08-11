@@ -9,6 +9,8 @@ import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useState } from "react";
+import changePassword from "../../Network/Users/changePassword";
+import { useNavigate } from "react-router-dom";
 
 const ChangePassword = () => {
     const [showCurrentPassword, setShowCurrentPassword] = useState('password');
@@ -16,6 +18,24 @@ const ChangePassword = () => {
     const [showConfirmNewPassword, setShowConfirmNewPassword] = useState('password');
 
     const formRef = useRef(null);
+    const navigate = useNavigate();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const formValues = formRef.current.values;
+        const data = {
+            newPassword: formValues.newPassword,
+            currentPassword: formValues.currentPassword,
+        };
+        changePassword(data)
+            .then((response) => {
+                console.log(response);
+                //navigate('/users/:id/profile', {replace: true});
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
     return (
         <>
             <Grid
@@ -41,7 +61,7 @@ const ChangePassword = () => {
                     >
                         {
                             (props) => (
-                                <Form>
+                                <Form onSubmit={handleSubmit}>
                                     <Grid container justifyContent='center' alignItems='center'>
                                         <Grid item xs={10} sx={{ marginTop: '25px' }}>
                                             <InputField label='Password' name='currentPassword' placeholder='Current Password'
