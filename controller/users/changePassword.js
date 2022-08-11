@@ -16,7 +16,7 @@ module.exports.changePassword = async (req, res, next) => {
                 if (!isCorrectPassword) {
                     return res.status(401).json({ message: 'Wrong password' });
                 }
-                userPassword.password = req.body.newPassword;
+                userPassword.password = req.body.password;
                 await userPassword.save();
                 return res.status(200).json({ message: 'Password changed successfully!' });
             })
