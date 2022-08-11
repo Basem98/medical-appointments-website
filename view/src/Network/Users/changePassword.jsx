@@ -1,6 +1,6 @@
 import axiosClient from "../axiosClient";
 
-const changePassword = (id, token, data) => {
+const changePassword = (id, data) => {
 
     return axiosClient.patch(`/users/${id}/change-password`, data);
 }
