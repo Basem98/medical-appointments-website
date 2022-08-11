@@ -27,10 +27,9 @@ const ChangePassword = () => {
             newPassword: formValues.newPassword,
             currentPassword: formValues.currentPassword,
         };
-        changePassword(data)
+        changePassword("62f24fa482a4ca4ed4c2fa03", data)
             .then((response) => {
-                console.log(response);
-                //navigate('/users/:id/profile', {replace: true});
+                navigate('/users/:id/profile', { replace: true });
             })
             .catch((error) => {
                 console.log(error);
@@ -58,10 +57,11 @@ const ChangePassword = () => {
                             })
                         }
                         innerRef={formRef}
+                        onSubmit={handleSubmit}
                     >
                         {
                             (props) => (
-                                <Form onSubmit={handleSubmit}>
+                                <Form>
                                     <Grid container justifyContent='center' alignItems='center'>
                                         <Grid item xs={10} sx={{ marginTop: '25px' }}>
                                             <InputField label='Password' name='currentPassword' placeholder='Current Password'
