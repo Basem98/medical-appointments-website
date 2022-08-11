@@ -32,35 +32,38 @@ const DoctorProfile = () => {
                     }
                 }}
             >
-                <Grid
-                    item
-                    xs={11}
-                    md={9}
-                    sx={{ marginTop: '10px' }}
-                >
-                    {
-                        !doctorData?.isVerified && (
+
+                {
+                    !doctorData?.isVerified && (
+                        <Grid
+                            item
+                            xs={11}
+                            md={9}
+                            sx={{ marginTop: '10px' }}
+                        >
                             <CustomAlert severity="warning">
                                 Your profile is not verified yet!
                                 Please check your email to verify.
                             </CustomAlert>
-                        )
-                    }
-                </Grid>
-                <Grid
-                    item
-                    xs={11}
-                    md={9}
-                    sx={{ marginTop: '10px' }}
-                >
-                    {
-                        !doctorData?.isAccepted && (
+
+                        </Grid>
+
+                    )
+                }
+                {
+                    !doctorData?.isAccepted && (
+                        <Grid
+                            item
+                            xs={11}
+                            md={9}
+                            sx={{ marginTop: '10px' }}
+                        >
                             <CustomAlert severity="info">
                                 Your application is being previewed.
                             </CustomAlert>
-                        )
-                    }
-                </Grid>
+                        </Grid>
+                    )
+                }
             </Grid>
         </>
     );
