@@ -100,7 +100,7 @@ const DoctorProfile = () => {
                                             <Typography>You have {upcomings?.length} upcoming appointment(s).</Typography>
                                             <Grid item xs={10} marginTop={4}>
                                                 <Link
-                                                    to="/users/appoinmtments"
+                                                    to="/doctors/:id/appointments"
                                                 >
                                                     <CustomFormButton variant="contained">
                                                         Show Appointments
