@@ -38,7 +38,7 @@ const UserSignInForm = ({ open, handleClose }) => {
         email: "",
         password: "",
         rememberMe: false,
-        role: "user"
+        role: "User"
     };
     const validationSchema = Yup.object({
         email: Yup.string().email('You must provide a valid email (example@organization.domain)').required('This field is required'),

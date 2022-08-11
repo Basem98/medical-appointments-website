@@ -12,6 +12,8 @@ import MailSent from './Assets/Images/mailsent.svg';
 import Feedback from "./Components/Feedback/Feedback";
 import UserProfile from "./Pages/UserProfile/UserProfile";
 import Appointments from "./Pages/UserProfile/Appointments";
+import Settings from "./Pages/UserProfile/Settings";
+import ChangePassword from "./Pages/UserProfile/ChangePassword";
 
 const errMsg = "Oops! Looks like the page you're looking for couldn't be found.";
 const verificationMsg = "Congratulations! Your email has been verified successfully! You can now sign into your account."
@@ -49,15 +51,29 @@ function App() {
         />
         <Route
           path="*"
-          element={<Feedback msg={errMsg}><SvgError/></Feedback>}
+          element={<Feedback msg={errMsg}><SvgError /></Feedback>}
         />
-        <Route 
+        <Route
           path="/users/:id/profile"
           element={<UserProfile />}
         />
-        <Route 
+        <Route
           path="/users/:id/appointments"
           element={<Appointments />}
+        />
+        <Route
+          path="/users/:id/settings"
+          element={<Settings
+            userData={{
+              firstName: "Belal",
+              lastName: "Elemligy",
+              phoneNumber: "01275223665"
+            }}
+          />}
+        />
+        <Route
+          path="/users/:id/change-password"
+          element={<ChangePassword />}
         />
       </Routes>
       <Footer />

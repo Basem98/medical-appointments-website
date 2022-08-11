@@ -1,10 +1,8 @@
 const { default: axiosClient } = require("../axiosClient")
 
-const loginUser = (id, token) => {
-    const config = {
-        headers: { Authorization: `Bearer ${token}` }
-    }
-    return axiosClient.get(`/users/${id}`, config);
+const loginUser = (id) => {
+
+    return axiosClient.get(`/users/${id}`);
 }
 
 export default loginUser;
