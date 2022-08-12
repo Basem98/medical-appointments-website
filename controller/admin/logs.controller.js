@@ -1,4 +1,5 @@
 const path = require('path');
+const fsPromises = require('fs/promises');
 const fs = require('fs');
 const readline = require('readline');
 
@@ -59,4 +60,20 @@ const getLogs = async (req, res, next) => {
   }
 }
 
-module.exports = getLogs;
+const deleteLogs = async (req, res, next) => {
+  try {
+    const isErrorsFileDeleted = await fsPromises.writeFile(path.resolve(__dirname, '../../logs/general.log'), '');
+    const isGeneralFileDeleted = await fsPromises.writeFile(path.resolve(__dirname, '../../logs/errors.log'), '');
+    if (isErrorsFileDeleted || isGeneralFileDeleted) {
+      const err = new Error('Something went wrong');
+      err.statusCode = 500;
+      throw err;
+    }
+    res.status(204).send();
+  } catch (err) {
+    err.statusCode = err.statusCode || 500;
+    next(err);
+  }
+}
+
+module.exports = { getLogs, deleteLogs };

@@ -1,6 +1,6 @@
 const express = require('express');
 const adminRouter = express.Router();
-const { signUp, logIn, getDoctorApplications, getLogs, acceptDoctorsApplication, deleteDoctor, getAllDoctors } = require('../controller/admin/main.controller');
+const { signUp, logIn, getDoctorApplications, getLogs, acceptDoctorsApplication, deleteDoctor, getAllDoctors, deleteLogs } = require('../controller/admin/main.controller');
 const validationResult = require('../middleware/user/validation.middleware');
 const validateAdminData = require('../middleware/admin/validation.middleware');
 const protectAdminsRoute = require('../middleware/admin/auth.middleware');
@@ -28,5 +28,8 @@ adminRouter.get('/logs', protectAdminsRoute, getLogs);
 
 /* ---------- An endpoint to get only error logs by page ---------- */
 adminRouter.get('/logs/errors', protectAdminsRoute, getLogs);
+
+/* ---------- An endpoint to delete all logs ---------- */
+adminRouter.delete('/logs', deleteLogs);
 
 module.exports = adminRouter;
