@@ -1,6 +1,7 @@
 const Admin = require('../../model/admin.model');
 const jwt = require('jsonwebtoken');
 const config = require('../../config/envConfig');
+const { verifyAuthHttpCookie } = require('../helpers/cookie.helper');
 
 
 /**
