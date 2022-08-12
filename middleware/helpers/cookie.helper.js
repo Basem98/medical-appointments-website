@@ -48,20 +48,20 @@ const verifyAuthHttpCookie = async (accessToken, role, secret, model, next) => {
     tokenPayload = jwt.verify(accessToken, secret);
   } catch (err) {
     err.statusCode = 401;
-    next(err);
+    return next(err);
   }
   /* Check if the doctor's id in the payload is valid */
   result.data = await model.findById(tokenPayload.id);
   if (!result.data) {
     authError.message = "Failed to verify token identity";
     authError.statusCode = 401;
-    next(authError);
+    return next(authError);
   }
   /* Check if the sender is authorized to access the endpoint */
   if (tokenPayload.role != role) {
     authError.message = "Insufficient access permissions";
     authError.statusCode = 401;
-    next(authError);
+    return next(authError);
   }
   if (tokenPayload.exp - tokenPayload.iat === 3600) {
     // Reset the token & cookie's timer with each request as long as the user is active
