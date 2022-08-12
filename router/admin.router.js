@@ -26,4 +26,7 @@ adminRouter.delete('/doctors/delete/:id', protectAdminsRoute, deleteDoctor);
 /* ---------- An endpoint to get all logs by page ---------- */
 adminRouter.get('/logs', protectAdminsRoute, getLogs);
 
+/* ---------- An endpoint to get only error logs by page ---------- */
+adminRouter.get('/logs/errors', protectAdminsRoute, getLogs);
+
 module.exports = adminRouter;

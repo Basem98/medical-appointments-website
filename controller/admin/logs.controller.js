@@ -2,10 +2,10 @@ const path = require('path');
 const fs = require('fs');
 const readline = require('readline');
 
-const getArrayOfLogs = async (start, end) => {
+const getArrayOfLogs = async (start, end, logLevel) => {
   /* Create a line reading interface using the readline module */
   const readLineOfLogs = readline.createInterface({
-    input: fs.createReadStream(path.resolve(__dirname, '../../logs/general.log'))
+    input: fs.createReadStream(path.resolve(__dirname, `../../logs/${logLevel}.log`))
   });
   const logs = [];
 
@@ -47,8 +47,8 @@ const getLogs = async (req, res, next) => {
   try {
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || 9;
-    console.log(page, limit)
-    getArrayOfLogs(page * limit, (page * limit) + limit)
+    const logLevel = /^\/logs$/.test(req.path) ? 'general' : 'errors';
+    getArrayOfLogs(page * limit, (page * limit) + limit, logLevel)
       .then(logs => {
         res.status(200).json({ data: logs });
       })
