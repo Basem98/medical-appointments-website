@@ -1,6 +1,6 @@
 const express = require('express');
 const adminRouter = express.Router();
-const { signUp, logIn, getDoctorApplications, getLogs, acceptDoctorsApplication, deleteDoctor, getAllDoctors, deleteLogs } = require('../controller/admin/main.controller');
+const { signUp, logIn, getDoctorApplications, getLogs, acceptDoctorsApplication, deleteDoctor, getAllDoctors, deleteLogs, getAllUsers } = require('../controller/admin/main.controller');
 const validationResult = require('../middleware/user/validation.middleware');
 const validateAdminData = require('../middleware/admin/validation.middleware');
 const protectAdminsRoute = require('../middleware/admin/auth.middleware');
@@ -12,6 +12,11 @@ adminRouter.post('/', validateAdminData, validationResult, signUp);
 /* ---------- An endpoint to log as admin in ---------- */
 adminRouter.post('/login', validateAdminData.slice(1), validationResult, logIn);
 
+
+
+/* -------------------- Operations on Doctors -------------------- */
+
+/* ---------- An endpoint to get all doctors in the database by page ---------- */
 adminRouter.get('/doctors/all', protectAdminsRoute, getAllDoctors);
 
 /* ---------- An endpoint to get all non-accepted doctors' applications ---------- */
@@ -22,6 +27,14 @@ adminRouter.put('/doctors/accept/:id', protectAdminsRoute, acceptDoctorsApplicat
 
 /* ---------- An endpoint to accept a doctor's application ---------- */
 adminRouter.delete('/doctors/delete/:id', protectAdminsRoute, deleteDoctor);
+
+
+
+/* -------------------- Operations on User -------------------- */
+adminRouter.get('/users/all', protectAdminsRoute, getAllUsers);
+
+
+/* -------------------- Operations on Logs -------------------- */
 
 /* ---------- An endpoint to get all logs by page ---------- */
 adminRouter.get('/logs', protectAdminsRoute, getLogs);
