@@ -61,7 +61,7 @@ const verifyAuthHttpCookie = async (accessToken, role, secret, model, next) => {
   if (tokenPayload.role != role) {
     authError.message = "Insufficient access permissions";
     authError.statusCode = 401;
-    nest(authError);
+    next(authError);
   }
   if (tokenPayload.exp - tokenPayload.iat === 3600) {
     // Reset the token & cookie's timer with each request as long as the user is active
