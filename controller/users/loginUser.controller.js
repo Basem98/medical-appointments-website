@@ -2,6 +2,7 @@ const User = require('../../model/user.model');
 const bycrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const envConfig = require('../../config/envConfig');
+const { generateCookie } = require('../../middleware/helpers/cookie.helper');
 
 module.exports.loginUser = (req, res, next) => {
     User.findOne({ email: req.body.email })
@@ -14,19 +15,12 @@ module.exports.loginUser = (req, res, next) => {
                     if (!isCorrectPassword) {
                         return res.status(400).json({ message: 'Incorrect email or password' });
                     }
-                    const tokenOptions = { expiresIn: 3600 };
-                    tokenOptions.expiresIn = req.body.rememberMe ? (30 * 24 * 60 * 60) : tokenOptions.expiresIn;
-                    let token = jwt.sign({
-                        id: data._id,
-                        role: 'user'
-                    }, envConfig.AUTH.USER_SECRET, tokenOptions);
+                    /* Generate a JWT access token */
+                    const cookie = generateCookie({ id: doctorData._id, role: 'User' }, config.AUTH.ADMIN_SECRET, req.body.rememberMe, next);
                     return res.status(200)
-                        .cookie('accessToken', token, {
-                            maxAge: tokenOptions.expiresIn * 1000,
-                            secure: true,
-                            httpOnly: true,
-                        })
-                        .json({message: 'Signed in successfully', id: data._id})
+                        .cookie('accessToken', cookie.accessToken, cookie.cookieOptions)
+                        .cookie('role', 'User', cookie.cookieOptions)
+                        .json({ message: 'Signed in successfully', id: data._id })
                 })
                 .catch((error) => {
                     error.statusCode = 500;

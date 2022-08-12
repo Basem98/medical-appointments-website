@@ -2,6 +2,7 @@ const Doctor = require('../../model/doctor.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const config = require("../../config/envConfig");
+const {generateCookie} = require('../../middleware/helpers/cookie.helper');
 
 
 const login = async (req, res, next) => {
@@ -24,23 +25,16 @@ const login = async (req, res, next) => {
     }
     doctorData.password = null;
     /* Generate a JWT access token */
-    const tokenIdentity = { id: doctorData._id, role: 'Doctor' };
-    const tokenOptions = { expiresIn: 3600 };
-    tokenOptions.expiresIn = rememberMe ? (30 * 24 * 60 * 60) : tokenOptions.expiresIn;
-    const accessToken = jwt.sign(tokenIdentity, config.AUTH.DOCTOR_SECRET, tokenOptions);
+    const cookie = generateCookie({ id: doctorData._id, role: 'Doctor' }, config.AUTH.DOCTOR_SECRET, rememberMe, next);
     /* Send a response to client to confirm the signing in success and set the cookie */
     res
       .status(200)
-      .cookie('accessToken', accessToken, {
-        // Turn the maxAge number into milliseconds (specific to Express)
-        maxAge: tokenOptions.expiresIn * 1000,
-        secure: true,
-        httpOnly: true
-      })
+      .cookie('accessToken', cookie.accessToken, cookie.cookieOptions)
+      .cookie('role', 'Doctor', cookie.cookieOptions)
       .json({ message: 'You are now signed in successfully', data: doctorData });
   } catch (err) {
-    next(err);
-  }
+  next(err);
+}
 }
 
 module.exports = login;
