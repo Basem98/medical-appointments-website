@@ -21,7 +21,7 @@ const logIn = async (req, res, next) => {
     }
     adminData.password = null;
     /* Generate a JWT access token */
-    const cookie = generateCookie({ id: doctorData._id, role: 'Admin' }, config.AUTH.ADMIN_SECRET, false, next);
+    const cookie = generateCookie({ id: adminData._id, role: 'Admin' }, config.AUTH.ADMIN_SECRET, false, next);
     /* Send a response to client to confirm the signing in success and set the cookie */
     res
       .status(200)
