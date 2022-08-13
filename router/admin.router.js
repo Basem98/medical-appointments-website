@@ -43,7 +43,7 @@ adminRouter.delete('/users/delete/:id', protectAdminsRoute, deleteUser);
 /* -------------------- Operations on Appointments -------------------- */
 
 /* ---------- An endpoint to get all appointments ---------- */
-adminRouter.get('/appointments/all', getAllAppointments);
+adminRouter.get('/appointments/all', protectAdminsRoute, getAllAppointments);
 
 
 
