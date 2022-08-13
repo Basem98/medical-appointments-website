@@ -200,7 +200,7 @@ module.exports = {
               "schema": {
                 "type": "string",
                 "description": "A header that allows the server to store a cookie in the client's browser to be used as a store for the access token",
-                "emaple": "accessToken=sdfweqgf123as; Path=/; Max-Age=2104; HttpOnly; Secure;"
+                "exmaple": "accessToken=sdfweqgf123as; Path=/; Max-Age=2104; HttpOnly; Secure;"
               }
             }
           },
