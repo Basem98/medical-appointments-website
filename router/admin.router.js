@@ -1,6 +1,6 @@
 const express = require('express');
 const adminRouter = express.Router();
-const { signUp, logIn, getDoctorApplications, getLogs, acceptDoctorsApplication, deleteDoctor, getAllDoctors, deleteLogs, getAllUsers, deleteUser } = require('../controller/admin/main.controller');
+const { signUp, logIn, getDoctorApplications, getLogs, acceptDoctorsApplication, deleteDoctor, getAllDoctors, deleteLogs, getAllUsers, deleteUser, getAllAppointments } = require('../controller/admin/main.controller');
 const validationResult = require('../middleware/user/validation.middleware');
 const validateAdminData = require('../middleware/admin/validation.middleware');
 const protectAdminsRoute = require('../middleware/admin/auth.middleware');
@@ -30,13 +30,20 @@ adminRouter.delete('/doctors/delete/:id', protectAdminsRoute, deleteDoctor);
 
 
 
-/* -------------------- Operations on User -------------------- */
+/* -------------------- Operations on Users -------------------- */
 
 /* ---------- An endpoint to get all users in the database by page ---------- */
 adminRouter.get('/users/all', protectAdminsRoute, getAllUsers);
 
 /* ---------- An endpoint to delete a user ---------- */
 adminRouter.delete('/users/delete/:id', protectAdminsRoute, deleteUser);
+
+
+
+/* -------------------- Operations on Appointments -------------------- */
+
+/* ---------- An endpoint to get all appointments ---------- */
+adminRouter.get('/appointments/all', getAllAppointments);
 
 
 

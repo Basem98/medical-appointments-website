@@ -7,6 +7,7 @@ const deleteDoctor = require('../admin/deleteDoctor.controller');
 const getAllDoctors = require('../admin/doctors.controller');
 const getAllUsers = require('../admin/users.controller');
 const deleteUser = require('../admin/deleteUser.controller');
+const getAllAppointments = require('../admin/appointments.controller');
 
 module.exports = {
   signUp,
@@ -18,5 +19,6 @@ module.exports = {
   deleteDoctor,
   getAllDoctors,
   getAllUsers,
-  deleteUser
+  deleteUser,
+  getAllAppointments
 }
