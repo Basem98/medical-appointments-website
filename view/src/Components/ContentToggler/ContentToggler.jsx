@@ -63,7 +63,10 @@ const ContentToggler = ({ titles, data, role }) => {
                     })
                 }
             </Grid>
-            <Grid item>
+            <Grid 
+                container
+                justifyContent="center"
+            >
                 <AppointmentsTable appointments={data[selectedIndex]} role={role} />
             </Grid>
         </>
