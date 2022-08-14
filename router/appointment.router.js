@@ -15,6 +15,6 @@ appointmentRouter.route('/upcomings/:id')
     .get(generalAuthenticationMiddleware, appointmentController.getUpcomings);
 
 appointmentRouter.route('/previous/:id')
-    .get(authorizationMiddleware, appointmentController.getPrevious);
+    .get(generalAuthenticationMiddleware, appointmentController.getPrevious);
 
 module.exports = appointmentRouter;
