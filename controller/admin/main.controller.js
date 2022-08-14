@@ -9,6 +9,7 @@ const getAllUsers = require('../admin/users.controller');
 const deleteUser = require('../admin/deleteUser.controller');
 const getAllAppointments = require('../admin/appointments.controller');
 const getUpcomingAppointments = require('../admin/upcomingAppointment.controller');
+const getPreviousAppointments = require('../admin/prevAppointments.controller');
 
 module.exports = {
   signUp,
@@ -22,5 +23,6 @@ module.exports = {
   getAllUsers,
   deleteUser,
   getAllAppointments,
-  getUpcomingAppointments
+  getUpcomingAppointments,
+  getPreviousAppointments
 }
