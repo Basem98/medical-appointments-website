@@ -14,6 +14,12 @@ import UserProfile from "./Pages/UserProfile/UserProfile";
 import Appointments from "./Pages/UserProfile/Appointments";
 import Settings from "./Pages/UserProfile/Settings";
 import ChangePassword from "./Pages/UserProfile/ChangePassword";
+import AdminSignInForm from './Pages/AdminDashboard/AdminLoginForm';
+import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
+import Statistics from "./Pages/AdminDashboard/Statistics";
+import AppointmentsList from "./Pages/AdminDashboard/AppointmentsList";
+import LogsList from "./Pages/AdminDashboard/LogsList";
+import ManageUsers from "./Pages/AdminDashboard/ManageUsers";
 
 const errMsg = "Oops! Looks like the page you're looking for couldn't be found.";
 const verificationMsg = "Congratulations! Your email has been verified successfully! You can now sign into your account."
@@ -29,7 +35,7 @@ function App() {
   };
 
   return (
-    <Grid container sx={{ minHeight: '100vh' }}>
+    <Grid container sx={{ minHeight: '100%' }}>
       <NavBar {...navbarStyle} />
       <Routes>
         <Route
@@ -75,6 +81,14 @@ function App() {
           path="/users/:id/change-password"
           element={<ChangePassword />}
         />
+        <Route path="/admin" element={<AdminSignInForm />}/>
+        <Route path="/dashboard" element={<AdminDashboard handleNavbarStyle={handleNavbarStyle}/>}>
+          <Route path="/dashboard/statistics" element={<Statistics />}/>
+          <Route path="/dashboard/manageusers" element={<ManageUsers />}/>
+          <Route path="/dashboard/appointments" element={<AppointmentsList />}/>
+          <Route path="/dashboard/logs" element={<LogsList />}/>
+          <Route />
+        </Route>
       </Routes>
       <Footer />
     </Grid>
