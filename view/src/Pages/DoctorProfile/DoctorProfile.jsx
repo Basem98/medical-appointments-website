@@ -88,7 +88,7 @@ const DoctorProfile = () => {
                 }
 
                 {
-                    doctorData ? (
+                    upcomings ? (
                         <Grid item>
                             <InfoCard>
                                 <CardContent>
