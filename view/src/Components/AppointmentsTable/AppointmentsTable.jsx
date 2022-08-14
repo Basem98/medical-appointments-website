@@ -145,6 +145,7 @@ const AppointmentsTable = ({ appointments, role }) => {
             <Grid
                 container
                 spacing={6}
+                marginTop={2}
                 justifyContent="center"
             >
                 {
