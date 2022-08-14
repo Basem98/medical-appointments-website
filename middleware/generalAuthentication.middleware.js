@@ -8,13 +8,13 @@ module.exports = (req, res, next) => {
     let verifiedToken;
     try {
         switch (role) {
-            case 'user':
+            case 'User':
                 verifiedToken = jwt.verify(accessToken, envConfig.AUTH.USER_SECRET);
                 break;
-            case 'doctor':
+            case 'Doctor':
                 verifiedToken = jwt.verify(accessToken, envConfig.AUTH.DOCTOR_SECRET);
                 break;
-            case 'admin':
+            case 'Admin':
                 verifiedToken = jwt.verify(accessToken, envConfig.AUTH.ADMIN_SECRET);
                 break;
             default:
