@@ -35,4 +35,5 @@ module.exports = {
   "/admins/appointments/all": admins["/admins/appointments/all"],
   "/admins/appointments/upcoming": admins["/admins/appointments/upcoming"],
   "/admins/appointments/previous": admins["/admins/appointments/previous"],
+  "/admins/appointments/delete/{id}": admins["/admins/appointments/delete/{id}"],
 }

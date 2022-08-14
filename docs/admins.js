@@ -793,5 +793,44 @@ module.exports = {
         }
       }
     }
+  },
+  "/admins/appointments/delete/{id}": {
+    "delete": {
+      "tags": ["Admin"],
+      "description": "An endpoint to delete an appointments and all its references",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "required": true,
+          "in": "path",
+          "description": "The id of the appointment to be deleted"
+        }
+      ],
+      "responses": {
+        "204": {
+          "description": "A response with a status code that confirms that the resourse is updated successfully",
+        },
+        "404": {
+          "description": "A message specifies the reason why the request failed to find resources",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
