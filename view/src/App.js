@@ -13,7 +13,7 @@ import Feedback from "./Components/Feedback/Feedback";
 import UserProfile from "./Pages/UserProfile/UserProfile";
 import UserAppointments from "./Pages/UserProfile/UserAppointments";
 import Settings from "./Pages/UserProfile/Settings";
-import ChangePassword from "./Pages/UserProfile/ChangePassword";
+import ChangeUserPassword from "./Pages/UserProfile/ChangeUserPassword";
 import DoctorProfile from "./Pages/DoctorProfile/DoctorProfile";
 import DoctorAppointment from "./Pages/DoctorProfile/DoctorAppointments";
 
@@ -75,7 +75,7 @@ function App() {
         />
         <Route
           path="/users/:id/change-password"
-          element={<ChangePassword />}
+          element={<ChangeUserPassword />}
         />
         <Route
           path="/doctors/:id/profile"
