@@ -14,7 +14,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 const DoctorProfile = () => {
     const theme = useTheme();
-    const id = "62e7c235150862d88def8161";
+    const id = "62f8f6acc5842627fdd9d631";
 
     const [doctorData, setDoctorData] = useState(null);
     const [upcomings, setUpcomings] = useState(null);

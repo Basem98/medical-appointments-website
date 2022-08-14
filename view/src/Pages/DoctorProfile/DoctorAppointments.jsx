@@ -16,7 +16,7 @@ const Appointments = () => {
     ];
 
     useEffect(() => {
-        getUpcomings("62e7c235150862d88def8161")
+        getUpcomings("62f8f6acc5842627fdd9d631")
             .then((response) => {
                 console.log(response);
                 setUpcomingAppointments(response.data.message);
@@ -27,7 +27,7 @@ const Appointments = () => {
     }, []);
 
     useEffect(() => {
-        getPrevious("62e7c235150862d88def8161")
+        getPrevious("62f8f6acc5842627fdd9d631")
             .then((response) => {
                 console.log(response);
                 setPreviousAppointments(response.data.message);

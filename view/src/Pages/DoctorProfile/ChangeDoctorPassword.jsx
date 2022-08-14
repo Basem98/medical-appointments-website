@@ -26,7 +26,7 @@ const ChangePassword = () => {
             password: formValues.newPassword,
             currentPassword: formValues.currentPassword,
         };
-        changePassword("62e7c235150862d88def8161", data)
+        changePassword("62f8f6acc5842627fdd9d631", data)
             .then((response) => {
                 navigate('/doctors/:id/profile', { replace: true });
             })
