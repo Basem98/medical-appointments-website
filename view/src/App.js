@@ -11,7 +11,7 @@ import SvgError from './Assets/Images/pagenotfound.svg';
 import MailSent from './Assets/Images/mailsent.svg';
 import Feedback from "./Components/Feedback/Feedback";
 import UserProfile from "./Pages/UserProfile/UserProfile";
-import Appointments from "./Pages/UserProfile/Appointments";
+import UserAppointments from "./Pages/UserProfile/UserAppointments";
 import Settings from "./Pages/UserProfile/Settings";
 import ChangePassword from "./Pages/UserProfile/ChangePassword";
 
@@ -59,7 +59,7 @@ function App() {
         />
         <Route
           path="/users/:id/appointments"
-          element={<Appointments />}
+          element={<UserAppointments />}
         />
         <Route
           path="/users/:id/settings"
