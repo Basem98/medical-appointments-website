@@ -16,6 +16,8 @@ import Settings from "./Pages/UserProfile/Settings";
 import ChangeUserPassword from "./Pages/UserProfile/ChangeUserPassword";
 import DoctorProfile from "./Pages/DoctorProfile/DoctorProfile";
 import DoctorAppointment from "./Pages/DoctorProfile/DoctorAppointments";
+import ChangeDoctorPassword from "./Pages/DoctorProfile/ChangeDoctorPassword";
+
 
 const errMsg = "Oops! Looks like the page you're looking for couldn't be found.";
 const verificationMsg = "Congratulations! Your email has been verified successfully! You can now sign into your account."
@@ -84,6 +86,10 @@ function App() {
         <Route 
           path="/doctors/:id/appointments"
           element={<DoctorAppointment />}
+        />
+        <Route 
+          path="/doctors/:id/change-password"
+          element={<ChangeDoctorPassword />}
         />
       </Routes>
       <Footer />
