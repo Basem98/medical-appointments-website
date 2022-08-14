@@ -4,7 +4,7 @@ const envConfig = require("../config/envConfig");
 module.exports = (req, res, next) => {
 
     const accessToken = req.cookies['accessToken'];
-    let role = "doctor";
+    let role = req.cookies['role'];
     let verifiedToken;
     try {
         switch (role) {
