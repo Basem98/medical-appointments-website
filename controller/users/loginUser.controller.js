@@ -16,7 +16,7 @@ module.exports.loginUser = (req, res, next) => {
                         return res.status(400).json({ message: 'Incorrect email or password' });
                     }
                     /* Generate a JWT access token */
-                    const cookie = generateCookie({ id: data._id, role: 'User' }, config.AUTH.ADMIN_SECRET, req.body.rememberMe, next);
+                    const cookie = generateCookie({ id: data._id, role: 'User' }, envConfig.AUTH.USER_SECRET, req.body.rememberMe, next);
                     return res.status(200)
                         .cookie('accessToken', cookie.accessToken, cookie.cookieOptions)
                         .cookie('role', 'User', cookie.cookieOptions)
