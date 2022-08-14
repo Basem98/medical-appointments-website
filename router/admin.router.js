@@ -1,6 +1,6 @@
 const express = require('express');
 const adminRouter = express.Router();
-const { signUp, logIn, getDoctorApplications, getLogs, acceptDoctorsApplication, deleteDoctor, getAllDoctors, deleteLogs, getAllUsers, deleteUser, getAllAppointments, getUpcomingAppointments, getPreviousAppointments } = require('../controller/admin/main.controller');
+const { signUp, logIn, getDoctorApplications, getLogs, acceptDoctorsApplication, deleteDoctor, getAllDoctors, deleteLogs, getAllUsers, deleteUser, getAllAppointments, getUpcomingAppointments, getPreviousAppointments, deleteAppointment } = require('../controller/admin/main.controller');
 const validationResult = require('../middleware/user/validation.middleware');
 const validateAdminData = require('../middleware/admin/validation.middleware');
 const protectAdminsRoute = require('../middleware/admin/auth.middleware');
@@ -61,7 +61,10 @@ adminRouter.get('/appointments/all', protectAdminsRoute, getAllAppointments);
 /* ---------- An endpoint to get upcoming appointments ---------- */
 adminRouter.get('/appointments/upcoming', protectAdminsRoute, getUpcomingAppointments);
 
+/* ---------- An endpoint to get previous appointments ---------- */
 adminRouter.get('/appointments/previous', protectAdminsRoute, getPreviousAppointments);
 
+/* ---------- An endpoint to get delete an appointment ---------- */
+adminRouter.delete('/appointments/delete/:id', protectAdminsRoute, deleteAppointment);
 
 module.exports = adminRouter;
