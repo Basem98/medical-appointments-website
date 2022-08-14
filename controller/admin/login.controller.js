@@ -2,6 +2,8 @@ const Admin = require('../../model/admin.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const config = require('../../config/envConfig');
+const { generateCookie } = require('../../middleware/helpers/cookie.helper');
+
 
 const logIn = async (req, res, next) => {
   try {
@@ -19,18 +21,12 @@ const logIn = async (req, res, next) => {
     }
     adminData.password = null;
     /* Generate a JWT access token */
-    const tokenIdentity = { id: adminData._id, role: 'Admin' };
-    const tokenOptions = { expiresIn: 3600 };
-    const accessToken = jwt.sign(tokenIdentity, config.AUTH.ADMIN_SECRET, tokenOptions);
+    const cookie = generateCookie({ id: adminData._id, role: 'Admin' }, config.AUTH.ADMIN_SECRET, false, next);
     /* Send a response to client to confirm the signing in success and set the cookie */
     res
       .status(200)
-      .cookie('accessToken', accessToken, {
-        // Turn the maxAge number into milliseconds (specific to Express)
-        maxAge: tokenOptions.expiresIn * 1000,
-        secure: true,
-        httpOnly: true
-      })
+      .cookie('accessToken', cookie.accessToken, cookie.cookieOptions)
+      .cookie('role', 'Admin', cookie.cookieOptions)
       .json({ message: 'You are now signed in successfully', data: adminData });
 
   } catch (err) {

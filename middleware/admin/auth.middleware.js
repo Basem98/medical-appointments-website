@@ -1,6 +1,7 @@
 const Admin = require('../../model/admin.model');
 const jwt = require('jsonwebtoken');
 const config = require('../../config/envConfig');
+const { verifyAuthHttpCookie } = require('../helpers/cookie.helper');
 
 
 /**
@@ -12,38 +13,12 @@ const config = require('../../config/envConfig');
 const protectAdminsRoute = async (req, res, next) => {
   try {
     const accessToken = req.cookies['accessToken'];
-    let authError = new Error();
-    let tokenPayload = '';
-    /* Check if token is signed with the admin's secret from this server */
-    try {
-      tokenPayload = jwt.verify(accessToken, config.AUTH.ADMIN_SECRET);
-    } catch (err) {
-      err.statusCode = 401;
-      next(err);
+    const cookieData = verifyAuthHttpCookie(accessToken, 'Admin', config.AUTH.ADMIN_SECRET, Admin, next);
+    req.admin = cookieData.data;
+    if (cookieData.tokenCookie && cookieData.tokenCookieOptions) {
+      res.cookie('accessToken', cookieData.tokenCookie, cookieData.tokenCookieOptions);
+      res.cookie('role', 'Admin', cookieData.tokenCookieOptions);
     }
-    /* Check if the admin's id in the payload is valid */
-    const adminData = await Admin.findById(tokenPayload.id);
-    if (!adminData) {
-      authError.message = "Failed to verify token identity";
-      authError.statusCode = 401;
-      throw authError;
-    }
-    /* Check if the sender is authorized to access the endpoint */
-    if (tokenPayload.role != 'Admin') {
-      authError.message = "Insufficient access permissions";
-      authError.statusCode = 401;
-      throw authError;
-    }
-    /* Reset the token & cookie's timer with each request as long as the user is active */
-    const tokenIdentity = { id: tokenPayload.id, role: tokenPayload.role };
-    const rolledToken = jwt.sign(tokenIdentity, config.AUTH.ADMIN_SECRET, { expiresIn: 3600 });
-    res.cookie('accessToken', rolledToken, {
-      maxAge: 3600 * 1000,
-      secure: true,
-      httpOnly: true
-    });
-
-    req.admin = adminData;
     next();
   } catch (err) {
     next(err);

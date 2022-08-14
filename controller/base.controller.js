@@ -35,11 +35,8 @@ async function verifyToken(req, res, next) {
 function logout(req, res, next) {
   try {
     res
-      .cookie('accessToken', null, {
-        maxAge: 0,
-        secure: true,
-        httpOnly: true
-      })
+      .clearCookie('accessToken')
+      .clearCookie('role')
       .status(200)
       .json({ message: 'Signed out successfully' });
   } catch (err) {
