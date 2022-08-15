@@ -7,8 +7,10 @@ import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import EmailIcon from '@mui/icons-material/Email';
 import PublicIcon from '@mui/icons-material/Public';
 import { useTheme } from '@mui/material';
-import NavBar from '../Home/NavBar';
+import NavBar from '../../Components/Navbar/NavBar';
 import React from 'react'
+
+import CustomCalender from "../../Components/CustomCalendar/CustomCalender";
 
 function DoctorDetails() {
     const Theme = useTheme();
@@ -26,7 +28,7 @@ function DoctorDetails() {
             website: "www.doctor.com"
         }
     ]
-    const isMobile = useMediaQuery((Theme) => Theme.breakpoints.down("sm"));
+    const isTablet = useMediaQuery((Theme)=>Theme.breakpoints.down("md"))
     return (
         <>
             <Grid
@@ -37,33 +39,37 @@ function DoctorDetails() {
                     width: "100%",
                 }}
             >
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                     <NavBar />
-                </Grid>
+                </Grid> */}
                 <Grid container item maxWidth="md" style={{ marginTop: 20 }} justifyContent='space-between'>
                     {/* Photo grid */}
-                    <Grid item xs={12} md={5} style={{
-                        borderRadius: '50%',
-                        overflow: 'hidden',
-                        border: 'solid white 5px',
-                        textAlign: 'center',
-                        maxWidth: "195px",
-                        maxHeight: "195px",
-                        marginBottom: "20px"
+                    <Grid item xs={12} md={6} style={{
+                        marginBottom: "20px",
+                        display:'flex',
+                        justifyContent:isTablet?'center':'flex-start',
+                        textAlign: 'center'
                     }}
                     >
                         {/* Doctor's pic here */}
                         <img
                             src={drImage}
                             alt="doctorImage"
-                            style={{ maxWidth: "195px", maxHeight: "195px" }}
+                            style={{ maxWidth: "195px", maxHeight: "195px",
+                            borderRadius: '50%',
+                            overflow: 'hidden',
+                            border: 'solid white 5px',
+                            textAlign: 'center',
+                        }}
                         />
                     </Grid>
                     {/* Hero's section grid */}
-                    <Grid item xs={12} md={5} alignSelf='center'>
+                    <Grid item xs={12} md={6} >
                         <Typography style={{
-                            ...Theme.typography.h1,
-                            color: Theme.palette.text.primary
+                            ...Theme.typography.h2,
+                            color: Theme.palette.text.primary,
+                            textAlign: 'center'
+
                         }}>
                             Doctor's name
                         </Typography>
@@ -91,8 +97,9 @@ function DoctorDetails() {
                             sx={{
                                 display: "flex",
                                 justifyContent: "center",
+                                marginBottom: "25px"
                             }}>
-                            <CustomFormButton variant='contained' style={{...Theme.typography.body1}}>
+                            <CustomFormButton variant='contained' style={{ ...Theme.typography.body1 }} >
                                 <Link href="#bookingSection" underline="none" color="white">
                                     Booking information
                                 </Link>
@@ -264,30 +271,30 @@ function DoctorDetails() {
                     <List>
                         {docContacts.map(item => (
                             <>
-                            
+
                                 <ListItem style={{
                                     ...Theme.typography.body2,
                                     color: Theme.palette.text.primary,
                                 }}
                                 >
-                                    <ListItemIcon><PhoneAndroidIcon/></ListItemIcon>
-                            <ListItemText primary={item.phone}/>
+                                    <ListItemIcon><PhoneAndroidIcon /></ListItemIcon>
+                                    <ListItemText primary={item.phone} />
                                 </ListItem>
                                 <ListItem style={{
                                     ...Theme.typography.body2,
                                     color: Theme.palette.text.primary,
                                 }}
                                 >
-                                    <ListItemIcon><EmailIcon/></ListItemIcon>
-                            <ListItemText primary={item.mail}/>
+                                    <ListItemIcon><EmailIcon /></ListItemIcon>
+                                    <ListItemText primary={item.mail} />
                                 </ListItem>
                                 <ListItem style={{
                                     ...Theme.typography.body2,
                                     color: Theme.palette.text.primary,
                                 }}
                                 >
-                                    <ListItemIcon><PublicIcon/></ListItemIcon>
-                            <ListItemText primary={item.website}/>
+                                    <ListItemIcon><PublicIcon /></ListItemIcon>
+                                    <ListItemText primary={item.website} />
                                 </ListItem>
                             </>
                         ))}
@@ -409,13 +416,53 @@ function DoctorDetails() {
                             10 mins.
                         </Typography>
                     </Grid>
-                    <Grid item xs={12} alignSelf='center' style={{ textAlign: "center", marginTop: "20px", width: "100%", marginBottom: "20px" }} name={"bookingSection"}>
-                        <CustomFormButton variant='contained' style={{ ...Theme.typography.largerButtonText, width: "35%" }} fullWidth>
-                            Book now
-                        </CustomFormButton>
-                        <a name="bookingSection"></a>
-                    </Grid>
+
                 </Grid>
+                <Grid container item maxWidth="md" style={{ marginTop: 30 }} justifyContent='space-between'>
+                    <Grid item xs={12} md={5} style={{
+                        marginBottom: "20px",
+                        textAlign: 'center'
+                    }}
+
+                        alignSelf='center'
+                    >
+                        <Typography style={{
+                            ...Theme.typography.largerButtonText,
+                            color: Theme.palette.text.primary,
+                        }}
+                            sx={{ marginY: "25px", alignSelf: "center" }}
+                        >
+                            Doctor's schedule
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={5}
+                        display='flex'
+                        alignSelf='center'
+                        justifyContent='center'
+                        alignItems={'center'}
+                        style={{ textAlign: "center",marginRight:'16px' }}>
+                        <CustomCalender />
+                    </Grid>
+                  
+                </Grid>
+                <Grid 
+                    item
+                    xs={4}
+                    
+                    style={{ textAlign: "center",
+                     marginTop: "20px",
+                      width: "100%",
+                       marginBottom: "20px",
+                       display:'flex',
+                       justifyContent:'center',
+                       textAlign: 'center' }} 
+                    name={"bookingSection"}>
+                    <CustomFormButton variant='contained' style={{ ...Theme.typography.largerButtonText }} fullWidth>
+                        Book now
+                    </CustomFormButton>
+                    <a name="bookingSection"></a>
+                </Grid>
+
             </Grid>
         </>
     )
