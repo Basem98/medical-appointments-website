@@ -9,6 +9,7 @@ const multerUpload = require('../middleware/multer.middleware');
 const bufferFileToString = require('../middleware/bufToString.middleware');
 const { isEmailAlreadyInDb, isPhoneAlreadyInDb } = require('../controller/doctors/exists.controller');
 const { sendMail } = require('../controller/doctors/emails.controller');
+const protectDoctorsRoute = require('../middleware/doctor/auth.middleware');
 
 
 /* ---------- An endpoint to register new doctors ---------- */
@@ -36,7 +37,7 @@ doctorRouter.post('/login', login);
 doctorRouter.route('/:id').get(getDoctorById);
 
 /* ---------- An endpoint to change doctor's password ---------- */
-doctorRouter.route('/:id/change-password').patch(changeDoctorPassword);
+doctorRouter.route('/:id/change-password').patch(protectDoctorsRoute, changeDoctorPassword);
 
 
 module.exports = doctorRouter;
