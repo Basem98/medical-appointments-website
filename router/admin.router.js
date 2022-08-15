@@ -1,6 +1,6 @@
 const express = require('express');
 const adminRouter = express.Router();
-const { signUp, logIn, getDoctorApplications, getLogs, acceptDoctorsApplication, deleteDoctor, getAllDoctors, deleteLogs, getAllUsers, deleteUser, getAllAppointments, getUpcomingAppointments, getPreviousAppointments, deleteAppointment, getAppointmentStatistics } = require('../controller/admin/main.controller');
+const { signUp, logIn, getDoctorApplications, getLogs, acceptDoctorsApplication, deleteDoctor, getAllDoctors, deleteLogs, getAllUsers, deleteUser, getAllAppointments, getUpcomingAppointments, getPreviousAppointments, deleteAppointment, getAppointmentStatistics, getUserStatistics } = require('../controller/admin/main.controller');
 const validationResult = require('../middleware/user/validation.middleware');
 const validateAdminData = require('../middleware/admin/validation.middleware');
 const protectAdminsRoute = require('../middleware/admin/auth.middleware');
@@ -69,5 +69,8 @@ adminRouter.delete('/appointments/delete/:id', protectAdminsRoute, deleteAppoint
 
 /* ---------- An endpoint to get statistics for the appointments ---------- */
 adminRouter.get('/appointments/statistics', protectAdminsRoute, getAppointmentStatistics);
+
+/* ---------- An endpoint to get statistics for users ---------- */
+adminRouter.get('/users/statistics', protectAdminsRoute, getUserStatistics);
 
 module.exports = adminRouter;
