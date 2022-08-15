@@ -1,20 +1,37 @@
 import React from "react";
 import DropdownField from "./../../Components/DropdownField/DropdownField";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom'
 import { Form, Formik } from "formik";
 import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton";
 import { Grid } from "@mui/material";
+import specialties from '../../Helper/SpecialtiesOptions';
+import governorates from "../../Helper/GovernoratesOptions";
+import { months, getDays } from './../../Helper/DateOptions';
 
 const SearchBar = () => {
-  const [specializations, setSpecializations] = useState([
-    "Spec 1",
-    "Spec 2",
-    "Spec 3",
-  ]);
 
-  const [locations, setLocations] = useState(["Dahab", "Cario", "Qaluobya"]);
+  const navigate = useNavigate();
 
-  const [dates, setDates] = useState(["1", "2", "3"]);
+  const routeToSpecialistsPage = (values) => {
+    console.log('here in routeToSpecialistsPage')
+    navigate("/specialists", {
+      state: { ...values }
+    })
+  }
+  const validateForm = (values) => {
+    const errors = {};
+    if (values.dateFromDay && values.dateFromMonth === '') {
+      console.log(values.dateFromMonth)
+      errors.dateFromMonth = "Required";
+    }
+    if (!values.dateFromDay && values.dateFromMonth) {
+      errors.dateFromDay = "Required";
+    }
+
+    return errors;
+  }
+
   return (
     <>
       <div
@@ -27,11 +44,13 @@ const SearchBar = () => {
       >
         <Formik
           initialValues={{
-            dropDown: "",
-            location: "",
-            date: "",
+            specialization: "",
+            governorate: "",
+            dateFromMonth: "",
+            dateFromDay: "",
           }}
-          onSubmit={() => console.log("Submitted")}
+          onSubmit={routeToSpecialistsPage}
+          validate={validateForm}
           align="center"
         >
           <Form
@@ -52,35 +71,56 @@ const SearchBar = () => {
               <Grid item md={3} xs={10}>
                 <DropdownField
                   label={"Specialization"}
-                  options={specializations}
-                  name="dropDown"
-                  sx={{ height: "56px" }}
-                  style={{ boxShadow: "0px 4px 4px rgba(0, 0, 0, .25)" }}
-                />
-              </Grid>
-              <Grid item md={3} xs={10}>
-                <DropdownField
-                  label="Location"
-                  options={locations}
-                  name="location"
-                  sx={{ height: "56px" }}
-                  style={{ boxShadow: "0px 4px 4px rgba(0, 0, 0, .25)" }}
-                />
-              </Grid>
-
-              <Grid item md={3} xs={10}>
-                <DropdownField
-                  label="Date"
-                  options={dates}
-                  name="date"
-                  sx={{ height: "56px" }}
-                  style={{
+                  options={specialties}
+                  name="specialization"
+                  sx={{
+                    height: "56px",
                     boxShadow: "0px 4px 4px rgba(0, 0, 0, .25)",
+                    padding: 0,
+                  }}
+                />
+              </Grid>
+              <Grid item md={3} xs={10}>
+                <DropdownField
+                  label="Governorate"
+                  options={governorates}
+                  name="governorate"
+                  sx={{
+                    height: "56px",
+                    boxShadow: "0px 4px 4px rgba(0, 0, 0, .25)",
+                    padding: 0,
                   }}
                 />
               </Grid>
 
-              <Grid item md={3} xs={10}>
+              <Grid item md={4} xs={10} container justifyContent="space-between">
+                <Grid item md={7} xs={7}>
+                  <DropdownField
+                    label="Month"
+                    options={months}
+                    name="dateFromMonth"
+                    sx={{
+                      height: "56px",
+                      boxShadow: "0px 4px 4px rgba(0, 0, 0, .25)",
+                      padding: 0,
+                    }}
+                  />
+                </Grid>
+                <Grid item md={4} xs={4}>
+                  <DropdownField
+                    label="Day"
+                    options={getDays()}
+                    name="dateFromDay"
+                    sx={{
+                      height: "56px",
+                      boxShadow: "0px 4px 4px rgba(0, 0, 0, .25)",
+                      padding: 0,
+                    }}
+                  />
+                </Grid>
+              </Grid>
+
+              <Grid item md={2} xs={10}>
                 <CustomFormButton
                   variant="contained"
                   type="submit"

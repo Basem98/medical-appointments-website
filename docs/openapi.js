@@ -1,3 +1,8 @@
+const doctorModel = require("./models/doctor");
+const userModel = require('./models/user');
+const appointmentModel = require('./models/appointment');
+const logModel = require('./models/log');
+const adminModel = require("./models/admin");
 const paths = require('./paths');
 
 module.exports = {
@@ -57,12 +62,34 @@ module.exports = {
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT"
+      },
+      "cookieAuth": {
+        "type": "http-only",
+        "in": "cookie",
+        "name": "accessToken"
       }
     },
-    "cookieAuth": {
-      "type": "http-only",
-      "in": "cookie",
-      "name": "accessToken"
+    "schemas": {
+      "Admin": {
+        "type": "object",
+        "properties": adminModel.schema
+      },
+      "Doctor": {
+        "type": "object",
+        "properties": doctorModel.schema
+      },
+      "User": {
+        "type": "object",
+        "properties": userModel.schema
+      },
+      "Appointment": {
+        "type": "object",
+        "properties": appointmentModel.schema
+      },
+      "Log": {
+        "type": "object",
+        "properties": logModel.schema
+      }
     }
   }
 }

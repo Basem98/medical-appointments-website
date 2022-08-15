@@ -3,9 +3,10 @@ import React from "react";
 import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton";
 import InfoCard from "../../Components/InfoCard/InfoCard";
 import Grid from "@mui/material/Grid";
+import { Link } from "react-router-dom";
 
 const Welcome = ({ userData }) => {
-    const theme= useTheme();
+    const theme = useTheme();
     const isUpcomingAppointment = (index) => {
         let currentDate = new Date();
         let now = {
@@ -48,14 +49,26 @@ const Welcome = ({ userData }) => {
                                             <Grid item xs={10}>
                                                 <Typography>You don't have any upcoming appointments.</Typography>
                                                 <Grid item xs={10} marginTop={4}>
-                                                    <CustomFormButton variant="contained">Book Now</CustomFormButton>
+                                                    <Link
+                                                        to="/"
+                                                    >
+                                                        <CustomFormButton variant="contained">
+                                                            Book Now!
+                                                        </CustomFormButton>
+                                                    </Link>
                                                 </Grid>
                                             </Grid>
                                             :
                                             <Grid item xs={10}>
-                                                <Typography>You have {upcomingAppointments?.length} upcoming appointments.</Typography>
+                                                <Typography>You have {upcomingAppointments?.length} upcoming appointment(s).</Typography>
                                                 <Grid item xs={10} marginTop={4}>
-                                                    <CustomFormButton variant="contained">Show Appointments</CustomFormButton>
+                                                    <Link
+                                                        to="/users/appoinmtments"
+                                                    >
+                                                        <CustomFormButton variant="contained">
+                                                            Show Appointments
+                                                        </CustomFormButton>
+                                                    </Link>
                                                 </Grid>
                                             </Grid>
                                     }

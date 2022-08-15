@@ -9,7 +9,7 @@ import axiosClient from '../axiosClient';
  *  */
 const submitDoctorApplication = async (doctorData) => {
   try {
-    const baseDoctorsRoute = '/api/doctors';
+    const baseDoctorsRoute = '/doctors';
     const headers = {
       'Content-Type': 'application/json'
     };

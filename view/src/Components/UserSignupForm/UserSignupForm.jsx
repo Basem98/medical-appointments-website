@@ -17,11 +17,11 @@ import CustomAlert from "../CustomAlert/CustomAlert";
 
 export default function UserSignupForm() {
 
-    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState('password');
+    const [showConfirmPassword, setShowConfirmPassword] = useState('password');
     const [isDuplicated, setIsDuplicated] = useState(false);
     const [duplicationErrorsArray, setDuplicationErrorsArray] = useState([]);
 
-    const handleShowPasswordToggle = () => setShowPassword(!showPassword);
     const handleDuplicationError = () => {
         return duplicationErrorsArray.map((errorMessage, index) => {
             return (
@@ -59,8 +59,8 @@ export default function UserSignupForm() {
         <>
             <Grid container height='100vh' justifyContent='center' alignItems='center' sx={{ backgroundColor: 'rgba(249, 249, 249, 0.5)', marginY: -1 }}>
                 <Grid container item height='fit-content' xl={4} lg={6} md={6} sm={8} xs={12} sx={{
-                    background: 'linear-gradient(180deg, #21D0C3 0%, rgba(166, 224, 214, 0.25) 22.4%)',
-                    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+                    background: theme.palette.linearFormBg,
+                    boxShadow: theme.shadows[5],
                     borderRadius: '20px'
                 }}>
                     <Grid item sx={{ width: '100%' }}>
@@ -118,22 +118,24 @@ export default function UserSignupForm() {
                                         </Grid>
                                         <Grid item xs={10} sx={{ marginTop: '25px' }}>
                                             <InputField label='Password' name='password' placeholder='Password'
-                                                type={showPassword ? "text" : "password"}
+                                                type={showPassword}
                                             >
                                                 <VpnKeyIcon></VpnKeyIcon>
-                                                {showPassword ?
-                                                    <VisibilityOffIcon onClick={handleShowPasswordToggle} cursor='pointer' /> :
-                                                    <VisibilityIcon onClick={handleShowPasswordToggle} cursor='pointer' />}
+                                                {showPassword === 'password' ?
+                                                    <VisibilityIcon onClick={() => setShowPassword('text')} cursor='pointer' />
+                                                    : <VisibilityOffIcon onClick={() => setShowPassword('password')} cursor='pointer' />
+                                                }
                                             </InputField>
                                         </Grid>
                                         <Grid item xs={10} sx={{ marginTop: '25px' }}>
                                             <InputField label='Confirm Password' name='passwordConfirmation' placeholder='Confirm Password'
-                                                type={showPassword ? "text" : "password"}
+                                                type={showConfirmPassword}
                                             >
                                                 <VpnKeyIcon></VpnKeyIcon>
-                                                {showPassword ?
-                                                    <VisibilityOffIcon onClick={handleShowPasswordToggle} cursor='pointer' /> :
-                                                    <VisibilityIcon onClick={handleShowPasswordToggle} cursor='pointer' />}
+                                                {showConfirmPassword === 'password' ?
+                                                    <VisibilityIcon onClick={() => setShowConfirmPassword('text')} cursor='pointer' />
+                                                    : <VisibilityOffIcon onClick={() => setShowConfirmPassword('password')} cursor='pointer' />
+                                                }
                                             </InputField>
                                         </Grid>
                                         <Grid item xs={8} sx={{ marginTop: '25px' }}>

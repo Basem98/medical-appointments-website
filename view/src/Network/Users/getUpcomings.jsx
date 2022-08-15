@@ -1,12 +1,8 @@
 import axiosClient from "../axiosClient";
 
-const getUpcomings = (id, token) => {
-    const config = {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    }
-    return axiosClient.get(`/api/appointments/upcomings/${id}`, config);
+const getUpcomings = (id) => {
+    
+    return axiosClient.get(`/appointments/upcomings/${id}`);
 }
 
 export default getUpcomings;
