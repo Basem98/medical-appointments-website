@@ -74,6 +74,12 @@ theme = createTheme({
             fontSize: 20,
             fontWeight: 'bold',
             textTransform: 'uppercase'
+        },
+        modalSmallText:{
+            fontSize:24
+        },
+        modalLargeText:{
+            fontSize:44
         }
     }
 });
