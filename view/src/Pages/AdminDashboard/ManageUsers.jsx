@@ -1,32 +1,35 @@
 import { getUsersData, deleteUser } from '../../Network/Admin/user'
 import {
-    CircularProgress, Table, TableHead, TableRow, TableBody, Button, Grid, TableContainer, Paper
+    CircularProgress, Table, TableHead, TableRow, TableBody, Button, Grid, TableContainer, Paper, Snackbar
 } from "@mui/material";
-import { Box, useTheme } from "@mui/system";
+import { Box } from "@mui/system";
 import { useState, useEffect } from "react";
-import CustomAlert from "../../Components/CustomAlert/CustomAlert";
 import { StyledTableCell, StyledTableRow } from "../../Helper/CustomTableItems";
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutlined';
+import CustomAlert from "../../Components/CustomAlert/CustomAlert";
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 const ManageUsers = () => {
     const [usersData, setUsersData] = useState([]);
     const [paginatePage, setPaginatePage] = useState({ pageNum: 0, nextPage: true });
-    const [serverResponse, setServerResponse] = useState({ sucess: false, msg: '' });
+    const [snakbarStatus, setSnakbarStatus] = useState(false);
+    const [alertStatus, setAlertStatus] = useState({ severity: '', msg: '' });
 
     useEffect(() => {
         getUsersData(paginatePage.pageNum)
             .then(res => {
                 setUsersData(res.data.data);
-                setServerResponse({ ...serverResponse, success: true })
             })
             .catch(err => {
                 console.log('erro: ', err)
                 if (err.response.status === 404) {
                     setPaginatePage({ pageNum: paginatePage.pageNum - 1, nextPage: false });
+                    setAlertStatus({ severity: 'error', msg: 'No pages found!' });
+                    setSnakbarStatus(true);
                 }
-                setServerResponse({ msg: err.response.status, success: false })
             })
     }, [paginatePage.pageNum])
 
@@ -42,9 +45,16 @@ const ManageUsers = () => {
     const handleDeleteUser = (userId) => {
         deleteUser(userId)
             .then(res => {
-                if (res.status === 204) setUsersData(usersData.filter(user => user._id !== userId));
+                if (res.status === 204) {
+                    setUsersData(usersData.filter(user => user._id !== userId));
+                    setAlertStatus({ severity: 'success', msg: 'User Deleted' });
+                    setSnakbarStatus(true);
+                }
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                setAlertStatus({ severity: 'error', msg: 'Could not delete!' });
+                setSnakbarStatus(true);
+            })
     }
 
     return (
@@ -81,6 +91,25 @@ const ManageUsers = () => {
                         {paginatePage.pageNum ? (<ArrowCircleLeftOutlinedIcon cursor="pointer" onClick={handlePageBackward} sx={{ fontSize: 40, "&:hover": { opacity: .7 } }} />) : ('')}
                         {paginatePage.nextPage ? (<ArrowCircleRightOutlinedIcon cursor="pointer" onClick={handlePageForward} sx={{ fontSize: 40, "&:hover": { opacity: .7 } }} />) : ('')}
                     </Box>
+                    <Snackbar open={snakbarStatus} autoHideDuration={5000} onClose={() => setSnakbarStatus(false)}>
+                        <CustomAlert
+                            severity={alertStatus.severity}
+                            action={
+                                <IconButton
+                                    aria-label="close"
+                                    color="inherit"
+                                    size="small"
+                                    onClick={() => {
+                                        setSnakbarStatus(false);
+                                    }}
+                                >
+                                    <CloseIcon fontSize="inherit" />
+                                </IconButton>
+                            }
+                        >
+                            {alertStatus.msg}
+                        </CustomAlert>
+                    </Snackbar>
                 </>
             ) : (
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -88,17 +117,6 @@ const ManageUsers = () => {
                 </Box>
             )
             }
-
-            {/* {
-                !serverResponse.sucess && serverResponse.msg ?
-                    <CustomAlert
-                        severity={serverResponse.success ? 'success' : 'error'}
-                        sx={{ boxShadow: theme.shadows[1] }}
-                        onClose={() => {
-                            setServerResponse({ success: false, msg: '' });
-                        }}>{serverResponse.msg}</CustomAlert>
-                    : <CircularProgress color='highlight' sx={{ marginY: '10px' }} />
-            } */}
         </Grid >
     )
 }
