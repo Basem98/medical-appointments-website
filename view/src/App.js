@@ -13,14 +13,14 @@ import Feedback from "./Components/Feedback/Feedback";
 import UserProfile from "./Pages/UserProfile/UserProfile";
 import UserAppointments from "./Pages/UserProfile/UserAppointments";
 import Settings from "./Pages/UserProfile/Settings";
-// import ChangePassword from "./Pages/UserProfile/ChangePassword";
-import ManageUsers from "./Pages/AdminDashboard/ManageUsers";
 import DoctorProfile from "./Pages/DoctorProfile/DoctorProfile";
 import DoctorAppointment from "./Pages/DoctorProfile/DoctorAppointments";
+import ChangeUserPassword from "./Pages/UserProfile/ChangeUserPassword";
 import ChangeDoctorPassword from "./Pages/DoctorProfile/ChangeDoctorPassword";
 import AdminSignInForm from './Pages/AdminDashboard/AdminLoginForm';
 import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
 import Statistics from "./Pages/AdminDashboard/Statistics";
+import ManageUsers from "./Pages/AdminDashboard/ManageUsers";
 import AppointmentsList from "./Pages/AdminDashboard/AppointmentsList";
 import LogsList from "./Pages/AdminDashboard/LogsList";
 
@@ -81,10 +81,10 @@ function App() {
             }}
           />}
         />
-        {/* <Route
+        <Route
           path="/users/:id/change-password"
           element={<ChangeUserPassword />}
-        /> */}
+        />
         <Route
           path="/doctors/:id/profile"
           element={<DoctorProfile />}
