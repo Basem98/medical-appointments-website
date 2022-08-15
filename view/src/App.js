@@ -11,15 +11,19 @@ import SvgError from './Assets/Images/pagenotfound.svg';
 import MailSent from './Assets/Images/mailsent.svg';
 import Feedback from "./Components/Feedback/Feedback";
 import UserProfile from "./Pages/UserProfile/UserProfile";
-import Appointments from "./Pages/UserProfile/Appointments";
+import UserAppointments from "./Pages/UserProfile/UserAppointments";
 import Settings from "./Pages/UserProfile/Settings";
-import ChangePassword from "./Pages/UserProfile/ChangePassword";
+// import ChangePassword from "./Pages/UserProfile/ChangePassword";
+import ManageUsers from "./Pages/AdminDashboard/ManageUsers";
+import DoctorProfile from "./Pages/DoctorProfile/DoctorProfile";
+import DoctorAppointment from "./Pages/DoctorProfile/DoctorAppointments";
+import ChangeDoctorPassword from "./Pages/DoctorProfile/ChangeDoctorPassword";
 import AdminSignInForm from './Pages/AdminDashboard/AdminLoginForm';
 import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
 import Statistics from "./Pages/AdminDashboard/Statistics";
 import AppointmentsList from "./Pages/AdminDashboard/AppointmentsList";
 import LogsList from "./Pages/AdminDashboard/LogsList";
-import ManageUsers from "./Pages/AdminDashboard/ManageUsers";
+
 
 const errMsg = "Oops! Looks like the page you're looking for couldn't be found.";
 const verificationMsg = "Congratulations! Your email has been verified successfully! You can now sign into your account."
@@ -65,7 +69,7 @@ function App() {
         />
         <Route
           path="/users/:id/appointments"
-          element={<Appointments />}
+          element={<UserAppointments />}
         />
         <Route
           path="/users/:id/settings"
@@ -77,9 +81,21 @@ function App() {
             }}
           />}
         />
-        <Route
+        {/* <Route
           path="/users/:id/change-password"
-          element={<ChangePassword />}
+          element={<ChangeUserPassword />}
+        /> */}
+        <Route
+          path="/doctors/:id/profile"
+          element={<DoctorProfile />}
+        />
+        <Route 
+          path="/doctors/:id/appointments"
+          element={<DoctorAppointment />}
+        />
+        <Route 
+          path="/doctors/:id/change-password"
+          element={<ChangeDoctorPassword />}
         />
         <Route path="/admin" element={<AdminSignInForm />}/>
         <Route path="/dashboard" element={<AdminDashboard handleNavbarStyle={handleNavbarStyle}/>}>

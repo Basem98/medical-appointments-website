@@ -33,7 +33,7 @@ const UserProfile = () => {
             >
                 {
                     !userData.isVerified &&
-                    <Grid item xs={12} md={9} sx={{ marginTop: '10px' }}>
+                    <Grid item xs={11} md={9} sx={{ marginTop: '10px' }}>
                         <CustomAlert
                             severity="warning"
                         >

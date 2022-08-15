@@ -13,7 +13,7 @@ const { verifyAuthHttpCookie } = require('../helpers/cookie.helper');
 const protectAdminsRoute = async (req, res, next) => {
   try {
     const accessToken = req.cookies['accessToken'];
-    const cookieData = verifyAuthHttpCookie(accessToken, 'Admin', config.AUTH.ADMIN_SECRET, Admin, next);
+    const cookieData = await verifyAuthHttpCookie(accessToken, 'Admin', config.AUTH.ADMIN_SECRET, Admin, next);
     req.admin = cookieData.data;
     if (cookieData.tokenCookie && cookieData.tokenCookieOptions) {
       res.cookie('accessToken', cookieData.tokenCookie, cookieData.tokenCookieOptions);

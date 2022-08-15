@@ -17,6 +17,7 @@ const generateCookie = (identity, secret, remember, next) => {
       // Turn the maxAge number into milliseconds (specific to Express)
       maxAge: expiresIn * 1000,
       secure: true,
+      sameSite: 'None',
       httpOnly: true
     }
     return {
