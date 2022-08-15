@@ -15,6 +15,7 @@ const getUpcomings = (req, res, next) => {
             {user: req.params.id},
             {doctor: req.params.id}
         ],
+        user: {"$exists": true},
         date: {"$gt": currentDate}
     })
     .populate('user')
