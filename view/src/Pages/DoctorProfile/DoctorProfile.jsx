@@ -3,7 +3,6 @@ import React from "react"
 import { useEffect } from "react";
 import { useState } from "react";
 import CustomAlert from "../../Components/CustomAlert/CustomAlert";
-import getDoctor from "../../Network/Doctors/getDocotor";
 import getUpcomings from "../../Network/Doctors/getUpcomings";
 import InfoCard from "../../Components/InfoCard/InfoCard";
 import CardContent from "@mui/material/CardContent";
@@ -12,16 +11,16 @@ import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton
 import { Link } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import checkAuthentication from "../../Network/Base/checkAuthentication";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 
 const DoctorProfile = () => {
+    const doctorData = useSelector((state) => state.userDetails)
     const dispatch = useDispatch();
 
     const theme = useTheme();
     const id = "62f8f6acc5842627fdd9d631";
 
-    const [doctorData, setDoctorData] = useState(null);
     const [upcomings, setUpcomings] = useState(null);
 
     useEffect(() => {
@@ -36,16 +35,8 @@ const DoctorProfile = () => {
             .catch((error) => {
                 console.log(error);
             })
-        getDoctor(id)
-            .then((response) => {
-                setDoctorData(response.data.message);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
         getUpcomings(id)
             .then((response) => {
-                console.log(response.data.message);
                 setUpcomings(response.data.message);
             })
             .catch((error) => {
