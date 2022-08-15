@@ -1,17 +1,23 @@
-import { StaticDatePicker, DesktopDatePicker } from '@mui/x-date-pickers';
+import { StaticDatePicker } from '@mui/x-date-pickers';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import TextField from '@mui/material/TextField';
-
 import { useState } from 'react';
 import './CustomCalendar.css'
 
-function CustomCalender() {
+
+function CustomCalender({ setCalVal }) {
   const [value, setValue] = useState(new Date());
+  const datesarray = [
+    { date: new Date(2022, 7, 15) },
+    { date: new Date(2022, 7, 17) },
+    { date: new Date(2022, 7, 19) },
+    { date: new Date(2022, 7, 21) },
+    { date: new Date(2022, 7, 23) }]
+    
   return (
-    // import moment.js to use it in the data adapter
-    <LocalizationProvider dateAdapter={AdapterMoment}>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
       <StyledEngineProvider injectFirst>
         < StaticDatePicker
           component="div"
@@ -22,9 +28,11 @@ function CustomCalender() {
           renderInput={(params) => <TextField {...params} />}
           onChange={(newValue) => {
             setValue(newValue);
+            setCalVal(newValue)
           }}
-          minDate={new Date('2022-08-02T13:34:50.445Z')}
-          maxDate={new Date('2022-08-12')}
+          disableHighlightToday
+          shouldDisableDate={(date) =>
+            datesarray.every((dateel) => dateel.date.getDate() !== date.getDate())}
         />
       </StyledEngineProvider>
     </LocalizationProvider>
