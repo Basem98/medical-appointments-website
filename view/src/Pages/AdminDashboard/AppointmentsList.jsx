@@ -7,10 +7,15 @@ import { useState, useEffect } from "react";
 import { StyledTableCell, StyledTableRow } from "../../Helper/CustomTableItems";
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutlined';
+import CustomAlert from "../../Components/CustomAlert/CustomAlert";
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function AppointmentsList() {
     const [appointmentsData, setAppointmentsData] = useState([]);
     const [paginatePage, setPaginatePage] = useState({ pageNum: 0, nextPage: true });
+    const [snakbarStatus, setSnakbarStatus] = useState(false);
+    const [alertStatus, setAlertStatus] = useState({ severity: '', msg: '' });
 
     useEffect(() => {
         getAppointmentsData({ type: 'all', pageNum: paginatePage.pageNum })
@@ -22,6 +27,8 @@ export default function AppointmentsList() {
                 console.log('erro: ', err)
                 if (err.response.status === 404) {
                     setPaginatePage({ pageNum: paginatePage.pageNum - 1, nextPage: false });
+                    setAlertStatus({ severity: 'error', msg: 'No pages found!' });
+                    setSnakbarStatus(true);
                 }
             })
     }, [paginatePage.pageNum])
@@ -40,9 +47,13 @@ export default function AppointmentsList() {
             .then(res => {
                 if (res.status === 204) {
                     setAppointmentsData(appointmentsData.filter(user => user._id !== userId));
+                    setAlertStatus({ severity: 'success', msg: 'Appointment Deleted' });
+                    setSnakbarStatus(true);
                 }
             })
             .catch(err => {
+                setAlertStatus({ severity: 'error', msg: 'Could not delete!' });
+                setSnakbarStatus(true);
             })
     }
 
@@ -82,6 +93,25 @@ export default function AppointmentsList() {
                         {paginatePage.pageNum ? (<ArrowCircleLeftOutlinedIcon cursor="pointer" onClick={handlePageBackward} sx={{ fontSize: 40, "&:hover": { opacity: .7 } }} />) : ('')}
                         {paginatePage.nextPage ? (<ArrowCircleRightOutlinedIcon cursor="pointer" onClick={handlePageForward} sx={{ fontSize: 40, "&:hover": { opacity: .7 } }} />) : ('')}
                     </Box>
+                    <Snackbar open={snakbarStatus} autoHideDuration={5000} onClose={() => setSnakbarStatus(false)}>
+                        <CustomAlert
+                            severity={alertStatus.severity}
+                            action={
+                                <IconButton
+                                    aria-label="close"
+                                    color="inherit"
+                                    size="small"
+                                    onClick={() => {
+                                        setSnakbarStatus(false);
+                                    }}
+                                >
+                                    <CloseIcon fontSize="inherit" />
+                                </IconButton>
+                            }
+                        >
+                            {alertStatus.msg}
+                        </CustomAlert>
+                    </Snackbar>
                 </>
             ) : (
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -89,8 +119,6 @@ export default function AppointmentsList() {
                 </Box>
             )
             }
-
-
         </Grid >
     )
 }
