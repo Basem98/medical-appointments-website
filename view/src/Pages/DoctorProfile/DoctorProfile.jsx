@@ -11,8 +11,13 @@ import Typography from "@mui/material/Typography";
 import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton";
 import { Link } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import checkAuthentication from "../../Network/Base/checkAuthentication";
+import { useDispatch } from "react-redux";
+import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 
 const DoctorProfile = () => {
+    const dispatch = useDispatch();
+
     const theme = useTheme();
     const id = "62f8f6acc5842627fdd9d631";
 
@@ -20,6 +25,17 @@ const DoctorProfile = () => {
     const [upcomings, setUpcomings] = useState(null);
 
     useEffect(() => {
+        checkAuthentication()
+            .then((response) => {
+                dispatch(setUserDetails({
+                    role: response.data.role,
+                    data: response.data.data,
+                    email: response.data.data.email
+                }))
+            })
+            .catch((error) => {
+                console.log(error);
+            })
         getDoctor(id)
             .then((response) => {
                 setDoctorData(response.data.message);
@@ -27,7 +43,7 @@ const DoctorProfile = () => {
             .catch((error) => {
                 console.log(error);
             })
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         getUpcomings(id)
@@ -114,7 +130,7 @@ const DoctorProfile = () => {
                         </Grid>
                     )
                         :
-                        <Grid item xs={10} sx={{textAlign: "center"}}>
+                        <Grid item xs={10} sx={{ textAlign: "center" }}>
                             <CircularProgress
                                 sx={{
                                     color: theme.palette.highlight.main,
