@@ -17,7 +17,7 @@ const schema = mongoose.Schema({
         type: String,
         required: true
     }
-});
+}, { timestamps: true });
 
 
 /* ---------- Hash the admin's password if it's a new/updated collection ---------- */
