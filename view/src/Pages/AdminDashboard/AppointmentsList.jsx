@@ -42,7 +42,7 @@ export default function AppointmentsList() {
         if (paginatePage.pageNum > 0) setPaginatePage({ nextPage: true, pageNum: paginatePage.pageNum - 1 });
     }
 
-    const handleDeleteUser = (userId) => {
+    const handleDeleteAppointment = (userId) => {
         deleteAppointment(userId)
             .then(res => {
                 if (res.status === 204) {
@@ -83,7 +83,7 @@ export default function AppointmentsList() {
                                         <StyledTableCell>{appointmentRow.state}</StyledTableCell>
                                         <StyledTableCell>{`${appointmentRow.doctor.firstName} ${appointmentRow.doctor.lastName}`}</StyledTableCell>
                                         <StyledTableCell>{appointmentRow.user ? (`${appointmentRow.user.firstName} ${appointmentRow.user.lastName}`) : ('Not Booked')}</StyledTableCell>
-                                        <StyledTableCell><Button variant="contained" color="error" onClick={() => handleDeleteUser(appointmentRow._id)}>Delete</Button></StyledTableCell>
+                                        <StyledTableCell><Button variant="contained" color="error" onClick={() => handleDeleteAppointment(appointmentRow._id)}>Delete</Button></StyledTableCell>
                                     </StyledTableRow>
                                 ))}
                             </TableBody>
