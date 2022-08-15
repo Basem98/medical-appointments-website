@@ -26,7 +26,7 @@ const Sidebar = () => {
       <li style={{ display: "flex", alignItems: "center", marginBottom: "15px" }}>
         <HandymanIcon />
         <NavLink
-          to="/dashboard/operations"
+          to="/dashboard/manageusers"
           style={{
             color: "white",
             textDecoration: "none",
