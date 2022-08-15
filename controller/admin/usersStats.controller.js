@@ -7,7 +7,7 @@ const getUserStatistics = async (req, res, next) => {
     let dateFrom = req.query.dateFrom;
     let dateTo = req.query.dateTo;
     dateFrom = isNaN(new Date(dateFrom)) ?
-    new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 5) : new Date(dateFrom);
+    new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 6) : new Date(dateFrom);
     dateTo = new Date(dateFrom.getFullYear(), dateFrom.getMonth(), dateFrom.getDate() + 7);
 
     const statistics = {

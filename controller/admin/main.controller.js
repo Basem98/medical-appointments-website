@@ -11,7 +11,7 @@ const getAllAppointments = require('../admin/appointments.controller');
 const getUpcomingAppointments = require('../admin/upcomingAppointment.controller');
 const getPreviousAppointments = require('../admin/prevAppointments.controller');
 const deleteAppointment = require('../admin/deleteAppointment.controller');
-const getAppointmentStatistics = require('../admin/appointmentsStats.controller');
+const {getAppointmentStatistics, getAppointmentsNumPerDay} = require('../admin/appointmentsStats.controller');
 const getUserStatistics = require('../admin/usersStats.controller');
 
 module.exports = {
@@ -30,5 +30,6 @@ module.exports = {
   getPreviousAppointments,
   deleteAppointment,
   getAppointmentStatistics,
-  getUserStatistics
+  getUserStatistics,
+  getAppointmentsNumPerDay
 }
