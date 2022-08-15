@@ -216,7 +216,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                                 </Card>
                                 <AppointmentDetails
                                     appointmentDetails={appointmentDetails}
-                                    role="user"
+                                    role={role}
                                     openDrawer={openDrawer}
                                     setOpenDrawer={setOpenDrawer}
                                 />
