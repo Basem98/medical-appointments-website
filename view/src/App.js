@@ -13,10 +13,16 @@ import Feedback from "./Components/Feedback/Feedback";
 import UserProfile from "./Pages/UserProfile/UserProfile";
 import UserAppointments from "./Pages/UserProfile/UserAppointments";
 import Settings from "./Pages/UserProfile/Settings";
-import ChangeUserPassword from "./Pages/UserProfile/ChangeUserPassword";
+// import ChangePassword from "./Pages/UserProfile/ChangePassword";
+import ManageUsers from "./Pages/AdminDashboard/ManageUsers";
 import DoctorProfile from "./Pages/DoctorProfile/DoctorProfile";
 import DoctorAppointment from "./Pages/DoctorProfile/DoctorAppointments";
 import ChangeDoctorPassword from "./Pages/DoctorProfile/ChangeDoctorPassword";
+import AdminSignInForm from './Pages/AdminDashboard/AdminLoginForm';
+import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
+import Statistics from "./Pages/AdminDashboard/Statistics";
+import AppointmentsList from "./Pages/AdminDashboard/AppointmentsList";
+import LogsList from "./Pages/AdminDashboard/LogsList";
 
 
 const errMsg = "Oops! Looks like the page you're looking for couldn't be found.";
@@ -33,7 +39,7 @@ function App() {
   };
 
   return (
-    <Grid container sx={{ minHeight: '100vh' }}>
+    <Grid container sx={{ minHeight: '100%' }}>
       <NavBar {...navbarStyle} />
       <Routes>
         <Route
@@ -75,10 +81,10 @@ function App() {
             }}
           />}
         />
-        <Route
+        {/* <Route
           path="/users/:id/change-password"
           element={<ChangeUserPassword />}
-        />
+        /> */}
         <Route
           path="/doctors/:id/profile"
           element={<DoctorProfile />}
@@ -91,6 +97,14 @@ function App() {
           path="/doctors/:id/change-password"
           element={<ChangeDoctorPassword />}
         />
+        <Route path="/admin" element={<AdminSignInForm />}/>
+        <Route path="/dashboard" element={<AdminDashboard handleNavbarStyle={handleNavbarStyle}/>}>
+          <Route path="/dashboard/statistics" element={<Statistics />}/>
+          <Route path="/dashboard/manageusers" element={<ManageUsers />}/>
+          <Route path="/dashboard/appointments" element={<AppointmentsList />}/>
+          <Route path="/dashboard/logs" element={<LogsList />}/>
+          <Route />
+        </Route>
       </Routes>
       <Footer />
     </Grid>

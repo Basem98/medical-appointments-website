@@ -47,6 +47,11 @@ const schema = new mongoose.Schema({
         }],
         diagnosis: String,
         nextVisit: this
+    },
+    state: {
+        type: String,
+        enum: ['available', 'booked', 'canceled', 'finished'],
+        default: 'available'
     }
 });
 

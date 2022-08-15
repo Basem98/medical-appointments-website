@@ -30,7 +30,10 @@ module.exports = {
   "/admins/doctors/delete/{id}": admins["/admins/doctors/delete/{id}"],
   "/admins/users/all": admins["/admins/users/all"],
   "/admins/users/delete/{id}": admins["/admins/users/delete/{id}"],
-  "/admins/appointments/all": admins["/admins/appointments/all"],
   "/admins/logs": admins["/admins/logs"],
   "/admins/logs/errors": admins["/admins/logs/errors"],
+  "/admins/appointments/all": admins["/admins/appointments/all"],
+  "/admins/appointments/upcoming": admins["/admins/appointments/upcoming"],
+  "/admins/appointments/previous": admins["/admins/appointments/previous"],
+  "/admins/appointments/delete/{id}": admins["/admins/appointments/delete/{id}"],
 }

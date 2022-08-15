@@ -430,73 +430,6 @@ module.exports = {
       }
     }
   },
-  "/admins/appointments/all": {
-    "get": {
-      "tags": ["Admin"],
-      "description": "an endpoint to get all appointments in the database",
-      "security": [
-        {
-          "cookieAuth": []
-        }
-      ],
-      "parameters": [
-        {
-          "name": "page",
-          "in": "query",
-          "description": "A parameter that specifies the desired page. Default value is 0",
-          "schema": {
-            "type": "integer"
-          }
-        },
-        {
-          "name": "limit",
-          "in": "query",
-          "description": "A parameter that specifies the number of documents per page. Default value is 9",
-          "schema": {
-            "type": "integer"
-          }
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "A list of the required page of appointments",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties":
-                {
-                  "data":
-                  {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": appointmentModel.schema
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "404": {
-          "description": "A message specifies the reason why the request failed to find resources",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "error": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
   "/admins/logs": {
     "get": {
       "tags": ["Admin"],
@@ -660,4 +593,244 @@ module.exports = {
       }
     }
   },
+  "/admins/appointments/all": {
+    "get": {
+      "tags": ["Admin"],
+      "description": "an endpoint to get all appointments in the database",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "page",
+          "in": "query",
+          "description": "A parameter that specifies the desired page. Default value is 0",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "description": "A parameter that specifies the number of documents per page. Default value is 9",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "A list of the required page of appointments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties":
+                {
+                  "data":
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": appointmentModel.schema
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "A message specifies the reason why the request failed to find resources",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/admins/appointments/upcoming": {
+    "get": {
+      "tags": ["Admin"],
+      "description": "an endpoint to get upcoming appointments in the database",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "page",
+          "in": "query",
+          "description": "A parameter that specifies the desired page. Default value is 0",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "description": "A parameter that specifies the number of documents per page. Default value is 9",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "A list of the required page of appointments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties":
+                {
+                  "data":
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": appointmentModel.schema
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "A message specifies the reason why the request failed to find resources",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/admins/appointments/previous": {
+    "get": {
+      "tags": ["Admin"],
+      "description": "an endpoint to get previous appointments in the database",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "page",
+          "in": "query",
+          "description": "A parameter that specifies the desired page. Default value is 0",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "description": "A parameter that specifies the number of documents per page. Default value is 9",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "A list of the required page of appointments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties":
+                {
+                  "data":
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": appointmentModel.schema
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "A message specifies the reason why the request failed to find resources",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/admins/appointments/delete/{id}": {
+    "delete": {
+      "tags": ["Admin"],
+      "description": "An endpoint to delete an appointments and all its references",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "required": true,
+          "in": "path",
+          "description": "The id of the appointment to be deleted"
+        }
+      ],
+      "responses": {
+        "204": {
+          "description": "A response with a status code that confirms that the resourse is updated successfully",
+        },
+        "404": {
+          "description": "A message specifies the reason why the request failed to find resources",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

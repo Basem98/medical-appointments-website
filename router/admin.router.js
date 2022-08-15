@@ -1,6 +1,6 @@
 const express = require('express');
 const adminRouter = express.Router();
-const { signUp, logIn, getDoctorApplications, getLogs, acceptDoctorsApplication, deleteDoctor, getAllDoctors, deleteLogs, getAllUsers, deleteUser, getAllAppointments } = require('../controller/admin/main.controller');
+const { signUp, logIn, getDoctorApplications, getLogs, acceptDoctorsApplication, deleteDoctor, getAllDoctors, deleteLogs, getAllUsers, deleteUser, getAllAppointments, getUpcomingAppointments, getPreviousAppointments, deleteAppointment } = require('../controller/admin/main.controller');
 const validationResult = require('../middleware/user/validation.middleware');
 const validateAdminData = require('../middleware/admin/validation.middleware');
 const protectAdminsRoute = require('../middleware/admin/auth.middleware');
@@ -40,13 +40,6 @@ adminRouter.delete('/users/delete/:id', protectAdminsRoute, deleteUser);
 
 
 
-/* -------------------- Operations on Appointments -------------------- */
-
-/* ---------- An endpoint to get all appointments ---------- */
-adminRouter.get('/appointments/all', protectAdminsRoute, getAllAppointments);
-
-
-
 /* -------------------- Operations on Logs -------------------- */
 
 /* ---------- An endpoint to get all logs by page ---------- */
@@ -57,5 +50,21 @@ adminRouter.get('/logs/errors', protectAdminsRoute, getLogs);
 
 /* ---------- An endpoint to delete all logs ---------- */
 adminRouter.delete('/logs', deleteLogs);
+
+
+
+/* -------------------- Operations on Appointments -------------------- */
+
+/* ---------- An endpoint to get all appointments ---------- */
+adminRouter.get('/appointments/all', protectAdminsRoute, getAllAppointments);
+
+/* ---------- An endpoint to get upcoming appointments ---------- */
+adminRouter.get('/appointments/upcoming', protectAdminsRoute, getUpcomingAppointments);
+
+/* ---------- An endpoint to get previous appointments ---------- */
+adminRouter.get('/appointments/previous', protectAdminsRoute, getPreviousAppointments);
+
+/* ---------- An endpoint to get delete an appointment ---------- */
+adminRouter.delete('/appointments/delete/:id', protectAdminsRoute, deleteAppointment);
 
 module.exports = adminRouter;
