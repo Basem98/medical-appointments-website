@@ -4,7 +4,7 @@ const userRouter = require('./user.router');
 const doctorRouter = require('./doctor.router');
 const adminRouter = require('./admin.router');
 const appointmentRouter = require('./appointment.router');
-const { verifyToken, logout, verifyBeforeForgetPassword, updatePassword, prepareBodyBeforeTokenRegen } = require('../controller/base.controller');
+const { verifyToken, logout, verifyBeforeForgetPassword, updatePassword, prepareBodyBeforeTokenRegen, authenticateCookie } = require('../controller/base.controller');
 const { generateVerificationToken, genForgetPassEmailBody, genSignUpEmailBody } = require('../middleware/verification.middleware');
 const { sendMail } = require('../controller/doctors/emails.controller');
 const validateBeforeChangingPassword = require('../middleware/changePassword.middleware');
@@ -25,6 +25,8 @@ baseRouter.post('/resend-verification', prepareBodyBeforeTokenRegen, generateVer
 /* ---------- An endpoint to change a doctor's password ---------- */
 baseRouter.post('/change-password', validateBeforeChangingPassword, validationResult, updatePassword);
 
+/* ---------- An endpoint to authenticate cookies ---------- */
+baseRouter.get('/authenticate', authenticateCookie);
 
 module.exports = {
   baseRouter,
