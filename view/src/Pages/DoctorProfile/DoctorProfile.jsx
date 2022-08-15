@@ -43,9 +43,6 @@ const DoctorProfile = () => {
             .catch((error) => {
                 console.log(error);
             })
-    }, [dispatch]);
-
-    useEffect(() => {
         getUpcomings(id)
             .then((response) => {
                 console.log(response.data.message);
@@ -54,7 +51,7 @@ const DoctorProfile = () => {
             .catch((error) => {
                 console.log(error);
             })
-    }, []);
+    }, [dispatch]);
 
     return (
         <>
