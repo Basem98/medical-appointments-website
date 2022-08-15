@@ -15,11 +15,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 
 const DoctorProfile = () => {
-    const doctorData = useSelector((state) => state.userDetails)
+    const doctorData = useSelector((state) => state.userDetails.data)
     const dispatch = useDispatch();
 
     const theme = useTheme();
-    const id = "62f8f6acc5842627fdd9d631";
+    const [id, setId] = useState("");
 
     const [upcomings, setUpcomings] = useState(null);
 
@@ -35,6 +35,12 @@ const DoctorProfile = () => {
             .catch((error) => {
                 console.log(error);
             })
+    }, []);
+
+    useEffect(() => {
+        setId(doctorData?._id)
+        console.log('DoctorData');
+        console.log(doctorData?._id)
         getUpcomings(id)
             .then((response) => {
                 setUpcomings(response.data.message);
@@ -42,7 +48,7 @@ const DoctorProfile = () => {
             .catch((error) => {
                 console.log(error);
             })
-    }, [dispatch]);
+    }, [doctorData, id])
 
     return (
         <>
