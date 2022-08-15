@@ -1,4 +1,4 @@
-import getUsersData from '../../Network/Admin/user'
+import { getUsersData, deleteUser } from '../../Network/Admin/user'
 import {
     CircularProgress, Table, TableHead, TableRow, TableBody, Button, Grid, TableContainer, Paper
 } from "@mui/material";
@@ -12,66 +12,83 @@ import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutl
 
 const ManageUsers = () => {
     const [usersData, setUsersData] = useState([]);
-    const [paginatePageNumber, setPaginatePageNumber] = useState(0);
+    const [paginatePage, setPaginatePage] = useState({ pageNum: 0, nextPage: true });
     const [serverResponse, setServerResponse] = useState({ sucess: false, msg: '' });
 
     useEffect(() => {
-        getUsersData(paginatePageNumber)
+        getUsersData(paginatePage.pageNum)
             .then(res => {
                 setUsersData(res.data.data);
                 setServerResponse({ ...serverResponse, success: true })
-                console.log(res.data.data);
             })
-            .catch(err => setServerResponse({ ...serverResponse, success: false }))
-    }, [paginatePageNumber])
+            .catch(err => {
+                console.log('erro: ', err)
+                if (err.response.status === 404) {
+                    setPaginatePage({ pageNum: paginatePage.pageNum - 1, nextPage: false });
+                }
+                setServerResponse({ msg: err.response.status, success: false })
+            })
+    }, [paginatePage.pageNum])
 
     const handlePageForward = () => {
-        console.log('paginatePageNumber: ', paginatePageNumber)
-        setPaginatePageNumber(paginatePageNumber + 1);
+        console.log('paginatePageNumber: ', paginatePage.pageNum)
+        setPaginatePage({ ...paginatePage, pageNum: paginatePage.pageNum + 1 });
     }
 
     const handlePageBackward = () => {
-        if (paginatePageNumber > 0) setPaginatePageNumber(paginatePageNumber - 1);
+        if (paginatePage.pageNum > 0) setPaginatePage({ nextPage: true, pageNum: paginatePage.pageNum - 1 });
     }
 
-    const theme = useTheme();
-    return (
-        <Grid item xs={11} sx={{ py: 3, }} >
-            {usersData.length ? (
-                <TableContainer component={Paper}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell>Name</StyledTableCell>
-                                <StyledTableCell>E-mail</StyledTableCell>
-                                <StyledTableCell>Phone No.</StyledTableCell>
-                                <StyledTableCell>Verified</StyledTableCell>
-                                <StyledTableCell>No. of Appointments</StyledTableCell>
-                                <StyledTableCell>Delete</StyledTableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {usersData.length && usersData.map(userRow => (
-                                <StyledTableRow key={userRow._id}>
-                                    <StyledTableCell>{`${userRow.firstName} ${userRow.lastName}`}</StyledTableCell>
-                                    <StyledTableCell>{userRow.email}</StyledTableCell>
-                                    <StyledTableCell>{userRow.phoneNumber}</StyledTableCell>
-                                    <StyledTableCell>{userRow.isVerified ? "Yes" : "No"}</StyledTableCell>
-                                    <StyledTableCell>{userRow.appointments.length}</StyledTableCell>
-                                    <StyledTableCell><Button>Delete</Button></StyledTableCell>
+    const handleDeleteUser = (userId) => {
+        deleteUser(userId)
+            .then(res => {
+                if (res.status === 204) setUsersData(usersData.filter(user => user._id !== userId));
+            })
+            .catch(err => console.log(err))
+    }
 
-                                </StyledTableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+    return (
+        <Grid item xs={11} sx={{ py: 3, display: "flex", flexDirection: "column", justifyContent: "space-between" }} >
+            {usersData.length ? (
+                <>
+                    <TableContainer component={Paper}>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <StyledTableCell>Name</StyledTableCell>
+                                    <StyledTableCell>E-mail</StyledTableCell>
+                                    <StyledTableCell>Phone No.</StyledTableCell>
+                                    <StyledTableCell>Verified</StyledTableCell>
+                                    <StyledTableCell>No. of Appointments</StyledTableCell>
+                                    <StyledTableCell>Delete</StyledTableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {usersData.length && usersData.map(userRow => (
+                                    <StyledTableRow key={userRow._id}>
+                                        <StyledTableCell>{`${userRow.firstName} ${userRow.lastName}`}</StyledTableCell>
+                                        <StyledTableCell>{userRow.email}</StyledTableCell>
+                                        <StyledTableCell>{userRow.phoneNumber}</StyledTableCell>
+                                        <StyledTableCell>{userRow.isVerified ? "Yes" : "No"}</StyledTableCell>
+                                        <StyledTableCell>{userRow.appointments.length}</StyledTableCell>
+                                        <StyledTableCell><Button variant="contained" color="error" onClick={() => handleDeleteUser(userRow._id)}>Delete</Button></StyledTableCell>
+                                    </StyledTableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <Box sx={{ my: 3, px: 15, display: "flex", justifyContent: paginatePage.pageNum ? "space-between" : "end", position: "static", bottom: "20px" }}>
+                        {paginatePage.pageNum ? (<ArrowCircleLeftOutlinedIcon cursor="pointer" onClick={handlePageBackward} sx={{ fontSize: 40, "&:hover": { opacity: .7 } }} />) : ('')}
+                        {paginatePage.nextPage ? (<ArrowCircleRightOutlinedIcon cursor="pointer" onClick={handlePageForward} sx={{ fontSize: 40, "&:hover": { opacity: .7 } }} />) : ('')}
+                    </Box>
+                </>
             ) : (
-                <CircularProgress color='highlight' sx={{ marginY: '10px' }} />
-            )}
-            <Box sx={{ mt: 3, px: 15, display: "flex", justifyContent: "space-between" }}>
-                <ArrowCircleLeftOutlinedIcon onClick={handlePageBackward} sx={{ fontSize: 40 }} />
-                <ArrowCircleRightOutlinedIcon onClick={handlePageForward} sx={{ fontSize: 40 }} />
-            </Box>
+                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <CircularProgress color='highlight' sx={{ marginY: '10px' }} />
+                </Box>
+            )
+            }
+
             {/* {
                 !serverResponse.sucess && serverResponse.msg ?
                     <CustomAlert
@@ -82,7 +99,7 @@ const ManageUsers = () => {
                         }}>{serverResponse.msg}</CustomAlert>
                     : <CircularProgress color='highlight' sx={{ marginY: '10px' }} />
             } */}
-        </Grid>
+        </Grid >
     )
 }
 
