@@ -39,7 +39,7 @@ function App() {
   };
 
   return (
-    <Grid container sx={{ minHeight: '100%' }}>
+    <Grid container sx={{ minHeight: '100vh' }}>
       <NavBar {...navbarStyle} />
       <Routes>
         <Route
