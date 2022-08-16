@@ -905,6 +905,84 @@ module.exports = {
       }
     }
   },
+  "/admins/appointments/statistics/day": {
+    "get": {
+      "tags": ["Admin"],
+      "description": "an endpoint to get the number of daily appointments in a week",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "dateFrom",
+          "in": "query",
+          "description": "A parameter that specifies the date to calculate a week up to",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "An object that has the 7 week days as its properties with the number of appointments in each day. Note that their ordering could change.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties":
+                {
+                  "data":
+                  {
+                    "type": "object",
+                    "properties": {
+                      "Sat": {
+                        "type": "number"
+                      },
+                      "Sun": {
+                        "type": "number"
+                      },
+                      "Mon": {
+                        "type": "number"
+                      },
+                      "Tue": {
+                        "type": "number"
+                      },
+                      "Wed": {
+                        "type": "number"
+                      },
+                      "Thur": {
+                        "type": "number"
+                      },
+                      "Fri": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "A message specifies the reason why the request failed to find resources",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "/admins/users/statistics": {
     "get": {
       "tags": ["Admin"],
