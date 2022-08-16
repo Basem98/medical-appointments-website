@@ -16,6 +16,7 @@ const bookAppointment = async (req, res, next) => {
                 appointment.user = userId;
                 let user = await User.findById(userId);
                 user.appointments.push(appointment._id);
+                appointment.state = 'booked';
                 await appointment.save();
                 await user.save();
                 return res.status(201).json({message: `Appointment booked successfully at ${appointment.date}`})

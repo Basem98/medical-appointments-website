@@ -1,6 +1,6 @@
 const express = require('express');
 const adminRouter = express.Router();
-const { signUp, logIn, getDoctorApplications, getLogs, acceptDoctorsApplication, deleteDoctor, getAllDoctors, deleteLogs, getAllUsers, deleteUser, getAllAppointments, getUpcomingAppointments, getPreviousAppointments, deleteAppointment } = require('../controller/admin/main.controller');
+const { signUp, logIn, getDoctorApplications, getLogs, acceptDoctorsApplication, deleteDoctor, getAllDoctors, deleteLogs, getAllUsers, deleteUser, getAllAppointments, getUpcomingAppointments, getPreviousAppointments, deleteAppointment, getAppointmentStatistics, getUserStatistics, getAppointmentsNumPerDay } = require('../controller/admin/main.controller');
 const validationResult = require('../middleware/user/validation.middleware');
 const validateAdminData = require('../middleware/admin/validation.middleware');
 const protectAdminsRoute = require('../middleware/admin/auth.middleware');
@@ -66,5 +66,18 @@ adminRouter.get('/appointments/previous', protectAdminsRoute, getPreviousAppoint
 
 /* ---------- An endpoint to get delete an appointment ---------- */
 adminRouter.delete('/appointments/delete/:id', protectAdminsRoute, deleteAppointment);
+
+/* ---------- An endpoint to get statistics for the appointments ---------- */
+adminRouter.get('/appointments/statistics', protectAdminsRoute, getAppointmentStatistics);
+
+/* ---------- An endpoint to get statistics for users ---------- */
+adminRouter.get('/users/statistics', protectAdminsRoute, getUserStatistics);
+
+/* ---------- An endpoint to get number of appointments per day in a week ---------- */
+adminRouter.get('/appointments/statistics/day', protectAdminsRoute, getAppointmentsNumPerDay);
+
+/* ---------- An endpoint to get income of appointments per day in a week ---------- */
+adminRouter.get('/appointments/statistics/cost', protectAdminsRoute);
+
 
 module.exports = adminRouter;
