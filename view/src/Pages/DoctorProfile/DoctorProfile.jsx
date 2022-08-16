@@ -17,10 +17,7 @@ import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlic
 const DoctorProfile = () => {
     const doctorData = useSelector((state) => state.userDetails.data)
     const dispatch = useDispatch();
-
     const theme = useTheme();
-    const [id, setId] = useState("");
-
     const [upcomings, setUpcomings] = useState(null);
 
     useEffect(() => {
@@ -38,17 +35,15 @@ const DoctorProfile = () => {
     }, []);
 
     useEffect(() => {
-        setId(doctorData?._id)
-        console.log('DoctorData');
-        console.log(doctorData?._id)
-        getUpcomings(id)
+        doctorData?._id &&
+        getUpcomings(doctorData?._id)
             .then((response) => {
                 setUpcomings(response.data.message);
             })
             .catch((error) => {
                 console.log(error);
             })
-    }, [doctorData, id])
+    }, [doctorData])
 
     return (
         <>
