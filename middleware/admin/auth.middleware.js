@@ -13,12 +13,15 @@ const { verifyAuthHttpCookie } = require('../helpers/cookie.helper');
 const protectAdminsRoute = async (req, res, next) => {
   try {
     const accessToken = req.cookies['accessToken'];
+    const role = req.cookies['role'];
     const cookieData = await verifyAuthHttpCookie(accessToken, 'Admin', config.AUTH.ADMIN_SECRET, Admin, next);
-    req.admin = cookieData.data;
     if (cookieData.tokenCookie && cookieData.tokenCookieOptions) {
       res.cookie('accessToken', cookieData.tokenCookie, cookieData.tokenCookieOptions);
       res.cookie('role', 'Admin', cookieData.tokenCookieOptions);
     }
+    req.admin = cookieData.data;
+    req.body.id = cookieData.data._id;
+    req.body.role = role;
     next();
   } catch (err) {
     next(err);
