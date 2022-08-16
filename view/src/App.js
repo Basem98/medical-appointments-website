@@ -23,6 +23,7 @@ import Statistics from "./Pages/AdminDashboard/Statistics";
 import ManageUsers from "./Pages/AdminDashboard/ManageUsers";
 import AppointmentsList from "./Pages/AdminDashboard/AppointmentsList";
 import LogsList from "./Pages/AdminDashboard/LogsList";
+import Patients from "./Pages/DoctorProfile/Patients";
 
 
 const errMsg = "Oops! Looks like the page you're looking for couldn't be found.";
@@ -57,7 +58,7 @@ function App() {
         />
         <Route
           path="/verification/:role/:token/:userId"
-          element={<Feedback msg={verificationMsg}><MailSent/></Feedback>}
+          element={<Feedback msg={verificationMsg}><MailSent /></Feedback>}
         />
         <Route
           path="*"
@@ -89,22 +90,26 @@ function App() {
           path="/doctors/:id/profile"
           element={<DoctorProfile />}
         />
-        <Route 
+        <Route
           path="/doctors/:id/appointments"
           element={<DoctorAppointment />}
         />
-        <Route 
+        <Route
           path="/doctors/:id/change-password"
           element={<ChangeDoctorPassword />}
         />
-        <Route path="/admin" element={<AdminSignInForm />}/>
-        <Route path="/dashboard" element={<AdminDashboard handleNavbarStyle={handleNavbarStyle}/>}>
-          <Route path="/dashboard/statistics" element={<Statistics />}/>
-          <Route path="/dashboard/manageusers" element={<ManageUsers />}/>
-          <Route path="/dashboard/appointments" element={<AppointmentsList />}/>
-          <Route path="/dashboard/logs" element={<LogsList />}/>
+        <Route path="/admin" element={<AdminSignInForm />} />
+        <Route path="/dashboard" element={<AdminDashboard handleNavbarStyle={handleNavbarStyle} />}>
+          <Route path="/dashboard/statistics" element={<Statistics />} />
+          <Route path="/dashboard/manageusers" element={<ManageUsers />} />
+          <Route path="/dashboard/appointments" element={<AppointmentsList />} />
+          <Route path="/dashboard/logs" element={<LogsList />} />
           <Route />
         </Route>
+        <Route
+          path="/doctors/:id/patients"
+          element={<Patients />}
+        />
       </Routes>
       <Footer />
     </Grid>
