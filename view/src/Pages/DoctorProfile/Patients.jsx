@@ -6,6 +6,7 @@ import { setDoctorPatients } from "../../Store/Features/DoctorPatients/doctorPat
 import checkAuthentication from "../../Network/Base/checkAuthentication";
 import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 import {
+    Typography,
     TableContainer,
     Table,
     TableHead,
@@ -70,7 +71,13 @@ const Patients = () => {
                                         fontWeight: 'bold'
                                     }}
                                     >
-                                        Name
+                                        First Name</TableCell>
+                                    <TableCell sx={{
+                                        color: theme.palette.highlight.main,
+                                        fontWeight: 'bold'
+                                    }}
+                                    >
+                                        Last Name
                                     </TableCell>
                                     <TableCell sx={{
                                         color: theme.palette.highlight.main,
@@ -91,22 +98,13 @@ const Patients = () => {
                                                 key={patient._id}
                                             >
                                                 <TableCell component="th">
-                                                    {patient.firstName} {patient.lastName}
+                                                    {patient.firstName}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {patient.lastName}
                                                 </TableCell>
                                                 <TableCell>
                                                     {patient.phoneNumber}
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Link
-                                                        to=""
-                                                        style={{
-                                                            textDecoration: 'none',
-                                                            color: theme.palette.highlight.main,
-                                                            fontWeight: 'bold'
-                                                        }}
-                                                    >
-                                                        View history
-                                                    </Link>
                                                 </TableCell>
                                             </TableRow>
                                         );
