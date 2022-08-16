@@ -14,7 +14,8 @@ import {
     TableCell,
     TableBody,
     useTheme,
-    Grid
+    Grid,
+    CircularProgress
 
 } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -57,63 +58,72 @@ const Patients = () => {
                 justifyContent="center"
                 marginTop={5}
             >
-                <Grid
-                    item
-                    xs={12}
-                    md={10}
-                >
-                    <TableContainer>
-                        <Table aria-label="Prescription">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell sx={{
-                                        color: theme.palette.highlight.main,
-                                        fontWeight: 'bold'
-                                    }}
-                                    >
-                                        First Name</TableCell>
-                                    <TableCell sx={{
-                                        color: theme.palette.highlight.main,
-                                        fontWeight: 'bold'
-                                    }}
-                                    >
-                                        Last Name
-                                    </TableCell>
-                                    <TableCell sx={{
-                                        color: theme.palette.highlight.main,
-                                        fontWeight: 'bold'
-                                    }}
-                                    >
-                                        Phone
-                                    </TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {
-
-                                    patients?.patients.map((patient) => {
-                                        console.log(patient);
-                                        return (
-                                            <TableRow
-                                                key={patient._id}
+                {
+                    patients ?
+                        <Grid
+                            item
+                            xs={12}
+                            md={10}
+                        >
+                            <TableContainer>
+                                <Table aria-label="Prescription">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell sx={{
+                                                color: theme.palette.highlight.main,
+                                                fontWeight: 'bold'
+                                            }}
                                             >
-                                                <TableCell component="th">
-                                                    {patient.firstName}
-                                                </TableCell>
-                                                <TableCell>
-                                                    {patient.lastName}
-                                                </TableCell>
-                                                <TableCell>
-                                                    {patient.phoneNumber}
-                                                </TableCell>
-                                            </TableRow>
-                                        );
-                                    })
-                                }
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Grid>
+                                                First Name</TableCell>
+                                            <TableCell sx={{
+                                                color: theme.palette.highlight.main,
+                                                fontWeight: 'bold'
+                                            }}
+                                            >
+                                                Last Name
+                                            </TableCell>
+                                            <TableCell sx={{
+                                                color: theme.palette.highlight.main,
+                                                fontWeight: 'bold'
+                                            }}
+                                            >
+                                                Phone
+                                            </TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {
+
+                                            patients?.patients.map((patient) => {
+                                                console.log(patient);
+                                                return (
+                                                    <TableRow
+                                                        key={patient._id}
+                                                    >
+                                                        <TableCell component="th">
+                                                            {patient.firstName}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {patient.lastName}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {patient.phoneNumber}
+                                                        </TableCell>
+                                                    </TableRow>
+                                                );
+                                            })
+                                        }
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </Grid>
+                        :
+                        <Grid item xs={10} sx={{ textAlign: "center" }}>
+                            <CircularProgress sx={{
+                                color: theme.palette.highlight.main
+                            }} />
+                        </Grid>
+                }
             </Grid>
 
         </>
