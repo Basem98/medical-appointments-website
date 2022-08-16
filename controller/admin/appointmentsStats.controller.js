@@ -13,14 +13,13 @@ const getAppointmentStatistics = async (req, res, next) => {
     dateTo = new Date(dateFrom.getFullYear(), dateFrom.getMonth(), dateFrom.getDate() + 7);
 
     const statistics = {
-      numberOfAppointments: await Appointments.find({ date: { $gte: dateFrom, $lt: dateTo } }).count(),
-      numberOfAvailableAppointments: await Appointments.find(
+      available: await Appointments.find(
         { state: 'available', date: { $gte: dateFrom, $lt: dateTo } }).count(),
-      numberOfBookedAppointments: await Appointments.find(
+      booked: await Appointments.find(
         { state: 'booked', date: { $gte: dateFrom, $lt: dateTo } }).count(),
-      numberOfFinishedAppointments: await Appointments.find(
+      finished: await Appointments.find(
         { state: 'finished', date: { $gte: dateFrom, $lt: dateTo } }).count(),
-      numberOfCanceledAppointments: await Appointments.find(
+      canceled: await Appointments.find(
         { state: 'canceled', date: { $gte: dateFrom, $lt: dateTo } }).count()
     }
     res.status(200).json({ data: statistics });
