@@ -51,9 +51,14 @@ const getLogs = async (req, res, next) => {
     const logLevel = /^\/logs$/.test(req.path) ? 'general' : 'errors';
     getArrayOfLogs(page * limit, (page * limit) + limit, logLevel)
       .then(logs => {
+        if (logs.length < 1) {
+          const err = new Error('No logs found');
+          err.statusCode = 404;
+          throw err;
+        }
         res.status(200).json({ data: logs });
       })
-      .catch(err => { throw err });
+      .catch(err => { next(err) });
   } catch (err) {
     err.statusCode = err.statusCode || 500;
     next(err);
