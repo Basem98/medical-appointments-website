@@ -1,35 +1,22 @@
-const jwt = require("jsonwebtoken");
-const envConfig = require("../config/envConfig");
+const protectAdminsRoute = require('./admin/auth.middleware');
+const protectDoctorsRoute = require('./doctor/auth.middleware');
+const protectUsersRoute = require('./user/authorization.middleware');
 
 module.exports = (req, res, next) => {
-
-    const accessToken = req.cookies['accessToken'];
-    let role = req.cookies['role'];
-    let verifiedToken;
     try {
+        let role = req.cookies['role'];
         switch (role) {
             case 'User':
-                verifiedToken = jwt.verify(accessToken, envConfig.AUTH.USER_SECRET);
-                break;
+                return protectUsersRoute(req, res, next);
             case 'Doctor':
-                verifiedToken = jwt.verify(accessToken, envConfig.AUTH.DOCTOR_SECRET);
-                break;
+                return protectDoctorsRoute(req, res, next);
             case 'Admin':
-                verifiedToken = jwt.verify(accessToken, envConfig.AUTH.ADMIN_SECRET);
-                break;
+                return protectAdminsRoute(req, res, next);
             default:
                 throw new Error("Role is not found");
         }
     } catch (error) {
         error.statusCode = 404;
         next(error);
-
-    }
-    finally {
-        if(verifiedToken) {
-            console.log(verifiedToken);
-            req.body.id = verifiedToken.id
-        }
-        next();
     }
 }
