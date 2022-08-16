@@ -905,6 +905,69 @@ module.exports = {
       }
     }
   },
+  "/admins/users/statistics": {
+    "get": {
+      "tags": ["Admin"],
+      "description": "an endpoint to get statistics for signed up users in a specific time period (week)",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "dateFrom",
+          "in": "query",
+          "description": "A parameter that specifies the date to calculate a week up to",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "An object that has statistics for users and doctors",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties":
+                {
+                  "data":
+                  {
+                    "type": "object",
+                    "properties": {
+                      "doctors": {
+                        "type": "number"
+                      },
+                      "users": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "A message specifies the reason why the request failed to find resources",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "/admins/appointments/statistics/day": {
     "get": {
       "tags": ["Admin"],
@@ -983,10 +1046,10 @@ module.exports = {
       }
     }
   },
-  "/admins/users/statistics": {
+  "/admins/appointments/statistics/income": {
     "get": {
       "tags": ["Admin"],
-      "description": "an endpoint to get statistics for signed up users in a specific time period (week)",
+      "description": "an endpoint to get the income of daily appointments in a week",
       "security": [
         {
           "cookieAuth": []
@@ -1004,7 +1067,7 @@ module.exports = {
       ],
       "responses": {
         "200": {
-          "description": "An object that has statistics for users and doctors",
+          "description": "An object that has the 7 week days as its properties with the income from appointments in each day (in EGP). Note that their ordering could change.",
           "content": {
             "application/json": {
               "schema": {
@@ -1015,10 +1078,25 @@ module.exports = {
                   {
                     "type": "object",
                     "properties": {
-                      "doctors": {
+                      "Sat": {
                         "type": "number"
                       },
-                      "users": {
+                      "Sun": {
+                        "type": "number"
+                      },
+                      "Mon": {
+                        "type": "number"
+                      },
+                      "Tue": {
+                        "type": "number"
+                      },
+                      "Wed": {
+                        "type": "number"
+                      },
+                      "Thur": {
+                        "type": "number"
+                      },
+                      "Fri": {
                         "type": "number"
                       }
                     }
