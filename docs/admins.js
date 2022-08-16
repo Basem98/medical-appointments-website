@@ -836,7 +836,7 @@ module.exports = {
   "/admins/appointments/statistics": {
     "get": {
       "tags": ["Admin"],
-      "description": "an endpoint to get statistics for all different states of appointments",
+      "description": "an endpoint to get statistics for all different states of appointments (in a week)",
       "security": [
         {
           "cookieAuth": []
@@ -878,6 +878,69 @@ module.exports = {
                         "type": "number"
                       },
                       "numberOfCanceledAppointments": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "A message specifies the reason why the request failed to find resources",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/admins/users/statistics": {
+    "get": {
+      "tags": ["Admin"],
+      "description": "an endpoint to get statistics for signed up users in a specific time period (week)",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "dateFrom",
+          "in": "query",
+          "description": "A parameter that specifies the date to calculate a week up to",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "An object that has statistics for users and doctors",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties":
+                {
+                  "data":
+                  {
+                    "type": "object",
+                    "properties": {
+                      "doctors": {
+                        "type": "number"
+                      },
+                      "users": {
                         "type": "number"
                       }
                     }
