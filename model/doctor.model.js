@@ -167,7 +167,7 @@ const schema = new mongoose.Schema({
         type: Boolean,
         default: false
     }
-});
+}, { timestamps: true });
 
 schema.virtual('fullName').get(() => `${this.firstName} ${this.lastName}`);
 
