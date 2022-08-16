@@ -28,3 +28,13 @@ export const getSignups = (searchDates) => {
         }
     })
 }
+
+export const getWeekIncome = (searchDate) => {
+    let path = '/admins/appointments/statistics/income';
+    return axiosClient.get(path);
+}
+
+export const getWeekAppointments = (searchDate) => {
+    let path = '/admins/appointments/statistics/day';
+    return axiosClient.get(path);
+}

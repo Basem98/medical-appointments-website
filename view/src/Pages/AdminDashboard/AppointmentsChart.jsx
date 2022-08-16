@@ -1,19 +1,10 @@
-import React, { useState } from "react";
-const AppointmentsChart = () => {
+const AppointmentsChart = ({ weekAppointmentsData }) => {
   const svgHeight = 270;
   const highestBar = svgHeight - 50;
   let maxAppointment = 0;
-  const [appointmentsData, setAppointmentsData] = useState({
-    Sat: 10,
-    Sun: 20,
-    Mon: 30,
-    Tue: 9,
-    Wed: 50,
-    Thur: 70,
-    Fri: 5,
-  });
-  for (let key in appointmentsData) {
-    maxAppointment = appointmentsData[key] > maxAppointment ? appointmentsData[key] : maxAppointment;
+
+  for (let key in weekAppointmentsData) {
+    maxAppointment = weekAppointmentsData[key] > maxAppointment ? weekAppointmentsData[key] : maxAppointment;
   }
   return (
     <>
@@ -32,27 +23,27 @@ const AppointmentsChart = () => {
         `}
       </style>
 
-      <h4 className="mt-3">Appointments</h4>
+      <h4 className="mt-3">Daily Appointments</h4>
       <svg
         // height={svgHeight}
         // width="100%"
         viewBox="0 0 250 270"
       // className="ps-0"
       >
-        {Object.keys(appointmentsData).map((key, indx) => (
+        {Object.keys(weekAppointmentsData).map((key, indx) => (
           <g key={indx} transform={`translate(${indx * 35}, 0)`}>
             <text
-              y={svgHeight - (appointmentsData[key] / maxAppointment) * highestBar - 35}
+              y={svgHeight - (weekAppointmentsData[key] / maxAppointment) * highestBar - 35}
               fontSize=".8em"
             >
-              {appointmentsData[key]}
+              {weekAppointmentsData[key]}
             </text>
             <rect
-              height={(appointmentsData[key] / maxAppointment) * highestBar}
+              height={(weekAppointmentsData[key] / maxAppointment) * highestBar}
               width="20"
-              y={svgHeight - (appointmentsData[key] / maxAppointment) * highestBar - 30}
+              y={svgHeight - (weekAppointmentsData[key] / maxAppointment) * highestBar - 30}
               className={
-                appointmentsData[key] === maxAppointment
+                weekAppointmentsData[key] === maxAppointment
                   ? "spark-bar-tallest"
                   : "spark-bar"
               }
