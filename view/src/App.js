@@ -23,6 +23,7 @@ import Statistics from "./Pages/AdminDashboard/Statistics";
 import ManageUsers from "./Pages/AdminDashboard/ManageUsers";
 import AppointmentsList from "./Pages/AdminDashboard/AppointmentsList";
 import LogsList from "./Pages/AdminDashboard/LogsList";
+import ManageDoctors from "./Pages/AdminDashboard/ManageDoctors";
 import Patients from "./Pages/DoctorProfile/Patients";
 
 
@@ -40,7 +41,7 @@ function App() {
   };
 
   return (
-    <Grid container sx={{ minHeight: '100%' }}>
+    <Grid container sx={{ minHeight: '100vh' }}>
       <NavBar {...navbarStyle} />
       <Routes>
         <Route
@@ -98,12 +99,13 @@ function App() {
           path="/doctors/:id/change-password"
           element={<ChangeDoctorPassword />}
         />
-        <Route path="/admin" element={<AdminSignInForm />} />
-        <Route path="/dashboard" element={<AdminDashboard handleNavbarStyle={handleNavbarStyle} />}>
-          <Route path="/dashboard/statistics" element={<Statistics />} />
-          <Route path="/dashboard/manageusers" element={<ManageUsers />} />
-          <Route path="/dashboard/appointments" element={<AppointmentsList />} />
-          <Route path="/dashboard/logs" element={<LogsList />} />
+        <Route path="/admin" element={<AdminSignInForm />}/>
+        <Route path="/dashboard" element={<AdminDashboard handleNavbarStyle={handleNavbarStyle}/>}>
+          <Route path="/dashboard/statistics" element={<Statistics />}/>
+          <Route path="/dashboard/managedoctors" element={<ManageDoctors />}/>
+          <Route path="/dashboard/manageusers" element={<ManageUsers />}/>
+          <Route path="/dashboard/appointments" element={<AppointmentsList />}/>
+          <Route path="/dashboard/logs" element={<LogsList />}/>
           <Route />
         </Route>
         <Route
