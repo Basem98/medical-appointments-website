@@ -20,7 +20,12 @@ module.exports.loginUser = (req, res, next) => {
                     return res.status(200)
                         .cookie('accessToken', cookie.accessToken, cookie.cookieOptions)
                         .cookie('role', 'User', cookie.cookieOptions)
-                        .json({ message: 'Signed in successfully', id: data._id })
+                        .json({
+                            message: 'Signed in successfully',
+                            id: data._id,
+                            role: 'User',
+                            data
+                        })
                 })
                 .catch((error) => {
                     error.statusCode = 500;

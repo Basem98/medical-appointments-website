@@ -5,7 +5,7 @@ const getDoctorsByPage = require('./pagination.controller');
 const login = require('./signin.controller');
 const getTopRated = require('./topRated.controller');
 const changeDoctorPassword = require('./changeDoctorPassword.controller');
-
+const getPatients = require('./getPatients.controller');
 module.exports = {
   signUp,
   login,
@@ -13,5 +13,6 @@ module.exports = {
   uploadImages,
   getDoctorsByPage,
   getTopRated,
-  changeDoctorPassword
+  changeDoctorPassword,
+  getPatients
 }

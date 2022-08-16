@@ -37,8 +37,7 @@ const UserSignInForm = ({ open, handleClose }) => {
     const initialValues = {
         email: "",
         password: "",
-        rememberMe: false,
-        role: "User"
+        rememberMe: false
     };
     const validationSchema = Yup.object({
         email: Yup.string().email('You must provide a valid email (example@organization.domain)').required('This field is required'),
@@ -49,7 +48,12 @@ const UserSignInForm = ({ open, handleClose }) => {
         submitUserData(values)
             .then((res) => {
                 setServerResponse({ success: true, msg: res.data.message });
-                dispatch(setUserDetails({ email: values.email, token: res.data.token }));
+                dispatch(setUserDetails({
+                    email: values.email,
+                    token: res.data.token,
+                    role: res.data.role,
+                    data: res.data.data
+                }));
                 return res;
             })
             .then((res) => {

@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   loggedIn: false,
   email: "",
+  role: "",
+  data: null
 };
 
 export const userDetailsSlice = createSlice({
@@ -12,10 +14,14 @@ export const userDetailsSlice = createSlice({
     setUserDetails: (state, action) => {
       state.loggedIn = true;
       state.email = action.payload.email;
+      state.role = action.payload.role;
+      state.data = action.payload.data;
     },
     removeUserDetails: (state) => {
       state.loggedIn = false;
       state.email = "";
+      state.role = "";
+      state.data = "";
     },
   },
 });
