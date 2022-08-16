@@ -28,12 +28,12 @@ const getPatients = async (req, res, next) => {
                     from: 'users',
                     localField:'appointments.user',
                     foreignField: '_id',
-                    as: 'users'
+                    as: 'patients'
                 }
             },
             {
                 $project: {
-                    users: 1
+                    patients: 1
                 }
             }
         ]);
