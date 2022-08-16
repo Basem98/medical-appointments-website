@@ -832,5 +832,77 @@ module.exports = {
         }
       }
     }
+  },
+  "/admins/appointments/statistics": {
+    "get": {
+      "tags": ["Admin"],
+      "description": "an endpoint to get statistics for all different states of appointments",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "dateFrom",
+          "in": "query",
+          "description": "A parameter that specifies the date to calculate a week up to",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "An object that has 5 properties that describe different stats for appointments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties":
+                {
+                  "data":
+                  {
+                    "type": "object",
+                    "properties": {
+                      "numberOfAppointments": {
+                        "type": "number"
+                      },
+                      "numberOfAvailableAppointments": {
+                        "type": "number"
+                      },
+                      "numberOfBookedAppointments": {
+                        "type": "number"
+                      },
+                      "numberOfFinishedAppointments": {
+                        "type": "number"
+                      },
+                      "numberOfCanceledAppointments": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "A message specifies the reason why the request failed to find resources",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
