@@ -2,7 +2,7 @@ const express = require('express');
 const doctorRouter = express.Router();
 const { validateUserData } = require('../middleware/doctor/signup.middleware');
 const validationResult = require('../middleware/user/validation.middleware');
-const { signUp, login, getDoctorById, uploadImages, getDoctorsByPage, getTopRated, changeDoctorPassword } = require('../controller/doctors/main.controller');
+const { signUp, login, getDoctorById, uploadImages, getDoctorsByPage, getTopRated, changeDoctorPassword, getPatients } = require('../controller/doctors/main.controller');
 const { generateVerificationToken, genSignUpEmailBody } = require('../middleware/verification.middleware');
 const { isAlreadyInDb } = require('../middleware/doctor/exists.middleware');
 const multerUpload = require('../middleware/multer.middleware');
@@ -39,5 +39,7 @@ doctorRouter.route('/:id').get(getDoctorById);
 /* ---------- An endpoint to change doctor's password ---------- */
 doctorRouter.route('/:id/change-password').patch(protectDoctorsRoute, changeDoctorPassword);
 
+/* ---------- An endpoint to fetch doctor's patients ---------- */
+doctorRouter.route('/:id/patients').get(protectDoctorsRoute, getPatients);
 
 module.exports = doctorRouter;
