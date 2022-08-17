@@ -77,7 +77,7 @@ adminRouter.get('/users/statistics', protectAdminsRoute, getUserStatistics);
 adminRouter.get('/appointments/statistics/day', protectAdminsRoute, getAppointmentsNumPerDay);
 
 /* ---------- An endpoint to get income of appointments per day in a week ---------- */
-adminRouter.get('/appointments/statistics/cost', protectAdminsRoute, getAppointmentsCostPerDay);
+adminRouter.get('/appointments/statistics/income', protectAdminsRoute, getAppointmentsCostPerDay);
 
 
 module.exports = adminRouter;
