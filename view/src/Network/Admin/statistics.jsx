@@ -31,10 +31,28 @@ export const getSignups = (searchDates) => {
 
 export const getWeekIncome = (searchDate) => {
     let path = '/admins/appointments/statistics/income';
-    return axiosClient.get(path);
+    let queryData = {};
+    if (searchDate) {
+        queryData = parseDate(searchDate);
+        console.log('queryData: ', queryData)
+    }
+    return axiosClient.get(path, {
+        params: {
+            dateFrom: queryData.dateFrom
+        }
+    });
 }
 
 export const getWeekAppointments = (searchDate) => {
     let path = '/admins/appointments/statistics/day';
-    return axiosClient.get(path);
+    let queryData = {};
+    if (searchDate) {
+        queryData = parseDate(searchDate);
+        console.log('queryData: ', queryData)
+    }
+    return axiosClient.get(path, {
+        params: {
+            dateFrom: queryData.dateFrom
+        }
+    });
 }

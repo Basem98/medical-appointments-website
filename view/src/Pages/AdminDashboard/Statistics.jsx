@@ -16,6 +16,13 @@ const Statistics = () => {
     dateToDay: ''
   })
 
+  const [weekFormInitialValues, setWeekFormInitialValues] = useState({
+    dateFromMonth: '',
+    dateFromDay: '',
+    dateToMonth: '',
+    dateToDay: ''
+  })
+
   const [appointmentsData, setAppointmentsData] = useState({});
   const [signupData, setSignupData] = useState({});
   const [weekIncomeData, setWeekIncomeData] = useState({});
@@ -23,20 +30,8 @@ const Statistics = () => {
 
   useEffect(() => {
     getPiesData();
-    getWeekIncome()
-      .then(res => {
-        setWeekIncomeData(res.data.data);
-        // console.log('getWeekIncome res: ', res.data.data);
-      })
-    // .catach(err => console.log(err))
-
-    getWeekAppointments()
-      .then(res => {
-        setWeekAppointmentsData(res.data.data);
-        // console.log('getWeekAppointments res: ', res.data.data);
-      })
-    // .catach(err => console.log(err))
-
+    getWeeklyData();
+    let newDate = new Date()
   }, [])
 
   const getPiesData = (values) => {
@@ -49,6 +44,22 @@ const Statistics = () => {
       .then(res => {
         setSignupData(res.data.data);
       })
+  }
+
+  const getWeeklyData = (values) => {
+    getWeekIncome(values)
+      .then(res => {
+        setWeekIncomeData(res.data.data);
+        // console.log('getWeekIncome res: ', res.data.data);
+      })
+    // .catach(err => console.log(err))
+
+    getWeekAppointments(values)
+      .then(res => {
+        setWeekAppointmentsData(res.data.data);
+        // console.log('getWeekAppointments res: ', res.data.data);
+      })
+    // .catach(err => console.log(err))
   }
 
   const validatePiesForm = (values) => {
@@ -75,6 +86,17 @@ const Statistics = () => {
       if (values.dateFromMonth === values.dateToMonth && values.dateFromDay > values.dateToDay) {
         errors.dateFromToMonth = "Dates must be chronological";
       }
+    }
+    return errors;
+  }
+
+  const validateWeeklyDataForm = (values) => {
+    const errors = {};
+    if (values.dateFromDay && values.dateFromMonth === '') {
+      errors.dateFromMonth = "Required";
+    }
+    if (!values.dateFromDay && values.dateFromMonth !== '') {
+      errors.dateFromDay = "Required";
     }
     return errors;
   }
@@ -183,6 +205,62 @@ const Statistics = () => {
         </Grid>
       </Grid>
       <Grid item md={10} container justifyContent="space-between" className="row row-cols-2 justify-content-evenly justify-content-md-center align-items-stretch mt-3">
+        <Grid item lg={3} md={2} xs={8} sx={{}}>
+          <Formik
+            initialValues={weekFormInitialValues}
+            enableReinitialize
+            validate={validateWeeklyDataForm}
+            onSubmit={getWeeklyData}
+          >
+            {(formik) =>
+            (<Form
+              style={{ minHeight: "100%", paddingTop: "20px" }}
+            >
+              <Grid container justifyContent="space-evenly">
+                <Grid item xs={12} container
+                  justifyContent="space-between"
+                  rowSpacing={2}
+                >
+                  <Grid item xs={12}>
+                    <Typography variant="h6">From</Typography>
+                  </Grid>
+
+                  <Grid item xs={7}><DropdownField
+                    label={"Month"}
+                    options={months}
+                    name="dateFromMonth"
+                    sx={{
+                      boxShadow: "0px 4px 4px rgba(0, 0, 0, .25)",
+                      padding: 0,
+
+                    }}
+                  /></Grid>
+                  <Grid item xs={4}>
+                    <DropdownField
+                      label={"Day"}
+                      options={getDays()}
+                      name="dateFromDay"
+                      sx={{
+                        // height:"56px",
+                        boxShadow: "0px 4px 4px rgba(0, 0,0, .25)",
+                        padding: 0,
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+                  <Button
+                    variant="contained"
+                    type={'submit'}
+                  >
+                    Search
+                  </Button>
+                </Grid>
+              </Grid>
+            </Form>)}
+
+          </Formik>
+        </Grid>
         <Grid item lg={3} md={4}>
           <AppointmentsChart weekAppointmentsData={weekAppointmentsData} />
         </Grid>
