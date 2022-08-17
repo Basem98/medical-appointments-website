@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+// import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
+
 import CustomFormButton from "./../../Components/CustomFormButton/CustomFormButton";
 import SearchBar from "./SearchBar";
 import DoctorCard from "../../Components/DoctorCard/DoctorCard";
 import heroBg from "../../Assets/Images/HeroBg.png";
 import sectionBg from "../../Assets/Images/SectionBg.png";
-import { useEffect } from "react";
-import getTopDoctors from '../../Network/Doctors/getTopDoctors'
+import getTopDoctors from '../../Network/Doctors/getTopDoctors';
 
 function Home({ handleNavbarStyle }) {
   const theme = useTheme();
@@ -78,16 +80,18 @@ function Home({ handleNavbarStyle }) {
           >
             Medical Appointments now with the click of A Button
           </Typography>
-          <CustomFormButton
-            variant="contained"
-            sx={{
-              m: 2,
-              padding: "10px 30px",
-              fontSize: theme.typography.body1.fontSize,
-            }}
-          >
-            Book Now
-          </CustomFormButton>
+          <Link to="/specialists" style={{ textDecoration: "none" }}>
+            <CustomFormButton
+              variant="contained"
+              sx={{
+                m: 2,
+                padding: "10px 30px",
+                fontSize: theme.typography.body1.fontSize,
+              }}
+            >
+              Book Now
+            </CustomFormButton>
+          </Link>
           <CustomFormButton
             variant="outlined"
             sx={{
@@ -175,16 +179,18 @@ function Home({ handleNavbarStyle }) {
           xs={12}
           style={{ display: "flex", justifyContent: "center" }}
         >
-          <CustomFormButton
-            variant="contained"
-            sx={{
-              mt: 7,
-              padding: "10px 30px",
-              fontSize: theme.typography.body1.fontSize,
-            }}
-          >
-            More Options
-          </CustomFormButton>
+          <Link to="/specialists" style={{ textDecoration: "none" }}>
+            <CustomFormButton
+              variant="contained"
+              sx={{
+                mt: 7,
+                padding: "10px 30px",
+                fontSize: theme.typography.body1.fontSize,
+              }}
+            >
+              More Options
+            </CustomFormButton>
+          </Link>
         </Grid>
       </Grid>
       {/* Doctor Join Section */}
@@ -294,21 +300,22 @@ function Home({ handleNavbarStyle }) {
             helping your business grow, and most importantly, making it easier
             to help people.
           </Typography>
-          <CustomFormButton
-            variant="contained"
-            sx={{
-              padding: "10px 40px",
-              my: 5,
-              fontSize: theme.typography.body1.fontSize,
-              width: "fit-content",
-              alignSelf: "center",
-            }}
-          >
-            Send a Message
-          </CustomFormButton>
+          <Link to="/contactus" style={{ textDecoration: "none", alignSelf: "center", }}>
+            <CustomFormButton
+              variant="contained"
+              sx={{
+                padding: "10px 40px",
+                my: 5,
+                fontSize: theme.typography.body1.fontSize,
+                width: "fit-content",
+              }}
+            >
+              Send a Message
+            </CustomFormButton>
+          </Link>
         </Grid>
       </Grid>
-    </div>
+    </div >
   );
 }
 
