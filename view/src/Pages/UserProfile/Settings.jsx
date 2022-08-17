@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useRef, useState, useEffect } from "react";
 import { Grid } from "@mui/material";
 import InputField from '../../Components/InputField/InputField'
 import { Formik, Form } from "formik";
@@ -9,12 +10,17 @@ import { personalFormStepValidation } from "../../Helper/ValidationSchema";
 import CustomAlert from "../../Components/CustomAlert/CustomAlert";
 import updateData from "../../Network/Users/updateData";
 import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
+import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
+import checkAuthentication from "../../Network/Base/checkAuthentication";
 
 const Settings = ({ userData }) => {
-    const id = "62e88ec51b557976cbe9e1f9";
+    const userId = useSelector((state) => state.userDetails.data?._id);
+    const role = useSelector((state) => state.userDetails.role);
 
     const formRef = useRef(null);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [isDuplicated, setIsDuplicated] = useState(false);
     const [duplicationErrorsArray, setDuplicationErrorsArray] = useState([]);
@@ -32,6 +38,27 @@ const Settings = ({ userData }) => {
         });
     }
 
+    useEffect(() => {
+        checkAuthentication()
+            .then((response) => {
+                dispatch(setUserDetails({
+                    role: response.data.role,
+                    data: response.data.data,
+                    email: response.data.data.email
+                }))
+            })
+            .catch((error) => {
+                navigate('/');
+            })
+    }, []);
+
+    useEffect(() => {
+        if(role && role !== 'User') {
+            navigate('/');
+        }
+    }, [role]);
+
+
     const handleSubmit = (e) => {
         const formValues = formRef.current.values;
         const userData = {
@@ -39,7 +66,7 @@ const Settings = ({ userData }) => {
             lastName: formValues.lastName,
             phoneNumber: formValues.phoneNumber,
         };
-        updateData(id, userData)
+        updateData(userId, userData)
             .then((response) => {
                 handleRedirect();
             })

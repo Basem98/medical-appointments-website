@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import { useState } from "react";
 import CustomAlert from "../../Components/CustomAlert/CustomAlert";
@@ -5,13 +6,42 @@ import loginUser from "../../Network/Users/login";
 import Grid from "@mui/material/Grid";
 import Welcome from "./Welcome";
 import { useEffect } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
+import checkAuthentication from "../../Network/Base/checkAuthentication";
+import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
+import { useNavigate } from "react-router-dom";
 const UserProfile = () => {
 
+    const userId = useSelector((state) => state.userDetails.data?._id);
+    const role = useSelector((state) => state.userDetails.role);
+    const navigate = useNavigate();
+
     const [userData, setUserData] = useState({});
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        loginUser("62e88ec51b557976cbe9e1f9")
+        checkAuthentication()
+            .then((response) => {
+                dispatch(setUserDetails({
+                    role: response.data.role,
+                    data: response.data.data,
+                    email: response.data.data.email
+                }))
+            })
+            .catch((error) => {
+                navigate('/');
+            })
+    }, []);
+
+    useEffect(() => {
+        if(role && role !== 'User') {
+            navigate('/');
+        }
+    }, [role]);
+
+    useEffect(() => {
+        userId &&
+        loginUser(userId)
             .then((response) => {
                 setUserData(response.data);
             })
