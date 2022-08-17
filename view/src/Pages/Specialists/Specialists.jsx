@@ -2,11 +2,13 @@ import { Typography, Grid, useTheme, FormHelperText, Box } from "@mui/material";
 import { Form, Formik } from "formik";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import specialties from "../../Helper/SpecialtiesOptions";
 import governorates from "../../Helper/GovernoratesOptions";
 import { months, getDays } from "../../Helper/DateOptions";
 import getAllDoctorsData from "../../Network/Doctors/getAllDoctors"
+import { setSpecialists } from "../../Store/Features/Specialists/specialistsSlice";
 
 import DropdownField from "../../Components/DropdownField/DropdownField";
 import InputField from "../../Components/InputField/InputField";
@@ -20,6 +22,7 @@ import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutl
 function Specialists({ handleNavbarStyle }) {
   const theme = useTheme();
   const location = useLocation();
+  const dispatch = useDispatch();
   const [formInitialValues, setFormInitialValues] = useState({
     specialization: "",
     governorate: "",
@@ -62,6 +65,9 @@ function Specialists({ handleNavbarStyle }) {
       .then((res) => {
         setServerResponse({ ...serverResponse, success: true });
         setSpecialistsData(res.data.doctors);
+        dispatch(setSpecialists({
+          specialists: res.data.doctors
+        }))
         console.log('res.data.doctors: ', res.data.doctors);
 
       })
