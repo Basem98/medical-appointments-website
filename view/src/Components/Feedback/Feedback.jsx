@@ -81,7 +81,7 @@ const Feedback = ({ msg, isConfirmed, children }) => {
                 (/^\/verification\//.test(pathname)) && errMsg ?
                   <>
                     {
-                      
+
                       <Grid container item xs={12} justifyContent={{ xs: 'center', lg: 'space-between' }}>
                         <Grid item xs={3} marginTop='25px'>
                           <CustomFormButton variant='contained' fullWidth onClick={resendVerificationEmail}>Resend Mail</CustomFormButton>
@@ -95,18 +95,71 @@ const Feedback = ({ msg, isConfirmed, children }) => {
                       </Grid>
                     }
                   </>
-                  :
-                  <Grid container item xs={12} justifyContent={{ xs: 'center', lg: 'space-between' }}>
-                    <Grid item xs={4} marginTop='25px'>
-                      <CustomFormButton variant='contained' fullWidth>
+                  : (/^\/unauthorized/.test(pathname)) ?
+                    <Grid container item xs={12}>
+                      <Grid container item xs={12} md={4} marginTop='25px' justifyContent='center' alignItems='center'>
+                        <Link to={{
+                          pathname: "/",
+                          state: {showModal: true, form: 'UserLoginForm'}
+                        }}
+                          style={{
+                            color: '#fff',
+                            textDecoration: "none",
+                            width:'100%',
+                            maxWidth:'242px'
+                          }}>
+                          <CustomFormButton sx={{maxWidth: '242px'}} variant='contained' fullWidth>
+                            Sign In
+                          </CustomFormButton>
+                        </Link>
+                      </Grid>
+                      <Grid container item xs={12} md={4} marginTop='25px' justifyContent='center' alignItems='center'>
+                        <Link to={{
+                          pathname: "/",
+                          state: {showModal: true, form: 'UserSignupForm'}
+                        }}
+                          style={{
+                            color: '#fff',
+                            textDecoration: "none",
+                            width:'100%',
+                            maxWidth:'242px'
+                          }}>
+                          <CustomFormButton sx={{maxWidth: '242px'}} variant='outlined' fullWidth>
+                            Sign Up
+                          </CustomFormButton>
+                        </Link>
+                      </Grid>
+                      <Grid container item xs={12} md={4} marginTop='25px' justifyContent='center' alignItems='center'>
+                        <Link to={{
+                          pathname: "/",
+                          state: {showModal: true, form: 'DoctorSignUpForm'}
+                        }}
+                          style={{
+                            color: '#fff',
+                            textDecoration: "none",
+                            width:'100%',
+                            maxWidth:'242px'
+                          }}>
+                          <CustomFormButton sx={{maxWidth: '242px'}} variant='outlined' fullWidth>
+                            Join As a Doctor
+                          </CustomFormButton>
+                        </Link>
+                      </Grid>
+                    </Grid>
+                    :
+                    <Grid container item xs={12} justifyContent={{ xs: 'center', lg: 'space-between' }}>
+                      <Grid item xs={4} marginTop='25px'>
                         <Link to="/"
                           style={{
                             color: '#fff',
                             textDecoration: "none",
-                          }}>Go Back Home</Link>
-                      </CustomFormButton>
+                          }}>
+                          <CustomFormButton variant='contained' fullWidth>
+                            Go Back home
+                          </CustomFormButton>
+                        </Link>
+                      </Grid>
                     </Grid>
-                  </Grid>
               }
             </Grid>
           </>
