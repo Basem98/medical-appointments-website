@@ -1,17 +1,13 @@
 import {
   Typography,
-  Grid,
+  Rating,
   useTheme,
   Container,
   CircularProgress,
 } from "@mui/material";
-import StarIcon from "@mui/icons-material/Star";
-import StarHalfIcon from "@mui/icons-material/StarHalf";
-import drImage from "../../Assets/Images/pic-black-white.jpg";
 import CustomFormButton from "../CustomFormButton/CustomFormButton";
 
 const DoctorCard = ({ cardData }) => {
-  console.log(cardData)
   const theme = useTheme();
   return (
     <Container
@@ -39,14 +35,10 @@ const DoctorCard = ({ cardData }) => {
             sx={{
               my: 4,
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: "center",
             }}
           >
-            <StarIcon sx={{ color: theme.palette.ratingGold.main }} />
-            <StarIcon sx={{ color: theme.palette.ratingGold.main }} />
-            <StarIcon sx={{ color: theme.palette.ratingGold.main }} />
-            <StarIcon sx={{ color: theme.palette.ratingGold.main }} />
-            <StarHalfIcon sx={{ color: theme.palette.ratingGold.main }} />
+            <Rating defaultValue={cardData.rating} precision={.5} size="large" readOnly />
           </Container>
           <Typography variant="h4" align="center">
             Dr. {cardData.firstName + ' ' + cardData.lastName}

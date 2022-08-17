@@ -2,13 +2,14 @@ const express = require('express');
 const doctorRouter = express.Router();
 const { validateUserData } = require('../middleware/doctor/signup.middleware');
 const validationResult = require('../middleware/user/validation.middleware');
-const { signUp, login, getDoctorById, uploadImages, getDoctorsByPage, getTopRated, changeDoctorPassword } = require('../controller/doctors/main.controller');
+const { signUp, login, getDoctorById, uploadImages, getDoctorsByPage, getTopRated, changeDoctorPassword, getPatients } = require('../controller/doctors/main.controller');
 const { generateVerificationToken, genSignUpEmailBody } = require('../middleware/verification.middleware');
 const { isAlreadyInDb } = require('../middleware/doctor/exists.middleware');
 const multerUpload = require('../middleware/multer.middleware');
 const bufferFileToString = require('../middleware/bufToString.middleware');
 const { isEmailAlreadyInDb, isPhoneAlreadyInDb } = require('../controller/doctors/exists.controller');
 const { sendMail } = require('../controller/doctors/emails.controller');
+const protectDoctorsRoute = require('../middleware/doctor/auth.middleware');
 
 
 /* ---------- An endpoint to register new doctors ---------- */
@@ -36,7 +37,9 @@ doctorRouter.post('/login', login);
 doctorRouter.route('/:id').get(getDoctorById);
 
 /* ---------- An endpoint to change doctor's password ---------- */
-doctorRouter.route('/:id/change-password').patch(changeDoctorPassword);
+doctorRouter.route('/:id/change-password').patch(protectDoctorsRoute, changeDoctorPassword);
 
+/* ---------- An endpoint to fetch doctor's patients ---------- */
+doctorRouter.route('/:id/patients').get(protectDoctorsRoute, getPatients);
 
 module.exports = doctorRouter;

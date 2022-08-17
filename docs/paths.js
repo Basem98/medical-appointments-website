@@ -36,4 +36,8 @@ module.exports = {
   "/admins/appointments/upcoming": admins["/admins/appointments/upcoming"],
   "/admins/appointments/previous": admins["/admins/appointments/previous"],
   "/admins/appointments/delete/{id}": admins["/admins/appointments/delete/{id}"],
+  "/admins/appointments/statistics": admins["/admins/appointments/statistics"],
+  "/admins/appointments/statistics/day": admins["/admins/appointments/statistics/day"],
+  "/admins/users/statistics": admins["/admins/users/statistics"],
+  "/admins/appointments/statistics/income": admins["/admins/appointments/statistics/income"]
 }

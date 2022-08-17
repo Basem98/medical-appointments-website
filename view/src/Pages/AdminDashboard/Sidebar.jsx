@@ -2,9 +2,9 @@ import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, useTheme, AppBar, Box, Grid } from "@mui/material"
 import AnalyticsIcon from "@mui/icons-material/Analytics"
-import HandymanIcon from '@mui/icons-material/Handyman';
-import HistoryIcon from '@mui/icons-material/History';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'; import HistoryIcon from '@mui/icons-material/History';
 import TableRowsIcon from '@mui/icons-material/TableRows';
+import FlakyIcon from '@mui/icons-material/Flaky';
 
 const Sidebar = () => {
   const theme = useTheme();
@@ -24,16 +24,29 @@ const Sidebar = () => {
         </NavLink>
       </li>
       <li style={{ display: "flex", alignItems: "center", marginBottom: "15px" }}>
-        <HandymanIcon />
+        <FlakyIcon />
         <NavLink
-          to="/dashboard/operations"
+          to="/dashboard/managedoctors"
           style={{
             color: "white",
             textDecoration: "none",
             paddingLeft: "5px",
           }}
         >
-          CRUD Operations
+          Manage Doctors
+        </NavLink>
+      </li>
+      <li style={{ display: "flex", alignItems: "center", marginBottom: "15px" }}>
+        <ManageAccountsIcon />
+        <NavLink
+          to="/dashboard/manageusers"
+          style={{
+            color: "white",
+            textDecoration: "none",
+            paddingLeft: "5px",
+          }}
+        >
+          Manage Users
         </NavLink>
       </li>
       <li style={{ display: "flex", alignItems: "center", marginBottom: "15px" }}>

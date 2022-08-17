@@ -1,4 +1,4 @@
-import { getUsersData, deleteUser } from '../../Network/Admin/user'
+import { getDoctorsData, acceptDoctor } from '../../Network/Admin/doctors'
 import {
     CircularProgress, Table, TableHead, TableRow, TableBody, Button, Grid, TableContainer, Paper, Snackbar
 } from "@mui/material";
@@ -12,16 +12,17 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
 
-const ManageUsers = () => {
-    const [usersData, setUsersData] = useState([]);
+export default function ManageDoctors() {
+    const [doctorsData, setDoctorsData] = useState([]);
     const [paginatePage, setPaginatePage] = useState({ pageNum: 0, nextPage: true });
     const [snakbarStatus, setSnakbarStatus] = useState(false);
     const [alertStatus, setAlertStatus] = useState({ severity: '', msg: '' });
 
     useEffect(() => {
-        getUsersData(paginatePage.pageNum)
+        getDoctorsData({ type: '', pageNum: paginatePage.pageNum })
             .then(res => {
-                setUsersData(res.data.data);
+                console.log(res.data.data)
+                setDoctorsData(res.data.data);
             })
             .catch(err => {
                 console.log('erro: ', err)
@@ -42,11 +43,14 @@ const ManageUsers = () => {
         if (paginatePage.pageNum > 0) setPaginatePage({ nextPage: true, pageNum: paginatePage.pageNum - 1 });
     }
 
-    const handleDeleteUser = (userId) => {
-        deleteUser(userId)
+    const handleAcceptDoctor = () => {
+
+    }
+    const handleRejectDoctor = (userId) => {
+        acceptDoctor(userId)
             .then(res => {
                 if (res.status === 204) {
-                    setUsersData(usersData.filter(user => user._id !== userId));
+                    setDoctorsData(doctorsData.filter(user => user._id !== userId));
                     setAlertStatus({ severity: 'success', msg: 'User Deleted' });
                     setSnakbarStatus(true);
                 }
@@ -59,7 +63,7 @@ const ManageUsers = () => {
 
     return (
         <Grid item xs={11} sx={{ py: 3, display: "flex", flexDirection: "column", justifyContent: "space-between" }} >
-            {usersData.length ? (
+            {doctorsData.length ? (
                 <>
                     <TableContainer component={Paper}>
                         <Table>
@@ -68,20 +72,20 @@ const ManageUsers = () => {
                                     <StyledTableCell>Name</StyledTableCell>
                                     <StyledTableCell>E-mail</StyledTableCell>
                                     <StyledTableCell>Phone No.</StyledTableCell>
-                                    <StyledTableCell>Verified</StyledTableCell>
-                                    <StyledTableCell>No. of Appointments</StyledTableCell>
-                                    <StyledTableCell>Delete</StyledTableCell>
+                                    <StyledTableCell>Education</StyledTableCell>
+                                    {/* <StyledTableCell>Verified</StyledTableCell> */}
+                                    <StyledTableCell>Details</StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {usersData.length && usersData.map(userRow => (
+                                {doctorsData.length && doctorsData.map(userRow => (
                                     <StyledTableRow key={userRow._id}>
                                         <StyledTableCell>{`${userRow.firstName} ${userRow.lastName}`}</StyledTableCell>
                                         <StyledTableCell>{userRow.email}</StyledTableCell>
                                         <StyledTableCell>{userRow.phoneNumber}</StyledTableCell>
-                                        <StyledTableCell>{userRow.isVerified ? "Yes" : "No"}</StyledTableCell>
-                                        <StyledTableCell>{userRow.appointments.length}</StyledTableCell>
-                                        <StyledTableCell><Button variant="contained" color="error" onClick={() => handleDeleteUser(userRow._id)}>Delete</Button></StyledTableCell>
+                                        {/* <StyledTableCell>{userRow.isVerified ? "Yes" : "No"}</StyledTableCell> */}
+                                        <StyledTableCell>{userRow.education[0].degree}</StyledTableCell>
+                                        <StyledTableCell><Button variant="contained" onClick={() => handleAcceptDoctor(userRow._id)}>More details</Button></StyledTableCell>
                                     </StyledTableRow>
                                 ))}
                             </TableBody>
@@ -120,5 +124,3 @@ const ManageUsers = () => {
         </Grid >
     )
 }
-
-export default ManageUsers;

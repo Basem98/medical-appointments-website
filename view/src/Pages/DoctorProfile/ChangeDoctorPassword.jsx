@@ -11,8 +11,10 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useState } from "react";
 import changePassword from "../../Network/Doctors/changePassword";
 import { useNavigate } from "react-router-dom";
+import CustomAlert from "../../Components/CustomAlert/CustomAlert";
 
 const ChangePassword = () => {
+    const [wrongPassword, setWrongPassword] = useState(false);
     const [showCurrentPassword, setShowCurrentPassword] = useState('password');
     const [showNewPassword, setShowNewPassword] = useState('password');
     const [showConfirmNewPassword, setShowConfirmNewPassword] = useState('password');
@@ -26,12 +28,12 @@ const ChangePassword = () => {
             password: formValues.newPassword,
             currentPassword: formValues.currentPassword,
         };
-        changePassword("62e7c235150862d88def8161", data)
+        changePassword("62f8f6acc5842627fdd9d631", data)
             .then((response) => {
                 navigate('/doctors/:id/profile', { replace: true });
             })
             .catch((error) => {
-                console.log(error);
+                setWrongPassword(true);
             })
     }
     return (
@@ -40,6 +42,14 @@ const ChangePassword = () => {
                 container
                 justifyContent="center"
             >
+                {
+                    wrongPassword &&
+                    <CustomAlert 
+                        severity="error"
+                    >
+                        Wrong password! Make sure to enter the correct password.
+                    </CustomAlert>
+                }
                 <Grid
                     item
                 >

@@ -31,7 +31,11 @@ const login = async (req, res, next) => {
       .status(200)
       .cookie('accessToken', cookie.accessToken, cookie.cookieOptions)
       .cookie('role', 'Doctor', cookie.cookieOptions)
-      .json({ message: 'You are now signed in successfully', data: doctorData });
+      .json({ 
+        message: 'You are now signed in successfully', 
+        data: doctorData,
+        role: 'Doctor'
+      });
   } catch (err) {
   next(err);
 }
