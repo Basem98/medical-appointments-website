@@ -44,122 +44,101 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
         )
     }
     return (
-        <>
-            {
-                appointmentDetails?.info?.diagnosis ?
-                    <Grid container>
-                        <Grid item xs={10}>
-                            <AppointmentDetail
-                                detail={appointmentDetails?.info.diagnosis}
-                            >
-                                <MonitorHeartIcon
-                                    fontSize="medium"
-                                    sx={{
-                                        color: theme.palette.highlight.main,
-                                        marginRight: 3
-                                    }}
-                                />
-                            </AppointmentDetail>
-                        </Grid>
-                    </Grid>
-                    : role === 'doctor' ?
-                        <CustomFormButton
-                            variant="contained"
-                            sx={{
-                                marginRight: '5px'
-                            }}
+
+        appointmentDetails?.info?.diagnosis &&
+            appointmentDetails.info?.prescription?.length > 0 ?
+            <>
+                <Grid container>
+                    <Grid item xs={10}>
+                        <AppointmentDetail
+                            detail={appointmentDetails?.info.diagnosis}
                         >
-                            Add Diagnosis
-                        </CustomFormButton>
-                        :
-                        <></>
-
-
-            }
-
-            {
-                appointmentDetails?.info?.prescription?.length > 0 ?
-                    <Grid
-                        container
-                        item
-                        xs={10}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            flexWrap: 'wrap'
-                        }}
-                    >
-                        <Grid item xs={1}>
-                            <MedicationIcon
+                            <MonitorHeartIcon
                                 fontSize="medium"
                                 sx={{
                                     color: theme.palette.highlight.main,
+                                    marginRight: 3
                                 }}
                             />
-                        </Grid>
-                        <Grid item xs={1}>
-                            <Typography
-                                variant="body2"
-                                paddingLeft={2}
-                            >
-                                Prescription
-                            </Typography>
-                        </Grid>
-                        <TableContainer>
-                            <Table sx={{ maxWidth: 400 }} aria-label="Prescription">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell sx={{
-                                            color: theme.palette.highlight.main,
-                                            fontWeight: 'bold'
-                                        }}
-                                        >
-                                            Drug Name</TableCell>
-                                        <TableCell sx={{
-                                            color: theme.palette.highlight.main,
-                                            fontWeight: 'bold'
-                                        }}
-                                        >
-                                            Dosage
-                                        </TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {
-
-                                        appointmentDetails?.info?.prescription.map((drug) => {
-                                            return (
-                                                <TableRow
-                                                    key={drug.drugName}
-                                                >
-                                                    <TableCell component="th">
-                                                        {drug.drugName}
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {drug.dosage}
-                                                    </TableCell>
-                                                </TableRow>
-                                            );
-                                        })
-                                    }
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                        </AppointmentDetail>
                     </Grid>
-                    : role === 'doctor' ?
-                        <CustomFormButton
-                            variant="contained"
+                </Grid>
+                <Grid
+                    container
+                    item
+                    xs={10}
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        flexWrap: 'wrap'
+                    }}
+                >
+                    <Grid item xs={1}>
+                        <MedicationIcon
+                            fontSize="medium"
                             sx={{
-                                marginLeft: '5px'
+                                color: theme.palette.highlight.main,
                             }}
+                        />
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Typography
+                            variant="body2"
+                            paddingLeft={2}
                         >
-                            Add Prescription
-                        </CustomFormButton>
-                        :
-                        <></>
-            }
+                            Prescription
+                        </Typography>
+                    </Grid>
+                    <TableContainer>
+                        <Table sx={{ maxWidth: 400 }} aria-label="Prescription">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell sx={{
+                                        color: theme.palette.highlight.main,
+                                        fontWeight: 'bold'
+                                    }}
+                                    >
+                                        Drug Name</TableCell>
+                                    <TableCell sx={{
+                                        color: theme.palette.highlight.main,
+                                        fontWeight: 'bold'
+                                    }}
+                                    >
+                                        Dosage
+                                    </TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {
 
-        </>
+                                    appointmentDetails?.info?.prescription.map((drug) => {
+                                        return (
+                                            <TableRow
+                                                key={drug.drugName}
+                                            >
+                                                <TableCell component="th">
+                                                    {drug.drugName}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {drug.dosage}
+                                                </TableCell>
+                                            </TableRow>
+                                        );
+                                    })
+                                }
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Grid>
+            </>
+            : role === 'doctor' ?
+                <CustomFormButton
+                    variant="contained"
+                >
+                    Add prescription and diagnosis
+                </CustomFormButton>
+                :
+                <></>
     );
 }
 
