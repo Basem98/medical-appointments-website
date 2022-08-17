@@ -7,7 +7,7 @@ const Map = ({ centerCoordinates }) => {
     });
     if (!isLoaded) return <div>Loading...</div>
     return (
-        <GoogleMap zoom={10} center={centerCoordinates} mapContainerClassName="map-container">
+        <GoogleMap zoom={15} center={centerCoordinates} mapContainerClassName="map-container">
             <Marker position={centerCoordinates} />
         </GoogleMap>
     )
