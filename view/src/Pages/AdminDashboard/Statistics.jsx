@@ -19,8 +19,6 @@ const Statistics = () => {
   const [weekFormInitialValues, setWeekFormInitialValues] = useState({
     dateFromMonth: '',
     dateFromDay: '',
-    dateToMonth: '',
-    dateToDay: ''
   })
 
   const [appointmentsData, setAppointmentsData] = useState({});
@@ -31,7 +29,14 @@ const Statistics = () => {
   useEffect(() => {
     getPiesData();
     getWeeklyData();
-    let newDate = new Date()
+    let newDate = new Date();
+    setPieFormInitialValues({
+      dateFromMonth: 2,
+      dateFromDay: 22,
+      dateToMonth: newDate.getMonth(),
+      dateToDay: newDate.getDate()
+    })
+    setWeekFormInitialValues({ dateFromMonth: newDate.getMonth(), dateFromDay: newDate.getDate() - 6 })
   }, [])
 
   const getPiesData = (values) => {
@@ -110,6 +115,7 @@ const Statistics = () => {
             initialValues={pieFormInitialValues}
             onSubmit={getPiesData}
             validate={validatePiesForm}
+            enableReinitialize
           >
             {(formik) =>
             (<Form
@@ -208,9 +214,9 @@ const Statistics = () => {
         <Grid item lg={3} md={2} xs={8} sx={{}}>
           <Formik
             initialValues={weekFormInitialValues}
-            enableReinitialize
-            validate={validateWeeklyDataForm}
             onSubmit={getWeeklyData}
+            validate={validateWeeklyDataForm}
+            enableReinitialize
           >
             {(formik) =>
             (<Form
