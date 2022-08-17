@@ -14,8 +14,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 import checkAuthentication from "../../Network/Base/checkAuthentication";
 
-const Settings = ({ userData }) => {
+const Settings = () => {
     const userId = useSelector((state) => state.userDetails.data?._id);
+    const userData = useSelector((state) => state.userDetails.data);
     const role = useSelector((state) => state.userDetails.role);
     const formRef = useRef(null);
     const navigate = useNavigate();
