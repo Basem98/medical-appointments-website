@@ -137,8 +137,13 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
                 >
                     Add prescription and diagnosis
                 </CustomFormButton>
-                :
-                <></>
+                : role === 'user' ?
+                    <Typography
+                        color={theme.palette.grey[500]}
+                    >
+                        No diagnosis or prescription
+                    </Typography>
+                    : <></>
     );
 }
 
