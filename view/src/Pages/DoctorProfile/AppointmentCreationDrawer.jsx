@@ -95,23 +95,23 @@ const AppointmentCreationDrawer = ({ openDrawer, setOpenDrawer }) => {
             <Grid container item xs={12} justifyContent='center' alignItems='center'>
               <Grid container item xs={12} flexDirection='column' justifyContent='center' alignItems='center' marginTop='25px'>
                 <Typography variant="modalSmallText" sx={{ color: theme.palette.text.primary, fontWeight: 'bold', marginBottom: '25px' }}>Date</Typography>
-                <CustomCalender setCalVal={(newDateVal) => formik.setFieldValue('date', newDateVal)} availableDates={[{ date: new Date() }, { date: new Date(2022, 7, 17) }]} />
+                <CustomCalender setCalVal={(newDateVal) => formik.setFieldValue('date', newDateVal)} isCreatingAppointment={true} />
                 <FormHelperText >{formik.errors['date']}</FormHelperText>
               </Grid>
 
               <Grid container item xs={12} flexDirection='column' justifyContent='center' alignItems='center' marginTop='25px'>
                 <Grid container item xs={12} flexDirection='column' alignItems='center' justifyContent='center'>
                   <Typography variant="modalSmallText" sx={{ color: theme.palette.text.primary, fontWeight: 'bold', marginBottom: '25px' }}>Time</Typography>
-                  <Grid item xs={10} >
+                  <Grid item xs={10} maxWidth='287.200px'>
                     <InputField label="Hours" name='time.hour' placeholder="0-23"><WatchLaterRounded /></InputField>
                   </Grid>
-                  <Grid item xs={10} marginTop='25px'>
+                  <Grid item xs={10} maxWidth='287.200px' marginTop='25px'>
                     <InputField label="Minutes" name='time.minute' placeholder="0-59"><WatchLaterRounded /></InputField>
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} flexDirection='column' alignItems='center' justifyContent='center' marginTop='25px'>
                   <Typography variant="modalSmallText" sx={{ color: theme.palette.text.primary, fontWeight: 'bold', marginBottom: '25px' }}>Estimated Duration</Typography>
-                  <Grid item xs={10} >
+                  <Grid item xs={10} maxWidth='287.200px' >
                     <InputField label="Duration" name='time.duration' placeholder="Duration in minutes"><WatchLaterRounded /></InputField>
                   </Grid>
                 </Grid>

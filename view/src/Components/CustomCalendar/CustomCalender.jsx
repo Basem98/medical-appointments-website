@@ -11,8 +11,8 @@ import './CustomCalendar.css'
  * @param {*} setCalVal A callback that calls Formik's setFieldValue function with the calender's field name in it
  * @param {*} availableDates An array of objects that have a 'date' JS Date object property with the dates to show in the calender
  */
-function CustomCalender({ setCalVal, availableDates }) {
-  const [value, setValue] = useState(new Date());
+function CustomCalender({ setCalVal, availableDates, isCreatingAppointment, initialDate}) {
+  const [value, setValue] = useState(initialDate ? initialDate : new Date());
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -29,8 +29,16 @@ function CustomCalender({ setCalVal, availableDates }) {
             setCalVal(newValue)
           }}
           disableHighlightToday
-          shouldDisableDate={(date) =>
-            availableDates.every((dateel) => (dateel?.date.getDate() !== date.getDate()) || (dateel?.date.getMonth() !== date.getMonth()))}
+          shouldDisableDate={(date) => {
+            if (!isCreatingAppointment && availableDates)
+              return availableDates.every((dateel) => (dateel?.date.getDate() !== date.getDate()) || (dateel?.date.getMonth() !== date.getMonth()))
+            else
+              return (
+                (date.getMonth() === new Date().getMonth() && date.getDate() < new Date().getDate())
+                || (date.getMonth() < new Date().getMonth())
+              );
+          }
+          }
         />
       </StyledEngineProvider>
     </LocalizationProvider>
