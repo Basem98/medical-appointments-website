@@ -8,16 +8,37 @@ import { useRef } from "react";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { useState } from "react";
+import { useState,
+         useEffect
+} from "react";
 import changePassword from "../../Network/Doctors/changePassword";
 import { useNavigate } from "react-router-dom";
 import CustomAlert from "../../Components/CustomAlert/CustomAlert";
+import checkAuthentication from "../../Network/Base/checkAuthentication";
+import { useDispatch } from "react-redux";
+import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 
 const ChangePassword = () => {
     const [wrongPassword, setWrongPassword] = useState(false);
     const [showCurrentPassword, setShowCurrentPassword] = useState('password');
     const [showNewPassword, setShowNewPassword] = useState('password');
     const [showConfirmNewPassword, setShowConfirmNewPassword] = useState('password');
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        checkAuthentication()
+            .then((response) => {
+                dispatch(setUserDetails({
+                    role: response.data.role,
+                    data: response.data.data,
+                    email: response.data.data.email
+                }))
+            })
+            .catch((error) => {
+                navigate('/');
+            })
+    }, []);
 
     const formRef = useRef(null);
     const navigate = useNavigate();
@@ -44,7 +65,7 @@ const ChangePassword = () => {
             >
                 {
                     wrongPassword &&
-                    <CustomAlert 
+                    <CustomAlert
                         severity="error"
                     >
                         Wrong password! Make sure to enter the correct password.
