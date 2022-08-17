@@ -8,7 +8,7 @@ import InfoCard from "../../Components/InfoCard/InfoCard";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import checkAuthentication from "../../Network/Base/checkAuthentication";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +20,8 @@ const DoctorProfile = () => {
     const theme = useTheme();
     const [upcomings, setUpcomings] = useState(null);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         checkAuthentication()
             .then((response) => {
@@ -30,7 +32,7 @@ const DoctorProfile = () => {
                 }))
             })
             .catch((error) => {
-                console.log(error);
+                navigate('/');
             })
     }, []);
 
