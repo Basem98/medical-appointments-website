@@ -11,7 +11,7 @@ import checkAuthentication from "../../Network/Base/checkAuthentication";
 import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 import { useNavigate } from "react-router-dom";
 const UserProfile = () => {
-
+    
     const userId = useSelector((state) => state.userDetails.data?._id);
     const role = useSelector((state) => state.userDetails.role);
     const navigate = useNavigate();
@@ -46,7 +46,7 @@ const UserProfile = () => {
                 setUserData(response.data);
             })
             .catch((error) => console.log(error));
-    }, []);
+    }, [userId]);
 
     return (
         <>
