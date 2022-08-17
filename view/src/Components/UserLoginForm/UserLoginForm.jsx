@@ -61,7 +61,7 @@ const UserSignInForm = ({ open, handleClose }) => {
                 if (res.status === 200) handleClose();
             })
             .catch(err => {
-                if (err.response.status === 404) {
+                if (err.response.status === 404 || err.response.status === 400 ) {
                     setServerResponse({ success: false, msg: 'Wrong email or password. Please make sure your credentials are correct.' });
                 } else {
                     setServerResponse({ success: false, msg: 'Something went wrong! Please, try again. Contact us if you need any help with the process.' });

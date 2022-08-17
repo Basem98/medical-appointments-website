@@ -13,12 +13,15 @@ const { verifyAuthHttpCookie } = require('../helpers/cookie.helper');
 const protectDoctorsRoute = async (req, res, next) => {
   try {
     const accessToken = req.cookies['accessToken'];
+    const role = req.cookies['role'];
     const cookieData = await verifyAuthHttpCookie(accessToken, 'Doctor', config.AUTH.DOCTOR_SECRET, Doctor, next);
-    req.doctor = cookieData.data;
     if (cookieData.tokenCookie && cookieData.tokenCookieOptions) {
       res.cookie('accessToken', cookieData.tokenCookie, cookieData.tokenCookieOptions);
       res.cookie('role', 'Doctor', cookieData.tokenCookieOptions);
     }
+    req.doctor = cookieData.data;
+    req.body.id = cookieData.data._id;
+    req.body.role = role;
     next();
   } catch (err) {
     next(err);

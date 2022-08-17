@@ -7,15 +7,13 @@ import { useState } from 'react';
 import './CustomCalendar.css'
 
 
-function CustomCalender({ setCalVal }) {
+/**
+ * @param {*} setCalVal A callback that calls Formik's setFieldValue function with the calender's field name in it
+ * @param {*} availableDates An array of objects that have a 'date' JS Date object property with the dates to show in the calender
+ */
+function CustomCalender({ setCalVal, availableDates }) {
   const [value, setValue] = useState(new Date());
-  const datesarray = [
-    { date: new Date(2022, 7, 15) },
-    { date: new Date(2022, 7, 17) },
-    { date: new Date(2022, 7, 19) },
-    { date: new Date(2022, 7, 21) },
-    { date: new Date(2022, 7, 23) }]
-    
+
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <StyledEngineProvider injectFirst>
@@ -32,7 +30,7 @@ function CustomCalender({ setCalVal }) {
           }}
           disableHighlightToday
           shouldDisableDate={(date) =>
-            datesarray.every((dateel) => dateel.date.getDate() !== date.getDate())}
+            availableDates.every((dateel) => (dateel?.date.getDate() !== date.getDate()) || (dateel?.date.getMonth() !== date.getMonth()))}
         />
       </StyledEngineProvider>
     </LocalizationProvider>
