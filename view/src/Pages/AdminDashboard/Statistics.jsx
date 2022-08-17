@@ -220,7 +220,7 @@ const Statistics = () => {
           >
             {(formik) =>
             (<Form
-              style={{ minHeight: "100%", paddingTop: "20px" }}
+              style={{ minHeight: "100%" }}
             >
               <Grid container justifyContent="space-evenly">
                 <Grid item xs={12} container
@@ -264,7 +264,6 @@ const Statistics = () => {
                 </Grid>
               </Grid>
             </Form>)}
-
           </Formik>
         </Grid>
         <Grid item lg={3} md={4}>
