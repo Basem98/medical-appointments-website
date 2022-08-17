@@ -12,7 +12,7 @@ import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlic
 
 const Appointments = () => {
     const userId = useSelector((state) => state.userDetails.data?._id);
-    
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -54,7 +54,7 @@ const Appointments = () => {
             .catch((error) => {
                 console.log(error);
             })
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [userId]);
 
     useEffect(() => {
         userId &&
@@ -65,7 +65,7 @@ const Appointments = () => {
             .catch((error) => {
                 console.log(error);
             })
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [userId]);
 
 
     return (
