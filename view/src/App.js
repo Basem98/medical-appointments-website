@@ -75,13 +75,7 @@ function App() {
         />
         <Route
           path="/users/:id/settings"
-          element={<Settings
-            userData={{
-              firstName: "Belal",
-              lastName: "Elemligy",
-              phoneNumber: "01275223665"
-            }}
-          />}
+          element={<Settings />}
         />
         <Route
           path="/users/:id/change-password"
