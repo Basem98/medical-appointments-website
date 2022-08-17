@@ -95,7 +95,7 @@ const AppointmentCreationDrawer = ({ openDrawer, setOpenDrawer }) => {
             <Grid container item xs={12} justifyContent='center' alignItems='center'>
               <Grid container item xs={12} flexDirection='column' justifyContent='center' alignItems='center' marginTop='25px'>
                 <Typography variant="modalSmallText" sx={{ color: theme.palette.text.primary, fontWeight: 'bold', marginBottom: '25px' }}>Date</Typography>
-                <CustomCalender setCalVal={(newDateVal) => formik.setFieldValue('date', newDateVal)} availableDates={[{ date: new Date() }, { date: new Date(2022, 7, 17) }]} />
+                <CustomCalender setCalVal={(newDateVal) => formik.setFieldValue('date', newDateVal)} isCreatingAppointment={true}/>
                 <FormHelperText >{formik.errors['date']}</FormHelperText>
               </Grid>
 
