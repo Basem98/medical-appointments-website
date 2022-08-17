@@ -16,7 +16,6 @@ import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlic
 
 const DoctorProfile = () => {
     const doctorData = useSelector((state) => state.userDetails.data)
-    const role = useSelector((state) => state.userDetails.role);
     const dispatch = useDispatch();
     const theme = useTheme();
     const [upcomings, setUpcomings] = useState(null);
@@ -31,17 +30,14 @@ const DoctorProfile = () => {
                     data: response.data.data,
                     email: response.data.data.email
                 }))
+                if(response.data.role !== 'Doctor') {
+                    navigate('/');
+                }
             })
             .catch((error) => {
                 navigate('/');
             })
     }, []);
-
-    useEffect(() => {
-        if(role && role !== 'Doctor') {
-            navigate('/');
-        }
-    }, [role]);
 
     useEffect(() => {
         doctorData?._id &&

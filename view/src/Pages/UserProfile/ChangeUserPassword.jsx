@@ -19,7 +19,6 @@ import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlic
 
 const ChangePassword = () => {
     const userId = useSelector((state) => state.userDetails.data?._id);
-    const role = useSelector((state) => state.userDetails.role);
     const dispatch = useDispatch();
     const [wrongPassword, setWorongPassword] = useState(false);
     const [showCurrentPassword, setShowCurrentPassword] = useState('password');
@@ -37,17 +36,14 @@ const ChangePassword = () => {
                     data: response.data.data,
                     email: response.data.data.email
                 }))
+                if(response.data.role !== 'User') {
+                    navigate('/');
+                }
             })
             .catch((error) => {
                 navigate('/');
             })
     }, []);
-
-    useEffect(() => {
-        if(role && role !== 'User') {
-            navigate('/');
-        }
-    }, [role]);
 
     const handleSubmit = (e) => {
         const formValues = formRef.current.values;

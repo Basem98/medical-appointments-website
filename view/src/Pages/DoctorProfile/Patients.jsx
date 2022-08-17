@@ -20,7 +20,6 @@ import {
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 const Patients = () => {
-    const role = useSelector((state) => state.userDetails.role);
     const theme = useTheme();
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -35,16 +34,14 @@ const Patients = () => {
                     data: response.data.data,
                     email: response.data.data.email
                 }))
+                if(response.data.role !== 'Doctor') {
+                    navigate('/');
+                }
             })
             .catch((error) => {
                 console.log(error);
             })
     }, []);
-    useEffect(() => {
-        if(role && role !== 'Doctor') {
-            navigate('/');
-        }
-    }, [role]);
     useEffect(() => {
         doctorId &&
             getPatients(doctorId)

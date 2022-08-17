@@ -19,7 +19,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 
 const ChangePassword = () => {
-    const role = useSelector((state) => state.userDetails.role);
     const doctorId = useSelector((state) => state.userDetails.data?._id);
     const [wrongPassword, setWrongPassword] = useState(false);
     const [showCurrentPassword, setShowCurrentPassword] = useState('password');
@@ -37,17 +36,14 @@ const ChangePassword = () => {
                     data: response.data.data,
                     email: response.data.data.email
                 }))
+                if(response.data.role !== 'Doctor') {
+                    navigate('/');
+                }
             })
             .catch((error) => {
                 navigate('/');
             })
     }, []);
-
-    useEffect(() => {
-        if(role && role !== 'Doctor') {
-            navigate('/');
-        }
-    }, [role]);
 
     const formRef = useRef(null);
     const handleSubmit = (e) => {

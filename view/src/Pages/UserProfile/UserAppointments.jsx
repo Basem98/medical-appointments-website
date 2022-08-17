@@ -12,8 +12,7 @@ import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlic
 
 const Appointments = () => {
     const userId = useSelector((state) => state.userDetails.data?._id);
-    const role = useSelector((state) => state.userDetails.role);
-
+    
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -37,18 +36,14 @@ const Appointments = () => {
                     data: response.data.data,
                     email: response.data.data.email
                 }))
+                if(response.data.role !== 'User') {
+                    navigate('/');
+                }
             })
             .catch((error) => {
                 navigate('/');
             })
     }, []);
-
-    useEffect(() => {
-        if(role && role !== 'User') {
-            navigate('/');
-        }
-    }, [role]);
-
 
     useEffect(() => {
         userId &&

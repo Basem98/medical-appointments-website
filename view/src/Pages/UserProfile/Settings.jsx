@@ -16,7 +16,6 @@ import checkAuthentication from "../../Network/Base/checkAuthentication";
 
 const Settings = ({ userData }) => {
     const userId = useSelector((state) => state.userDetails.data?._id);
-    const role = useSelector((state) => state.userDetails.role);
 
     const formRef = useRef(null);
     const navigate = useNavigate();
@@ -46,18 +45,14 @@ const Settings = ({ userData }) => {
                     data: response.data.data,
                     email: response.data.data.email
                 }))
+                if (response.data.role !== 'User') {
+                    navigate('/');
+                }
             })
             .catch((error) => {
                 navigate('/');
             })
     }, []);
-
-    useEffect(() => {
-        if(role && role !== 'User') {
-            navigate('/');
-        }
-    }, [role]);
-
 
     const handleSubmit = (e) => {
         const formValues = formRef.current.values;

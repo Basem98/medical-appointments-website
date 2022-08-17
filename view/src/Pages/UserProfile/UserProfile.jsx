@@ -13,7 +13,6 @@ import { useNavigate } from "react-router-dom";
 const UserProfile = () => {
     
     const userId = useSelector((state) => state.userDetails.data?._id);
-    const role = useSelector((state) => state.userDetails.role);
     const navigate = useNavigate();
 
     const [userData, setUserData] = useState({});
@@ -27,17 +26,14 @@ const UserProfile = () => {
                     data: response.data.data,
                     email: response.data.data.email
                 }))
+                if(response.data.role !== 'User') {
+                    navigate('/');
+                }
             })
             .catch((error) => {
                 navigate('/');
             })
     }, []);
-
-    useEffect(() => {
-        if(role && role !== 'User') {
-            navigate('/');
-        }
-    }, [role]);
 
     useEffect(() => {
         userId &&
