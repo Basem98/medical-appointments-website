@@ -17,7 +17,8 @@ import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlic
 import { useNavigate } from 'react-router-dom';
 // import RoleToggler from '../RoleToggler/RoleToggler';
 
-const AdminSignInForm = () => {
+const AdminSignInForm = ({ setDisplayNavFooter }) => {
+    setDisplayNavFooter(false);
     const dispatch = useDispatch()
     const [isVisible, setVisibility] = useState(false);
     // const [role, setRole] = useState('User');

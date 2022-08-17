@@ -40,9 +40,11 @@ function App() {
     setNavbarStyle(navbarStyle);
   };
 
+  const [displayNavFooter, setDisplayNavFooter] = useState(true);
+
   return (
     <Grid container sx={{ minHeight: '100vh' }}>
-      <NavBar {...navbarStyle} />
+      <NavBar {...navbarStyle} displayNavFooter={displayNavFooter} />
       <Routes>
         <Route
           path="/"
@@ -99,8 +101,8 @@ function App() {
           path="/doctors/:id/change-password"
           element={<ChangeDoctorPassword />}
         />
-        <Route path="/admin" element={<AdminSignInForm />}/>
-        <Route path="/dashboard" element={<AdminDashboard handleNavbarStyle={handleNavbarStyle}/>}>
+        <Route path="/admin" element={<AdminSignInForm setDisplayNavFooter={setDisplayNavFooter}/>}/>
+        <Route path="/dashboard" element={<AdminDashboard handleNavbarStyle={handleNavbarStyle} setDisplayNavFooter={setDisplayNavFooter}/>}>
           <Route path="/dashboard/statistics" element={<Statistics />}/>
           <Route path="/dashboard/managedoctors" element={<ManageDoctors />}/>
           <Route path="/dashboard/manageusers" element={<ManageUsers />}/>
@@ -113,7 +115,7 @@ function App() {
           element={<Patients />}
         />
       </Routes>
-      <Footer />
+      <Footer displayNavFooter={displayNavFooter}/>
     </Grid>
   );
 }
