@@ -1,4 +1,4 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import getPatients from "../../Network/Doctors/getPatients";
@@ -6,7 +6,6 @@ import { setDoctorPatients } from "../../Store/Features/DoctorPatients/doctorPat
 import checkAuthentication from "../../Network/Base/checkAuthentication";
 import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 import {
-    Typography,
     TableContainer,
     Table,
     TableHead,
@@ -18,7 +17,7 @@ import {
     CircularProgress
 
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const Patients = () => {
     const theme = useTheme();
     const dispatch = useDispatch();
@@ -34,7 +33,7 @@ const Patients = () => {
                     data: response.data.data,
                     email: response.data.data.email
                 }))
-                if(response.data.role !== 'Doctor') {
+                if (response.data.role !== 'Doctor') {
                     navigate('/');
                 }
             })
