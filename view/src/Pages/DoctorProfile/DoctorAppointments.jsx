@@ -12,12 +12,13 @@ import { useNavigate } from "react-router-dom";
 const Appointments = () => {
     const titles = ["Upcoming Appointments", "Previous Appointments"];
     const doctorId = useSelector((state) => state.userDetails.data?._id);
+    const role = useSelector((state) => state.userDetails.role);
     const [upcomingAppointments, setUpcomingAppointments] = useState(null);
     const [previousAppointments, setPreviousAppointments] = useState(null);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+
     const data = [
         upcomingAppointments,
         previousAppointments
@@ -64,11 +65,16 @@ const Appointments = () => {
 
     return (
         <>
-            <ContentToggler
-                titles={titles}
-                data={data}
-                role="doctor"
-            />
+            {
+                role === 'Dcotor' ?
+                    <ContentToggler
+                        titles={titles}
+                        data={data}
+                        role="doctor"
+                    />
+                    :
+                    <></>
+            }
         </>
     );
 }

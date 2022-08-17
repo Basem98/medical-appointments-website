@@ -11,8 +11,10 @@ import checkAuthentication from "../../Network/Base/checkAuthentication";
 import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 import { useNavigate } from "react-router-dom";
 const UserProfile = () => {
-    
+
     const userId = useSelector((state) => state.userDetails.data?._id);
+    const role = useSelector((state) => state.userDetails.role);
+
     const navigate = useNavigate();
 
     const [userData, setUserData] = useState({});
@@ -26,7 +28,7 @@ const UserProfile = () => {
                     data: response.data.data,
                     email: response.data.data.email
                 }))
-                if(response.data.role !== 'User') {
+                if (response.data.role !== 'User') {
                     navigate('/');
                 }
             })
@@ -37,44 +39,49 @@ const UserProfile = () => {
 
     useEffect(() => {
         userId &&
-        loginUser(userId)
-            .then((response) => {
-                setUserData(response.data);
-            })
-            .catch((error) => console.log(error));
+            loginUser(userId)
+                .then((response) => {
+                    setUserData(response.data);
+                })
+                .catch((error) => console.log(error));
     }, [userId]);
 
     return (
         <>
-            <Grid
-                container
-                spacing={2}
-                justifyContent='flex-end'
-                sx={{
-                    width: {
-                        'xs': '100%',
-                        'md': '90%'
-                    }
-                }}
-            >
-                {
-                    !userData.isVerified &&
-                    <Grid item xs={11} md={9} sx={{ marginTop: '10px' }}>
-                        <CustomAlert
-                            severity="warning"
-                        >
-                            Your profile is not verified yet!
-                            Please check your email to verify.
-                        </CustomAlert>
-                    </Grid>
-                }
-                <Grid item xs={12} md={9}>
-                    <Welcome
-                        userData={userData}
-                    />
-                </Grid>
+            {
+                role === 'User' ?
+                    <Grid
+                        container
+                        spacing={2}
+                        justifyContent='flex-end'
+                        sx={{
+                            width: {
+                                'xs': '100%',
+                                'md': '90%'
+                            }
+                        }}
+                    >
+                        {
+                            !userData.isVerified &&
+                            <Grid item xs={11} md={9} sx={{ marginTop: '10px' }}>
+                                <CustomAlert
+                                    severity="warning"
+                                >
+                                    Your profile is not verified yet!
+                                    Please check your email to verify.
+                                </CustomAlert>
+                            </Grid>
+                        }
+                        <Grid item xs={12} md={9}>
+                            <Welcome
+                                userData={userData}
+                            />
+                        </Grid>
 
-            </Grid>
+                    </Grid>
+                    :
+                    <></>
+            }
         </>
     );
 }

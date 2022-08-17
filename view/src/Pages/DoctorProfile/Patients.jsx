@@ -23,7 +23,8 @@ const Patients = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const doctorId = useSelector((state) => state.userDetails.data?._id);
-    const patients = useSelector((state) => state.doctorPatients.patients)
+    const patients = useSelector((state) => state.doctorPatients.patients);
+    const role = useSelector((state) => state.userDetails.role);
 
     useEffect(() => {
         checkAuthentication()
@@ -56,79 +57,84 @@ const Patients = () => {
 
     return (
         <>
-            <Grid
-                container
-                justifyContent="center"
-                marginTop={5}
-            >
-                {
-                    patients ?
-                        <Grid
-                            item
-                            xs={12}
-                            md={10}
-                        >
-                            <TableContainer>
-                                <Table aria-label="Prescription">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell sx={{
-                                                color: theme.palette.highlight.main,
-                                                fontWeight: 'bold'
-                                            }}
-                                            >
-                                                First Name</TableCell>
-                                            <TableCell sx={{
-                                                color: theme.palette.highlight.main,
-                                                fontWeight: 'bold'
-                                            }}
-                                            >
-                                                Last Name
-                                            </TableCell>
-                                            <TableCell sx={{
-                                                color: theme.palette.highlight.main,
-                                                fontWeight: 'bold'
-                                            }}
-                                            >
-                                                Phone
-                                            </TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {
-
-                                            patients?.patients.map((patient) => {
-                                                console.log(patient);
-                                                return (
-                                                    <TableRow
-                                                        key={patient._id}
+            {
+                role === 'Doctor' ?
+                    <Grid
+                        container
+                        justifyContent="center"
+                        marginTop={5}
+                    >
+                        {
+                            patients ?
+                                <Grid
+                                    item
+                                    xs={12}
+                                    md={10}
+                                >
+                                    <TableContainer>
+                                        <Table aria-label="Prescription">
+                                            <TableHead>
+                                                <TableRow>
+                                                    <TableCell sx={{
+                                                        color: theme.palette.highlight.main,
+                                                        fontWeight: 'bold'
+                                                    }}
                                                     >
-                                                        <TableCell component="th">
-                                                            {patient.firstName}
-                                                        </TableCell>
-                                                        <TableCell>
-                                                            {patient.lastName}
-                                                        </TableCell>
-                                                        <TableCell>
-                                                            {patient.phoneNumber}
-                                                        </TableCell>
-                                                    </TableRow>
-                                                );
-                                            })
-                                        }
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                        </Grid>
-                        :
-                        <Grid item xs={10} sx={{ textAlign: "center" }}>
-                            <CircularProgress sx={{
-                                color: theme.palette.highlight.main
-                            }} />
-                        </Grid>
-                }
-            </Grid>
+                                                        First Name</TableCell>
+                                                    <TableCell sx={{
+                                                        color: theme.palette.highlight.main,
+                                                        fontWeight: 'bold'
+                                                    }}
+                                                    >
+                                                        Last Name
+                                                    </TableCell>
+                                                    <TableCell sx={{
+                                                        color: theme.palette.highlight.main,
+                                                        fontWeight: 'bold'
+                                                    }}
+                                                    >
+                                                        Phone
+                                                    </TableCell>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                {
 
+                                                    patients?.patients.map((patient) => {
+                                                        console.log(patient);
+                                                        return (
+                                                            <TableRow
+                                                                key={patient._id}
+                                                            >
+                                                                <TableCell component="th">
+                                                                    {patient.firstName}
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    {patient.lastName}
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    {patient.phoneNumber}
+                                                                </TableCell>
+                                                            </TableRow>
+                                                        );
+                                                    })
+                                                }
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                </Grid>
+                                :
+                                <Grid item xs={10} sx={{ textAlign: "center" }}>
+                                    <CircularProgress sx={{
+                                        color: theme.palette.highlight.main
+                                    }} />
+                                </Grid>
+                        }
+                    </Grid>
+                    :
+                    <></>
+
+            }
         </>
     );
 }

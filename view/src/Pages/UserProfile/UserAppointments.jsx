@@ -12,7 +12,7 @@ import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlic
 
 const Appointments = () => {
     const userId = useSelector((state) => state.userDetails.data?._id);
-
+    const role = useSelector((state) => state.userDetails.role);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -36,7 +36,7 @@ const Appointments = () => {
                     data: response.data.data,
                     email: response.data.data.email
                 }))
-                if(response.data.role !== 'User') {
+                if (response.data.role !== 'User') {
                     navigate('/');
                 }
             })
@@ -47,30 +47,35 @@ const Appointments = () => {
 
     useEffect(() => {
         userId &&
-        getUpcomings(userId)
-            .then((response) => {
-                setUpcomingAppointments(response.data.message);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+            getUpcomings(userId)
+                .then((response) => {
+                    setUpcomingAppointments(response.data.message);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
     }, [userId]);
 
     useEffect(() => {
         userId &&
-        getPrevious(userId)
-            .then((response) => {
-                setPreviousAppointments(response.data.message);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+            getPrevious(userId)
+                .then((response) => {
+                    setPreviousAppointments(response.data.message);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
     }, [userId]);
 
 
     return (
         <>
-            <ContentToggler data={data} titles={titles} role="user"/>
+            {
+                role === 'User' ?
+                    <ContentToggler data={data} titles={titles} role="user" />
+                    :
+                    <></>
+            }
         </>
     );
 }
