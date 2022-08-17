@@ -18,10 +18,12 @@ import {
     CircularProgress
 
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Patients = () => {
+    const role = useSelector((state) => state.userDetails.role);
     const theme = useTheme();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const doctorId = useSelector((state) => state.userDetails.data?._id);
     const patients = useSelector((state) => state.doctorPatients.patients)
 
@@ -38,6 +40,11 @@ const Patients = () => {
                 console.log(error);
             })
     }, []);
+    useEffect(() => {
+        if(role && role !== 'Doctor') {
+            navigate('/');
+        }
+    }, [role]);
     useEffect(() => {
         doctorId &&
             getPatients(doctorId)
