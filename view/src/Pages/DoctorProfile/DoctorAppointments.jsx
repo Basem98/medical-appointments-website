@@ -66,7 +66,7 @@ const Appointments = () => {
     return (
         <>
             {
-                role === 'Dcotor' ?
+                role === 'Doctor' ?
                     <ContentToggler
                         titles={titles}
                         data={data}
