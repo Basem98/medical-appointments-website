@@ -15,16 +15,19 @@ import changePassword from "../../Network/Doctors/changePassword";
 import { useNavigate } from "react-router-dom";
 import CustomAlert from "../../Components/CustomAlert/CustomAlert";
 import checkAuthentication from "../../Network/Base/checkAuthentication";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 
 const ChangePassword = () => {
+    const role = useSelector((state) => state.userDetails.role);
+    const doctorId = useSelector((state) => state.userDetails.data?._id);
     const [wrongPassword, setWrongPassword] = useState(false);
     const [showCurrentPassword, setShowCurrentPassword] = useState('password');
     const [showNewPassword, setShowNewPassword] = useState('password');
     const [showConfirmNewPassword, setShowConfirmNewPassword] = useState('password');
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         checkAuthentication()
@@ -40,16 +43,20 @@ const ChangePassword = () => {
             })
     }, []);
 
-    const formRef = useRef(null);
-    const navigate = useNavigate();
+    useEffect(() => {
+        if(role && role !== 'Doctor') {
+            navigate('/');
+        }
+    }, [role]);
 
+    const formRef = useRef(null);
     const handleSubmit = (e) => {
         const formValues = formRef.current.values;
         const data = {
             password: formValues.newPassword,
             currentPassword: formValues.currentPassword,
         };
-        changePassword("62f8f6acc5842627fdd9d631", data)
+        changePassword(doctorId, data)
             .then((response) => {
                 navigate('/doctors/:id/profile', { replace: true });
             })
