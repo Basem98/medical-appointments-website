@@ -67,16 +67,24 @@ function Home() {
               Book Now
             </CustomFormButton>
           </Link>
-          <CustomFormButton
-            variant="outlined"
-            sx={{
-              m: 2,
-              padding: "10px 40px",
-              fontSize: theme.typography.body1.fontSize,
+          <Link
+            to={"/"}
+            state={{ showModal: true, form: 'UserSignupForm' }}
+            style={{
+              textDecoration: 'none'
             }}
           >
-            Sign Up
-          </CustomFormButton>
+            <CustomFormButton
+              variant="outlined"
+              sx={{
+                m: 2,
+                padding: "10px 40px",
+                fontSize: theme.typography.body1.fontSize,
+              }}
+            >
+              Sign Up
+            </CustomFormButton>
+          </Link>
         </Grid>
         {!isTabletMobile && (
           <Grid container item md={6} minHeight='500px' justifyContent='flex-end' paddingRight={{ md: 0, lg: "70px", xl: '100px' }}>
@@ -91,7 +99,7 @@ function Home() {
             />
           </Grid>
         )}
-        <Grid item xs={12}>
+        <Grid item md={11} lg={8} marginX='auto'>
           <SearchBar />
         </Grid>
       </Grid>
@@ -196,6 +204,7 @@ function Home() {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
+            alignItems: 'center'
           }}
         >
           <Typography align="center" variant="h2">
@@ -217,18 +226,27 @@ function Home() {
               Join us now!
             </span>
           </Typography>
-          <CustomFormButton
-            variant="contained"
-            sx={{
-              padding: "10px 40px",
-              mt: 7,
-              fontSize: theme.typography.body1.fontSize,
-              width: "fit-content",
-              alignSelf: "center",
+          <Link
+            to={"/"}
+            state={{ showModal: true, form: 'DoctorSignupForm' }}
+            style={{
+              textDecoration: 'none',
+              width: 'fit-content'
             }}
           >
-            Join As a Doctor
-          </CustomFormButton>
+            <CustomFormButton
+              variant="contained"
+              sx={{
+                padding: "10px 40px",
+                mt: 7,
+                fontSize: theme.typography.body1.fontSize,
+                width: "fit-content",
+                alignSelf: "center",
+              }}
+            >
+              Join As a Doctor
+            </CustomFormButton>
+          </Link>
         </Grid>
       </Grid>
       <Grid

@@ -5,7 +5,7 @@ import CustomFormButton from '../CustomFormButton/CustomFormButton';
 
 const FormNavigator = ({ hasPreviousStep, goBack, isLastStep, isFormValid }) => {
   return (
-    <Grid container item xs={12} justifyContent='space-around' marginY='50px'>
+    <Grid container item xs={12} justifyContent='space-around' marginTop='50px'>
       {
         hasPreviousStep && (
           <Grid item xs={4}>
