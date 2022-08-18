@@ -1,4 +1,4 @@
-import { Button, Grid, Typography, FormHelperText } from "@mui/material";
+import { Button, Grid, Typography, FormHelperText, useMediaQuery } from "@mui/material";
 import { useState, useEffect } from "react";
 import IncomeChart from "./IncomeChart";
 import AppointmentsChart from "./AppointmentsChart";
@@ -9,6 +9,8 @@ import DropdownField from "../../Components/DropdownField/DropdownField";
 import { months, getDays } from '../../Helper/DateOptions';
 
 const Statistics = () => {
+  const isTabletMobile = useMediaQuery(theme => theme.breakpoints.down("md"));
+
   const [pieFormInitialValues, setPieFormInitialValues] = useState({
     dateFromMonth: '',
     dateFromDay: '',
@@ -109,8 +111,8 @@ const Statistics = () => {
   return (
     <>
 
-      <Grid item md={10} container justifyContent="space-between">
-        <Grid item lg={3} md={2} xs={8} sx={{}}>
+      <Grid item md={10} container justifyContent={isTabletMobile ? "center" : "space-between"}>
+        <Grid item lg={3} md={2} sm={3} xs={8} sx={{}}>
           <Formik
             initialValues={pieFormInitialValues}
             onSubmit={getPiesData}
@@ -203,15 +205,15 @@ const Statistics = () => {
 
           </Formik>
         </Grid>
-        <Grid item lg={3} md={4}>
+        <Grid item lg={3} md={4} sm={4} xs={8}>
           <PieChart chartName={'Appointments'} pieData={appointmentsData} />
         </Grid>
-        <Grid item lg={3} md={4}>
+        <Grid item lg={3} md={4} sm={4} xs={8}>
           <PieChart chartName={'SignUps'} pieData={signupData} />
         </Grid>
       </Grid>
-      <Grid item md={10} container justifyContent="space-between" className="row row-cols-2 justify-content-evenly justify-content-md-center align-items-stretch mt-3">
-        <Grid item lg={3} md={2} xs={8} sx={{}}>
+      <Grid item md={10} container justifyContent={isTabletMobile ? "center" : "space-between"}>
+        <Grid item lg={3} md={2} sm={3} xs={8} sx={{}}>
           <Formik
             initialValues={weekFormInitialValues}
             onSubmit={getWeeklyData}
@@ -266,10 +268,10 @@ const Statistics = () => {
             </Form>)}
           </Formik>
         </Grid>
-        <Grid item lg={3} md={4}>
+        <Grid item lg={3} md={4} sm={4} xs={8}>
           <AppointmentsChart weekAppointmentsData={weekAppointmentsData} />
         </Grid>
-        <Grid item lg={3} md={4}>
+        <Grid item lg={3} md={4} sm={4} xs={8}>
           <IncomeChart weekIncomeData={weekIncomeData} />
         </Grid>
       </Grid>
