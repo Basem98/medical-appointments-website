@@ -8,7 +8,8 @@ const AppointmentCancellation = ({ role, state }) => {
     const handleCancellation = () => {
         setWantToCancel(!wantToCancel);
     }
-    return role === 'user' && state === 'booked' ?
+    return (role === 'user' && state === 'booked')
+        || (role === 'doctor' && state === 'available') ?
         (
             <Grid item xs={12}>
                 {
