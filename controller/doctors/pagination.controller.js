@@ -1,4 +1,5 @@
 const Doctor = require('../../model/doctor.model');
+const Appointment = require('../../model/appointment.model');
 
 const getDoctorsByPage = async (req, res, next) => {
   try {
@@ -52,6 +53,28 @@ const getDoctorsByPage = async (req, res, next) => {
       // 6. Limit the number of returned documents based on the recieved limit query string
       {
         $limit: limit
+      },
+      // 7. Populate the appointments array
+      {
+        $lookup: {
+          from: Appointment.collection.name,
+          as: 'appointments',
+          localField: 'appointments._id',
+          foreignField: '_id'
+        }
+      },
+      // 8. Filter the appointments by their state (Use $addFields instead of $project to keep the other properties)
+      {
+        $addFields: {
+          'appointments':
+          {
+            $filter: {
+              input: '$appointments',
+              as: 'appointment',
+              cond: { $eq: ['$$appointment.state', 'available'] }
+            }
+          }
+        }
       }
     ]);
     if (doctors.length > 0) {
