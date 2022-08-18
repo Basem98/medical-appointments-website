@@ -32,7 +32,7 @@ function ContactUs() {
             <Grid container justifyContent={'center'}>
                 <Grid container justifyContent={'center'} alignItems={'center'} sx={{flexDirection:isTablet?"column":"row"}} >
                     <Grid container item columns={12} md={6} sx={{order:isTablet?"2":null}} justifyContent={isTablet ? 'center' : 'flex-start'}>
-                        <img src={ContactPic} height="500px" />
+                        <img src={ContactPic} width="100%" height="500px" />
                     </Grid>
                     <Grid container item columns={12} md={6}
                      sx={{order:isTablet?"1":null,flexDirection:isTablet?"column":"row",textAlign:isTablet?"center":null}} >
