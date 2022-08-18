@@ -41,16 +41,18 @@ function Home() {
           background: "linear-gradient(#F8FBFC, #A6E0D6)",
           padding: `0px ${!isTabletMobile ? "70px" : "0px"}`,
           width: "100%",
+          position: 'relative'
         }}
+        justifyContent='space-between'
       >
-        <Grid item xs={12} md={6} sx={{}}>
+        <Grid container item xs={12} md={6} xl={4} alignItems='flex-end'>
           <Typography
             variant={isTabletMobile ? "h4" : "h1"}
             sx={{
-              maxWidth: "560px",
-              m: 2,
-              my: 7,
-              pt: 5
+              //   maxWidth: "560px",
+              m: 2.5,
+              //   my: 7,
+              //   pt: 5
             }}
           >
             Medical Appointments now with the click of A Button
@@ -79,15 +81,13 @@ function Home() {
           </CustomFormButton>
         </Grid>
         {!isTabletMobile && (
-          <Grid item md={6} justifyContent="center">
+          <Grid container item md={6} minHeight='500px' justifyContent='flex-end' paddingRight={{ md: 0, lg: "70px", xl:'100px' }}>
             <img
               src={heroBg}
               alt="heroBg"
               style={{
-                width: "270px",
-                position: "relative",
-                top: "120px",
-                left: "350px",
+                width: "350px",
+                position: "absolute",
                 bottom: "0px",
               }}
             />
