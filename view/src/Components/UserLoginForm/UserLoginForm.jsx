@@ -1,4 +1,4 @@
-import { CircularProgress, FormGroup, Grid, Link, Typography, Modal } from '@mui/material';
+import { CircularProgress, FormGroup, Grid, Typography } from '@mui/material';
 import { Form, Formik } from 'formik'
 import { useTheme } from '@mui/material';
 import InputField from '../InputField/InputField';
@@ -15,6 +15,7 @@ import submitUserData from '../../Network/Base/login';
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 import RoleToggler from '../RoleToggler/RoleToggler';
+import { Link } from 'react-router-dom';
 
 const UserSignInForm = ({ open, handleClose }) => {
     const dispatch = useDispatch()
@@ -123,8 +124,12 @@ const UserSignInForm = ({ open, handleClose }) => {
                             <FormGroup>
                                 <CustomCheckbox label="Remember me" name='rememberMe' />
                             </FormGroup>
-                            <Link href="/verify" style={{ ...theme.typography.body2, alignSelf: 'center', color: theme.palette.highlight.main }}>
-                                Forgot password?
+                            <Link
+                                to={"/"}
+                                state={{ showModal: true, form: 'VerificationForm' }}
+                                style={{ textDecoration: 'none', color: theme.palette.highlight.main, ...theme.typography.body2 }}
+                            >
+                                Forgot your password?
                             </Link>
                         </Grid>
                         <Grid container marginTop='50px' marginLeft='1px' justifyContent={'center'}>
