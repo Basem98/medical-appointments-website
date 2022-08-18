@@ -229,7 +229,7 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                     <Grid
                         item
                     >
-                        <AppointmentCancellation role={role} state={appointmentDetails?.state}/>
+                        <AppointmentCancellation role={role} state={appointmentDetails?.state} appointmentId={appointmentDetails?._id}/>
                     </Grid>
 
                 </Grid>

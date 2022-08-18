@@ -2,7 +2,7 @@ import { Grid, Button, useTheme } from "@mui/material";
 import { useState } from "react";
 import AppointmentCancellationConfirm from "./AppointmentCancellationConfirm";
 
-const AppointmentCancellation = ({ role, state }) => {
+const AppointmentCancellation = ({ role, state, appointmentId }) => {
     const theme = useTheme();
     const [wantToCancel, setWantToCancel] = useState(false);
     const handleCancellation = () => {
@@ -15,6 +15,7 @@ const AppointmentCancellation = ({ role, state }) => {
                 {
                     wantToCancel ?
                         <AppointmentCancellationConfirm
+                            appointmentId={appointmentId}
                             handleCancellation={handleCancellation}
                         />
                         :

@@ -1,8 +1,21 @@
 import { Grid, Typography, useTheme } from "@mui/material";
+import cancelAppointment from "../../Network/Appointments/CancelAppointment";
 import CustomFormButton from "../CustomFormButton/CustomFormButton";
 
-const AppointmentCancellationConfirm = ({ handleCancellation }) => {
+const AppointmentCancellationConfirm = ({ handleCancellation, appointmentId }) => {
     const theme = useTheme();
+    const confirmCancellation = () => {
+        const data = {
+            state: 'canceled'
+        }
+        cancelAppointment(appointmentId, data)
+            .then((response) => {
+                window.location.reload();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
     return (
         <Grid
             container
@@ -21,7 +34,10 @@ const AppointmentCancellationConfirm = ({ handleCancellation }) => {
             <Grid
                 item
             >
-                <CustomFormButton variant="contained">
+                <CustomFormButton variant="contained"
+                    onClick={confirmCancellation}
+                    appointmentId={appointmentId}
+                >
                     Yes
                 </CustomFormButton>
             </Grid>
