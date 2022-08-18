@@ -332,13 +332,7 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
                         </Grid>
                     }
                 </>
-                : role === 'user' ?
-                    <Typography
-                        color={theme.palette.grey[500]}
-                    >
-                        No diagnosis or prescription
-                    </Typography>
-                    : <></>
+                : <></>
     );
 }
 
