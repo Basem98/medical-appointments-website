@@ -4,7 +4,7 @@ import {
     Typography,
     Box,
     useTheme,
-    Link
+    Link,
 }
     from "@mui/material";
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
@@ -16,6 +16,7 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import PersonIcon from '@mui/icons-material/Person';
 import moment from "moment";
 import AppointmentExamination from "./AppointmentExamination";
+import AppointmentCancellation from "./AppointmentCancellation";
 
 const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawer }) => {
     const theme = useTheme();
@@ -223,6 +224,12 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                             appointmentDetails={appointmentDetails}
                             role={role}
                         />
+                    </Grid>
+
+                    <Grid
+                        item
+                    >
+                        <AppointmentCancellation role={role} state={appointmentDetails?.state} appointmentId={appointmentDetails?._id}/>
                     </Grid>
 
                 </Grid>
