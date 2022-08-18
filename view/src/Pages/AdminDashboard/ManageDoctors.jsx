@@ -1,4 +1,4 @@
-import { getDoctorsData, acceptDoctor } from '../../Network/Admin/doctors'
+import { getDoctorsData, acceptDoctor, rejectDoctor } from '../../Network/Admin/doctors'
 import {
     CircularProgress, Table, TableHead, TableRow, TableBody, Button, Grid, TableContainer, Paper, Snackbar
 } from "@mui/material";
@@ -11,7 +11,6 @@ import CustomAlert from "../../Components/CustomAlert/CustomAlert";
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import ReviewDoctorApplication from './ReviewDoctorApplication';
-
 
 export default function ManageDoctors() {
     const [doctorsData, setDoctorsData] = useState([]);
@@ -52,10 +51,41 @@ export default function ManageDoctors() {
         setCurrentDoctorRow(doctorRow);
     };
 
-    const handleDrawerClose = (doctorRow) => {
+    const handleDrawerClose = () => {
         setOpen(false);
     };
 
+    const handleAcceptDoctor = (doctorId) => {
+        acceptDoctor(doctorId)
+            .then(res => {
+                if (res.status === 204) {
+                    setDoctorsData(doctorsData.filter(doctor => doctor._id !== doctorId));
+                    setAlertStatus({ severity: 'success', msg: 'Doctor Application Accepted' });
+                    setSnakbarStatus(true);
+                }
+            })
+            .catch(err => {
+                setAlertStatus({ severity: 'error', msg: 'Could not Accept Application!' });
+                setSnakbarStatus(true);
+            })
+    }
+
+    const handleRejectDoctor = (doctorId) => {
+        rejectDoctor(doctorId)
+            .then(res => {
+                if (res.status === 204) {
+                    setDoctorsData(doctorsData.filter(doctor => doctor._id !== doctorId));
+                    setAlertStatus({ severity: 'success', msg: 'Doctor Application Rejected' });
+                    setSnakbarStatus(true);
+                    handleDrawerClose();
+                }
+            })
+            .catch(err => {
+                setAlertStatus({ severity: 'error', msg: 'Could not Reject Application!' });
+                setSnakbarStatus(true);
+            })
+
+    }
     return (
         <>
             <Grid item xs={11} sx={{ py: 3, display: "flex", flexDirection: "column", justifyContent: "space-between" }} >
@@ -122,7 +152,7 @@ export default function ManageDoctors() {
                     </Box>
                 )
                 }
-                <ReviewDoctorApplication open={open} handleDrawerClose={handleDrawerClose} currentDoctorRow={currentDoctorRow} />
+                <ReviewDoctorApplication open={open} handleDrawerClose={handleDrawerClose} currentDoctorRow={currentDoctorRow} handleAcceptDoctor={handleAcceptDoctor} handleRejectDoctor={handleRejectDoctor} />
             </Grid >
         </>
 

@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import licenceImg from '../../../src/Assets/Images/okasha.jpg'
 
-export default function ReviewDoctorApplication({ open, handleDrawerClose, currentDoctorRow }) {
+export default function ReviewDoctorApplication({ open, handleDrawerClose, currentDoctorRow, handleAcceptDoctor, handleRejectDoctor }) {
     console.log('currentDoctorRow: ', currentDoctorRow)
 
     const DrawerHeader = styled('div')(({ theme }) => ({
@@ -93,8 +93,12 @@ export default function ReviewDoctorApplication({ open, handleDrawerClose, curre
                             </Box>))}
                         </Box>
                         <Box sx={{ p: 5, display: "flex", justifyContent: "start" }}>
-                            <Button variant="contained" color="success" sx={{ mr: 7, px: 3, py: 1 }}>Accept</Button>
-                            <Button variant="contained" color="error" sx={{ px: 3 }}>Reject</Button>
+                            {!currentDoctorRow?.isAccepted ?
+                                <Button variant="contained" color="success" sx={{ mr: 7, px: 3, py: 1 }} onClick={() => handleAcceptDoctor(currentDoctorRow?._id)}>Accept</Button>
+                                :
+                                <Button variant="contained" color="success" sx={{ mr: 7, px: 3, py: 1 }} disabled >Accept</Button>
+                            }
+                            {!currentDoctorRow?.isAccepted && <Button variant="contained" color="error" sx={{ px: 3 }} onClick={() => handleRejectDoctor(currentDoctorRow?._id)}>Reject</Button>}
                         </Box>
                     </Grid>
                 </Grid>
