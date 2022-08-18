@@ -28,6 +28,7 @@ function DoctorDetails() {
                     width: "100%",
                 }}
             >
+                {/* Hero section */}
                 <Grid container item maxWidth="md" style={{ marginTop: 20 }} justifyContent='space-between'>
                     {/* Photo grid */}
                     <Grid item xs={12} md={6} style={{
@@ -42,7 +43,8 @@ function DoctorDetails() {
                             src={doctorDetails.profilePicture}
                             alt="doctorImage"
                             style={{
-                                maxWidth: "195px", maxHeight: "195px",
+                                width: "200px",
+                                 height: "200px",
                                 borderRadius: '50%',
                                 overflow: 'hidden',
                                 border: 'solid white 5px',
