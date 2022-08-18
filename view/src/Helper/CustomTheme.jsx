@@ -27,8 +27,17 @@ theme = createTheme({
         linearHeroBg: {
             main: 'linear-gradient(180deg, rgba(248, 251, 252, 0) 0%, rgba(152, 226, 205, 0.505208) 77.6%, #A6E0D6 100%)'
         },
+        heroNavbarBg: {
+            main: 'rgba(248, 251, 252, 1)'
+        },
         linearFormBg: {
             main: 'linear-gradient(180deg, #21D0C3 0%, rgba(166, 224, 214, 0.25) 22.4%)'
+        },
+        detailsNavbarBg: {
+            main: '#A6E0D6'
+        },
+        linearDetailsBg: {
+            main: 'linear-gradient(0deg, rgba(255,255,255,1) 10%, #A6E0D6 100%, rgba(0,212,255,1) 100%)'
         }
     },
     typography: {
@@ -75,11 +84,11 @@ theme = createTheme({
             fontWeight: 'bold',
             textTransform: 'uppercase'
         },
-        modalSmallText:{
-            fontSize:24
+        modalSmallText: {
+            fontSize: 24
         },
-        modalLargeText:{
-            fontSize:44
+        modalLargeText: {
+            fontSize: 44
         }
     }
 });

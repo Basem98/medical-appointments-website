@@ -51,7 +51,10 @@ function App() {
   switch (location.pathname) {
     case '/':
     case '/home':
-      navbarStyle.backgroundColor = 'rgba(248, 251, 252, 1)';
+      navbarStyle.backgroundColor = theme.palette.heroNavbarBg.main;
+      break;
+    case '/specialists/details':
+      navbarStyle.backgroundColor = theme.palette.detailsNavbarBg.main;
       break;
     default:
       navbarStyle.backgroundColor = theme.palette.highlight.main;
@@ -108,13 +111,13 @@ function App() {
           path="/specialists/details"
           element={<DoctorsDetails />}
         />
-         <Route
-        path="/contactus"
-        element={<ContactUs/>}
+        <Route
+          path="/contactus"
+          element={<ContactUs />}
         />
         <Route
-        path="/about"
-         element={<AboutUs/>} />
+          path="/about"
+          element={<AboutUs />} />
         <Route
           path="/forgotpassword/:token"
           element={<PasswordChangeForm />}
@@ -172,7 +175,7 @@ function App() {
           path="/doctors/:id/patients"
           element={<Patients />}
         />
-       
+
       </Routes>
       <Footer displayNavFooter={displayNavFooter} />
     </Grid>
