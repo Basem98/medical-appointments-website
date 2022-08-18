@@ -121,7 +121,7 @@ function AboutUs() {
                 <Grid container item justifyContent={'center'} sx={{ width: '75%' }}>
                     <Grid item sx={{
                         display: 'flex',
-                        border: '2px solid black',
+                        border: `3px solid ${theme.palette.highlight.main}`,
                         borderRadius: 5
                     }}
                         xs={12} >
@@ -165,7 +165,7 @@ function AboutUs() {
                 <Grid container item justifyContent={'center'} sx={{ width: '75%' }}>
                     <Grid item sx={{
                         display: 'flex',
-                        border: '2px solid black',
+                        border: `3px solid ${theme.palette.highlight.main}`,
                         borderRadius: 5
                     }}
                         xs={12} >
@@ -209,7 +209,7 @@ function AboutUs() {
                 <Grid container item justifyContent={'center'} sx={{ width: '75%' }}>
                     <Grid  item sx={{
                         display: 'flex',
-                        border: '2px solid black',
+                        border: `3px solid ${theme.palette.highlight.main}`,
                         borderRadius: 5
                     }}
                     xs={12}
@@ -254,7 +254,7 @@ function AboutUs() {
                 <Grid container item justifyContent={'center'} sx={{ width: '75%' }}>
                     <Grid item sx={{
                         display: 'flex',
-                        border: '2px solid black',
+                        border: `3px solid ${theme.palette.highlight.main}`,
                         borderRadius: 5
                     }}
                         xs={12} >
