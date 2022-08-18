@@ -1,6 +1,7 @@
 import { Grid, Typography, useTheme } from "@mui/material";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { Link } from "react-router-dom";
+import LogoSvg from '../../Assets/Images/logo.svg';
 
 
 function Footer({ displayNavFooter }) {
@@ -24,20 +25,22 @@ function Footer({ displayNavFooter }) {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          justifyContent:'flex-start'
         }}
       >
         <Link
-          to="#"
-          underline="none"
+          to="/home"
           style={{
             color: theme.palette.text.primary,
-            fontSize: theme.typography.body1.fontSize,
-            fontWeight: theme.typography.body1.fontWeight,
-            mb: 3,
-            textDecoration:"none"
+            textDecoration: "none",
+            display: 'flex',
+            alignItems: 'center',
+            width: 'fit-content',
+            marginBottom: '15px'
           }}
         >
-          BRAND
+          <img src={LogoSvg} alt='Maw Logo' width='35px' height='35px' />
+          <Typography variant="body2" fontWeight='bold' marginLeft='10px'>MAW</Typography>
         </Link>
         <Link
           to="/about"
@@ -45,8 +48,8 @@ function Footer({ displayNavFooter }) {
           style={{
             color: theme.palette.text.primary,
             fontSize: theme.typography.body2.fontSize,
-            mb: 3,
-            textDecoration:"none"
+            marginTop: '10px',
+            textDecoration: "none"
           }}
         >
           About us
@@ -57,7 +60,8 @@ function Footer({ displayNavFooter }) {
           style={{
             color: theme.palette.text.primary,
             fontSize: theme.typography.body2.fontSize,
-            textDecoration:"none"
+            marginTop: '10px',
+            textDecoration: "none"
           }}
         >
           Our Team
@@ -78,6 +82,7 @@ function Footer({ displayNavFooter }) {
             color: theme.palette.text.primary,
             fontSize: theme.typography.body1.fontSize,
             fontWeight: theme.typography.body1.fontWeight,
+            marginBottom: '15px'
           }}
         >
           Search By
@@ -89,7 +94,8 @@ function Footer({ displayNavFooter }) {
             color: theme.palette.text.primary,
             fontSize: theme.typography.body2.fontSize,
             my: 3,
-            textDecoration:"none"
+            marginTop: '10px',
+            textDecoration: "none"
           }}
         >
           Specialisation
@@ -100,7 +106,8 @@ function Footer({ displayNavFooter }) {
           style={{
             color: theme.palette.text.primary,
             fontSize: theme.typography.body2.fontSize,
-            textDecoration:"none"
+            marginTop: '10px',
+            textDecoration: "none"
           }}
         >
           Location
@@ -111,8 +118,8 @@ function Footer({ displayNavFooter }) {
           style={{
             color: theme.palette.text.primary,
             fontSize: theme.typography.body2.fontSize,
-            mt: 3,
-            textDecoration:"none"
+            marginTop: '10px',
+            textDecoration: "none"
           }}
         >
           Date
@@ -133,6 +140,7 @@ function Footer({ displayNavFooter }) {
             color: theme.palette.text.primary,
             fontSize: theme.typography.body1.fontSize,
             fontWeight: theme.typography.body1.fontWeight,
+            marginBottom: '15px'
           }}
         >
           Do you need help?
@@ -143,8 +151,8 @@ function Footer({ displayNavFooter }) {
           style={{
             color: theme.palette.text.primary,
             fontSize: theme.typography.body2.fontSize,
-            mt: 3,
-            textDecoration:"none"
+            marginTop: '10px',
+            textDecoration: "none"
           }}
         >
           Contact us
@@ -165,18 +173,19 @@ function Footer({ displayNavFooter }) {
             color: theme.palette.text.primary,
             fontSize: theme.typography.body1.fontSize,
             fontWeight: theme.typography.body1.fontWeight,
+            marginBottom: '15px'
           }}
         >
           Are you a Doctor?
         </Typography>
         <Link
           to="#"
-          underline="none"
+          state={{ showModal: true, form: 'DoctorSignupForm' }}
           style={{
             color: theme.palette.text.primary,
             fontSize: theme.typography.body2.fontSize,
-            mt: 3,
-            textDecoration:"none"
+            marginTop: '10px',
+            textDecoration: "none"
           }}
         >
           Join our team of heroes
@@ -189,7 +198,8 @@ function Footer({ displayNavFooter }) {
           // mt: 7,
           display: "flex",
           justifyContent: "center",
-          paddingBottom:"20px"
+          paddingBottom: "20px",
+          alignItems: 'center'
         }}
       >
         <Typography
@@ -197,6 +207,7 @@ function Footer({ displayNavFooter }) {
           style={{
             fontSize: theme.typography.body2.fontSize,
             pt: 1,
+            order: 2
           }}
         >
           Copyrights &copy; MAW Team
@@ -206,13 +217,14 @@ function Footer({ displayNavFooter }) {
           underline="none"
           style={{
             color: theme.palette.text.primary,
-            ml: 3,
+            marginRight: '10px',
+            order: 1
           }}
         >
           <GitHubIcon fontSize="large" />
         </Link>
       </Grid>
-    </Grid>
+    </Grid >
   );
 }
 
