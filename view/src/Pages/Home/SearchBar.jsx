@@ -55,7 +55,7 @@ const SearchBar = () => {
         >
           <Form
             style={{
-              width: "60%",
+              width: "100%",
               background: "white",
               padding: "30px",
               borderRadius: "16px",

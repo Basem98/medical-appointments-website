@@ -91,7 +91,7 @@ function Home() {
             />
           </Grid>
         )}
-        <Grid item xs={12}>
+        <Grid item md={11} lg={8} marginX='auto'>
           <SearchBar />
         </Grid>
       </Grid>
