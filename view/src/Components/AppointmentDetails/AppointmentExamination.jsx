@@ -37,7 +37,8 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
     }
     const handleSubmit = (values) => {
         const data = {
-            info: { ...values }
+            info: { ...values },
+            state: 'finished'
         }
         writePrescription(appointmentId, data)
             .then((response) => {
