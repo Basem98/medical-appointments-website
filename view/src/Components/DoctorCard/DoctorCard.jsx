@@ -5,10 +5,12 @@ import {
   Container,
   CircularProgress,
 } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import CustomFormButton from "../CustomFormButton/CustomFormButton";
 
 const DoctorCard = ({ cardData }) => {
   const theme = useTheme();
+  const navigate = useNavigate();
   return (
     <Container
       disableGutters
@@ -46,16 +48,20 @@ const DoctorCard = ({ cardData }) => {
           <Typography variant="h6" align="center" sx={{ my: 2, p: 0 }}>
             Specialized in {cardData.specialization}
           </Typography>
-          <CustomFormButton
-            variant="contained"
-            sx={{
-              padding: "10px 30px",
-              fontSize: theme.typography.body1.fontSize,
-            }}
-            onClick={() => { }}
+          <Link
+            to={'/specialists/details'}
+            state={{ doctorData: cardData }}
           >
-            More Info
-          </CustomFormButton>
+            <CustomFormButton
+              variant="contained"
+              sx={{
+                padding: "10px 30px",
+                fontSize: theme.typography.body1.fontSize,
+              }}
+            >
+              More Info
+            </CustomFormButton>
+          </Link>
         </>
       ) : (
         <CircularProgress
@@ -65,8 +71,9 @@ const DoctorCard = ({ cardData }) => {
             size: 40,
           }}
         />
-      )}
-    </Container>
+      )
+      }
+    </Container >
   );
 };
 
