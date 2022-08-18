@@ -1,11 +1,11 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import "./App.css";
 import Home from "./Pages/Home/Home";
 import Footer from "./Components/Footer/Footer";
 import Specialists from "./Pages/Specialists/Specialists";
 import NavBar from "./Components/Navbar/NavBar";
-import { useState } from "react";
-import { Grid } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Grid, useTheme } from "@mui/material";
 import PasswordChangeForm from './Components/PasswordChangeForm/PasswordChangeForm';
 import SvgError from './Assets/Images/pagenotfound.svg';
 import MailSent from './Assets/Images/mailsent.svg';
@@ -26,37 +26,95 @@ import AppointmentsList from "./Pages/AdminDashboard/AppointmentsList";
 import LogsList from "./Pages/AdminDashboard/LogsList";
 import ManageDoctors from "./Pages/AdminDashboard/ManageDoctors";
 import Patients from "./Pages/DoctorProfile/Patients";
-
+import DoctorsDetails from "./Pages/DoctorDetails/DoctorDetails";
+import FormModal from "./Components/FormModal/FormModal";
+import UserLoginForm from "./Components/UserLoginForm/UserLoginForm";
+import UserSignupForm from "./Components/UserSignupForm/UserSignupForm";
+import DoctorSignupForm from "./Components/DoctorSignUpForm/DoctorSignUpForm";
+import VerificationForm from "./Components/VerificationForm/VerificationForm";
+import ContactUs from "./Pages/ContactUs/ContactUs";
+import AboutUs from "./Pages/AboutUs/AboutUs"
 
 const errMsg = "Oops! Looks like the page you're looking for couldn't be found.";
 const verificationMsg = "Congratulations! Your email has been verified successfully! You can now sign into your account."
 const unAuthenticatedMsg = "Looks like you don't have access to this page right now. Please sign in, or create an account, either as a user or a doctor."
 
 function App() {
-  const [navbarStyle, setNavbarStyle] = useState({
-    backgroundColor: "inherit",
-    position: "fixed",
-  });
+  const theme = useTheme();
+  const location = useLocation();
 
-  const handleNavbarStyle = (navbarStyle) => {
-    setNavbarStyle(navbarStyle);
+  const navbarStyle = {
+    position: '',
+    backgroundColor: ''
   };
 
+  switch (location.pathname) {
+    case '/':
+    case '/home':
+      navbarStyle.backgroundColor = 'rgba(248, 251, 252, 1)';
+      break;
+    default:
+      navbarStyle.backgroundColor = theme.palette.highlight.main;
+      break;
+  }
+
+  const [modalOptions, setModalOptions] = useState({ showModal: false, form: 'UserLoginForm' });
+
+  useEffect(() => {
+    if (location.state?.showModal) {
+      switch (location.state?.form) {
+        case 'UserLoginForm':
+        case 'UserSignupForm':
+        case 'DoctorSignupForm':
+        case 'VerificationForm':
+          setModalOptions({ showModal: location.state.showModal, form: location.state.form });
+          break;
+        default: break;
+      }
+    }
+  }, [location.state]);
   const [displayNavFooter, setDisplayNavFooter] = useState(true);
 
   return (
-    <Grid container sx={{ minHeight: '100vh' }}>
-      <NavBar {...navbarStyle} displayNavFooter={displayNavFooter} />
+    <Grid container sx={{ minHeight: '100vh', flexDirection: 'column', display: 'flex' }}>
+      <NavBar {...navbarStyle} displayNavFooter={displayNavFooter} openLoginForm={() => setModalOptions({ showModal: true, form: 'UserLoginForm' })} />
+      <FormModal
+        openModal={modalOptions.showModal}
+        setOpenModal={(showModal) => setModalOptions({ ...modalOptions, showModal: showModal })}
+      >
+        {
+          modalOptions.form === 'UserLoginForm' ?
+            <UserLoginForm />
+            : modalOptions.form === 'UserSignupForm' ?
+              <UserSignupForm />
+              : modalOptions.form === 'DoctorSignupForm' ?
+                <DoctorSignupForm />
+                : modalOptions.form === 'VerificationForm' ?
+                  <VerificationForm />
+                  : <UserLoginForm />
+        }
+      </FormModal>
       <Routes>
         <Route
           path="/"
-          element={<Home handleNavbarStyle={handleNavbarStyle} />}
+          element={<Home />}
         />
         <Route path="/home" element={<Navigate to="/" />} />
         <Route
           path="/specialists"
-          element={<Specialists handleNavbarStyle={handleNavbarStyle} />}
+          element={<Specialists />}
         />
+        <Route
+          path="/specialists/details"
+          element={<DoctorsDetails />}
+        />
+         <Route
+        path="/contactus"
+        element={<ContactUs/>}
+        />
+        <Route
+        path="/about"
+         element={<AboutUs/>} />
         <Route
           path="/forgotpassword/:token"
           element={<PasswordChangeForm />}
@@ -101,21 +159,22 @@ function App() {
           path="/doctors/:id/change-password"
           element={<ChangeDoctorPassword />}
         />
-        <Route path="/admin" element={<AdminSignInForm setDisplayNavFooter={setDisplayNavFooter}/>}/>
-        <Route path="/dashboard" element={<AdminDashboard handleNavbarStyle={handleNavbarStyle} setDisplayNavFooter={setDisplayNavFooter}/>}>
-          <Route path="/dashboard/statistics" element={<Statistics />}/>
-          <Route path="/dashboard/managedoctors" element={<ManageDoctors />}/>
-          <Route path="/dashboard/manageusers" element={<ManageUsers />}/>
-          <Route path="/dashboard/appointments" element={<AppointmentsList />}/>
-          <Route path="/dashboard/logs" element={<LogsList />}/>
+        <Route path="/admin" element={<AdminSignInForm setDisplayNavFooter={setDisplayNavFooter} />} />
+        <Route path="/dashboard" element={<AdminDashboard setDisplayNavFooter={setDisplayNavFooter} />}>
+          <Route path="/dashboard/statistics" element={<Statistics />} />
+          <Route path="/dashboard/managedoctors" element={<ManageDoctors />} />
+          <Route path="/dashboard/manageusers" element={<ManageUsers />} />
+          <Route path="/dashboard/appointments" element={<AppointmentsList />} />
+          <Route path="/dashboard/logs" element={<LogsList />} />
           <Route />
         </Route>
         <Route
           path="/doctors/:id/patients"
           element={<Patients />}
         />
+       
       </Routes>
-      <Footer displayNavFooter={displayNavFooter}/>
+      <Footer displayNavFooter={displayNavFooter} />
     </Grid>
   );
 }

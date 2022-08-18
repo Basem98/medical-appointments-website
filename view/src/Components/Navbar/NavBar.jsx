@@ -5,27 +5,26 @@ import {
   Toolbar,
   Grid,
   useMediaQuery,
+  Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useTheme } from "@emotion/react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import UserLoginForm from "../UserLoginForm/UserLoginForm";
 import { useSelector, useDispatch } from "react-redux";
 import { removeUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
+import LogoSvg from '../../Assets/Images/logo.svg';
 
-const NavBar = ({ backgroundColor, color, position, displayNavFooter }) => {
+const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginForm }) => {
   const theme = useTheme();
   const isTabletMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const [showMenue, setShowMenu] = useState(false);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
-    setOpen(true);
+    openLoginForm();
   };
-  const handleClose = () => {
-    setOpen(false);
-  };
+
 
   const userDetails = useSelector((state) => state.userDetails);
   const dispatch = useDispatch();
@@ -36,8 +35,7 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter }) => {
           backgroundColor: backgroundColor ? backgroundColor : "inherit",
           color: theme.palette.text.primary,
           position: position ? position : "static",
-          // padding: `0 ${paddingX ? paddingX : 0}px`,
-          padding: `0 70px`,
+          padding: { xs: `5px 20px`, md: `5px 70px` },
           marginBottom: position === "fixed" ? "50px" : "0",
           display: !displayNavFooter && 'none'
         }}
@@ -51,9 +49,13 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter }) => {
                 style={{
                   color: color ? color : theme.palette.text.primary,
                   textDecoration: "none",
+                  display: 'flex',
+                  alignItems: 'center',
+                  width: 'fit-content'
                 }}
               >
-                LOGO
+                <img src={LogoSvg} alt='Maw Logo' width='55px' height='55px' />
+                <Typography variant="body1" marginLeft='10px'>MAW</Typography>
               </Link>
             </Grid>
 
@@ -181,7 +183,7 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter }) => {
                     >
                       Sign In
                     </Link>
-                    <UserLoginForm open={open} handleClose={handleClose} />
+{/* Add Sign In Form */}
                   </Grid>
                 )}
                 <Grid

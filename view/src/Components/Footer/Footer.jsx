@@ -1,5 +1,8 @@
-import { Grid, Link, Typography, useTheme } from "@mui/material";
+import { Grid, Typography, useTheme } from "@mui/material";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import { Link } from "react-router-dom";
+import LogoSvg from '../../Assets/Images/logo.svg';
+
 
 function Footer({ displayNavFooter }) {
   const theme = useTheme();
@@ -7,52 +10,58 @@ function Footer({ displayNavFooter }) {
     <Grid
       container
       justifyContent="space-around"
-      sx={{
+      style={{
         backgroundColor: theme.palette.secondaryBg.main, py: 5,
-        display: !displayNavFooter && 'none'
+        display: !displayNavFooter && 'none',
+        marginTop: 'auto'
       }}
-      alignSelf="flex-end"
       rowSpacing={5}
     >
       <Grid
         item
         xs={6}
         md={2}
-        sx={{
+        style={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          justifyContent:'flex-start'
         }}
       >
         <Link
-          href="#"
-          underline="none"
-          sx={{
+          to="/home"
+          style={{
             color: theme.palette.text.primary,
-            fontSize: theme.typography.body1.fontSize,
-            fontWeight: theme.typography.body1.fontWeight,
-            mb: 3,
+            textDecoration: "none",
+            display: 'flex',
+            alignItems: 'center',
+            width: 'fit-content',
+            marginBottom: '15px'
           }}
         >
-          BRAND
+          <img src={LogoSvg} alt='Maw Logo' width='35px' height='35px' />
+          <Typography variant="body2" fontWeight='bold' marginLeft='10px'>MAW</Typography>
         </Link>
         <Link
-          href="#"
+          to="/about"
           underline="none"
-          sx={{
+          style={{
             color: theme.palette.text.primary,
             fontSize: theme.typography.body2.fontSize,
-            mb: 3,
+            marginTop: '10px',
+            textDecoration: "none"
           }}
         >
           About us
         </Link>
         <Link
-          href="#"
+          to="#"
           underline="none"
-          sx={{
+          style={{
             color: theme.palette.text.primary,
             fontSize: theme.typography.body2.fontSize,
+            marginTop: '10px',
+            textDecoration: "none"
           }}
         >
           Our Team
@@ -62,49 +71,55 @@ function Footer({ displayNavFooter }) {
         item
         xs={6}
         md={2}
-        sx={{
+        style={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
         <Typography
-          sx={{
+          style={{
             color: theme.palette.text.primary,
             fontSize: theme.typography.body1.fontSize,
             fontWeight: theme.typography.body1.fontWeight,
+            marginBottom: '15px'
           }}
         >
           Search By
         </Typography>
         <Link
-          href="#"
+          to="#"
           underline="none"
-          sx={{
+          style={{
             color: theme.palette.text.primary,
             fontSize: theme.typography.body2.fontSize,
             my: 3,
+            marginTop: '10px',
+            textDecoration: "none"
           }}
         >
           Specialisation
         </Link>
         <Link
-          href="#"
+          to="#"
           underline="none"
-          sx={{
+          style={{
             color: theme.palette.text.primary,
             fontSize: theme.typography.body2.fontSize,
+            marginTop: '10px',
+            textDecoration: "none"
           }}
         >
           Location
         </Link>
         <Link
-          href="#"
+          to="#"
           underline="none"
-          sx={{
+          style={{
             color: theme.palette.text.primary,
             fontSize: theme.typography.body2.fontSize,
-            mt: 3,
+            marginTop: '10px',
+            textDecoration: "none"
           }}
         >
           Date
@@ -114,28 +129,30 @@ function Footer({ displayNavFooter }) {
         item
         xs={6}
         md={2}
-        sx={{
+        style={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
         <Typography
-          sx={{
+          style={{
             color: theme.palette.text.primary,
             fontSize: theme.typography.body1.fontSize,
             fontWeight: theme.typography.body1.fontWeight,
+            marginBottom: '15px'
           }}
         >
           Do you need help?
         </Typography>
         <Link
-          href="#"
+          to="/contactus"
           underline="none"
-          sx={{
+          style={{
             color: theme.palette.text.primary,
             fontSize: theme.typography.body2.fontSize,
-            mt: 3,
+            marginTop: '10px',
+            textDecoration: "none"
           }}
         >
           Contact us
@@ -145,28 +162,30 @@ function Footer({ displayNavFooter }) {
         item
         xs={6}
         md={2}
-        sx={{
+        style={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
         <Typography
-          sx={{
+          style={{
             color: theme.palette.text.primary,
             fontSize: theme.typography.body1.fontSize,
             fontWeight: theme.typography.body1.fontWeight,
+            marginBottom: '15px'
           }}
         >
           Are you a Doctor?
         </Typography>
         <Link
-          href="#"
-          underline="none"
-          sx={{
+          to="#"
+          state={{ showModal: true, form: 'DoctorSignupForm' }}
+          style={{
             color: theme.palette.text.primary,
             fontSize: theme.typography.body2.fontSize,
-            mt: 3,
+            marginTop: '10px',
+            textDecoration: "none"
           }}
         >
           Join our team of heroes
@@ -175,33 +194,37 @@ function Footer({ displayNavFooter }) {
       <Grid
         item
         xs={12}
-        sx={{
-          mt: 7,
+        style={{
+          // mt: 7,
           display: "flex",
           justifyContent: "center",
+          paddingBottom: "20px",
+          alignItems: 'center'
         }}
       >
         <Typography
           variant="h6"
-          sx={{
+          style={{
             fontSize: theme.typography.body2.fontSize,
             pt: 1,
+            order: 2
           }}
         >
           Copyrights &copy; MAW Team
         </Typography>
         <Link
-          href="#"
+          to="#"
           underline="none"
-          sx={{
+          style={{
             color: theme.palette.text.primary,
-            ml: 3,
+            marginRight: '10px',
+            order: 1
           }}
         >
           <GitHubIcon fontSize="large" />
         </Link>
       </Grid>
-    </Grid>
+    </Grid >
   );
 }
 

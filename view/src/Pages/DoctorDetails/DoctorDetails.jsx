@@ -2,91 +2,22 @@ import { Grid, Link, Typography, useMediaQuery, List, ListItem, ListItemIcon, Li
 import CustomFormButton from '../../Components/CustomFormButton/CustomFormButton';
 import StarIcon from "@mui/icons-material/Star";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
-import drImage from "../../Assets/Images/HeroBg1.png";
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import EmailIcon from '@mui/icons-material/Email';
-import PublicIcon from '@mui/icons-material/Public';
 import { useTheme } from '@mui/material';
 import React from 'react'
 import Map from '../../Components/Map/Map';
 import CallIcon from '@mui/icons-material/Call';
-
-const doctorDetails = {
-    firstName:"Hussien",
-    lastName:"Hassan",
-    email:"HussienHassan@gmail.com",
-    phoneNumber:+201001234567,
-    appointments :[{
-        id:69,
-        date: new Date().getDate()
-    }],
-    specialization:"Surgery",
-    experiences:[{
-        title:"experience title",
-        workplace:"experience work place",
-        location:{
-            city:"Alexandria",
-            country:"Egypt"
-        },
-        startDate: new Date(2022,7,4),
-        endDate: new Date(2022,8,21),
-        isCurrentlyWorking:false
-    }],
-    education:[{
-        degeree:"Ligma",
-        granter:"balls",
-        issueDate: new Date(2019,8,5).toLocaleDateString()
-    }],
-    certifications:[{
-        title:"zuck",
-        granter:"deez nuts",
-        issueDate: new Date(2009,8,5).toLocaleDateString()
-    }],
-    clinics:[{
-        name:"Abo hamada",
-        address:{
-            city:"Monufia",
-            governrate:"Sheben",
-            conutry:"Libya",
-            buildingNo:420,
-            streetName:"Kofta",
-            postalCode:95
-        },
-        geoLocation:{
-            longitude:"31.022031",
-            latitude:"30.0788637"
-        },
-        phone:{
-            mobile:"01222334455",
-            landline:"0222334455"
-        },
-        fees:600
-    }],
-    rating:4.5,
-    profilePicture:"https://img.freepik.com/free-photo/cat-white-background_155003-15381.jpg?w=2000",
-    professionalLicense:"../../Assets/Images/HeroBg1.png",
-    isVerified:"false",
-    isAccepted:"false"
-}
+import { useLocation } from 'react-router-dom';
 
 
 function DoctorDetails() {
     const Theme = useTheme();
-    const docItems = [
-        {
-            degree: "Fellow of the american university",
-            university: "University of colorado",
-            date: "May 2019 - June 2021"
-        }
-    ]
-    const docContacts = [
-        {
-            phone: "01004206969",
-            mail: "bruh@gmail.com",
-            website: "www.doctor.com"
-        }
-    ]
-    const isTablet = useMediaQuery((Theme)=>Theme.breakpoints.down("md"))
+    const {state} = useLocation();
+    const doctorDetails = state.doctorData;
+    console.log(doctorDetails);
+
+    const isTablet = useMediaQuery((Theme) => Theme.breakpoints.down("md"))
     return (
         <>
             <Grid
@@ -97,15 +28,13 @@ function DoctorDetails() {
                     width: "100%",
                 }}
             >
-                {/* <Grid item xs={12}>
-                    <NavBar />
-                </Grid> */}
+                {/* Hero section */}
                 <Grid container item maxWidth="md" style={{ marginTop: 20 }} justifyContent='space-between'>
                     {/* Photo grid */}
                     <Grid item xs={12} md={6} style={{
                         marginBottom: "20px",
-                        display:'flex',
-                        justifyContent:isTablet?'center':'flex-start',
+                        display: 'flex',
+                        justifyContent: isTablet ? 'center' : 'flex-start',
                         textAlign: 'center'
                     }}
                     >
@@ -113,12 +42,14 @@ function DoctorDetails() {
                         <img
                             src={doctorDetails.profilePicture}
                             alt="doctorImage"
-                            style={{ maxWidth: "195px", maxHeight: "195px",
-                            borderRadius: '50%',
-                            overflow: 'hidden',
-                            border: 'solid white 5px',
-                            textAlign: 'center',
-                        }}
+                            style={{
+                                width: "200px",
+                                 height: "200px",
+                                borderRadius: '50%',
+                                overflow: 'hidden',
+                                border: 'solid white 5px',
+                                textAlign: 'center',
+                            }}
                         />
                     </Grid>
                     {/* Hero's section grid */}
@@ -157,12 +88,12 @@ function DoctorDetails() {
                                 justifyContent: "center",
                                 marginBottom: "25px"
                             }}>
-                                <Link href="#bookingSection" underline="none" color="white">
-                            <CustomFormButton variant='contained' style={{ ...Theme.typography.body1 }} >
-                                
+                            <Link href="#bookingSection" underline="none" color="white">
+                                <CustomFormButton variant='contained' style={{ ...Theme.typography.body1 }} >
+
                                     Booking information
-                                
-                            </CustomFormButton>
+
+                                </CustomFormButton>
                             </Link>
                         </Grid>
                     </Grid>
@@ -217,7 +148,7 @@ function DoctorDetails() {
                                     sx={{
                                         paddingTop: "0px"
                                     }}>
-                                    {item.issueDate}
+                                    {item.issueDate.replace(/T.*Z/,'')}
                                 </ListItem>
                             </>
                         ))}
@@ -273,7 +204,7 @@ function DoctorDetails() {
                                     sx={{
                                         paddingTop: "0px"
                                     }}>
-                                    {item.issueDate}
+                                    {item.issueDate.replace(/T.*Z/,'')}
                                 </ListItem>
                             </>
                         ))}
@@ -287,7 +218,7 @@ function DoctorDetails() {
                     width: "100%",
                     backgroundColor: Theme.palette.secondaryBg.main
                 }}>
-                    <Grid container item maxWidth="md" style={{ marginTop: 20, textAlign: 'start' }}
+                <Grid container item maxWidth="md" style={{ marginTop: 20, textAlign: 'start' }}
                     sx={{
                         display: 'flex',
                         flexDirection: 'column'
@@ -300,20 +231,20 @@ function DoctorDetails() {
                         Clinic's Location
                     </Typography>
                 </Grid>
-                <Grid container item maxWidth="md" style={{border:"5px solid white",}}  justifyContent='flex-start'
+                <Grid container item maxWidth="md" style={{ border: "5px solid white", }} justifyContent='flex-start'
                     sx={{
                         display: 'flex',
                         flexDirection: 'column',
-                        marginY:"25px",
-                        height:"450px",
-                        width:isTablet?"90%":null,
-                        borderRadius:"10px"
+                        marginY: "25px",
+                        height: "450px",
+                        width: isTablet ? "90%" : null,
+                        borderRadius: "10px"
                     }}>
-                        {doctorDetails.clinics.map((item)=>
-                        <Map centerCoordinates={{lat:parseFloat(item.geoLocation.latitude),lng:parseFloat(item.geoLocation.longitude)}} />)}
-                    
+                    {doctorDetails.clinics.map((item) =>
+                        <Map centerCoordinates={{ lat: parseFloat(item.geoLocation.latitude), lng: parseFloat(item.geoLocation.longitude) }} />)}
+
                 </Grid>
-                
+
             </Grid>
             {/* doctor's contacts */}
             <Grid container justifyContent={'center'} style={{ width: "100%" }}>
@@ -330,32 +261,32 @@ function DoctorDetails() {
                         Contact information
                     </Typography>
                     <List>
-                       
 
-                                <ListItem style={{
-                                    ...Theme.typography.body2,
-                                    color: Theme.palette.text.primary,
-                                }}
-                                >
-                                    <ListItemIcon><PhoneAndroidIcon /></ListItemIcon>
-                                    <ListItemText primary={doctorDetails.phoneNumber} />
-                                </ListItem>
-                                <ListItem style={{
-                                    ...Theme.typography.body2,
-                                    color: Theme.palette.text.primary,
-                                }}
-                                >
-                                    <ListItemIcon><CallIcon /></ListItemIcon>
-                                    <ListItemText primary={doctorDetails.clinics.map((item)=>item.phone.landline)} />
-                                </ListItem>
-                                <ListItem style={{
-                                    ...Theme.typography.body2,
-                                    color: Theme.palette.text.primary,
-                                }}
-                                >
-                                    <ListItemIcon><EmailIcon /></ListItemIcon>
-                                    <ListItemText primary={doctorDetails.email} />
-                                </ListItem>
+
+                        <ListItem style={{
+                            ...Theme.typography.body2,
+                            color: Theme.palette.text.primary,
+                        }}
+                        >
+                            <ListItemIcon><PhoneAndroidIcon /></ListItemIcon>
+                            <ListItemText primary={doctorDetails.phoneNumber} />
+                        </ListItem>
+                        <ListItem style={{
+                            ...Theme.typography.body2,
+                            color: Theme.palette.text.primary,
+                        }}
+                        >
+                            <ListItemIcon><CallIcon /></ListItemIcon>
+                            <ListItemText primary={doctorDetails.clinics.map((item) => item.phone.landline)} />
+                        </ListItem>
+                        <ListItem style={{
+                            ...Theme.typography.body2,
+                            color: Theme.palette.text.primary,
+                        }}
+                        >
+                            <ListItemIcon><EmailIcon /></ListItemIcon>
+                            <ListItemText primary={doctorDetails.email} />
+                        </ListItem>
                     </List>
                 </Grid>
             </Grid>
@@ -477,17 +408,19 @@ function DoctorDetails() {
 
                 </Grid>
 
-                <Grid 
+                <Grid
                     item
                     xs={4}
-                    
-                    style={{ textAlign: "center",
-                     marginTop: "20px",
-                      width: "100%",
-                       marginBottom: "20px",
-                       display:'flex',
-                       justifyContent:'center',
-                       textAlign: 'center' }} 
+
+                    style={{
+                        textAlign: "center",
+                        marginTop: "20px",
+                        width: "100%",
+                        marginBottom: "20px",
+                        display: 'flex',
+                        justifyContent: 'center',
+                        textAlign: 'center'
+                    }}
                     name={"bookingSection"}>
                     <CustomFormButton variant='contained' style={{ ...Theme.typography.largerButtonText }} fullWidth>
                         Booking details

@@ -43,8 +43,8 @@ const VerificationForm = () => {
   }
 
   return (
-    <Grid container style={{ background: theme.palette.linearFormBg.main, borderRadius: 20, boxShadow: theme.shadows[5], minHeight: '400px' }} justifyContent='center'>
-      <Grid item xs={12} marginTop='25px'>
+    <Grid container style={{ background: theme.palette.linearFormBg.main, borderRadius: 20, boxShadow: theme.shadows[5], minHeight: '400px', padding:'30px 0' }} justifyContent='center'>
+      <Grid item xs={12}>
         <Typography variant='h2' style={{ textAlign: 'center', color: theme.palette.text.primary }}>
           Email Verification
         </Typography>
@@ -60,7 +60,7 @@ const VerificationForm = () => {
               <Form style={{ width: '100%' }}>
                 <Grid container item xs={12} justifyContent='center' marginY='25px'>
                   <Grid container item xs={12} justifyContent='center'>
-                    <Grid container item xs={8} md={6} justifyContent='space-around'>
+                    <Grid container item xs={8} md={6} justifyContent='space-around' marginY='10px'>
                       <RoleToggler role={role} setRole={(newRole) => handleRoleChange(newRole, formik.setFieldValue)} />
                     </Grid>
                   </Grid>
@@ -82,7 +82,7 @@ const VerificationForm = () => {
                     <InputField placeholder="example@organization.domain" label="Email Address" name="email" type="text"><EmailRoundedIcon /></InputField>
                   </Grid>
                   <Grid item xs={2}></Grid>
-                  <Grid item xs={4} marginY='25px' paddingY='25px'>
+                  <Grid item xs={4} marginTop='50px'>
                     <CustomFormButton type="submit" variant='contained' fullWidth>
                       Submit
                     </CustomFormButton>

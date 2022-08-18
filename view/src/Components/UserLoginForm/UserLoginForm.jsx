@@ -1,4 +1,4 @@
-import { CircularProgress, FormGroup, Grid, Link, Typography, Modal } from '@mui/material';
+import { CircularProgress, FormGroup, Grid, Typography } from '@mui/material';
 import { Form, Formik } from 'formik'
 import { useTheme } from '@mui/material';
 import InputField from '../InputField/InputField';
@@ -15,6 +15,7 @@ import submitUserData from '../../Network/Base/login';
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 import RoleToggler from '../RoleToggler/RoleToggler';
+import { Link } from 'react-router-dom';
 
 const UserSignInForm = ({ open, handleClose }) => {
     const dispatch = useDispatch()
@@ -61,7 +62,7 @@ const UserSignInForm = ({ open, handleClose }) => {
                 if (res.status === 200) handleClose();
             })
             .catch(err => {
-                if (err.response.status === 404 || err.response.status === 400 ) {
+                if (err.response.status === 404 || err.response.status === 400) {
                     setServerResponse({ success: false, msg: 'Wrong email or password. Please make sure your credentials are correct.' });
                 } else {
                     setServerResponse({ success: false, msg: 'Something went wrong! Please, try again. Contact us if you need any help with the process.' });
@@ -72,72 +73,74 @@ const UserSignInForm = ({ open, handleClose }) => {
 
     const theme = useTheme()
     return (
-        <Modal open={open} onClose={handleClose} aria-labelledby="modal-login">
-            <Grid container style={{ background: theme.palette.linearFormBg.main, borderRadius: 20, boxShadow: theme.shadows[5] }} justifyContent='center'>
-                <Grid item xs={12} justifyContent='center'>
-                    <Typography variant='h2' style={{ color: theme.palette.text.primary, textAlign: 'center' }}>Log In</Typography>
-                </Grid>
-                <Formik initialValues={initialValues}
-                    validationSchema={validationSchema}
-                    onSubmit={onSubmit}>
-                    {(formik) => (<Form>
-                        <Grid container item justifyContent='center'>
-                            <Grid container item xs={8} md={7} justifyContent='space-evenly'>
-                                <RoleToggler role={role} setRole={(newRole) => handleRoleChange(newRole, formik.setFieldValue)} />
+        <Grid container style={{ background: theme.palette.linearFormBg.main, borderRadius: 20, boxShadow: theme.shadows[5], padding: '30px 0' }} justifyContent='center'>
+            <Grid item xs={12} justifyContent='center'>
+                <Typography variant='h2' style={{ color: theme.palette.text.primary, textAlign: 'center' }}>Log In</Typography>
+            </Grid>
+            <Formik initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={onSubmit}>
+                {(formik) => (<Form>
+                    <Grid container item justifyContent='center'>
+                        <Grid container item xs={8} md={7} justifyContent='space-evenly' marginY='10px'>
+                            <RoleToggler role={role} setRole={(newRole) => handleRoleChange(newRole, formik.setFieldValue)} />
+                        </Grid>
+                        {
+                            <Grid item xs={8} md={7} justifyContent='center' textAlign='center' marginTop='25px'>
+                                {serverResponse.msg && formSubmitted ?
+                                    <CustomAlert
+                                        severity={serverResponse.success ? 'success' : 'error'}
+                                        sx={{ boxShadow: theme.shadows[1] }}
+                                        onClose={() => {
+                                            setServerResponse({ success: false, msg: '' });
+                                            setFormSubmitted(false);
+                                        }}>{serverResponse.msg}</CustomAlert>
+                                    : formSubmitted && <CircularProgress color='highlight' sx={{ marginY: '10px' }} />}
                             </Grid>
-                            {
-                                <Grid item xs={8} md={7} justifyContent='center' textAlign='center' marginTop='25px'>
-                                    {serverResponse.msg && formSubmitted ?
-                                        <CustomAlert
-                                            severity={serverResponse.success ? 'success' : 'error'}
-                                            sx={{ boxShadow: theme.shadows[1] }}
-                                            onClose={() => {
-                                                setServerResponse({ success: false, msg: '' });
-                                                setFormSubmitted(false);
-                                            }}>{serverResponse.msg}</CustomAlert>
-                                        : formSubmitted && <CircularProgress color='highlight' sx={{ marginY: '10px' }} />}
-                                </Grid>
-                            }
-                            <Grid item xs={8} md={7} marginTop='25px'>
-                                <InputField
-                                    id="email"
-                                    name="email"
-                                    type="text"
-                                    placeholder="Enter your email"><EmailRoundedIcon />
-                                </InputField>
-                            </Grid>
-                            <Grid item xs={8} md={7} marginTop='25px'>
-                                <InputField
-                                    id="password"
-                                    name="password"
-                                    type={isVisible ? "text" : "password"}
-                                    placeholder="Enter your password"
+                        }
+                        <Grid item xs={8} md={7} marginTop='25px'>
+                            <InputField
+                                id="email"
+                                name="email"
+                                type="text"
+                                placeholder="Enter your email"><EmailRoundedIcon />
+                            </InputField>
+                        </Grid>
+                        <Grid item xs={8} md={7} marginTop='25px'>
+                            <InputField
+                                id="password"
+                                name="password"
+                                type={isVisible ? "text" : "password"}
+                                placeholder="Enter your password"
 
-                                >
-                                    <VpnKeyRoundedIcon />
-                                    {isVisible ?
-                                        <VisibilityOffRounded onClick={handlePass} cursor={'pointer'} /> :
-                                        <VisibilityRounded onClick={handlePass} cursor={'pointer'} />}
-                                </InputField>
-                            </Grid>
-                            <Grid container item xs={8} md={7} justifyContent={'space-between'} marginTop='25px'>
-                                <FormGroup>
-                                    <CustomCheckbox label="Remember me" name='rememberMe' />
-                                </FormGroup>
-                                <Link href="/verify" style={{ ...theme.typography.body2, alignSelf: 'center', color: theme.palette.highlight.main }}>
-                                    Forgot password?
-                                </Link>
-                            </Grid>
-                            <Grid container marginTop='50px' marginLeft='1px' justifyContent={'center'}>
-                                <Grid item xs={4} marginBottom='50px'>
-                                    <CustomFormButton variant='contained' type={'submit'} fullWidth>Log in</CustomFormButton>
-                                </Grid>
+                            >
+                                <VpnKeyRoundedIcon />
+                                {isVisible ?
+                                    <VisibilityOffRounded onClick={handlePass} cursor={'pointer'} /> :
+                                    <VisibilityRounded onClick={handlePass} cursor={'pointer'} />}
+                            </InputField>
+                        </Grid>
+                        <Grid container item xs={8} md={7} justifyContent={'space-between'} alignItems='center' marginTop='25px'>
+                            <FormGroup>
+                                <CustomCheckbox label="Remember me" name='rememberMe' />
+                            </FormGroup>
+                            <Link
+                                to={"/"}
+                                state={{ showModal: true, form: 'VerificationForm' }}
+                                style={{ textDecoration: 'none', color: theme.palette.highlight.main, ...theme.typography.body2 }}
+                            >
+                                Forgot your password?
+                            </Link>
+                        </Grid>
+                        <Grid container marginTop='50px' justifyContent={'center'}>
+                            <Grid item xs={4}>
+                                <CustomFormButton variant='contained' type={'submit'} fullWidth>Log in</CustomFormButton>
                             </Grid>
                         </Grid>
-                    </Form >)}
-                </Formik >
-            </Grid >
-        </Modal>
+                    </Grid>
+                </Form >)}
+            </Formik >
+        </Grid >
     )
 }
 export default UserSignInForm;

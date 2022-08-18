@@ -19,7 +19,7 @@ import CustomAlert from "../../Components/CustomAlert/CustomAlert";
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutlined';
 
-function Specialists({ handleNavbarStyle }) {
+function Specialists() {
   const theme = useTheme();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -40,11 +40,6 @@ function Specialists({ handleNavbarStyle }) {
   const [serverResponse, setServerResponse] = useState({ success: false, msg: '' });
 
   useEffect(() => {
-    handleNavbarStyle({
-      backgroundColor: theme.palette.highlight.main,
-      position: "static",
-      color: "white",
-    });
     if (location.state) {
       console.log("locaition: ", location);
       getAllSpecialists(location.state);
