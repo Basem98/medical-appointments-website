@@ -18,6 +18,7 @@ import { Form, Formik } from "formik";
 import InputField from "../InputField/InputField";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import writePrescription from "../../Network/Doctors/writePrescription";
+import { prescriptionAndDiagnosisValidation } from "../../Helper/ValidationSchema";
 const AppointmentExamination = ({ appointmentDetails, role }) => {
     const intialValues = {
         diagnosis: '',
@@ -220,6 +221,7 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
                             <Formik
                                 initialValues={intialValues}
                                 onSubmit={handleSubmit}
+                                validationSchema={prescriptionAndDiagnosisValidation}
                             >
                                 {
                                     (props) =>
