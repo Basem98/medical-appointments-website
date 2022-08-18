@@ -85,11 +85,11 @@ const MultiStepForm = ({ children, initialValues, onSubmit, serverResponse, setS
 
 
   return (
-    <Grid container sx={{ background: theme.palette.linearFormBg.main, borderRadius: '20px', boxShadow: theme.shadows[5] }} justifyContent='center'>
+    <Grid container sx={{ background: theme.palette.linearFormBg.main, borderRadius: '20px', boxShadow: theme.shadows[5], padding:'30px 0' }} justifyContent='center'>
       <Grid item xs={12} justifyContent='center'>
         <Typography variant='h2' style={{ color: theme.palette.text.primary, textAlign: 'center' }}>Join Us</Typography>
       </Grid>
-      <Grid item xs={12} marginBottom='25px'>
+      <Grid item xs={12} marginTop='25px' marginBottom='50px'>
         <CustomFormStepper activeStep={stepNumber > 4 ? 4 : stepNumber} alternativeLabel>
           {formSteps.slice(0, 5).map((step, index) => (
             <Step key={step.props.stepName}>
