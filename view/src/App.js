@@ -26,7 +26,7 @@ import AppointmentsList from "./Pages/AdminDashboard/AppointmentsList";
 import LogsList from "./Pages/AdminDashboard/LogsList";
 import ManageDoctors from "./Pages/AdminDashboard/ManageDoctors";
 import Patients from "./Pages/DoctorProfile/Patients";
-
+import DoctorsDetails from "./Pages/DoctorDetails/DoctorDetails";
 
 const errMsg = "Oops! Looks like the page you're looking for couldn't be found.";
 const verificationMsg = "Congratulations! Your email has been verified successfully! You can now sign into your account."
@@ -45,7 +45,7 @@ function App() {
   const [displayNavFooter, setDisplayNavFooter] = useState(true);
 
   return (
-    <Grid container sx={{ minHeight: '100vh' }}>
+    <Grid container sx={{ minHeight: '100vh', flexDirection: 'column', display: 'flex' }}>
       <NavBar {...navbarStyle} displayNavFooter={displayNavFooter} />
       <Routes>
         <Route
@@ -56,6 +56,10 @@ function App() {
         <Route
           path="/specialists"
           element={<Specialists handleNavbarStyle={handleNavbarStyle} />}
+        />
+        <Route 
+          path="/specialists/details"
+          element={<DoctorsDetails />}
         />
         <Route
           path="/forgotpassword/:token"
