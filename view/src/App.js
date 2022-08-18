@@ -27,6 +27,11 @@ import LogsList from "./Pages/AdminDashboard/LogsList";
 import ManageDoctors from "./Pages/AdminDashboard/ManageDoctors";
 import Patients from "./Pages/DoctorProfile/Patients";
 import DoctorsDetails from "./Pages/DoctorDetails/DoctorDetails";
+import FormModal from "./Components/FormModal/FormModal";
+import UserLoginForm from "./Components/UserLoginForm/UserLoginForm";
+import UserSignupForm from "./Components/UserSignupForm/UserSignupForm";
+import DoctorSignupForm from "./Components/DoctorSignUpForm/DoctorSignUpForm";
+import VerificationForm from "./Components/VerificationForm/VerificationForm";
 
 const errMsg = "Oops! Looks like the page you're looking for couldn't be found.";
 const verificationMsg = "Congratulations! Your email has been verified successfully! You can now sign into your account."
@@ -51,11 +56,42 @@ function App() {
       break;
   }
 
+  const [modalOptions, setModalOptions] = useState({ showModal: false, form: 'UserLoginForm' });
+
+  useEffect(() => {
+    if (location.state?.showModal) {
+      switch (location.state?.form) {
+        case 'UserLoginForm':
+        case 'UserSignupForm':
+        case 'DoctorSignupForm':
+        case 'VerificationForm':
+          setModalOptions({ showModal: location.state.showModal, form: location.state.form });
+          break;
+        default: break;
+      }
+    }
+  }, [location.state]);
   const [displayNavFooter, setDisplayNavFooter] = useState(true);
 
   return (
     <Grid container sx={{ minHeight: '100vh', flexDirection: 'column', display: 'flex' }}>
-      <NavBar {...navbarStyle} displayNavFooter={displayNavFooter} />
+      <NavBar {...navbarStyle} displayNavFooter={displayNavFooter} openLoginForm={() => setModalOptions({ showModal: true, form: 'UserLoginForm' })} />
+      <FormModal
+        openModal={modalOptions.showModal}
+        setOpenModal={(showModal) => setModalOptions({ ...modalOptions, showModal: showModal })}
+      >
+        {
+          modalOptions.form === 'UserLoginForm' ?
+            <UserLoginForm />
+            : modalOptions.form === 'UserSignupForm' ?
+              <UserSignupForm />
+              : modalOptions.form === 'DoctorSignupForm' ?
+                <DoctorSignupForm />
+                : modalOptions.form === 'VerificationForm' ?
+                  <VerificationForm />
+                  : <UserLoginForm />
+        }
+      </FormModal>
       <Routes>
         <Route
           path="/"
