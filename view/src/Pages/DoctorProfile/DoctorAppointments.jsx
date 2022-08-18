@@ -42,25 +42,27 @@ const Appointments = () => {
     }, []);
 
     useEffect(() => {
-        getUpcomings(doctorId)
-            .then((response) => {
-                console.log(response);
-                setUpcomingAppointments(response.data.message);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+        doctorId &&
+            getUpcomings(doctorId)
+                .then((response) => {
+                    console.log(response);
+                    setUpcomingAppointments(response.data.message);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
     }, [doctorId]);
 
     useEffect(() => {
-        getPrevious(doctorId)
-            .then((response) => {
-                console.log(response);
-                setPreviousAppointments(response.data.message);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+        doctorId &&
+            getPrevious(doctorId)
+                .then((response) => {
+                    console.log(response);
+                    setPreviousAppointments(response.data.message);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
     }, [doctorId]);
 
     return (
