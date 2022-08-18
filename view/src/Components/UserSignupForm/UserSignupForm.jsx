@@ -57,9 +57,9 @@ export default function UserSignupForm() {
 
     return (
         <>
-            <Grid container height='100vh' justifyContent='center' alignItems='center' sx={{ backgroundColor: 'rgba(249, 249, 249, 0.5)', marginY: -1 }}>
-                <Grid container item height='fit-content' xl={4} lg={6} md={6} sm={8} xs={12} sx={{
-                    background: theme.palette.linearFormBg,
+            <Grid container justifyContent='center' alignItems='center'>
+                <Grid container item  sx={{
+                    background: theme.palette.linearFormBg.main,
                     boxShadow: theme.shadows[5],
                     borderRadius: '20px'
                 }}>
