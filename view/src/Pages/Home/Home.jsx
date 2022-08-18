@@ -45,14 +45,13 @@ function Home() {
         }}
         justifyContent='space-between'
       >
-        <Grid container item xs={12} md={6} xl={4} alignItems='flex-end'>
+        <Grid container item xs={12} md={6} xl={4} alignItems='flex-end' paddingX={{}} justifyContent={{ xs: 'center', md: 'flex-start' }}>
           <Typography
             variant={isTabletMobile ? "h4" : "h1"}
             sx={{
-              //   maxWidth: "560px",
               m: 2.5,
-              //   my: 7,
-              //   pt: 5
+              paddingX: { xs: '70px', md: '0' },
+              textAlign: { xs: 'center', md: 'start' }
             }}
           >
             Medical Appointments now with the click of A Button
@@ -81,7 +80,7 @@ function Home() {
           </CustomFormButton>
         </Grid>
         {!isTabletMobile && (
-          <Grid container item md={6} minHeight='500px' justifyContent='flex-end' paddingRight={{ md: 0, lg: "70px", xl:'100px' }}>
+          <Grid container item md={6} minHeight='500px' justifyContent='flex-end' paddingRight={{ md: 0, lg: "70px", xl: '100px' }}>
             <img
               src={heroBg}
               alt="heroBg"
