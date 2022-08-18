@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { Link } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 
@@ -124,12 +123,12 @@ function Home() {
           item
           xs={12}
           container
-          justifyContent="space-around"
+          justifyContent="space-evenly"
           sx={{ mt: 9 }}
           rowSpacing={9}
         >
           {topDoctorsData.length && topDoctorsData.map(cardData => (
-            <Grid key={cardData._id} item xs={8} md={3}>
+            <Grid key={cardData._id} item marginX='25px'>
               <DoctorCard cardData={cardData} />
             </Grid>
           ))}
