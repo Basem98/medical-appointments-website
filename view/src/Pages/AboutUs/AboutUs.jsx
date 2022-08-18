@@ -19,6 +19,7 @@ var directions = [
 function CardLeftComp() {
     const theme = useTheme()
     const isTablet = useMediaQuery(theme.breakpoints.up('md'))
+    
     return (
         <>
             <Grid container>
@@ -33,7 +34,7 @@ function CardLeftComp() {
 
                     </Grid>}
                     <Grid container item xs={12} md={8}>
-                        <img src={bruh} width="100%" height="583px" />
+                        <img src={bruh} width="100%" height={isTablet?"583px":"400px"} />
                     </Grid>
                 </Grid>
             </Grid>
@@ -49,7 +50,7 @@ function CardRightComp() {
             <Grid container>
                 <Grid container item xs={12}>
                     <Grid container item xs={12} md={8}>
-                        <img src={bruh_2} width="100%" height="583px" />
+                        <img src={bruh_2} width="100%" height={isTablet?"583px":"400px"} />
                     </Grid>
                     {isTablet &&
                     <Grid container item justifyContent={'center'} alignItems={'center'} xs={4} alignSelf={'center'}
