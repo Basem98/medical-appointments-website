@@ -148,7 +148,7 @@ function DoctorDetails() {
                                     sx={{
                                         paddingTop: "0px"
                                     }}>
-                                    {item.issueDate}
+                                    {item.issueDate.replace(/T.*Z/,'')}
                                 </ListItem>
                             </>
                         ))}
@@ -204,7 +204,7 @@ function DoctorDetails() {
                                     sx={{
                                         paddingTop: "0px"
                                     }}>
-                                    {item.issueDate}
+                                    {item.issueDate.replace(/T.*Z/,'')}
                                 </ListItem>
                             </>
                         ))}
