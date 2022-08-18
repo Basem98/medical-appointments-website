@@ -5,6 +5,7 @@ import {
   Toolbar,
   Grid,
   useMediaQuery,
+  Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useTheme } from "@emotion/react";
@@ -13,6 +14,7 @@ import { Link } from "react-router-dom";
 import UserLoginForm from "../UserLoginForm/UserLoginForm";
 import { useSelector, useDispatch } from "react-redux";
 import { removeUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
+import LogoSvg from '../../Assets/Images/logo.svg';
 
 const NavBar = ({ backgroundColor, color, position, displayNavFooter }) => {
   const theme = useTheme();
@@ -36,7 +38,7 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter }) => {
           backgroundColor: backgroundColor ? backgroundColor : "inherit",
           color: theme.palette.text.primary,
           position: position ? position : "static",
-          padding: {xs:`0 20px`, md: `0 70px`},
+          padding: { xs: `5px 20px`, md: `5px 70px` },
           marginBottom: position === "fixed" ? "50px" : "0",
           display: !displayNavFooter && 'none'
         }}
@@ -50,9 +52,13 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter }) => {
                 style={{
                   color: color ? color : theme.palette.text.primary,
                   textDecoration: "none",
+                  display: 'flex',
+                  alignItems: 'center',
+                  width: 'fit-content'
                 }}
               >
-                LOGO
+                <img src={LogoSvg} alt='Maw Logo' width='55px' height='55px' />
+                <Typography variant="body1" marginLeft='10px'>MAW</Typography>
               </Link>
             </Grid>
 
