@@ -17,6 +17,7 @@ import { useState } from "react";
 import { Form, Formik } from "formik";
 import InputField from "../InputField/InputField";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import writePrescription from "../../Network/Doctors/writePrescription";
 const AppointmentExamination = ({ appointmentDetails, role }) => {
     const intialValues = {
         diagnosis: '',
@@ -28,11 +29,23 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
     const theme = useTheme();
     const [showForm, setShowForm] = useState(false);
     const [drugList, setDrugList] = useState([]);
-    const handleClick = () => {
+    const [appointmentId, setAppointmentId] = useState();
+    const handleClick = (id) => {
+        setAppointmentId(id)
         setShowForm(!showForm);
     }
     const handleSubmit = (values) => {
-        console.log(values);
+        const data = {
+            info: { ...values }
+        }
+        writePrescription(appointmentId, data)
+            .then((response) => {
+                console.log('Done')
+                console.log(response)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
     const addNewDrug = () => {
         setDrugList(drugList.concat(
@@ -104,7 +117,7 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
     return (
 
         appointmentDetails?.info?.diagnosis &&
-            appointmentDetails.info?.prescription?.length > 0 ?
+            appointmentDetails?.info?.prescription?.length > 0 ?
             <>
                 <Grid container>
                     <Grid item xs={10}>
@@ -193,7 +206,7 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
                 <>
                     <CustomFormButton
                         variant="contained"
-                        onClick={handleClick}
+                        onClick={() => handleClick(appointmentDetails._id)}
                     >
                         Add prescription and diagnosis
                     </CustomFormButton>
