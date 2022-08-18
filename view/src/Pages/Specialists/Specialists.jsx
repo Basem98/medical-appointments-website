@@ -1,21 +1,28 @@
-import { Typography, Grid, useTheme, FormHelperText } from "@mui/material";
+import { Typography, Grid, useTheme, FormHelperText, Box } from "@mui/material";
 import { Form, Formik } from "formik";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import DropdownField from "../../Components/DropdownField/DropdownField";
-import InputField from "../../Components/InputField/InputField";
-import DoctorCard from "../../Components/DoctorCard/DoctorCard";
-import specialistsPageBg from "../../Assets/Images/specialistsPageBg.png";
-import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton";
+import { useDispatch } from "react-redux";
 
 import specialties from "../../Helper/SpecialtiesOptions";
 import governorates from "../../Helper/GovernoratesOptions";
 import { months, getDays } from "../../Helper/DateOptions";
 import getAllDoctorsData from "../../Network/Doctors/getAllDoctors"
+import { setSpecialists } from "../../Store/Features/Specialists/specialistsSlice";
+
+import DropdownField from "../../Components/DropdownField/DropdownField";
+import InputField from "../../Components/InputField/InputField";
+import DoctorCard from "../../Components/DoctorCard/DoctorCard";
+import specialistsPageBg from "../../Assets/Images/specialistsPageBg.png";
+import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton";
+import CustomAlert from "../../Components/CustomAlert/CustomAlert";
+import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
+import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutlined';
 
 function Specialists({ handleNavbarStyle }) {
   const theme = useTheme();
   const location = useLocation();
+  const dispatch = useDispatch();
   const [formInitialValues, setFormInitialValues] = useState({
     specialization: "",
     governorate: "",
@@ -26,6 +33,12 @@ function Specialists({ handleNavbarStyle }) {
     priceFrom: "",
     priceTo: "",
   })
+
+  const [specialistsData, setSpecialistsData] = useState([]);
+  const [paginatePage, setPaginatePage] = useState({ pageNum: 0, nextPage: true });
+
+  const [serverResponse, setServerResponse] = useState({ success: false, msg: '' });
+
   useEffect(() => {
     handleNavbarStyle({
       backgroundColor: theme.palette.highlight.main,
@@ -40,8 +53,7 @@ function Specialists({ handleNavbarStyle }) {
     else {
       getAllSpecialists()
     }
-  }, []);
-  const [specialistsData, setSpecialistsData] = useState([]);
+  }, [paginatePage.pageNum]);
 
   const getAllSpecialists = (values) => {
     console.log('here in getAllSpecialists')
@@ -49,11 +61,32 @@ function Specialists({ handleNavbarStyle }) {
     for (let prop in filteredValues) {
       if (filteredValues[prop] === "") delete filteredValues[prop]
     }
-    getAllDoctorsData(filteredValues)
+    getAllDoctorsData({ ...filteredValues, pageNum: paginatePage.pageNum })
       .then((res) => {
+        setServerResponse({ ...serverResponse, success: true });
         setSpecialistsData(res.data.doctors);
+        dispatch(setSpecialists({
+          specialists: res.data.doctors
+        }))
+        console.log('res.data.doctors: ', res.data.doctors);
+
       })
-      .catch((err) => { console.log(err) })
+      .catch((err) => {
+        console.log(err.response.status, err.response.data.error);
+        if (err.response.status === 404) {
+          setPaginatePage({ pageNum: paginatePage.pageNum - 1, nextPage: false });
+          setServerResponse({ success: false, msg: err.response.data.error });
+        }
+      })
+  }
+
+  const handlePageForward = () => {
+    console.log('paginatePageNumber: ', paginatePage.pageNum)
+    setPaginatePage({ ...paginatePage, pageNum: paginatePage.pageNum + 1 });
+  }
+
+  const handlePageBackward = () => {
+    if (paginatePage.pageNum > 0) setPaginatePage({ nextPage: true, pageNum: paginatePage.pageNum - 1 });
   }
 
   const validateForm = (values) => {
@@ -157,7 +190,7 @@ function Specialists({ handleNavbarStyle }) {
                   height: "fit-content",
                   // alignItems: "center",
                   borderRadius: "10px 10px 0 0",
-                  py: 4,
+                  py: 2,
                 }}
               >
                 <Typography variant="h3" align="center">Filters</Typography>
@@ -401,16 +434,39 @@ function Specialists({ handleNavbarStyle }) {
                 </Grid>
               </>) :
               (
-                <Grid item md={12} container rowSpacing={3} columnSpacing={{ xs: 7 }}>
-                  {specialistsData.map((cardData) => (
-                    <Grid item lg={4} md={5} key={cardData._id}>
-                      <DoctorCard cardData={cardData} />
-                    </Grid>
-                  ))}
-                </Grid>
+                <>
+                  <Grid item md={12} container rowSpacing={3} columnSpacing={{ xs: 7 }}>
+                    {!serverResponse.success && serverResponse.msg ?
+                      <Grid item xs={12} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+
+                        <CustomAlert severity='error' onClose={() => {
+                          setServerResponse({ success: false, msg: '' });
+                        }}>
+                          No doctors available for the selected filters, slect different options and try again.....
+                        </CustomAlert>
+                        {/* <Typography variant="h5">No doctors available for the selected filters, slect different options and try again.....</Typography> */}
+
+                      </Grid>
+                      : (
+                        specialistsData.map((cardData) => (
+                          <Grid item lg={4} md={5} key={cardData._id}>
+                            <DoctorCard cardData={cardData} />
+                          </Grid>
+                        ))
+                      )
+                    }
+
+                  </Grid>
+
+                </>
               )
             }
-
+          </Grid>
+          <Grid item md={12}>
+            <Box sx={{ my: 3, px: 20, display: "flex", justifyContent: paginatePage.pageNum ? "space-between" : "end", position: "static", bottom: "20px" }}>
+              {paginatePage.pageNum ? (<ArrowCircleLeftOutlinedIcon cursor="pointer" onClick={handlePageBackward} sx={{ fontSize: 40, "&:hover": { opacity: .7 } }} />) : ('')}
+              {paginatePage.nextPage ? (<ArrowCircleRightOutlinedIcon cursor="pointer" onClick={handlePageForward} sx={{ fontSize: 40, "&:hover": { opacity: .7 } }} />) : ('')}
+            </Box>
           </Grid>
         </Grid>
       </div>

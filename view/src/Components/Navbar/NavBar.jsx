@@ -14,7 +14,7 @@ import UserLoginForm from "../UserLoginForm/UserLoginForm";
 import { useSelector, useDispatch } from "react-redux";
 import { removeUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 
-const NavBar = ({ backgroundColor, color, position }) => {
+const NavBar = ({ backgroundColor, color, position, displayNavFooter }) => {
   const theme = useTheme();
   const isTabletMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const [showMenue, setShowMenu] = useState(false);
@@ -39,6 +39,7 @@ const NavBar = ({ backgroundColor, color, position }) => {
           // padding: `0 ${paddingX ? paddingX : 0}px`,
           padding: `0 70px`,
           marginBottom: position === "fixed" ? "50px" : "0",
+          display: !displayNavFooter && 'none'
         }}
         elevation={0}
       >

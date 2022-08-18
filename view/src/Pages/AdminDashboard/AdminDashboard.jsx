@@ -4,15 +4,17 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { Grid, useTheme } from "@mui/material";
 
-const AdminDashboard = ({ handleNavbarStyle }) => {
+const AdminDashboard = ({ setDisplayNavFooter }) => {
+  setDisplayNavFooter(false);
+
   const theme = useTheme();
 
   useEffect(() => {
-    handleNavbarStyle({
-      backgroundColor: theme.palette.highlight.main,
-      position: "static",
-      color: "white",
-    });
+    // handleNavbarStyle({
+    //   backgroundColor: theme.palette.highlight.main,
+    //   position: "static",
+    //   color: "white",
+    // });
   }, [])
 
 

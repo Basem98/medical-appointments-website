@@ -9,6 +9,7 @@ import { Grid } from "@mui/material";
 import PasswordChangeForm from './Components/PasswordChangeForm/PasswordChangeForm';
 import SvgError from './Assets/Images/pagenotfound.svg';
 import MailSent from './Assets/Images/mailsent.svg';
+import UnauthorizedSvg from './Assets/Images/unauthorized.svg'
 import Feedback from "./Components/Feedback/Feedback";
 import UserProfile from "./Pages/UserProfile/UserProfile";
 import UserAppointments from "./Pages/UserProfile/UserAppointments";
@@ -29,6 +30,7 @@ import Patients from "./Pages/DoctorProfile/Patients";
 
 const errMsg = "Oops! Looks like the page you're looking for couldn't be found.";
 const verificationMsg = "Congratulations! Your email has been verified successfully! You can now sign into your account."
+const unAuthenticatedMsg = "Looks like you don't have access to this page right now. Please sign in, or create an account, either as a user or a doctor."
 
 function App() {
   const [navbarStyle, setNavbarStyle] = useState({
@@ -40,9 +42,11 @@ function App() {
     setNavbarStyle(navbarStyle);
   };
 
+  const [displayNavFooter, setDisplayNavFooter] = useState(true);
+
   return (
     <Grid container sx={{ minHeight: '100vh' }}>
-      <NavBar {...navbarStyle} />
+      <NavBar {...navbarStyle} displayNavFooter={displayNavFooter} />
       <Routes>
         <Route
           path="/"
@@ -60,6 +64,10 @@ function App() {
         <Route
           path="/verification/:role/:token/:userId"
           element={<Feedback msg={verificationMsg}><MailSent /></Feedback>}
+        />
+        <Route
+          path="/unauthorized"
+          element={<Feedback msg={unAuthenticatedMsg}><UnauthorizedSvg /></Feedback>}
         />
         <Route
           path="*"
@@ -93,8 +101,8 @@ function App() {
           path="/doctors/:id/change-password"
           element={<ChangeDoctorPassword />}
         />
-        <Route path="/admin" element={<AdminSignInForm />}/>
-        <Route path="/dashboard" element={<AdminDashboard handleNavbarStyle={handleNavbarStyle}/>}>
+        <Route path="/admin" element={<AdminSignInForm setDisplayNavFooter={setDisplayNavFooter}/>}/>
+        <Route path="/dashboard" element={<AdminDashboard handleNavbarStyle={handleNavbarStyle} setDisplayNavFooter={setDisplayNavFooter}/>}>
           <Route path="/dashboard/statistics" element={<Statistics />}/>
           <Route path="/dashboard/managedoctors" element={<ManageDoctors />}/>
           <Route path="/dashboard/manageusers" element={<ManageUsers />}/>
@@ -107,7 +115,7 @@ function App() {
           element={<Patients />}
         />
       </Routes>
-      <Footer />
+      <Footer displayNavFooter={displayNavFooter}/>
     </Grid>
   );
 }

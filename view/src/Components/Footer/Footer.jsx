@@ -1,13 +1,16 @@
 import { Grid, Link, Typography, useTheme } from "@mui/material";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
-function Footer() {
+function Footer({ displayNavFooter }) {
   const theme = useTheme();
   return (
     <Grid
       container
       justifyContent="space-around"
-      sx={{ backgroundColor: theme.palette.secondaryBg.main, py: 5}}
+      sx={{
+        backgroundColor: theme.palette.secondaryBg.main, py: 5,
+        display: !displayNavFooter && 'none'
+      }}
       alignSelf="flex-end"
       rowSpacing={5}
     >
