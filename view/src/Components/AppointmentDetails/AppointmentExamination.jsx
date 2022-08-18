@@ -7,14 +7,72 @@ import {
     TableBody,
     Grid,
     Typography,
-    useTheme
+    useTheme,
+    IconButton
 } from "@mui/material";
 import MedicationIcon from '@mui/icons-material/Medication';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import CustomFormButton from "../CustomFormButton/CustomFormButton";
-
+import { useState } from "react";
+import { Form, Formik } from "formik";
+import InputField from "../InputField/InputField";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 const AppointmentExamination = ({ appointmentDetails, role }) => {
+    const intialValues = {
+        diagnosis: '',
+        prescription: [{
+            drugName: '',
+            dosage: ''
+        }]
+    }
     const theme = useTheme();
+    const [showForm, setShowForm] = useState(false);
+    const [drugList, setDrugList] = useState([]);
+    const handleClick = () => {
+        setShowForm(!showForm);
+    }
+    const handleSubmit = (values) => {
+        console.log(values);
+    }
+    const addNewDrug = () => {
+        setDrugList(drugList.concat(
+            <Grid key={drugList.length} container>
+                <Grid
+                    item
+                    xs={4}
+                    sx={{
+                        border: `1px solid ${theme.palette.highlight.main}`,
+                        borderRadius: '12px',
+                        marginBottom: '10px',
+                        marginRight: '5px'
+                    }}
+                >
+                    <InputField
+                        placeholder="Drug name"
+                        name={`prescription[${drugList.length + 1}].drugName`}
+                        type="text"
+                    />
+                </Grid>
+                <Grid
+                    item
+                    xs={4}
+                    sx={{
+                        border: `1px solid ${theme.palette.highlight.main}`,
+                        borderRadius: '12px',
+                        marginBottom: '10px',
+                        marginLeft: '5px'
+
+                    }}
+                >
+                    <InputField
+                        placeholder="Dosage"
+                        name={`prescription[${drugList.length + 1}].dosage`}
+                        type="text"
+                    />
+                </Grid>
+            </Grid>
+        ))
+    }
     const AppointmentDetail = (props) => {
         return (
 
@@ -132,11 +190,133 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
                 </Grid>
             </>
             : role === 'doctor' ?
-                <CustomFormButton
-                    variant="contained"
-                >
-                    Add prescription and diagnosis
-                </CustomFormButton>
+                <>
+                    <CustomFormButton
+                        variant="contained"
+                        onClick={handleClick}
+                    >
+                        Add prescription and diagnosis
+                    </CustomFormButton>
+                    {
+                        showForm &&
+                        <Grid
+                            sx={{
+                                marginTop: '10px'
+                            }}
+                        >
+                            <Formik
+                                initialValues={intialValues}
+                                onSubmit={handleSubmit}
+                            >
+                                {
+                                    (props) =>
+                                        <>
+                                            <Form>
+                                                <Grid
+                                                    container
+                                                >
+                                                    <Grid
+                                                        item
+                                                        xs={10}
+                                                        sx={{
+                                                            border: `1px solid ${theme.palette.highlight.main}`,
+                                                            borderRadius: '12px',
+                                                            marginBottom: '10px'
+
+                                                        }}
+                                                    >
+                                                        <InputField
+                                                            name="diagnosis"
+                                                            placeholder="Diagnosis"
+                                                            multiline
+                                                            rows={4}
+
+                                                            type="text"
+                                                        />
+                                                    </Grid>
+                                                    <Grid
+                                                        item
+                                                        xs={4}
+                                                        sx={{
+                                                            border: `1px solid ${theme.palette.highlight.main}`,
+                                                            borderRadius: '12px',
+                                                            marginBottom: '10px',
+                                                            marginRight: '5px'
+                                                        }}
+                                                    >
+                                                        <InputField
+                                                            placeholder="Drug name"
+                                                            name="prescription[0].drugName"
+                                                            type="text"
+                                                        />
+                                                    </Grid>
+                                                    <Grid
+                                                        item
+                                                        xs={4}
+                                                        sx={{
+                                                            border: `1px solid ${theme.palette.highlight.main}`,
+                                                            borderRadius: '12px',
+                                                            marginBottom: '10px',
+                                                            marginLeft: '5px'
+
+                                                        }}
+                                                    >
+                                                        <InputField
+                                                            placeholder="Dosage"
+                                                            name="prescription[0].dosage"
+                                                            type="text"
+                                                        />
+                                                    </Grid>
+                                                    <Grid
+                                                        item
+                                                        xs={2}
+                                                    >
+                                                        <IconButton
+                                                            sx={{
+                                                                color: theme.palette.highlight.main
+                                                            }}
+                                                            onClick={addNewDrug}
+                                                        >
+                                                            <AddCircleOutlineIcon />
+                                                        </IconButton>
+                                                    </Grid>
+                                                    {
+                                                        drugList
+                                                    }
+                                                    <Grid
+                                                        item
+                                                        xs={10}
+                                                    >
+                                                        <CustomFormButton
+                                                            variant="contained"
+                                                            sx={{
+                                                                marginRight: '5px'
+                                                            }}
+                                                            type="submit"
+                                                        >
+                                                            Submit
+                                                        </CustomFormButton>
+                                                        <CustomFormButton
+                                                            onClick={handleClick}
+                                                            sx={{
+                                                                backgroundColor: theme.palette.grey[500],
+                                                                color: 'black',
+                                                                marginLeft: '5px'
+                                                            }}
+                                                        >
+                                                            Cancel
+                                                        </CustomFormButton>
+                                                    </Grid>
+                                                </Grid>
+                                            </Form>
+                                        </>
+                                }
+
+
+                            </Formik>
+                        </Grid>
+                    }
+                </>
                 : role === 'user' ?
                     <Typography
                         color={theme.palette.grey[500]}
