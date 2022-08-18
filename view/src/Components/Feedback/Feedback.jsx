@@ -98,49 +98,43 @@ const Feedback = ({ msg, isConfirmed, children }) => {
                   : (/^\/unauthorized/.test(pathname)) ?
                     <Grid container item xs={12}>
                       <Grid container item xs={12} md={4} marginTop='25px' justifyContent='center' alignItems='center'>
-                        <Link to={{
-                          pathname: "/",
-                          state: {showModal: true, form: 'UserLoginForm'}
-                        }}
+                        <Link to={"/"}
+                          state={{ showModal: true, form: 'UserLoginForm' }}
                           style={{
                             color: '#fff',
                             textDecoration: "none",
-                            width:'100%',
-                            maxWidth:'242px'
+                            width: '100%',
+                            maxWidth: '242px'
                           }}>
-                          <CustomFormButton sx={{maxWidth: '242px'}} variant='contained' fullWidth>
+                          <CustomFormButton sx={{ maxWidth: '242px' }} variant='contained' fullWidth>
                             Sign In
                           </CustomFormButton>
                         </Link>
                       </Grid>
                       <Grid container item xs={12} md={4} marginTop='25px' justifyContent='center' alignItems='center'>
-                        <Link to={{
-                          pathname: "/",
-                          state: {showModal: true, form: 'UserSignupForm'}
-                        }}
+                        <Link to={"/"}
+                          state={{ showModal: true, form: 'UserSignupForm' }}
                           style={{
                             color: '#fff',
                             textDecoration: "none",
-                            width:'100%',
-                            maxWidth:'242px'
+                            width: '100%',
+                            maxWidth: '242px'
                           }}>
-                          <CustomFormButton sx={{maxWidth: '242px'}} variant='outlined' fullWidth>
+                          <CustomFormButton sx={{ maxWidth: '242px' }} variant='outlined' fullWidth>
                             Sign Up
                           </CustomFormButton>
                         </Link>
                       </Grid>
                       <Grid container item xs={12} md={4} marginTop='25px' justifyContent='center' alignItems='center'>
-                        <Link to={{
-                          pathname: "/",
-                          state: {showModal: true, form: 'DoctorSignUpForm'}
-                        }}
+                        <Link to={"/"}
+                          state={{ showModal: true, form: 'DoctorSignupForm' }}
                           style={{
                             color: '#fff',
                             textDecoration: "none",
-                            width:'100%',
-                            maxWidth:'242px'
+                            width: '100%',
+                            maxWidth: '242px'
                           }}>
-                          <CustomFormButton sx={{maxWidth: '242px'}} variant='outlined' fullWidth>
+                          <CustomFormButton sx={{ maxWidth: '242px' }} variant='outlined' fullWidth>
                             Join As a Doctor
                           </CustomFormButton>
                         </Link>
