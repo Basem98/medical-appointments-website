@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { Link } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 
@@ -10,36 +9,15 @@ import heroBg from "../../Assets/Images/HeroBg.png";
 import sectionBg from "../../Assets/Images/SectionBg.png";
 import getTopDoctors from '../../Network/Doctors/getTopDoctors';
 
-function Home({ handleNavbarStyle }) {
+function Home() {
   const theme = useTheme();
   const [topDoctorsData, setTopDoctorsData] = useState([])
 
   useEffect(() => {
-    handleNavbarStyle({
-      backgroundColor: "inherit",
-      position: "fixed",
-      color: "",
-    });
-
     //call api for top 3 rated
     handleGetTopDoctors()
   }, []);
 
-  const handleNavbarScroll = (e) => {
-    handleNavbarStyle({
-      backgroundColor:
-        window.scrollY > 400 ? theme.palette.highlight.main : "inherit",
-      position: "fixed",
-      color: window.scrollY > 400 ? "white" : "",
-    });
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", (e) => handleNavbarScroll(e));
-    return () => {
-      window.removeEventListener("scroll", (e) => handleNavbarScroll(e));
-    };
-  }, [window.scrollY]);
   const isTabletMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   const handleGetTopDoctors = () => {
@@ -60,22 +38,19 @@ function Home({ handleNavbarStyle }) {
         container
         style={{
           background: "linear-gradient(#F8FBFC, #A6E0D6)",
-          // height: "300px",
-          // padding: "10px 130px",
           padding: `0px ${!isTabletMobile ? "70px" : "0px"}`,
           width: "100%",
+          position: 'relative'
         }}
-      // justifyContent="center"
+        justifyContent='space-between'
       >
-        <Grid item xs={12} md={6} sx={{}}>
+        <Grid container item xs={12} md={6} xl={4} alignItems='flex-end' paddingX={{}} justifyContent={{ xs: 'center', md: 'flex-start' }}>
           <Typography
             variant={isTabletMobile ? "h4" : "h1"}
             sx={{
-              // color: theme.palette.text.primary,
-              maxWidth: "560px",
-              m: 2,
-              my: 7,
-              pt: 5
+              m: 2.5,
+              paddingX: { xs: '70px', md: '0' },
+              textAlign: { xs: 'center', md: 'start' }
             }}
           >
             Medical Appointments now with the click of A Button
@@ -104,15 +79,13 @@ function Home({ handleNavbarStyle }) {
           </CustomFormButton>
         </Grid>
         {!isTabletMobile && (
-          <Grid item md={6} justifyContent="center">
+          <Grid container item md={6} minHeight='500px' justifyContent='flex-end' paddingRight={{ md: 0, lg: "70px", xl: '100px' }}>
             <img
               src={heroBg}
               alt="heroBg"
               style={{
-                width: "270px",
-                position: "relative",
-                top: "120px",
-                left: "350px",
+                width: "350px",
+                position: "absolute",
                 bottom: "0px",
               }}
             />
@@ -129,7 +102,6 @@ function Home({ handleNavbarStyle }) {
           item
           md={12}
           justifyContent="center"
-          // alignItems="center"
           container
         >
           <Grid item xs={8} md={5}>
@@ -151,12 +123,12 @@ function Home({ handleNavbarStyle }) {
           item
           xs={12}
           container
-          justifyContent="space-around"
+          justifyContent="space-evenly"
           sx={{ mt: 9 }}
           rowSpacing={9}
         >
           {topDoctorsData.length && topDoctorsData.map(cardData => (
-            <Grid key={cardData._id} item xs={8} md={3}>
+            <Grid key={cardData._id} item marginX='25px'>
               <DoctorCard cardData={cardData} />
             </Grid>
           ))}
@@ -198,7 +170,6 @@ function Home({ handleNavbarStyle }) {
         container
         justifyContent="space-around"
         sx={{
-          // mt: 9,
           py: 5,
           backgroundColor: theme.palette.secondaryBg.main,
         }}
@@ -234,7 +205,6 @@ function Home({ handleNavbarStyle }) {
             align="center"
             sx={{
               mt: 7,
-              // px: 2,
               fontSize: theme.typography.body2.fontSize,
               fontWeight: theme.typography.body2.fontWeight,
             }}
@@ -289,8 +259,6 @@ function Home({ handleNavbarStyle }) {
           <Typography
             align="center"
             sx={{
-              // mt: 7,
-              // px: 2,
               fontSize: theme.typography.body2.fontSize,
               fontWeight: theme.typography.body2.fontWeight,
             }}

@@ -9,9 +9,9 @@ function Footer({ displayNavFooter }) {
       justifyContent="space-around"
       sx={{
         backgroundColor: theme.palette.secondaryBg.main, py: 5,
-        display: !displayNavFooter && 'none'
+        display: !displayNavFooter && 'none',
+        marginTop: 'auto'
       }}
-      alignSelf="flex-end"
       rowSpacing={5}
     >
       <Grid

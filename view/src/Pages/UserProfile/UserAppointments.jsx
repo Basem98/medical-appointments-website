@@ -1,11 +1,20 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import ContentToggler from "../../Components/ContentToggler/ContentToggler";
 import { useState } from "react";
 import { useEffect } from "react";
 import getUpcomings from "../../Network/Users/getUpcomings";
 import getPrevious from "../../Network/Users/getPrevious";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import checkAuthentication from "../../Network/Base/checkAuthentication";
+import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 
 const Appointments = () => {
+    const userId = useSelector((state) => state.userDetails.data?._id);
+    const role = useSelector((state) => state.userDetails.role);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [upcomingAppointments, setUpcomingAppointments] = useState();
     const [previousAppointments, setPreviousAppointments] = useState();
@@ -19,31 +28,54 @@ const Appointments = () => {
         previousAppointments
     ];
 
-
     useEffect(() => {
-        getUpcomings("62e88ec51b557976cbe9e1f9")
+        checkAuthentication()
             .then((response) => {
-                setUpcomingAppointments(response.data.message);
+                dispatch(setUserDetails({
+                    role: response.data.role,
+                    data: response.data.data,
+                    email: response.data.data.email
+                }))
+                if (response.data.role !== 'User') {
+                    navigate('/');
+                }
             })
             .catch((error) => {
-                console.log(error);
+                navigate('/');
             })
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
-        getPrevious("62e88ec51b557976cbe9e1f9")
-            .then((response) => {
-                setPreviousAppointments(response.data.message);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+        userId &&
+            getUpcomings(userId)
+                .then((response) => {
+                    setUpcomingAppointments(response.data.message);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+    }, [userId]);
+
+    useEffect(() => {
+        userId &&
+            getPrevious(userId)
+                .then((response) => {
+                    setPreviousAppointments(response.data.message);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+    }, [userId]);
 
 
     return (
         <>
-            <ContentToggler data={data} titles={titles} role="user"/>
+            {
+                role === 'User' ?
+                    <ContentToggler data={data} titles={titles} role="user" />
+                    :
+                    <></>
+            }
         </>
     );
 }

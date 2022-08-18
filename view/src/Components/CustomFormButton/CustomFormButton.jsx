@@ -8,7 +8,7 @@ const CustomFormButton = styled(Button)(({ theme }) => ({
     ':hover': {
       backgroundColor: theme.palette.highlight.main,
       opacity: 0.8,
-      transform: 'scale(1.05)'
+      boxShadow: theme.shadows[10]
     }
   },
   '&.MuiButton-outlined': {

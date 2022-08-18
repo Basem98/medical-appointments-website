@@ -19,4 +19,6 @@ appointmentRouter.route('/previous/:id')
 
 appointmentRouter.put('/:id', protectDoctorsRoute, appointmentController.editAppointment);
 
+appointmentRouter.put('/:id/cancel', generalAuthenticationMiddleware ,appointmentController.cancelAppointment);
+
 module.exports = appointmentRouter;

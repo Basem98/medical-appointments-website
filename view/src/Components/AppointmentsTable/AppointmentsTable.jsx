@@ -14,6 +14,7 @@ import { useTheme } from "@mui/material";
 import moment from "moment";
 import { useState } from "react";
 import AppointmentDetails from "../AppointmentDetails/AppointmentDetails";
+import AppointmentStatus from "./AppointmentStatus";
 
 const AppointmentsTable = ({ appointments, role }) => {
     const theme = useTheme();
@@ -187,30 +188,35 @@ const AppointmentsTable = ({ appointments, role }) => {
 
                                             </CardContent>
                                         </Grid>
-                                        <Grid item alignSelf="center" width="25%">
-                                            <CardActions>
-                                                <Button
-                                                    sx={{
-                                                        backgroundColor: theme.palette.highlight.main,
-                                                        fontWeight: 'bold',
-                                                        padding: "15px",
-                                                        borderRadius: "20px",
-                                                        width: "90%",
-                                                        ':hover': {
+                                        <Grid container width="25%" justifyContent='center'>
+                                            <Grid item xs={10} marginTop='10px'>
+                                                <AppointmentStatus state={appointment.state} />
+                                            </Grid>
+                                            <Grid item xs={10}>
+                                                <CardActions>
+                                                    <Button
+                                                        sx={{
                                                             backgroundColor: theme.palette.highlight.main,
-                                                            opacity: 0.8,
-                                                            transform: 'scale(1.05)'
-                                                        }
-                                                    }}
-                                                    variant="contained"
-                                                    onClick={() => {
-                                                        setOpenDrawer(!openDrawer);
-                                                        setAppointmentDetails(appointment)
-                                                    }}
-                                                >
-                                                    See Details
-                                                </Button>
-                                            </CardActions>
+                                                            fontWeight: 'bold',
+                                                            padding: "15px",
+                                                            borderRadius: "20px",
+                                                            width: "90%",
+                                                            ':hover': {
+                                                                backgroundColor: theme.palette.highlight.main,
+                                                                opacity: 0.8,
+                                                                transform: 'scale(1.05)'
+                                                            }
+                                                        }}
+                                                        variant="contained"
+                                                        onClick={() => {
+                                                            setOpenDrawer(!openDrawer);
+                                                            setAppointmentDetails(appointment)
+                                                        }}
+                                                    >
+                                                        See Details
+                                                    </Button>
+                                                </CardActions>
+                                            </Grid>
                                         </Grid>
                                     </Grid>
                                 </Card>

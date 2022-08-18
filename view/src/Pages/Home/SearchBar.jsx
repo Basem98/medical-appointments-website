@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom'
 import { Form, Formik } from "formik";
 import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton";
-import { Grid } from "@mui/material";
+import { Grid, useTheme } from "@mui/material";
 import specialties from '../../Helper/SpecialtiesOptions';
 import governorates from "../../Helper/GovernoratesOptions";
 import { months, getDays } from './../../Helper/DateOptions';
@@ -12,7 +12,7 @@ import { months, getDays } from './../../Helper/DateOptions';
 const SearchBar = () => {
 
   const navigate = useNavigate();
-
+  const theme = useTheme();
   const routeToSpecialistsPage = (values) => {
     console.log('here in routeToSpecialistsPage')
     navigate("/specialists", {
@@ -39,7 +39,7 @@ const SearchBar = () => {
           display: "flex",
           justifyContent: "center",
           position: "relative",
-          top: "50px",
+          top: "50px"
         }}
       >
         <Formik
@@ -59,6 +59,7 @@ const SearchBar = () => {
               background: "white",
               padding: "30px",
               borderRadius: "16px",
+              boxShadow: theme.shadows[3]
             }}
             align="center"
           >

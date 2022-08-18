@@ -1,16 +1,10 @@
 import {
     Drawer,
-    TableContainer,
-    Table,
-    TableHead,
-    TableRow,
-    TableCell,
-    TableBody,
     Grid,
     Typography,
     Box,
     useTheme,
-    Link
+    Link,
 }
     from "@mui/material";
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
@@ -18,18 +12,13 @@ import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
 import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ApartmentIcon from '@mui/icons-material/Apartment';
-import MedicationIcon from '@mui/icons-material/Medication';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
-import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import PersonIcon from '@mui/icons-material/Person';
 import moment from "moment";
+import AppointmentExamination from "./AppointmentExamination";
+import AppointmentCancellation from "./AppointmentCancellation";
 
 const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawer }) => {
-    const details = [
-        { drugName: 'Some weirdo drug name', dosage: '2 times a day' },
-        { drugName: 'Some quirky drug name', dosage: '2 times a day' },
-        { drugName: 'Some strange drug name', dosage: '2 times a day' }
-    ];
     const theme = useTheme();
     const AppointmentDetail = (props) => {
         return (
@@ -229,84 +218,20 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                                 </AppointmentDetail>
                                 : <></>
                     }
-                    <AppointmentDetail
-                        detail={"Some diagnosis Some diagnosis Some diagnosis Some diagnosis Some diagnosis Some diagnosis Some diagnosis Some diagnosisSome diagnosis Some diagnosis Some diagnosis"}
-                    >
-                        <MonitorHeartIcon
-                            fontSize="medium"
-                            sx={{
-                                color: theme.palette.highlight.main,
-                                marginRight: 3
-                            }}
-                        />
-                    </AppointmentDetail>
-                    <Grid
-                        container
-                        item
-                        xs={10}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            flexWrap: 'wrap'
-                        }}
-                    >
-                        <Grid item xs={1}>
-                            <MedicationIcon
-                                fontSize="medium"
-                                sx={{
-                                    color: theme.palette.highlight.main,
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={1}>
-                            <Typography
-                                variant="body2"
-                                paddingLeft={2}
-                            >
-                                Prescription
-                            </Typography>
-                        </Grid>
-                        <TableContainer>
-                            <Table sx={{ maxWidth: 400 }} aria-label="Prescription">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell sx={{
-                                            color: theme.palette.highlight.main,
-                                            fontWeight: 'bold'
-                                        }}
-                                        >
-                                            Drug Name</TableCell>
-                                        <TableCell sx={{
-                                            color: theme.palette.highlight.main,
-                                            fontWeight: 'bold'
-                                        }}
-                                        >
-                                            Dosage
-                                        </TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {
 
-                                        details.map((drug) => {
-                                            return (
-                                                <TableRow
-                                                    key={drug.drugName}
-                                                >
-                                                    <TableCell component="th">
-                                                        {drug.drugName}
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {drug.dosage}
-                                                    </TableCell>
-                                                </TableRow>
-                                            );
-                                        })
-                                    }
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                    <Grid item>
+                        <AppointmentExamination
+                            appointmentDetails={appointmentDetails}
+                            role={role}
+                        />
                     </Grid>
+
+                    <Grid
+                        item
+                    >
+                        <AppointmentCancellation role={role} state={appointmentDetails?.state} appointmentId={appointmentDetails?._id}/>
+                    </Grid>
+
                 </Grid>
             </Drawer>
         </>

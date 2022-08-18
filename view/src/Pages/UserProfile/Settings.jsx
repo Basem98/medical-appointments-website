@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useRef, useState, useEffect } from "react";
 import { Grid } from "@mui/material";
 import InputField from '../../Components/InputField/InputField'
 import { Formik, Form } from "formik";
@@ -9,12 +10,17 @@ import { personalFormStepValidation } from "../../Helper/ValidationSchema";
 import CustomAlert from "../../Components/CustomAlert/CustomAlert";
 import updateData from "../../Network/Users/updateData";
 import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
+import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
+import checkAuthentication from "../../Network/Base/checkAuthentication";
 
-const Settings = ({ userData }) => {
-    const id = "62e88ec51b557976cbe9e1f9";
-
+const Settings = () => {
+    const userId = useSelector((state) => state.userDetails.data?._id);
+    const userData = useSelector((state) => state.userDetails.data);
+    const role = useSelector((state) => state.userDetails.role);
     const formRef = useRef(null);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [isDuplicated, setIsDuplicated] = useState(false);
     const [duplicationErrorsArray, setDuplicationErrorsArray] = useState([]);
@@ -32,6 +38,23 @@ const Settings = ({ userData }) => {
         });
     }
 
+    useEffect(() => {
+        checkAuthentication()
+            .then((response) => {
+                dispatch(setUserDetails({
+                    role: response.data.role,
+                    data: response.data.data,
+                    email: response.data.data.email
+                }))
+                if (response.data.role !== 'User') {
+                    navigate('/');
+                }
+            })
+            .catch((error) => {
+                navigate('/');
+            })
+    }, []);
+
     const handleSubmit = (e) => {
         const formValues = formRef.current.values;
         const userData = {
@@ -39,7 +62,7 @@ const Settings = ({ userData }) => {
             lastName: formValues.lastName,
             phoneNumber: formValues.phoneNumber,
         };
-        updateData(id, userData)
+        updateData(userId, userData)
             .then((response) => {
                 handleRedirect();
             })
@@ -56,63 +79,68 @@ const Settings = ({ userData }) => {
     return (
 
         <>
-            <Grid
-                container
-                justifyContent="center"
-            >
-                <Grid item xs={10} sx={{ margin: '0 auto' }}>
-                    {
-                        isDuplicated &&
-                        handleDuplicationError()
-                    }
-                </Grid>
-                <Grid
-                    item
-                >
-                    <Formik
-                        initialValues={{
-                            firstName: userData.firstName,
-                            lastName: userData.lastName,
-                            phoneNumber: userData.phoneNumber,
-                        }}
-                        validationSchema={personalFormStepValidation}
-                        innerRef={formRef}
-                        onSubmit={handleSubmit}
+            {
+                role === 'User' ?
+                    <Grid
+                        container
+                        justifyContent="center"
                     >
-                        {
-                            (props) => (
-                                <Form>
-                                    <Grid container justifyContent='center' alignItems='center'>
-                                        <Grid item xs={10} md={5} sx={{ marginTop: '25px' }}>
-                                            <InputField
-                                                label='First Name'
-                                                name='firstName'
-                                                placeholder='First Name'
-                                            >
-                                                <PersonIcon></PersonIcon>
-                                            </InputField>
-                                        </Grid>
-                                        <Grid item xs={10} md={5} sx={{ marginTop: '25px', ml: '1px' }}>
-                                            <InputField label='Last Name' name='lastName' placeholder='Last Name' >
-                                                <PersonIcon></PersonIcon>
-                                            </InputField>
-                                        </Grid>
-                                        <Grid item xs={10} sx={{ marginTop: '25px' }}>
-                                            <InputField label='Phone Number' name='phoneNumber' placeholder='Phone Number'>
-                                                <PhoneIcon></PhoneIcon>
-                                            </InputField>
-                                        </Grid>
-                                        <Grid item xs={8} sx={{ marginTop: '25px' }}>
-                                            <CustomFormButton variant="contained" type="submit" xs={8} sx={{ width: '100%', mb: '50px' }}>Submit</CustomFormButton>
-                                        </Grid>
-                                    </Grid>
-                                </Form>
-                            )
-                        }
+                        <Grid item xs={10} sx={{ margin: '0 auto' }}>
+                            {
+                                isDuplicated &&
+                                handleDuplicationError()
+                            }
+                        </Grid>
+                        <Grid
+                            item
+                        >
+                            <Formik
+                                initialValues={{
+                                    firstName: userData.firstName,
+                                    lastName: userData.lastName,
+                                    phoneNumber: userData.phoneNumber,
+                                }}
+                                validationSchema={personalFormStepValidation}
+                                innerRef={formRef}
+                                onSubmit={handleSubmit}
+                            >
+                                {
+                                    (props) => (
+                                        <Form>
+                                            <Grid container justifyContent='center' alignItems='center'>
+                                                <Grid item xs={10} md={5} sx={{ marginTop: '25px' }}>
+                                                    <InputField
+                                                        label='First Name'
+                                                        name='firstName'
+                                                        placeholder='First Name'
+                                                    >
+                                                        <PersonIcon></PersonIcon>
+                                                    </InputField>
+                                                </Grid>
+                                                <Grid item xs={10} md={5} sx={{ marginTop: '25px', ml: '1px' }}>
+                                                    <InputField label='Last Name' name='lastName' placeholder='Last Name' >
+                                                        <PersonIcon></PersonIcon>
+                                                    </InputField>
+                                                </Grid>
+                                                <Grid item xs={10} sx={{ marginTop: '25px' }}>
+                                                    <InputField label='Phone Number' name='phoneNumber' placeholder='Phone Number'>
+                                                        <PhoneIcon></PhoneIcon>
+                                                    </InputField>
+                                                </Grid>
+                                                <Grid item xs={8} sx={{ marginTop: '25px' }}>
+                                                    <CustomFormButton variant="contained" type="submit" xs={8} sx={{ width: '100%', mb: '50px' }}>Submit</CustomFormButton>
+                                                </Grid>
+                                            </Grid>
+                                        </Form>
+                                    )
+                                }
 
-                    </Formik>
-                </Grid>
-            </Grid>
+                            </Formik>
+                        </Grid>
+                    </Grid>
+                    :
+                    <></>
+            }
         </>
     );
 }
