@@ -36,8 +36,7 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter }) => {
           backgroundColor: backgroundColor ? backgroundColor : "inherit",
           color: theme.palette.text.primary,
           position: position ? position : "static",
-          // padding: `0 ${paddingX ? paddingX : 0}px`,
-          padding: `0 70px`,
+          padding: {xs:`0 20px`, md: `0 70px`},
           marginBottom: position === "fixed" ? "50px" : "0",
           display: !displayNavFooter && 'none'
         }}
