@@ -1,7 +1,7 @@
 import { Grid, Typography, useMediaQuery } from '@mui/material'
 import Carousel from 'react-material-ui-carousel'
 import bruh from '../../Assets/Images/PXL_20220809_071909192.PORTRAIT.jpg'
-import bruh_2 from '../../Assets/Images/meeting.jpg'
+import bruh_2 from '../../Assets/Images/Area51.jpg'
 import Basem from '../../Assets/Images/Basemtany.jpg'
 import Okasha from '../../Assets/Images/okasha.jpg'
 import Tohamy from '../../Assets/Images/Tohamy1.jpg'
@@ -33,7 +33,7 @@ function CardLeftComp() {
 
                     </Grid>}
                     <Grid container item xs={12} md={8}>
-                        <img src={bruh} width="100%" height="510px" />
+                        <img src={bruh} width="100%" height="583px" />
                     </Grid>
                 </Grid>
             </Grid>
@@ -49,7 +49,7 @@ function CardRightComp() {
             <Grid container>
                 <Grid container item xs={12}>
                     <Grid container item xs={12} md={8}>
-                        <img src={bruh_2} width="100%" height="510px" />
+                        <img src={bruh_2} width="100%" height="583px" />
                     </Grid>
                     {isTablet &&
                     <Grid container item justifyContent={'center'} alignItems={'center'} xs={4} alignSelf={'center'}
@@ -77,7 +77,7 @@ function AboutUs() {
     const isTablet = useMediaQuery(theme.breakpoints.down('md'))
     return (
         <>
-            <Grid container justifyContent={'center'}>
+            <Grid container justifyContent={'center'} >
                 <Carousel sx={{ width: "100%" }}
                     indicatorContainerProps={{
                         style: {
@@ -250,7 +250,7 @@ function AboutUs() {
                 </Grid>
             </Grid>
             {/* okasha */}
-            <Grid container justifyContent={'center'} alignItems={'center'} marginTop={12}>
+            <Grid container justifyContent={'center'} alignItems={'center'} marginY={12}>
                 <Grid container item justifyContent={'center'} sx={{ width: '75%' }}>
                     <Grid item sx={{
                         display: 'flex',

@@ -5,7 +5,7 @@ const getAdminLogs = (pageNumber) => {
 
     return axiosClient.get(path, {
         params: {
-            limit: 6,
+            limit: 9,
             page: pageNumber
         }
     });

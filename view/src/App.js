@@ -32,6 +32,8 @@ import UserLoginForm from "./Components/UserLoginForm/UserLoginForm";
 import UserSignupForm from "./Components/UserSignupForm/UserSignupForm";
 import DoctorSignupForm from "./Components/DoctorSignUpForm/DoctorSignUpForm";
 import VerificationForm from "./Components/VerificationForm/VerificationForm";
+import ContactUs from "./Pages/ContactUs/ContactUs";
+import AboutUs from "./Pages/AboutUs/AboutUs"
 
 const errMsg = "Oops! Looks like the page you're looking for couldn't be found.";
 const verificationMsg = "Congratulations! Your email has been verified successfully! You can now sign into your account."
@@ -106,6 +108,13 @@ function App() {
           path="/specialists/details"
           element={<DoctorsDetails />}
         />
+         <Route
+        path="/contactus"
+        element={<ContactUs/>}
+        />
+        <Route
+        path="/about"
+         element={<AboutUs/>} />
         <Route
           path="/forgotpassword/:token"
           element={<PasswordChangeForm />}
@@ -163,6 +172,7 @@ function App() {
           path="/doctors/:id/patients"
           element={<Patients />}
         />
+       
       </Routes>
       <Footer displayNavFooter={displayNavFooter} />
     </Grid>
