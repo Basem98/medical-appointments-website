@@ -20,8 +20,8 @@ const AdminDashboard = ({ setDisplayNavFooter }) => {
 
   return (
     <>
-      <Grid item xs={12} container>
-        <Grid item md={2} container alignItems="start" justifyContent="center" sx={{ p: 0, m: 0, backgroundColor: "#181c1a", color: "white", height: "100%" }}>
+      <Grid item xs={12} container sx={{ minHeight: "100vh" }}>
+        <Grid item md={2} container alignItems="start" justifyContent="center" sx={{ p: 0, m: 0, backgroundColor: "#181c1a", color: "white", minHeight: "100%" }}>
           <Sidebar />
         </Grid>
         <Grid item md={10} container justifyContent="space-evenly">
