@@ -17,6 +17,7 @@ import getAvailableAppointments from "../../Network/Doctors/getAvailableAppointm
 import moment from "moment";
 import EditAppointmentDrawer from "./EditAppointmentDrawer";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { setAvailableAppointments } from "../../Store/Features/Appointments/availableAppointmentsSlice";
 
 const DoctorProfile = () => {
     const doctorData = useSelector((state) => state.userDetails.data);
@@ -25,7 +26,7 @@ const DoctorProfile = () => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const [upcomings, setUpcomings] = useState(null);
-    const [availableAppointments, setAvailableAppointments] = useState();
+    const availableAppointments = useSelector((state) => state.availableAppointments.data);
     const [openEditAppointmentDrawer, setOpenAppointmentDrawer] = useState(false);
     const [selectedAppointment, setSelectedAppointment] = useState();
     const navigate = useNavigate();
@@ -48,7 +49,9 @@ const DoctorProfile = () => {
     useEffect(() => {
         getAvailableAppointments()
             .then((response) => {
-                setAvailableAppointments(response.data.data)
+                dispatch(setAvailableAppointments({
+                    availableAppointments: response.data.data
+                }))
             })
             .catch((error) => {
                 console.log(error);
