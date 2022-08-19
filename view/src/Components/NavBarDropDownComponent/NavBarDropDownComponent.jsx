@@ -12,7 +12,9 @@ import FaceIcon from '@mui/icons-material/Face';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
-
+import { useLocation } from 'react-router-dom';
+import { removeUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
+import { useDispatch } from 'react-redux';
 
 
 export default function NavBarDropDownComponent() {
@@ -26,17 +28,22 @@ export default function NavBarDropDownComponent() {
         setAnchorEl(null);
     };
 
+    const handleLogout = () => {
+        dispatch(removeUserDetails())
+    }
+
     const theme = useTheme()
+    const location = useLocation();
+    const dispatch = useDispatch();
+
 
     return (
-        <Grid container justifyContent={'flex-end'}>
+        <Grid container justifyContent={'flex-start'}>
             <AccountCircle
                 fontSize="large"
-                sx={{ color: theme.palette.highlight.main }}
+                sx={{ color: location.pathname === '/' ? theme.palette.highlight.main : theme.palette.heroNavbarBg.main }}
             />
-            <Grid item alignItems={'center'} sx={{marginRight:"250px"}}>
-
-
+            <Grid item alignItems={'center'}>
                 <IconButton
                     size="large"
                     aria-label="account of current user"
@@ -44,7 +51,7 @@ export default function NavBarDropDownComponent() {
                     aria-haspopup="true"
                     onClick={handleMenu}
                     color="inherit"
-                    sx={{ padding: 0, paddingTop: "6px", color: theme.palette.highlight.main }}
+                    sx={{ padding: 0, paddingTop: "6px", color: location.pathname === "/" ? theme.palette.highlight.main : theme.palette.heroNavbarBg.main }}
                 >
                     <ArrowDropDownIcon />
                 </IconButton>
@@ -72,27 +79,25 @@ export default function NavBarDropDownComponent() {
                         Profile
                     </MenuItem>
                     <MenuItem onClick={handleClose}>
-                    <ListItemIcon>
+                        <ListItemIcon>
                             <CalendarMonthIcon />
                         </ListItemIcon>
                         My schedule
-                        </MenuItem>
+                    </MenuItem>
                     <MenuItem onClick={handleClose}>
-                    <ListItemIcon>
+                        <ListItemIcon>
                             <SettingsIcon />
                         </ListItemIcon>
                         Settings
-                        </MenuItem>
-                    <MenuItem onClick={handleClose}>
-                    <ListItemIcon>
+                    </MenuItem>
+                    <MenuItem onClick={handleLogout}>
+                        <ListItemIcon>
                             <LogoutIcon />
                         </ListItemIcon>
                         Log out
-                        </MenuItem>
+                    </MenuItem>
                 </Menu>
             </Grid>
-
-
         </Grid>
     );
 }
