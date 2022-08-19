@@ -1,22 +1,29 @@
-import { Grid, Typography, useTheme, Snackbar, Alert } from "@mui/material";
-import { useState } from "react";
+import { Grid, Typography, useTheme } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import cancelAppointment from "../../Network/Appointments/CancelAppointment";
+import { setUpcomingAppointments } from "../../Store/Features/Appointments/upcomingAppointmentsSlice";
 import CustomFormButton from "../CustomFormButton/CustomFormButton";
 
-const AppointmentCancellationConfirm = ({ handleCancellation, appointmentId }) => {
+const AppointmentCancellationConfirm = ({ handleCancellation, appointmentId, setShowCancel, setOpenDrawer, setOpen }) => {
     const theme = useTheme();
-    const [open, setOpen] = useState(false);
+    const dispatch = useDispatch();
+    const upcomingAppointments = useSelector((state) => state.upcomingAppointments.data);
     const confirmCancellation = () => {
-        const data = {
-            state: 'canceled'
-        }
-        cancelAppointment(appointmentId, data)
+        cancelAppointment(appointmentId)
             .then((response) => {
-                console.log(data);
+                dispatch(setUpcomingAppointments({
+                    upcomingAppointments: upcomingAppointments.map((appointment) => {
+                        if(appointment._id === appointmentId) {
+                            appointment = {...appointment, state: 'canceled'}
+                        }
+                        return appointment;
+                    })
+                }))
+                setShowCancel(false);
                 setOpen(true);
                 setTimeout(() => {
-                    window.location.reload();
-                }, 3000);
+                    setOpenDrawer(false)
+                }, 5000);
             })
             .catch((error) => {
                 console.log(error);
@@ -65,20 +72,6 @@ const AppointmentCancellationConfirm = ({ handleCancellation, appointmentId }) =
                     No
                 </CustomFormButton>
             </Grid>
-            <Snackbar
-                open={open}
-                autoHideDuration={6000}
-                sx={{
-                    marginRight: 'auto'
-                }}
-            >
-                <Alert
-                    severity="info"
-                    sx={{ width: '100%' }}
-                >
-                    Appointment is cancelled successfully.
-                </Alert>
-            </Snackbar>
         </Grid>
     )
 }
