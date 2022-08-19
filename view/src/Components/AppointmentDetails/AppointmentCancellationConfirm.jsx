@@ -1,16 +1,22 @@
-import { Grid, Typography, useTheme } from "@mui/material";
+import { Grid, Typography, useTheme, Snackbar, Alert } from "@mui/material";
+import { useState } from "react";
 import cancelAppointment from "../../Network/Appointments/CancelAppointment";
 import CustomFormButton from "../CustomFormButton/CustomFormButton";
 
 const AppointmentCancellationConfirm = ({ handleCancellation, appointmentId }) => {
     const theme = useTheme();
+    const [open, setOpen] = useState(false);
     const confirmCancellation = () => {
         const data = {
             state: 'canceled'
         }
         cancelAppointment(appointmentId, data)
             .then((response) => {
-                window.location.reload();
+                console.log(data);
+                setOpen(true);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
             })
             .catch((error) => {
                 console.log(error);
@@ -59,6 +65,20 @@ const AppointmentCancellationConfirm = ({ handleCancellation, appointmentId }) =
                     No
                 </CustomFormButton>
             </Grid>
+            <Snackbar
+                open={open}
+                autoHideDuration={6000}
+                sx={{
+                    marginRight: 'auto'
+                }}
+            >
+                <Alert
+                    severity="info"
+                    sx={{ width: '100%' }}
+                >
+                    Appointment is cancelled successfully.
+                </Alert>
+            </Snackbar>
         </Grid>
     )
 }
