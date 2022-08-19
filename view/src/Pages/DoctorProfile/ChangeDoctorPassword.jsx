@@ -11,14 +11,12 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {
     useState,
-    useEffect
 } from "react";
 import changePassword from "../../Network/Doctors/changePassword";
 import { useNavigate } from "react-router-dom";
 import CustomAlert from "../../Components/CustomAlert/CustomAlert";
-import checkAuthentication from "../../Network/Base/checkAuthentication";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
+import { authenticate } from "../../Helper/Authentication";
 
 const ChangePassword = () => {
     const doctorId = useSelector((state) => state.userDetails.data?._id);
@@ -31,22 +29,7 @@ const ChangePassword = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        checkAuthentication()
-            .then((response) => {
-                dispatch(setUserDetails({
-                    role: response.data.role,
-                    data: response.data.data,
-                    email: response.data.data.email
-                }))
-                if (response.data.role !== 'Doctor') {
-                    navigate('/');
-                }
-            })
-            .catch((error) => {
-                navigate('/');
-            })
-    }, []);
+    authenticate('Doctor', navigate, dispatch);
 
     const formRef = useRef(null);
     const handleSubmit = (e) => {

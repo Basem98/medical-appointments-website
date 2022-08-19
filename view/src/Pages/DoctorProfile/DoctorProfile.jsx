@@ -14,6 +14,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import checkAuthentication from "../../Network/Base/checkAuthentication";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
+import { authenticate } from "../../Helper/Authentication";
 
 const DoctorProfile = () => {
     const doctorData = useSelector((state) => state.userDetails.data)
@@ -24,22 +25,7 @@ const DoctorProfile = () => {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        checkAuthentication()
-            .then((response) => {
-                dispatch(setUserDetails({
-                    role: response.data.role,
-                    data: response.data.data,
-                    email: response.data.data.email
-                }))
-                if (response.data.role !== 'Doctor') {
-                    navigate('/');
-                }
-            })
-            .catch((error) => {
-                navigate('/');
-            })
-    }, []);
+    authenticate('Doctor', navigate, dispatch);
 
     useEffect(() => {
         doctorData?._id &&

@@ -7,8 +7,7 @@ import getUpcomings from "../../Network/Users/getUpcomings";
 import getPrevious from "../../Network/Users/getPrevious";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import checkAuthentication from "../../Network/Base/checkAuthentication";
-import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
+import { authenticate } from "../../Helper/Authentication";
 
 const Appointments = () => {
     const userId = useSelector((state) => state.userDetails.data?._id);
@@ -28,22 +27,7 @@ const Appointments = () => {
         previousAppointments
     ];
 
-    useEffect(() => {
-        checkAuthentication()
-            .then((response) => {
-                dispatch(setUserDetails({
-                    role: response.data.role,
-                    data: response.data.data,
-                    email: response.data.data.email
-                }))
-                if (response.data.role !== 'User') {
-                    navigate('/');
-                }
-            })
-            .catch((error) => {
-                navigate('/');
-            })
-    }, []);
+    authenticate('User', navigate, dispatch);
 
     useEffect(() => {
         userId &&

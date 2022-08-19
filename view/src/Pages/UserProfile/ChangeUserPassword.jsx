@@ -5,7 +5,7 @@ import { Grid } from "@mui/material";
 import InputField from "../../Components/InputField/InputField";
 import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton";
 import * as Yup from "yup";
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -14,8 +14,7 @@ import changePassword from "../../Network/Users/changePassword";
 import { useNavigate } from "react-router-dom";
 import CustomAlert from "../../Components/CustomAlert/CustomAlert";
 import { useDispatch, useSelector } from "react-redux";
-import checkAuthentication from "../../Network/Base/checkAuthentication";
-import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
+import { authenticate } from "../../Helper/Authentication";
 
 const ChangePassword = () => {
     const userId = useSelector((state) => state.userDetails.data?._id);
@@ -29,22 +28,7 @@ const ChangePassword = () => {
     const formRef = useRef(null);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        checkAuthentication()
-            .then((response) => {
-                dispatch(setUserDetails({
-                    role: response.data.role,
-                    data: response.data.data,
-                    email: response.data.data.email
-                }))
-                if (response.data.role !== 'User') {
-                    navigate('/');
-                }
-            })
-            .catch((error) => {
-                navigate('/');
-            })
-    }, []);
+    authenticate('User', navigate, dispatch);
 
     const handleSubmit = (e) => {
         const formValues = formRef.current.values;
