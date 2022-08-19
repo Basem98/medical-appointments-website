@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from '../../Store/Features/UserDetails/userDetailsSlice';
 import checkAuthentication from "../../Network/Base/checkAuthentication";
 import { useNavigate } from "react-router-dom";
+import { setAvailableAppointments } from "../../Store/Features/Appointments/availableAppointmentsSlice";
 
 const AppointmentCreationDrawer = ({ openDrawer, setOpenDrawer }) => {
   const theme = useTheme();
@@ -21,7 +22,7 @@ const AppointmentCreationDrawer = ({ openDrawer, setOpenDrawer }) => {
   const dispatch = useDispatch();
   /** This should get the doctor's id from the store */
   const doctorData = useSelector(store => store.userDetails);
-
+  const availableAppointments = useSelector((state) => state.availableAppointments.data);
   useEffect(() => {
     checkAuthentication()
       .then((response) => {
@@ -63,8 +64,7 @@ const AppointmentCreationDrawer = ({ openDrawer, setOpenDrawer }) => {
         if (res.status === 201) {
           setFormSubmitted(false);
           setServerResponse({ success: true, msg: `Your appointment on ${res.data.data.date.split('T')[0]} has been added to our systems.` })
-          const updatedDoctorData = { ...doctorData.data, appointments: [...doctorData.data.appointments, { _id: res.data.data._id, date: res.data.data.date }] };
-          dispatch(setUserDetails({ ...doctorData, data: updatedDoctorData }));
+          dispatch(setAvailableAppointments({ availableAppointments:  [...availableAppointments, { date: res.data.data.date, time: res.data.data.time }]}));
         }
       })
       .catch(err => {
