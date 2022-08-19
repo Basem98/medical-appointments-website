@@ -17,13 +17,21 @@ function DoctorDetails() {
     const bookingSectionRef = useRef();
     const [openBookingDrawer, setOpenBookingDrawer] = useState(false);
     let storeData = useSelector(store => store.specialists.specialists.find(doctor => doctor._id === id));
-    const [doctorDetails, setDoctorDetails] = useState(storeData ? {...storeData} : {});
+    const [doctorDetails, setDoctorDetails] = useState(storeData ? { ...storeData } : {});
 
     useEffect(() => {
         if (!storeData) {
             getDoctor(id)
-                .then(res => { setDoctorDetails({...res.data.message}); console.log(res.data.message)})
+                .then(res => {
+                    const sortedDetails = { ...res.data.message };
+                    sortedDetails.appointments = sortedDetails.appointments ? [...res.data.message.appointments].sort((date1, date2) => new Date(date1).getDate() - new Date(date2).getDate()) : [];
+                    setDoctorDetails({ ...sortedDetails });
+                })
                 .catch(err => console.log(err));
+        } else {
+            const sortedDetails = { ...doctorDetails };
+            sortedDetails.appointments = sortedDetails.appointments ? [...doctorDetails.appointments].sort((date1, date2) => new Date(date1).getDate() - new Date(date2).getDate()) : [];
+            setDoctorDetails({ ...sortedDetails });
         }
     }, []);
 
@@ -121,8 +129,8 @@ function DoctorDetails() {
                                                 Education
                                             </Typography>
                                             <List>
-                                                {doctorDetails.education.map(item => (
-                                                    <>
+                                                {doctorDetails.education.map((item, index) => (
+                                                    <Grid item key={item.issueDate + index}>
                                                         <ListItem sx={{
                                                             ...theme.typography.largerButtonText,
                                                             color: theme.palette.text.primary,
@@ -146,12 +154,12 @@ function DoctorDetails() {
                                                         <ListItem alignItems={'center'}
                                                             sx={{
                                                                 ...theme.typography.body2,
-                                                                color: theme.palette.highlight.main,
+                                                                color: theme.palette.text.primary,
                                                                 padding: "0px"
                                                             }}>
                                                             {item.issueDate.replace(/T.*Z/, '')}
                                                         </ListItem>
-                                                    </>
+                                                    </Grid>
                                                 ))}
                                             </List>
                                         </Grid>
@@ -172,8 +180,8 @@ function DoctorDetails() {
                                                 Certification
                                             </Typography>
                                             <List>
-                                                {doctorDetails.certifications.map(item => (
-                                                    <>
+                                                {doctorDetails.certifications.map((item, index) => (
+                                                    <Grid item key ={item.issueDate+index}>
                                                         <ListItem style={{
                                                             ...theme.typography.largerButtonText,
                                                             color: theme.palette.text.primary,
@@ -203,7 +211,7 @@ function DoctorDetails() {
                                                             }}>
                                                             {item.issueDate.replace(/T.*Z/, '')}
                                                         </ListItem>
-                                                    </>
+                                                    </Grid>
                                                 ))}
                                             </List>
                                         </Grid>
@@ -240,7 +248,7 @@ function DoctorDetails() {
                                             }}
                                             >
                                                 <ListItemIcon><CallIcon /></ListItemIcon>
-                                                <ListItemText primary={doctorDetails.clinics.map((item) => item.phone.landline)} />
+                                                <ListItemText primary={doctorDetails.clinics[0].phone.landline} />
                                             </ListItem>}
                                             <ListItem sx={{
                                                 ...theme.typography.body2,
@@ -289,8 +297,8 @@ function DoctorDetails() {
                                         height: "450px",
                                         borderRadius: "10px"
                                     }}>
-                                    {doctorDetails.clinics.map((item) =>
-                                        <Map centerCoordinates={{ lat: parseFloat(item.geoLocation.latitude), lng: parseFloat(item.geoLocation.longitude) }} />)}
+                                    {doctorDetails.clinics.map((item, index) =>
+                                        <Map key={item.geoLocation.latitude+item.geoLocation.longitude} centerCoordinates={{ lat: parseFloat(item.geoLocation.latitude), lng: parseFloat(item.geoLocation.longitude) }} />)}
 
                                 </Grid>
 
@@ -374,7 +382,7 @@ function DoctorDetails() {
                                                 Cash
                                             </Typography>
                                         </Grid>
-                                        <Grid
+                                       { doctorDetails.appointments  && doctorDetails.appointments.length > 0 && <Grid
                                             item
                                             sx={{
                                                 backgroundColor: "white",
@@ -404,10 +412,10 @@ function DoctorDetails() {
                                             <Typography style={{
                                                 ...theme.typography.body2,
                                             }} sx={{ paddingX: "30px", paddingY: "30px", textAlign: "center" }}>
-                                                {doctorDetails.appointments[0].time.duration} mins
+                                                {doctorDetails.appointments ? doctorDetails.appointments[0].time.duration : '-'} mins
                                             </Typography>
-                                        </Grid>
-                                        <Grid
+                                        </Grid>}
+                                        { doctorDetails.appointments && doctorDetails.appointments.length > 0 && <Grid
                                             item
                                             sx={{
                                                 backgroundColor: "white",
@@ -436,8 +444,8 @@ function DoctorDetails() {
                                             </Grid>
                                             <Typography style={{
                                                 ...theme.typography.body2,
-                                            }} sx={{ paddingX: "30px", paddingY: "30px", textAlign: "center" }}>{doctorDetails.appointments.length}</Typography>
-                                        </Grid>
+                                            }} sx={{ paddingX: "30px", paddingY: "30px", textAlign: "center" }}>{doctorDetails.appointments ? doctorDetails.appointments.length : 0}</Typography>
+                                        </Grid>}
                                     </Grid>
                                     <Grid
                                         item
@@ -449,7 +457,7 @@ function DoctorDetails() {
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            <BookingDrawer appointments={doctorDetails.appointments} openDrawer={openBookingDrawer} setOpenDrawer={(toggle) => setOpenBookingDrawer(toggle)} />
+                            <BookingDrawer doctorDetails={doctorDetails} appointments={doctorDetails.appointments ? doctorDetails.appointments : []} openDrawer={openBookingDrawer} setOpenDrawer={(toggle) => setOpenBookingDrawer(toggle)} />
                         </>
                     </Grid>
                     :
