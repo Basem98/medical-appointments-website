@@ -18,7 +18,7 @@ const BookingDrawer = ({ openDrawer, setOpenDrawer, appointments, doctorDetails,
   const theme = useTheme();
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [serverResponse, setServerResponse] = useState({ success: false, msg: '' });
-  const currUser = useSelector(store => store.userDetails.data);
+  const currUser = useSelector(store => store.userDetails);
   const dispatch = useDispatch();
 
   const appointmentInitialValues = {
@@ -65,7 +65,7 @@ const BookingDrawer = ({ openDrawer, setOpenDrawer, appointments, doctorDetails,
               updatedDoctor.appointments = updatedDoctor.appointments && updatedDoctor.appointments.length > 1 ?
                 updatedDoctor.appointments.filter(appointment => appointment._id !== values.id)
                 : [];
-                setDoctorDetails(updatedDoctor);
+              setDoctorDetails(updatedDoctor);
             }
           })
           .catch(err => {
@@ -163,12 +163,12 @@ const BookingDrawer = ({ openDrawer, setOpenDrawer, appointments, doctorDetails,
                 {
                   formSubmitted && <CircularProgress color='highlight' sx={{ marginY: '10px' }} />
                 }
-                <Grid container item xs={10} justifyContent='center' alignItems='center' marginTop='25px'>
-                  {
-                    serverResponse.msg &&
-                    <CustomAlert severity={serverResponse.success ? 'success' : 'error'} onClose={() => setServerResponse({ success: false, msg: '' })}>
-                      {
-                        serverResponse.msg === 'unauthorized' ?
+                {
+                  serverResponse.msg &&
+                  <Grid container item xs={10} justifyContent='center' alignItems='center' marginTop='25px'>
+                    {
+                      serverResponse.msg === 'unauthorized' ?
+                        !currUser.loggedIn && <CustomAlert severity={serverResponse.success ? 'success' : 'error'} onClose={() => setServerResponse({ success: false, msg: '' })}>
                           <div style={{ display: 'flex', flexDirection: 'column' }}>You have to sign in or create an account to be able to book an appointment
                             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start' }}>
                               <Link to={"#"} state={{ showModal: true, form: 'UserLoginForm' }} style={{ textDecoration: 'none', marginTop: '10px' }}>
@@ -183,11 +183,13 @@ const BookingDrawer = ({ openDrawer, setOpenDrawer, appointments, doctorDetails,
                               </Link>
                             </div>
                           </div>
-                          : <div>{serverResponse.msg}</div>
-                      }
-                    </CustomAlert>
-                  }
-                </Grid>
+                        </CustomAlert>
+                        : <CustomAlert severity={serverResponse.success ? 'success' : 'error'} onClose={() => setServerResponse({ success: false, msg: '' })}>
+                          <div>{serverResponse.msg}</div>
+                        </CustomAlert>
+                    }
+                  </Grid>
+                }
               </Grid>
             </Form>
           )}

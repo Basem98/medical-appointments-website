@@ -206,7 +206,7 @@ function DoctorDetails() {
                                                         <ListItem alignItems={'center'}
                                                             style={{
                                                                 ...theme.typography.body2,
-                                                                color: theme.palette.highlight.main,
+                                                                color: theme.palette.text.primary,
                                                                 padding: '0px'
                                                             }}>
                                                             {item.issueDate.replace(/T.*Z/, '')}
