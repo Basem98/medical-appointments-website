@@ -11,9 +11,7 @@ import Typography from "@mui/material/Typography";
 import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton";
 import { Link, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
-import checkAuthentication from "../../Network/Base/checkAuthentication";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 import { authenticate } from "../../Helper/Authentication";
 
 const DoctorProfile = () => {
