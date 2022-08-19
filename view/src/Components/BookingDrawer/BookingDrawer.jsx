@@ -14,7 +14,7 @@ import bookAppointment from '../../Network/Users/bookAppointment';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserDetails } from '../../Store/Features/UserDetails/userDetailsSlice';
 
-const BookingDrawer = ({ openDrawer, setOpenDrawer, appointments, doctorDetails }) => {
+const BookingDrawer = ({ openDrawer, setOpenDrawer, appointments, doctorDetails, setDoctorDetails }) => {
   const theme = useTheme();
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [serverResponse, setServerResponse] = useState({ success: false, msg: '' });
@@ -54,12 +54,18 @@ const BookingDrawer = ({ openDrawer, setOpenDrawer, appointments, doctorDetails 
             if (res.status === 201) {
               setServerResponse({
                 success: true,
-                msg: `You have booked an appointment with Dr. ${doctorDetails.firstName} ${doctorDetails.lastName} on ${values.date.getFullYear()}-${values.date.getMonth() + 1}-${values.date.getDate()}`
+                msg: `You have booked an appointment with Dr. ${doctorDetails.firstName} ${doctorDetails.lastName} on ${values.date.getFullYear()}-${values.date.getMonth() + 1}-${values.date.getDate()}. Please contact the clinic through the contact details if you have an inquiry regarding your appointment.`
               });
 
               const updatedUser = { ...authRes.data.data };
               updatedUser.appointments = [...updatedUser.appointments, values.id];
               dispatch(setUserDetails({ role: authRes.data.role, email: updatedUser.email, data: { ...updatedUser } }));
+
+              const updatedDoctor = { ...doctorDetails };
+              updatedDoctor.appointments = updatedDoctor.appointments && updatedDoctor.appointments.length > 1 ?
+                updatedDoctor.appointments.filter(appointment => appointment._id !== values.id)
+                : [];
+                setDoctorDetails(updatedDoctor);
             }
           })
           .catch(err => {

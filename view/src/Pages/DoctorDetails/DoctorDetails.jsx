@@ -457,7 +457,7 @@ function DoctorDetails() {
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            <BookingDrawer doctorDetails={doctorDetails} appointments={doctorDetails.appointments ? doctorDetails.appointments : []} openDrawer={openBookingDrawer} setOpenDrawer={(toggle) => setOpenBookingDrawer(toggle)} />
+                            <BookingDrawer setDoctorDetails={(updatedDoctorData) => setDoctorDetails(updatedDoctorData)} doctorDetails={doctorDetails} appointments={doctorDetails.appointments ? doctorDetails.appointments : []} openDrawer={openBookingDrawer} setOpenDrawer={(toggle) => setOpenBookingDrawer(toggle)} />
                         </>
                     </Grid>
                     :
