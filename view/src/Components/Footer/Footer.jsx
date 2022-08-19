@@ -25,7 +25,7 @@ function Footer({ displayNavFooter }) {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent:'flex-start'
+          justifyContent: 'flex-start'
         }}
       >
         <Link
@@ -88,7 +88,7 @@ function Footer({ displayNavFooter }) {
           Search By
         </Typography>
         <Link
-          to="#"
+          to="/specialists"
           underline="none"
           style={{
             color: theme.palette.text.primary,
@@ -101,7 +101,7 @@ function Footer({ displayNavFooter }) {
           Specialisation
         </Link>
         <Link
-          to="#"
+          to="/specialists"
           underline="none"
           style={{
             color: theme.palette.text.primary,
@@ -113,7 +113,7 @@ function Footer({ displayNavFooter }) {
           Location
         </Link>
         <Link
-          to="#"
+          to="/specialists"
           underline="none"
           style={{
             color: theme.palette.text.primary,
@@ -212,8 +212,8 @@ function Footer({ displayNavFooter }) {
         >
           Copyrights &copy; MAW Team
         </Typography>
-        <Link
-          to="#"
+        <a
+          href="https://github.com/Basem98/medical-appointments-website"
           underline="none"
           style={{
             color: theme.palette.text.primary,
@@ -222,7 +222,7 @@ function Footer({ displayNavFooter }) {
           }}
         >
           <GitHubIcon fontSize="large" />
-        </Link>
+        </a>
       </Grid>
     </Grid >
   );

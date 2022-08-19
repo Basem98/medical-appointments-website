@@ -1,4 +1,4 @@
-import { Typography, Grid, useTheme, FormHelperText, Box } from "@mui/material";
+import { Typography, Grid, useTheme, FormHelperText, Pagination } from "@mui/material";
 import { Form, Formik } from "formik";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -16,13 +16,22 @@ import DoctorCard from "../../Components/DoctorCard/DoctorCard";
 import specialistsPageBg from "../../Assets/Images/specialistsPageBg.png";
 import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton";
 import CustomAlert from "../../Components/CustomAlert/CustomAlert";
-import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
-import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutlined';
+import PageNotFoundSvg from '../../Assets/Images/pagenotfound1.svg';
 
 function Specialists() {
   const theme = useTheme();
   const location = useLocation();
   const dispatch = useDispatch();
+  const filterInitialValues = {
+    specialization: "",
+    governorate: "",
+    dateFromMonth: "",
+    dateFromDay: "",
+    dateToMonth: "",
+    dateToDay: "",
+    priceFrom: "",
+    priceTo: "",
+  };
   const [formInitialValues, setFormInitialValues] = useState({
     specialization: "",
     governorate: "",
@@ -35,53 +44,52 @@ function Specialists() {
   })
 
   const [specialistsData, setSpecialistsData] = useState([]);
-  const [paginatePage, setPaginatePage] = useState({ pageNum: 0, nextPage: true });
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(2);
   const [serverResponse, setServerResponse] = useState({ success: false, msg: '' });
 
   useEffect(() => {
     if (location.state) {
-      console.log("locaition: ", location);
       getAllSpecialists(location.state);
       setFormInitialValues({ ...formInitialValues, ...location.state })
     }
     else {
-      getAllSpecialists()
+      getAllSpecialists();
     }
-  }, [paginatePage.pageNum]);
+  }, []);
 
-  const getAllSpecialists = (values) => {
-    console.log('here in getAllSpecialists')
+  useEffect(() => {
+    if (location.state) {
+      getAllSpecialists(location.state);
+      setFormInitialValues({ ...formInitialValues, ...location.state })
+    } else {
+      getAllSpecialists();
+    }
+  }, [location.state])
+
+
+  const getAllSpecialists = (values, newPageNumber = 0) => {
     let filteredValues = { ...values }
     for (let prop in filteredValues) {
       if (filteredValues[prop] === "") delete filteredValues[prop]
     }
-    getAllDoctorsData({ ...filteredValues, pageNum: paginatePage.pageNum })
+    getAllDoctorsData({ ...filteredValues, pageNum: newPageNumber })
       .then((res) => {
         setServerResponse({ ...serverResponse, success: true });
         setSpecialistsData(res.data.doctors);
+        setCurrentPage(newPageNumber);
+        if (totalPages === currentPage)
+          setTotalPages(totalPages + 1);
         dispatch(setSpecialists({
           specialists: res.data.doctors
         }))
-        console.log('res.data.doctors: ', res.data.doctors);
 
       })
       .catch((err) => {
-        console.log(err.response.status, err.response.data.error);
         if (err.response.status === 404) {
-          setPaginatePage({ pageNum: paginatePage.pageNum - 1, nextPage: false });
           setServerResponse({ success: false, msg: err.response.data.error });
         }
       })
-  }
-
-  const handlePageForward = () => {
-    console.log('paginatePageNumber: ', paginatePage.pageNum)
-    setPaginatePage({ ...paginatePage, pageNum: paginatePage.pageNum + 1 });
-  }
-
-  const handlePageBackward = () => {
-    if (paginatePage.pageNum > 0) setPaginatePage({ nextPage: true, pageNum: paginatePage.pageNum - 1 });
   }
 
   const validateForm = (values) => {
@@ -158,13 +166,13 @@ function Specialists() {
             />
           </Grid>
         </Grid>
-        <Grid container justifyContent="space-between" sx={{ py: 11 }}>
+        <Grid container justifyContent={{ xs: 'center', md: "space-between" }} sx={{ py: 11 }}>
           {/* filter */}
           <Grid
             item
             lg={3}
-            md={4}
-            sm={5}
+            md={5}
+            sm={9}
             xs={12}
           // container
           >
@@ -183,7 +191,6 @@ function Specialists() {
                 sx={{
                   backgroundColor: theme.palette.secondaryBg.main,
                   height: "fit-content",
-                  // alignItems: "center",
                   borderRadius: "10px 10px 0 0",
                   py: 2,
                 }}
@@ -192,11 +199,10 @@ function Specialists() {
               </Grid>
               <Grid item xs={12}>
                 <Formik
-                  initialValues={{
-                    ...formInitialValues
-                  }}
+                  initialValues={formInitialValues}
                   validate={validateForm}
                   onSubmit={getAllSpecialists}
+                  onReset={getAllSpecialists}
                   enableReinitialize
                 >
                   {(formik) =>
@@ -234,7 +240,6 @@ function Specialists() {
                           p: 2,
                         }}
                         container
-                      // rowSpacing={4}
                       >
                         <Grid item xs={12} sx={{ mb: 1 }}>
                           <Typography variant="h6" sx={{ p: 0 }}>
@@ -247,9 +252,8 @@ function Specialists() {
                           sx={{ mb: 1 }}
                           container
                           justifyContent="space-between"
-                          rowSpacing={2}
                         >
-                          <Grid item xs={12}>
+                          <Grid item xs={12} marginBottom='15px'>
                             <Typography variant="h6">From</Typography>
                           </Grid>
                           <Grid item xs={7}>
@@ -282,9 +286,8 @@ function Specialists() {
                           sx={{ mb: 1 }}
                           container
                           justifyContent="space-between"
-                          rowSpacing={2}
                         >
-                          <Grid item xs={12}>
+                          <Grid item xs={12} marginBottom='15px'>
                             <Typography variant="h6">To</Typography>
                           </Grid>
                           <Grid item xs={7}>
@@ -329,7 +332,6 @@ function Specialists() {
                           p: 2,
                         }}
                         container
-                      // rowSpacing={4}
                       >
                         <Grid item xs={12} sx={{ mb: 5 }}>
                           <Typography variant="h6" sx={{ p: 0 }}>
@@ -382,7 +384,7 @@ function Specialists() {
                           sx={{
                             fontSize: theme.typography.body1.fontSize,
                           }}
-                          onClick={() => { formik.resetForm() }}
+                          onClick={() => { formik.resetForm({ values: filterInitialValues }) }}
                         >
                           Clear
                         </CustomFormButton>
@@ -402,10 +404,10 @@ function Specialists() {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item lg={8} md={7} sm={5} xs={12} container rowSpacing={5} >
+          <Grid item lg={8} md={6} sm={5} xs={12} container >
             {!specialistsData.length ?
               (<>
-                <Grid item md={12} container rowSpaceing={3} columnSpacing={{ xs: 7 }} >
+                <Grid item md={12} container>
                   <Grid item lg={4} md={5}>
                     <DoctorCard cardData={specialistsData[0]} />
                   </Grid>
@@ -430,38 +432,35 @@ function Specialists() {
               </>) :
               (
                 <>
-                  <Grid item md={12} container rowSpacing={3} columnSpacing={{ xs: 7 }}>
+                  <Grid item xs={12} container justifyContent='center' marginTop={{ xs: '50px', md: '0' }}>
                     {!serverResponse.success && serverResponse.msg ?
-                      <Grid item xs={12} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <Grid container item xs={12} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
 
-                        <CustomAlert severity='error' onClose={() => {
+                        <CustomAlert severity='error' sx={{ alignSelf: 'flex-start' }} onClose={() => {
                           setServerResponse({ success: false, msg: '' });
                         }}>
-                          No doctors available for the selected filters, slect different options and try again.....
+                          No doctors available for the selected filters, select different options and try again...
                         </CustomAlert>
-                        {/* <Typography variant="h5">No doctors available for the selected filters, slect different options and try again.....</Typography> */}
-
+                        <Grid container item xs={12} md={10} lg={7}>
+                          <img alt='Page not found' src={PageNotFoundSvg} />
+                        </Grid>
                       </Grid>
-                      : (
-                        specialistsData.map((cardData) => (
-                          <Grid item lg={4} md={5} key={cardData._id}>
-                            <DoctorCard cardData={cardData} />
-                          </Grid>
-                        ))
-                      )
+                      : <Grid container item justifyContent={{ xs: 'center', md: 'space-between' }}>
+                        {
+                          specialistsData.map((cardData) => (
+                            <Grid item key={cardData._id} marginBottom='50px' marginRight={{ xs: '0', md: '10px' }}>
+                              <DoctorCard cardData={cardData} />
+                            </Grid>
+                          ))
+                        }
+                      </Grid>
                     }
-
+                    <Pagination sx={{ alignSelf: 'center' }} color="highlight" count={totalPages} onChange={(event, pageNumber) => { getAllSpecialists(formInitialValues, pageNumber - 1) }} />
                   </Grid>
 
                 </>
               )
             }
-          </Grid>
-          <Grid item md={12}>
-            <Box sx={{ my: 3, px: 20, display: "flex", justifyContent: paginatePage.pageNum ? "space-between" : "end", position: "static", bottom: "20px" }}>
-              {paginatePage.pageNum ? (<ArrowCircleLeftOutlinedIcon cursor="pointer" onClick={handlePageBackward} sx={{ fontSize: 40, "&:hover": { opacity: .7 } }} />) : ('')}
-              {paginatePage.nextPage ? (<ArrowCircleRightOutlinedIcon cursor="pointer" onClick={handlePageForward} sx={{ fontSize: 40, "&:hover": { opacity: .7 } }} />) : ('')}
-            </Box>
           </Grid>
         </Grid>
       </div>

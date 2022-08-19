@@ -8,17 +8,19 @@ import DoctorCard from "../../Components/DoctorCard/DoctorCard";
 import heroBg from "../../Assets/Images/HeroBg.png";
 import sectionBg from "../../Assets/Images/SectionBg.png";
 import getTopDoctors from '../../Network/Doctors/getTopDoctors';
+import { useSelector } from "react-redux";
 
 function Home() {
   const theme = useTheme();
   const [topDoctorsData, setTopDoctorsData] = useState([])
+  const isTabletMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const userDetails = useSelector(state => state.userDetails);
 
   useEffect(() => {
     //call api for top 3 rated
     handleGetTopDoctors()
   }, []);
 
-  const isTabletMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   const handleGetTopDoctors = () => {
     getTopDoctors()
@@ -67,24 +69,26 @@ function Home() {
               Book Now
             </CustomFormButton>
           </Link>
-          <Link
-            to={"/"}
-            state={{ showModal: true, form: 'UserSignupForm' }}
-            style={{
-              textDecoration: 'none'
-            }}
-          >
-            <CustomFormButton
-              variant="outlined"
-              sx={{
-                m: 2,
-                padding: "10px 40px",
-                fontSize: theme.typography.body1.fontSize,
+          {!userDetails?.loggedIn &&
+            <Link
+              to={"/"}
+              state={{ showModal: true, form: 'UserSignupForm' }}
+              style={{
+                textDecoration: 'none'
               }}
             >
-              Sign Up
-            </CustomFormButton>
-          </Link>
+              <CustomFormButton
+                variant="outlined"
+                sx={{
+                  m: 2,
+                  padding: "10px 40px",
+                  fontSize: theme.typography.body1.fontSize,
+                }}
+              >
+                Sign Up
+              </CustomFormButton>
+            </Link>
+          }
         </Grid>
         {!isTabletMobile && (
           <Grid container item md={6} minHeight='500px' justifyContent='flex-end' paddingRight={{ md: 0, lg: "70px", xl: '100px' }}>
@@ -174,81 +178,83 @@ function Home() {
         </Grid>
       </Grid>
       {/* Doctor Join Section */}
-      <Grid
-        container
-        justifyContent="space-around"
-        sx={{
-          py: 5,
-          backgroundColor: theme.palette.secondaryBg.main,
-        }}
-      >
-        {!isTabletMobile && (
-          <Grid item md={4}>
-            {/* dr image */}
-            <img
-              src={sectionBg}
-              alt="dr sectionBg"
-              style={{
-                width: "400px",
-                position: "relative",
-                top: "44px",
-              }}
-            />
-          </Grid>
-        )}
+      {!userDetails?.loggedIn &&
         <Grid
-          item
-          xs={10}
-          md={5}
+          container
+          justifyContent="space-around"
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: 'center'
+            py: 5,
+            backgroundColor: theme.palette.secondaryBg.main,
           }}
         >
-          <Typography align="center" variant="h2">
-            Are you a professional?
-          </Typography>
-          <Typography
-            align="center"
+          {!isTabletMobile && (
+            <Grid item md={4}>
+              {/* dr image */}
+              <img
+                src={sectionBg}
+                alt="dr sectionBg"
+                style={{
+                  width: "400px",
+                  position: "relative",
+                  top: "44px",
+                }}
+              />
+            </Grid>
+          )}
+          <Grid
+            item
+            xs={10}
+            md={5}
             sx={{
-              mt: 7,
-              fontSize: theme.typography.body2.fontSize,
-              fontWeight: theme.typography.body2.fontWeight,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: 'center'
             }}
           >
-            If yes, then this is the right place for you! With our services,
-            your medical services would be more accessible and digitized,
-            helping your business grow, and most importantly, making it easier
-            to help people.
-            <span style={{ display: "block", marginTop: "20px" }}>
-              Join us now!
-            </span>
-          </Typography>
-          <Link
-            to={"/"}
-            state={{ showModal: true, form: 'DoctorSignupForm' }}
-            style={{
-              textDecoration: 'none',
-              width: 'fit-content'
-            }}
-          >
-            <CustomFormButton
-              variant="contained"
+            <Typography align="center" variant="h2">
+              Are you a professional?
+            </Typography>
+            <Typography
+              align="center"
               sx={{
-                padding: "10px 40px",
                 mt: 7,
-                fontSize: theme.typography.body1.fontSize,
-                width: "fit-content",
-                alignSelf: "center",
+                fontSize: theme.typography.body2.fontSize,
+                fontWeight: theme.typography.body2.fontWeight,
               }}
             >
-              Join As a Doctor
-            </CustomFormButton>
-          </Link>
+              If yes, then this is the right place for you! With our services,
+              your medical services would be more accessible and digitized,
+              helping your business grow, and most importantly, making it easier
+              to help people.
+              <span style={{ display: "block", marginTop: "20px" }}>
+                Join us now!
+              </span>
+            </Typography>
+            <Link
+              to={"/"}
+              state={{ showModal: true, form: 'DoctorSignupForm' }}
+              style={{
+                textDecoration: 'none',
+                width: 'fit-content'
+              }}
+            >
+              <CustomFormButton
+                variant="contained"
+                sx={{
+                  padding: "10px 40px",
+                  mt: 7,
+                  fontSize: theme.typography.body1.fontSize,
+                  width: "fit-content",
+                  alignSelf: "center",
+                }}
+              >
+                Join As a Doctor
+              </CustomFormButton>
+            </Link>
+          </Grid>
         </Grid>
-      </Grid>
+      }
       <Grid
         container
         justifyContent="space-around"

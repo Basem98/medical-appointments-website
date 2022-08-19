@@ -14,7 +14,6 @@ const SearchBar = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const routeToSpecialistsPage = (values) => {
-    console.log('here in routeToSpecialistsPage')
     navigate("/specialists", {
       state: { ...values }
     })

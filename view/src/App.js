@@ -108,7 +108,7 @@ function App() {
           element={<Specialists />}
         />
         <Route
-          path="/specialists/details"
+          path="/specialists/details/:id"
           element={<DoctorsDetails />}
         />
         <Route
