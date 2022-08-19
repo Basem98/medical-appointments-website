@@ -6,6 +6,7 @@ import {
   Grid,
   useMediaQuery,
   Typography,
+  Badge,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useTheme } from "@emotion/react";
@@ -14,6 +15,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import LogoSvg from '../../Assets/Images/logo.svg';
 import NavBarDropDownComponent from "../NavBarDropDownComponent/NavBarDropDownComponent";
+import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
 
 const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginForm }) => {
   const theme = useTheme();
@@ -169,15 +171,31 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                   md={2}
                   sx={{ display: "flex", justifyContent: "center" }}
                 >
-                  <Link
-                    to="/about"
-                    style={{
-                      color: color ? color : theme.palette.text.primary,
-                      textDecoration: "none",
-                    }}
-                  >
-                    About
-                  </Link>
+                  {userDetails?.loggedIn ?
+                    (<Link
+                      to={`/users/${userDetails.data._id}/appointments`}
+                      style={{
+                        color: color ? color : theme.palette.text.primary,
+                        textDecoration: "none",
+                        display: "flex"
+                      }}
+                    >
+                      <Badge color="success" badgeContent={userDetails.data.appointments.length}>
+                        <AccessAlarmsIcon fontSize="large" sx={{ margingTop: "0" }} />
+                      </Badge>
+                    </Link>)
+                    :
+                    (<Link
+                      to="/about"
+                      style={{
+                        color: color ? color : theme.palette.text.primary,
+                        textDecoration: "none",
+                        display: "flex"
+                      }}
+                    >
+                      About
+                    </Link>)
+                  }
                 </Grid>
                 <Grid
                   item
