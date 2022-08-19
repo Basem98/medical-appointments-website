@@ -24,7 +24,7 @@ const AppointmentStatus = ({ state }) => {
         backgroundColor: theme.palette.warning.main
     } : state === 'finished' ? {
         ...baseStyle,
-        backgroundColor: theme.palette.grey[500].main
+        backgroundColor: theme.palette.grey[500]
     } : {}
     return (
         <>
