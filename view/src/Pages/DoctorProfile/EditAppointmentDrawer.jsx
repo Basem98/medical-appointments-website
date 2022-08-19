@@ -68,7 +68,7 @@ const EditAppointmentDrawer = ({ openDrawer, setOpenDrawer, appointmentDetails }
             appointments: doctorData.data.appointments.map(appointmentObject => {
               let updatedAppointmentObject = { ...appointmentObject };
               if (appointmentObject._id == appointmentDetails._id) {
-                updatedAppointmentObject.date = values.date.toISOString();
+                updatedAppointmentObject.date = new Date(values.date).toISOString();
               }
               return updatedAppointmentObject;
             })
