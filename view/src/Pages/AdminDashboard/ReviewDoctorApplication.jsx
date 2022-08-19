@@ -87,7 +87,7 @@ export default function ReviewDoctorApplication({ open, handleDrawerClose, curre
                                 {/* <span style={{ display: "inline" }}>&rarr;Exprience::</span> */}
                                 <ul style={{ listStyleType: "none", margin: 0, padding: 0, display: "inline", marginBottom: "10px", border: "3px solid #fff" }}>
                                     <li>{`${exp.title} at ${exp.workplace}`}</li>
-                                    <li>{`From: ${exp.startDate.slice(0, 10)} to: ${exp.endDate.slice(0, 10)}`}</li>
+                                    <li>{`From: ${exp.startDate.slice(0, 10)} to: ${!exp.isCurrentlyWorking ? exp.endDate.slice(0, 10) : 'now'}`}</li>
                                     <li>{`Location: ${exp.location.city}, ${exp.location.country}`}</li>
                                 </ul>
                             </Box>))}
