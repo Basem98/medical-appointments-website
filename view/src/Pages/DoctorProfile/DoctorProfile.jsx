@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Grid, useTheme, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button } from "@mui/material";
+import { Grid, useTheme, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, IconButton } from "@mui/material";
 import React from "react"
 import { useEffect } from "react";
 import { useState } from "react";
@@ -16,6 +16,7 @@ import { authenticate } from "../../Helper/Authentication";
 import getAvailableAppointments from "../../Network/Doctors/getAvailableAppointments";
 import moment from "moment";
 import EditAppointmentDrawer from "./EditAppointmentDrawer";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const DoctorProfile = () => {
     const doctorData = useSelector((state) => state.userDetails.data);
@@ -154,6 +155,8 @@ const DoctorProfile = () => {
                                         xs={12}
                                         md={10}
                                         justifyContent="center"
+                                        alignItems="center"
+                                        textAlign="center"
                                     >
                                         <Grid item md={3} xs={4}>
                                             <Typography
@@ -168,6 +171,11 @@ const DoctorProfile = () => {
                                             >
                                                 Your Timetable
                                             </Typography>
+                                        </Grid>
+                                        <Grid item xs={1} >
+                                            <IconButton>
+                                                <AddCircleOutlineIcon />
+                                            </IconButton>
                                         </Grid>
                                         <TableContainer>
                                             <Table aria-label="Prescription">
