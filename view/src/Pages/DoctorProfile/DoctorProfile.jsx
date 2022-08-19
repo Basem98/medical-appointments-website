@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../../Helper/Authentication";
 import getAvailableAppointments from "../../Network/Doctors/getAvailableAppointments";
 import moment from "moment";
+import EditAppointmentDrawer from "./EditAppointmentDrawer";
 
 const DoctorProfile = () => {
     const doctorData = useSelector((state) => state.userDetails.data);
@@ -24,7 +25,8 @@ const DoctorProfile = () => {
     const theme = useTheme();
     const [upcomings, setUpcomings] = useState(null);
     const [availableAppointments, setAvailableAppointments] = useState();
-
+    const [openEditAppointmentDrawer, setOpenAppointmentDrawer] = useState(false);
+    const [selectedAppointment, setSelectedAppointment] = useState();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -51,6 +53,11 @@ const DoctorProfile = () => {
                 console.log(error);
             })
     }, []);
+
+    const handleEditAppointment = (appointment) => {
+        setOpenAppointmentDrawer(true);
+        setSelectedAppointment(appointment);
+    }
 
     return (
         <>
@@ -213,6 +220,7 @@ const DoctorProfile = () => {
                                                                                     xs: '12px'
                                                                                 }
                                                                             }}
+                                                                            onClick={() => { handleEditAppointment(appointment) }}
                                                                         >Edit</Button>
                                                                     </TableCell>
                                                                     <TableCell>
@@ -253,6 +261,11 @@ const DoctorProfile = () => {
                     :
                     <></>
             }
+            <EditAppointmentDrawer 
+                openDrawer={openEditAppointmentDrawer}
+                setOpenDrawer={setOpenAppointmentDrawer}
+                appointmentDetails={selectedAppointment}
+            />
         </>
     );
 }
