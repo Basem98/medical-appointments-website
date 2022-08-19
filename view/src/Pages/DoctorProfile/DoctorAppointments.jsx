@@ -7,7 +7,7 @@ import getPrevious from "../../Network/Doctors/getPrevious";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authenticate } from "../../Helper/Authentication";
-import { setUpcomingAppointments } from "../../Store/Features/Appointments/upcomingAppointments";
+import { setUpcomingAppointments } from "../../Store/Features/Appointments/upcomingAppointmentsSlice";
 
 const Appointments = () => {
     const titles = ["Upcoming Appointments", "Previous Appointments"];

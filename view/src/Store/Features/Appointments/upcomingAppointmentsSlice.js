@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     data: null
 }
-const upcomingAppointments = createSlice({
+const upcomingAppointmentsSlice = createSlice({
     name: 'upcomingAppointments',
     initialState,
     reducers: {
@@ -14,5 +14,5 @@ const upcomingAppointments = createSlice({
     }
 });
 
-export default upcomingAppointments.reducer;
-export const { setUpcomingAppointments } = upcomingAppointments.actions;
+export default upcomingAppointmentsSlice.reducer;
+export const { setUpcomingAppointments } = upcomingAppointmentsSlice.actions;
