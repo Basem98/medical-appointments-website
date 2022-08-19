@@ -38,11 +38,11 @@ const EditAppointmentDrawer = ({ openDrawer, setOpenDrawer, appointmentDetails }
   }, []);
 
   const appointmentInitialValues = {
-    date: appointmentDetails.date,
+    date: appointmentDetails?.date,
     time: {
-      hour: appointmentDetails.time.hour,
-      minute: appointmentDetails.time.minute,
-      duration: appointmentDetails.time.duration
+      hour: appointmentDetails?.time.hour,
+      minute: appointmentDetails?.time.minute,
+      duration: appointmentDetails?.time.duration
     }
   };
 
