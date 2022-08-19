@@ -12,6 +12,7 @@ import { setUserDetails } from '../../Store/Features/UserDetails/userDetailsSlic
 import checkAuthentication from "../../Network/Base/checkAuthentication";
 import { useNavigate } from "react-router-dom";
 import editAppointment from "../../Network/Doctors/editAppointment";
+import { setAvailableAppointments } from "../../Store/Features/Appointments/availableAppointmentsSlice";
 
 
 const EditAppointmentDrawer = ({ openDrawer, setOpenDrawer, appointmentDetails }) => {
@@ -20,7 +21,7 @@ const EditAppointmentDrawer = ({ openDrawer, setOpenDrawer, appointmentDetails }
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [serverResponse, setServerResponse] = useState({ success: false, msg: '' });
   const dispatch = useDispatch();
-  const doctorData = useSelector(store => store.userDetails);
+  const availableAppointments = useSelector((state) => state.availableAppointments.data);
 
 
   useEffect(() => {
@@ -63,20 +64,22 @@ const EditAppointmentDrawer = ({ openDrawer, setOpenDrawer, appointmentDetails }
         if (res.status === 204) {
           setFormSubmitted(false);
           setServerResponse({ success: true, msg: `Your appointment has been updated successfully.` })
-          const updatedDoctorData = {
-            ...doctorData.data,
-            appointments: doctorData.data.appointments.map(appointmentObject => {
+          const updatedAppointments = {
+            availableAppointments: availableAppointments.map(appointmentObject => {
               let updatedAppointmentObject = { ...appointmentObject };
               if (appointmentObject._id == appointmentDetails._id) {
                 updatedAppointmentObject.date = new Date(values.date).toISOString();
               }
               return updatedAppointmentObject;
             })
-          };
-          dispatch(setUserDetails({ ...doctorData, data: updatedDoctorData }));
+          }
+          dispatch(setAvailableAppointments({
+            availableAppointments: updatedAppointments.availableAppointments
+          }))
         }
       })
       .catch(err => {
+        console.log(err)
         setFormSubmitted(false);
         setServerResponse({ success: false, msg: `Something went wrong. Please, try again.` })
       });
