@@ -7,12 +7,13 @@ import getPrevious from "../../Network/Doctors/getPrevious";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authenticate } from "../../Helper/Authentication";
+import { setUpcomingAppointments } from "../../Store/Features/Appointments/upcomingAppointments";
 
 const Appointments = () => {
     const titles = ["Upcoming Appointments", "Previous Appointments"];
     const doctorId = useSelector((state) => state.userDetails.data?._id);
     const role = useSelector((state) => state.userDetails.role);
-    const [upcomingAppointments, setUpcomingAppointments] = useState(null);
+    const upcomingAppointments = useSelector((state) => state.upcomingAppointments.data);
     const [previousAppointments, setPreviousAppointments] = useState(null);
 
     const dispatch = useDispatch();
@@ -29,8 +30,9 @@ const Appointments = () => {
         doctorId &&
             getUpcomings(doctorId)
                 .then((response) => {
-                    console.log(response);
-                    setUpcomingAppointments(response.data.message);
+                    dispatch(setUpcomingAppointments({
+                        upcomingAppointments: response.data.message
+                    }))
                 })
                 .catch((error) => {
                     console.log(error);
