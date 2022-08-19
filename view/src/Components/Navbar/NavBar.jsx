@@ -11,23 +11,20 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useTheme } from "@emotion/react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { removeUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
+import { useSelector } from "react-redux";
 import LogoSvg from '../../Assets/Images/logo.svg';
+import NavBarDropDownComponent from "../NavBarDropDownComponent/NavBarDropDownComponent";
 
 const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginForm }) => {
   const theme = useTheme();
   const isTabletMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const [showMenue, setShowMenu] = useState(false);
 
-  const [open, setOpen] = useState(false);
   const handleOpen = () => {
     openLoginForm();
   };
 
-
   const userDetails = useSelector((state) => state.userDetails);
-  const dispatch = useDispatch();
   return (
     <>
       <AppBar
@@ -158,22 +155,38 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                   sx={{ display: "flex", justifyContent: "center" }}
                 >
                   <Link
+                    to="/contactus"
+                    style={{
+                      color: color ? color : theme.palette.text.primary,
+                      textDecoration: "none",
+                    }}
+                  >
+                    Contact Us
+                  </Link>
+                </Grid>
+                <Grid
+                  item
+                  md={2}
+                  sx={{ display: "flex", justifyContent: "center" }}
+                >
+                  <Link
                     to="/about"
                     style={{
                       color: color ? color : theme.palette.text.primary,
                       textDecoration: "none",
                     }}
                   >
-                    About Us
+                    About
                   </Link>
                 </Grid>
-                {!userDetails?.loggedIn && (
-                  <Grid
-                    item
-                    md={2}
-                    sx={{ display: "flex", justifyContent: "center" }}
-                  >
-                    <Link
+                <Grid
+                  item
+                  md={2}
+                  sx={{ display: "flex", justifyContent: "center" }}
+                >
+                  {userDetails?.loggedIn ?
+                    (<NavBarDropDownComponent />)
+                    : (<Link
                       to="#"
                       style={{
                         color: color ? color : theme.palette.text.primary,
@@ -182,44 +195,9 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                       onClick={() => handleOpen()}
                     >
                       Sign In
-                    </Link>
-{/* Add Sign In Form */}
-                  </Grid>
-                )}
-                <Grid
-                  item
-                  md={2}
-                  sx={{ display: "flex", justifyContent: "center" }}
-                >
-                  <Link
-                    to="#"
-                    style={{
-                      color: color ? color : theme.palette.text.primary,
-                      textDecoration: "none",
-                    }}
-                  >
-                    العربية
-                  </Link>
+                    </Link>)
+                  }
                 </Grid>
-
-                {userDetails?.loggedIn && (
-                  <Grid
-                    item
-                    md={2}
-                    sx={{ display: "felx", justifyContent: "center" }}
-                  >
-                    <Link
-                      to="#"
-                      style={{
-                        color: color ? color : theme.palette.text.primary,
-                        textDecoration: "none",
-                      }}
-                      onClick={() => dispatch(removeUserDetails())}
-                    >
-                      Welcome, {userDetails.email}
-                    </Link>
-                  </Grid>
-                )}
               </>
             )}
           </Grid>
