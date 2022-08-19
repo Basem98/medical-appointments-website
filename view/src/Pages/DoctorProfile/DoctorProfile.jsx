@@ -231,10 +231,10 @@ const DoctorProfile = () => {
                                                 <TableBody>
                                                     {
 
-                                                        availableAppointments?.map((appointment) => {
+                                                        availableAppointments?.map((appointment, index) => {
                                                             return (
                                                                 <TableRow
-                                                                    key={appointment._id}
+                                                                    key={index}
                                                                 >
                                                                     <TableCell component="th" sx={{
                                                                         fontSize: {
