@@ -10,7 +10,7 @@ const getAppointmentStatistics = async (req, res, next) => {
     let dateTo = req.query.dateTo;
     dateFrom = isNaN(new Date(dateFrom)) ?
       new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 6) : new Date(dateFrom);
-    dateTo = new Date(dateFrom.getFullYear(), dateFrom.getMonth(), dateFrom.getDate() + 7);
+    dateTo = isNaN(new Date(dateTo)) ? new Date(3000, 11, 30) : new Date(dateTo);
 
     const statistics = {
       available: await Appointments.find(
