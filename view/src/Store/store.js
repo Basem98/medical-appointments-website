@@ -3,12 +3,14 @@ import userDetailsSliceReducer from "./Features/UserDetails/userDetailsSlice";
 import doctorPatientsReducer from "./Features/DoctorPatients/doctorPatientsSlice";
 import specialistsReducer from "./Features/Specialists/specialistsSlice";
 import availableAppointmentsReducer from "./Features/Appointments/availableAppointmentsSlice";
+import upcomingAppointmentsReducer from "./Features/Appointments/upcomingAppointments";
 
 export const store = configureStore({
   reducer: {
     userDetails: userDetailsSliceReducer,
     doctorPatients: doctorPatientsReducer,
     specialists: specialistsReducer,
-    availableAppointments: availableAppointmentsReducer
+    availableAppointments: availableAppointmentsReducer,
+    upcomingAppointments: upcomingAppointmentsReducer
   },
 });
