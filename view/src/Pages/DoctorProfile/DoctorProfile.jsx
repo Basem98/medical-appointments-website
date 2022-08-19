@@ -15,7 +15,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../../Helper/Authentication";
 
 const DoctorProfile = () => {
-    const doctorData = useSelector((state) => state.userDetails.data)
+    const doctorData = useSelector((state) => state.userDetails.data);
+    const doctorId = useSelector((state) => state.userDetails.data?._id);
     const role = useSelector((state) => state.userDetails.role);
     const dispatch = useDispatch();
     const theme = useTheme();
@@ -23,108 +24,113 @@ const DoctorProfile = () => {
 
     const navigate = useNavigate();
 
-    authenticate('Doctor', navigate, dispatch);
+    useEffect(() => {
+        authenticate('Doctor', navigate, dispatch);
+    }, []);
 
     useEffect(() => {
-        doctorData?._id &&
-            getUpcomings(doctorData?._id)
+        doctorId &&
+            getUpcomings(doctorId)
                 .then((response) => {
                     setUpcomings(response.data.message);
                 })
                 .catch((error) => {
                     console.log(error);
                 })
-    }, [doctorData])
+    }, [doctorId]);
 
     return (
         <>
 
             {
 
-                role === 'Doctor' ? 
+                role === 'Doctor' ?
 
-                <Grid
-                    container
-                    spacing={2}
-                    justifyContent='center'
-                    alignContent="flex-start"
-                    sx={{
-                        width: {
-                            'xs': '100%',
-                            'md': '90%'
+                    <Grid
+                        container
+                        spacing={2}
+                        justifyContent='center'
+                        alignContent="flex-start"
+                        sx={{
+                            width: {
+                                'xs': '100%',
+                                'md': '90%'
+                            }
+                        }}
+                    >
+
+                        {
+                            !doctorData?.isVerified && (
+                                <Grid
+                                    item
+                                    xs={11}
+                                    md={9}
+                                    sx={{ marginTop: '10px' }}
+                                >
+                                    <CustomAlert severity="warning">
+                                        Your profile is not verified yet!
+                                        Please check your email to verify.
+                                    </CustomAlert>
+
+                                </Grid>
+
+                            )
                         }
-                    }}
-                >
+                        {
+                            !doctorData?.isAccepted && (
+                                <Grid
+                                    item
+                                    xs={11}
+                                    md={9}
+                                    sx={{ marginTop: '10px' }}
+                                >
+                                    <CustomAlert severity="info">
+                                        Your application is being previewed.
+                                    </CustomAlert>
+                                </Grid>
+                            )
+                        }
 
-                    {
-                        !doctorData?.isVerified && (
-                            <Grid
-                                item
-                                xs={11}
-                                md={9}
-                                sx={{ marginTop: '10px' }}
-                            >
-                                <CustomAlert severity="warning">
-                                    Your profile is not verified yet!
-                                    Please check your email to verify.
-                                </CustomAlert>
-
-                            </Grid>
-
-                        )
-                    }
-                    {
-                        !doctorData?.isAccepted && (
-                            <Grid
-                                item
-                                xs={11}
-                                md={9}
-                                sx={{ marginTop: '10px' }}
-                            >
-                                <CustomAlert severity="info">
-                                    Your application is being previewed.
-                                </CustomAlert>
-                            </Grid>
-                        )
-                    }
-
-                    {
-                        upcomings ? (
-                            <Grid item>
-                                <InfoCard>
-                                    <CardContent>
-                                        <Grid container spacing={2}>
-                                            <Grid item xs={10}>
-                                                <Typography>Welcome, Dr.{doctorData?.firstName}!</Typography>
-                                            </Grid>
-                                            <Grid item xs={10}>
-                                                <Typography>You have {upcomings?.length} upcoming appointment(s).</Typography>
-                                                <Grid item xs={10} marginTop={4}>
-                                                    <Link
-                                                        to="/doctors/:id/appointments"
-                                                    >
-                                                        <CustomFormButton variant="contained">
-                                                            Show Appointments
-                                                        </CustomFormButton>
-                                                    </Link>
+                        {
+                            upcomings ? (
+                                <Grid item>
+                                    <InfoCard>
+                                        <CardContent>
+                                            <Grid container spacing={2}>
+                                                <Grid item xs={10}>
+                                                    <Typography>Welcome, Dr.{doctorData?.firstName}!</Typography>
+                                                </Grid>
+                                                <Grid item xs={10}>
+                                                    <Typography>You have {upcomings?.length} upcoming appointment(s).</Typography>
+                                                    <Grid item xs={10} marginTop={4}>
+                                                        <Link
+                                                            to="/doctors/:id/appointments"
+                                                        >
+                                                            <CustomFormButton variant="contained">
+                                                                Show Appointments
+                                                            </CustomFormButton>
+                                                        </Link>
+                                                    </Grid>
                                                 </Grid>
                                             </Grid>
-                                        </Grid>
-                                    </CardContent>
-                                </InfoCard>
-                            </Grid>
-                        )
-                            :
-                            <Grid item xs={10} sx={{ textAlign: "center" }}>
-                                <CircularProgress
-                                    sx={{
-                                        color: theme.palette.highlight.main,
-                                    }} />
-                            </Grid>
-                    }
-                </Grid>
-                :
-                <></>
+                                        </CardContent>
+                                    </InfoCard>
+                                </Grid>
+                            )
+                                :
+                                <Grid item xs={10} sx={{ textAlign: "center" }}>
+                                    <CircularProgress
+                                        sx={{
+                                            color: theme.palette.highlight.main,
+                                        }} />
+                                </Grid>
+                        }
+                        {
+
+                        }
+                    </Grid>
+                    :
+                    <></>
             }
         </>
     );
