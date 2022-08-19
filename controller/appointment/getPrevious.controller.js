@@ -15,10 +15,7 @@ const getPrevious = (req, res, next) => {
             { user: req.params.id },
             { doctor: req.params.id }
         ],
-        "$or": [
-            {date: {"$lt": currentDate}},
-            {state: {"$in": ['finished', 'canceled']}}
-        ],
+        date: {"$lt": currentDate},
         user: {"$exists": true}
     })
         .populate('user')
