@@ -140,20 +140,18 @@ const AppointmentExamination = ({ appointmentDetails, role, setOpenDrawer }) => 
         appointmentDetails?.info?.diagnosis &&
             appointmentDetails?.info?.prescription?.length > 0 ?
             <>
-                <Grid container>
-                    <Grid item xs={10}>
-                        <AppointmentDetail
-                            detail={appointmentDetails?.info.diagnosis}
-                        >
-                            <MonitorHeartIcon
-                                fontSize="medium"
-                                sx={{
-                                    color: theme.palette.highlight.main,
-                                    marginRight: 3
-                                }}
-                            />
-                        </AppointmentDetail>
-                    </Grid>
+                <Grid item xs={12}>
+                    <AppointmentDetail
+                        detail={appointmentDetails?.info.diagnosis}
+                    >
+                        <MonitorHeartIcon
+                            fontSize="medium"
+                            sx={{
+                                color: theme.palette.highlight.main,
+                                marginRight: 3
+                            }}
+                        />
+                    </AppointmentDetail>
                 </Grid>
                 <Grid
                     container
@@ -351,21 +349,21 @@ const AppointmentExamination = ({ appointmentDetails, role, setOpenDrawer }) => 
                             </Formik>
                         </Grid>
                     }
-                    
-                </> : 
+
+                </> :
                 <Grid>
-                        <Snackbar
-                            open={open}
-                            autoHideDuration={6000}
+                    <Snackbar
+                        open={open}
+                        autoHideDuration={6000}
+                    >
+                        <Alert
+                            severity="success"
+                            sx={{ width: '100%' }}
                         >
-                            <Alert
-                                severity="success"
-                                sx={{ width: '100%' }}
-                            >
-                                Diagnosis and prescription added successfully! Now appointment is finished.
-                            </Alert>
-                        </Snackbar>
-                    </Grid>
+                            Diagnosis and prescription added successfully! Now appointment is finished.
+                        </Alert>
+                    </Snackbar>
+                </Grid>
     );
 }
 

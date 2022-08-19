@@ -225,13 +225,11 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                                 : <></>
                     }
 
-                    <Grid item>
-                        <AppointmentExamination
-                            appointmentDetails={appointmentDetails}
-                            role={role}
-                            setOpenDrawer={setOpenDrawer}
-                        />
-                    </Grid>
+                    <AppointmentExamination
+                        appointmentDetails={appointmentDetails}
+                        role={role}
+                        setOpenDrawer={setOpenDrawer}
+                    />
 
                     <Grid
                         item
