@@ -8,7 +8,9 @@ import {
     Grid,
     Typography,
     useTheme,
-    IconButton
+    IconButton,
+    Snackbar,
+    Alert
 } from "@mui/material";
 import MedicationIcon from '@mui/icons-material/Medication';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
@@ -31,6 +33,7 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
     const [showForm, setShowForm] = useState(false);
     const [drugList, setDrugList] = useState([]);
     const [appointmentId, setAppointmentId] = useState();
+    const [open, setOpen] = useState(false);
     const handleClick = (id) => {
         setAppointmentId(id)
         setShowForm(!showForm);
@@ -42,8 +45,10 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
         }
         writePrescription(appointmentId, data)
             .then((response) => {
-                console.log('Done')
-                console.log(response)
+                setOpen(true);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 5000);
             })
             .catch((error) => {
                 console.log(error)
@@ -330,10 +335,22 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
 
 
                             </Formik>
+                            <Grid>
+                                <Snackbar
+                                    open={open}
+                                    autoHideDuration={6000}
+                                >
+                                    <Alert
+                                        severity="success"
+                                        sx={{ width: '100%' }}
+                                    >
+                                        Diagnosis and prescription added successfully! Now appointment is finished.
+                                    </Alert>
+                                </Snackbar>
+                            </Grid>
                         </Grid>
                     }
-                </>
-                : <></>
+                </> : <></>
     );
 }
 
