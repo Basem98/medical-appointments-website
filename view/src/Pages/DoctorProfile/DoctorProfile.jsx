@@ -149,10 +149,26 @@ const DoctorProfile = () => {
                             availableAppointments ?
                                 availableAppointments.length > 0 ?
                                     <Grid
+                                        container
                                         item
                                         xs={12}
                                         md={10}
+                                        justifyContent="center"
                                     >
+                                        <Grid item md={3} xs={4}>
+                                            <Typography
+                                                sx={{
+                                                    color: theme.palette.highlight.main,
+                                                    textAlign: 'center',
+                                                    marginTop: 3,
+                                                    marginBottom: 3,
+                                                    borderBottom: `1px solid ${theme.palette.highlight.main}`,
+                                                    paddingBottom: 1,
+                                                }}
+                                            >
+                                                Your Timetable
+                                            </Typography>
+                                        </Grid>
                                         <TableContainer>
                                             <Table aria-label="Prescription">
                                                 <TableHead>
@@ -261,7 +277,7 @@ const DoctorProfile = () => {
                     :
                     <></>
             }
-            <EditAppointmentDrawer 
+            <EditAppointmentDrawer
                 openDrawer={openEditAppointmentDrawer}
                 setOpenDrawer={setOpenAppointmentDrawer}
                 appointmentDetails={selectedAppointment}
