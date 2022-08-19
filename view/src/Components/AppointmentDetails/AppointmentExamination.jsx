@@ -209,7 +209,7 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
                     </TableContainer>
                 </Grid>
             </>
-            : role === 'doctor' ?
+            : (role === 'doctor' &&  appointmentDetails?.state === 'booked') ?
                 <>
                     <CustomFormButton
                         variant="contained"
