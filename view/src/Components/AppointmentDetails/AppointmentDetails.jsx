@@ -59,6 +59,12 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                         width: { 'md': '50vw', 'xs': '90vw' }
                     }
                 }}
+                BackdropProps={{
+                    sx: {
+                        backgroundColor: 'rgba(0,0,0,0.2)'
+                    }
+                }}
+
             >
                 <Grid container justifyContent="flex-start" padding={2} spacing={2}>
 
@@ -229,7 +235,7 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                     <Grid
                         item
                     >
-                        <AppointmentCancellation role={role} state={appointmentDetails?.state} appointmentId={appointmentDetails?._id}/>
+                        <AppointmentCancellation role={role} state={appointmentDetails?.state} appointmentId={appointmentDetails?._id} />
                     </Grid>
 
                 </Grid>
