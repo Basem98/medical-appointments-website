@@ -229,6 +229,7 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                         <AppointmentExamination
                             appointmentDetails={appointmentDetails}
                             role={role}
+                            setOpenDrawer={setOpenDrawer}
                         />
                     </Grid>
 
