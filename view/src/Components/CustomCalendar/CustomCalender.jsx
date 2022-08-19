@@ -5,6 +5,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import './CustomCalendar.css'
+import { Grid } from '@mui/material';
 
 
 /**
@@ -15,33 +16,35 @@ function CustomCalender({ setCalVal, availableDates, isCreatingAppointment, init
   const [value, setValue] = useState(new Date(initialDate) ? new Date(initialDate) : new Date());
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <StyledEngineProvider injectFirst>
-        < StaticDatePicker
-          component="div"
-          variant="div"
-          displayStaticWrapperAs="desktop"
-          openTo="day"
-          value={value}
-          renderInput={(params) => <TextField {...params} />}
-          onChange={(newValue) => {
-            setValue(newValue);
-            setCalVal(newValue)
-          }}
-          disableHighlightToday
-          shouldDisableDate={(date) => {
-            if (!isCreatingAppointment && availableDates)
-              return availableDates.every((dateel) => (new Date(dateel?.date).getDate() !== date.getDate()) || (new Date(dateel?.date).getMonth() !== date.getMonth()))
-            else
-              return (
-                (date.getMonth() === new Date().getMonth() && date.getDate() < new Date().getDate())
-                || (date.getMonth() < new Date().getMonth())
-              );
-          }
-          }
-        />
-      </StyledEngineProvider>
-    </LocalizationProvider>
+    <Grid container item xs={12} justifyContent='center' alignItems='center' marginLeft='-20px'>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <StyledEngineProvider injectFirst>
+          < StaticDatePicker
+            component="div"
+            variant="div"
+            displayStaticWrapperAs="desktop"
+            openTo="day"
+            value={value}
+            renderInput={(params) => <TextField {...params} />}
+            onChange={(newValue) => {
+              setValue(newValue);
+              setCalVal(newValue)
+            }}
+            disableHighlightToday
+            shouldDisableDate={(date) => {
+              if (!isCreatingAppointment && availableDates)
+                return availableDates.every((dateel) => (new Date(dateel?.date).getDate() !== date.getDate()) || (new Date(dateel?.date).getMonth() !== date.getMonth()))
+              else
+                return (
+                  (date.getMonth() === new Date().getMonth() && date.getDate() < new Date().getDate())
+                  || (date.getMonth() < new Date().getMonth())
+                );
+            }
+            }
+          />
+        </StyledEngineProvider>
+      </LocalizationProvider>
+    </Grid>
   )
 }
 
