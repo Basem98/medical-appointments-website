@@ -112,13 +112,13 @@ const Sidebar = () => {
         </li>
       </ul>
       {userDetails.loggedIn &&
-        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", px: 1 }}>
           <AccountCircle
             fontSize="large"
-            sx={{ color: theme.palette.heroNavbarBg.main, mr: 2 }}
+            sx={{ color: theme.palette.heroNavbarBg.main, mr: 1 }}
           />
           <Box>
-            <Typography variant="h6" fontSize="small">@{userDetails.email}</Typography>
+            <Typography variant="h6" fontSize="small">@{userDetails.data.username}</Typography>
             <Button onClick={handleLogout} variant="text" size="small">Logout</Button>
           </Box>
         </Box >}
