@@ -54,8 +54,7 @@ const DoctorCard = ({ cardData }) => {
             Appointment Fees: {cardData.clinics[0].fees}
           </Typography>
           <Link
-            to={'/specialists/details'}
-            state={{ doctorData: cardData }}
+            to={`/specialists/details/${cardData._id}`}
             style={{
               textDecoration: 'none'
             }}

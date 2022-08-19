@@ -6,14 +6,15 @@ import { useTheme } from '@mui/material';
 import React, { useRef } from 'react'
 import Map from '../../Components/Map/Map';
 import CallIcon from '@mui/icons-material/Call';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 function DoctorDetails() {
     const theme = useTheme();
-    const { state } = useLocation();
+    const { id } = useParams();
     const bookingSectionRef = useRef();
-    const doctorDetails = state.doctorData;
+    const doctorDetails = useSelector(store => store.specialists.specialists.find(doctor => doctor._id === id));
 
     return (
         <>
