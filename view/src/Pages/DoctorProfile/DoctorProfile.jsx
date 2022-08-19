@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Grid, useTheme } from "@mui/material";
+import { Grid, useTheme, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button } from "@mui/material";
 import React from "react"
 import { useEffect } from "react";
 import { useState } from "react";
@@ -14,6 +14,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../../Helper/Authentication";
 import getAvailableAppointments from "../../Network/Doctors/getAvailableAppointments";
+import moment from "moment";
 
 const DoctorProfile = () => {
     const doctorData = useSelector((state) => state.userDetails.data);
@@ -138,7 +139,115 @@ const DoctorProfile = () => {
                                 </Grid>
                         }
                         {
+                            availableAppointments ?
+                                availableAppointments.length > 0 ?
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        md={10}
+                                    >
+                                        <TableContainer>
+                                            <Table aria-label="Prescription">
+                                                <TableHead>
+                                                    <TableRow>
+                                                        <TableCell sx={{
+                                                            color: theme.palette.highlight.main,
+                                                            fontWeight: 'bold',
 
+                                                        }}
+                                                        >
+                                                            Date</TableCell>
+                                                        <TableCell sx={{
+                                                            color: theme.palette.highlight.main,
+                                                            fontWeight: 'bold'
+                                                        }}
+                                                        >
+                                                            At
+                                                        </TableCell>
+                                                        <TableCell sx={{
+                                                            color: theme.palette.highlight.main,
+                                                            fontWeight: 'bold'
+                                                        }}
+                                                        >
+                                                            Duration
+                                                        </TableCell>
+                                                    </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+                                                    {
+
+                                                        availableAppointments?.map((appointment) => {
+                                                            return (
+                                                                <TableRow
+                                                                    key={appointment._id}
+                                                                >
+                                                                    <TableCell component="th" sx={{
+                                                                        fontSize: {
+                                                                            sm: '16px',
+                                                                            xs: '12px'
+                                                                        }
+                                                                    }}>
+                                                                        {moment(appointment.date.split('T')[0]).format('dddd, MMMM Do YYYY')}
+                                                                    </TableCell>
+                                                                    <TableCell sx={{
+                                                                        fontSize: {
+                                                                            sm: '16px',
+                                                                            xs: '12px'
+                                                                        }
+                                                                    }}>
+                                                                        {appointment.time.hour} : {appointment.time.minute}
+                                                                    </TableCell>
+                                                                    <TableCell sx={{
+                                                                        fontSize: {
+                                                                            sm: '16px',
+                                                                            xs: '12px'
+                                                                        }
+                                                                    }}>
+                                                                        {appointment.time.duration} minutes
+                                                                    </TableCell>
+                                                                    <TableCell>
+                                                                        <Button
+                                                                            sx={{
+                                                                                fontSize: {
+                                                                                    sm: '16px',
+                                                                                    xs: '12px'
+                                                                                }
+                                                                            }}
+                                                                        >Edit</Button>
+                                                                    </TableCell>
+                                                                    <TableCell>
+                                                                        <Button sx={{
+                                                                            fontSize: {
+                                                                                sm: '16px',
+                                                                                xs: '12px'
+                                                                            },
+                                                                            color: theme.palette.error.main
+                                                                        }}>Cancel</Button>
+                                                                    </TableCell>
+                                                                </TableRow>
+                                                            );
+                                                        })
+                                                    }
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                    </Grid>
+                                    :
+                                    <Grid
+                                        container
+                                        item
+                                        xs={12}
+                                        md={10}
+                                        justifyContent="center"
+                                    >
+                                        <Grid xs={12} item>
+                                            <Typography textAlign='center'>Your timetable is empty!</Typography>
+                                        </Grid>
+                                        <Grid xs={12} item textAlign="center" marginTop="10px">
+                                            <CustomFormButton variant="contained">Set appointment</CustomFormButton>
+                                        </Grid>
+                                    </Grid>
+                                : <></>
                         }
                     </Grid>
                     :
