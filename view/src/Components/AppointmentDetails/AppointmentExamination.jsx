@@ -21,7 +21,9 @@ import InputField from "../InputField/InputField";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import writePrescription from "../../Network/Doctors/writePrescription";
 import { prescriptionAndDiagnosisValidation } from "../../Helper/ValidationSchema";
-const AppointmentExamination = ({ appointmentDetails, role }) => {
+import { useDispatch, useSelector } from "react-redux";
+import { setUpcomingAppointments } from "../../Store/Features/Appointments/upcomingAppointmentsSlice";
+const AppointmentExamination = ({ appointmentDetails, role, setOpenDrawer }) => {
     const intialValues = {
         diagnosis: '',
         prescription: [{
@@ -30,10 +32,13 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
         }]
     }
     const theme = useTheme();
+    const dispatch = useDispatch();
     const [showForm, setShowForm] = useState(false);
     const [drugList, setDrugList] = useState([]);
     const [appointmentId, setAppointmentId] = useState();
     const [open, setOpen] = useState(false);
+    const [showAddPrescription, setShowAddPrescription] = useState(true);
+    const upcomingAppointments = useSelector((state) => state.upcomingAppointments.data)
     const handleClick = (id) => {
         setAppointmentId(id)
         setShowForm(!showForm);
@@ -45,10 +50,19 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
         }
         writePrescription(appointmentId, data)
             .then((response) => {
+                setShowAddPrescription(false);
                 setOpen(true);
                 setTimeout(() => {
-                    window.location.reload();
-                }, 5000);
+                    setOpenDrawer(false)
+                }, 5000)
+                dispatch(setUpcomingAppointments({
+                    upcomingAppointments: upcomingAppointments.map((appointment) => {
+                        if (appointment._id === appointmentId) {
+                            appointment = { ...appointment, ...data }
+                        }
+                        return appointment;
+                    })
+                }))
             })
             .catch((error) => {
                 console.log(error)
@@ -209,7 +223,7 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
                     </TableContainer>
                 </Grid>
             </>
-            : (role === 'doctor' &&  appointmentDetails?.state === 'booked') ?
+            : (role === 'doctor' && appointmentDetails?.state === 'booked' && showAddPrescription) ?
                 <>
                     <CustomFormButton
                         variant="contained"
@@ -335,22 +349,23 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
 
 
                             </Formik>
-                            <Grid>
-                                <Snackbar
-                                    open={open}
-                                    autoHideDuration={6000}
-                                >
-                                    <Alert
-                                        severity="success"
-                                        sx={{ width: '100%' }}
-                                    >
-                                        Diagnosis and prescription added successfully! Now appointment is finished.
-                                    </Alert>
-                                </Snackbar>
-                            </Grid>
                         </Grid>
                     }
-                </> : <></>
+                    
+                </> : 
+                <Grid>
+                        <Snackbar
+                            open={open}
+                            autoHideDuration={6000}
+                        >
+                            <Alert
+                                severity="success"
+                                sx={{ width: '100%' }}
+                            >
+                                Diagnosis and prescription added successfully! Now appointment is finished.
+                            </Alert>
+                        </Snackbar>
+                    </Grid>
     );
 }
 
