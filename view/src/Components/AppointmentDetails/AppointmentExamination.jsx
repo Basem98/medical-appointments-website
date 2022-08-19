@@ -189,10 +189,10 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
                             <TableBody>
                                 {
 
-                                    appointmentDetails?.info?.prescription.map((drug) => {
+                                    appointmentDetails?.info?.prescription.map((drug, index) => {
                                         return (
                                             <TableRow
-                                                key={drug.drugName}
+                                                key={index}
                                             >
                                                 <TableCell component="th">
                                                     {drug.drugName}
