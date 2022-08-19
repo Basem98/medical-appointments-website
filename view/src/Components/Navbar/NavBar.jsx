@@ -173,14 +173,14 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                 >
                   {userDetails?.loggedIn ?
                     (<Link
-                      to={`/users/${userDetails.data._id}/appointments`}
+                      to={`/users/${userDetails.data?._id}/appointments`}
                       style={{
                         color: color ? color : theme.palette.text.primary,
                         textDecoration: "none",
                         display: "flex"
                       }}
                     >
-                      <Badge color="success" badgeContent={userDetails.data.appointments.length}>
+                      <Badge color="success" badgeContent={userDetails.data?.appointments?.length}>
                         <AccessAlarmsIcon fontSize="large" sx={{ margingTop: "0" }} />
                       </Badge>
                     </Link>)
