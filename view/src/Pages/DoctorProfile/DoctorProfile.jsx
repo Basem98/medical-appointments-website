@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Grid, useTheme, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, IconButton } from "@mui/material";
+import { Grid, useTheme, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, IconButton, Snackbar, Alert } from "@mui/material";
 import React from "react"
 import { useEffect } from "react";
 import { useState } from "react";
@@ -18,6 +18,7 @@ import moment from "moment";
 import EditAppointmentDrawer from "./EditAppointmentDrawer";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { setAvailableAppointments } from "../../Store/Features/Appointments/availableAppointmentsSlice";
+import cancelAppointment from "../../Network/Appointments/CancelAppointment";
 
 const DoctorProfile = () => {
     const doctorData = useSelector((state) => state.userDetails.data);
@@ -29,6 +30,7 @@ const DoctorProfile = () => {
     const availableAppointments = useSelector((state) => state.availableAppointments.data);
     const [openEditAppointmentDrawer, setOpenAppointmentDrawer] = useState(false);
     const [selectedAppointment, setSelectedAppointment] = useState();
+    const [openDeleteFeedback, setOpenDeleteFeedback] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -61,6 +63,20 @@ const DoctorProfile = () => {
     const handleEditAppointment = (appointment) => {
         setOpenAppointmentDrawer(true);
         setSelectedAppointment(appointment);
+    }
+    const handleDeleteAppointment = (id) => {
+        cancelAppointment(id)
+            .then((response) => {
+                setOpenDeleteFeedback(true);
+                dispatch(setAvailableAppointments({
+                    availableAppointments: availableAppointments.filter((appointment) => {
+                        return appointment._id !== id;
+                    })
+                }));
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     return (
@@ -257,7 +273,9 @@ const DoctorProfile = () => {
                                                                                 xs: '12px'
                                                                             },
                                                                             color: theme.palette.error.main
-                                                                        }}>Cancel</Button>
+                                                                        }}
+                                                                            onClick={() => {handleDeleteAppointment(appointment._id)}}
+                                                                        >Delete</Button>
                                                                     </TableCell>
                                                                 </TableRow>
                                                             );
@@ -293,6 +311,15 @@ const DoctorProfile = () => {
                 setOpenDrawer={setOpenAppointmentDrawer}
                 appointmentDetails={selectedAppointment}
             />
+            <Snackbar
+                open={openDeleteFeedback}
+                autoHideDuration={3000}
+                onClose={() => setOpenDeleteFeedback(false)}
+            >
+                <Alert severity="info">
+                    Appointment deleted successfully.
+                </Alert>
+            </Snackbar>
         </>
     );
 }
