@@ -69,6 +69,7 @@ const EditAppointmentDrawer = ({ openDrawer, setOpenDrawer, appointmentDetails }
               let updatedAppointmentObject = { ...appointmentObject };
               if (appointmentObject._id == appointmentDetails._id) {
                 updatedAppointmentObject.date = new Date(values.date).toISOString();
+                updatedAppointmentObject.time = { ...values.time }
               }
               return updatedAppointmentObject;
             })
