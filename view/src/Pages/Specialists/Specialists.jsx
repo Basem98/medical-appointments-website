@@ -1,4 +1,4 @@
-import { Typography, Grid, useTheme, FormHelperText, Box, Pagination } from "@mui/material";
+import { Typography, Grid, useTheme, FormHelperText, Pagination } from "@mui/material";
 import { Form, Formik } from "formik";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -44,10 +44,8 @@ function Specialists() {
   })
 
   const [specialistsData, setSpecialistsData] = useState([]);
-  const [paginatePage, setPaginatePage] = useState({ pageNum: 0, nextPage: true });
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(2);
-
   const [serverResponse, setServerResponse] = useState({ success: false, msg: '' });
 
   useEffect(() => {
@@ -168,13 +166,13 @@ function Specialists() {
             />
           </Grid>
         </Grid>
-        <Grid container justifyContent="space-between" sx={{ py: 11 }}>
+        <Grid container justifyContent={{ xs: 'center', md: "space-between" }} sx={{ py: 11 }}>
           {/* filter */}
           <Grid
             item
             lg={3}
-            md={4}
-            sm={5}
+            md={5}
+            sm={9}
             xs={12}
           // container
           >
@@ -406,7 +404,7 @@ function Specialists() {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item lg={8} md={7} sm={5} xs={12} container >
+          <Grid item lg={8} md={6} sm={5} xs={12} container >
             {!specialistsData.length ?
               (<>
                 <Grid item md={12} container>
@@ -434,7 +432,7 @@ function Specialists() {
               </>) :
               (
                 <>
-                  <Grid item md={12} container justifyContent='center'>
+                  <Grid item xs={12} container justifyContent='center' marginTop={{ xs: '50px', md: '0' }}>
                     {!serverResponse.success && serverResponse.msg ?
                       <Grid container item xs={12} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
 
@@ -447,17 +445,17 @@ function Specialists() {
                           <img alt='Page not found' src={PageNotFoundSvg} />
                         </Grid>
                       </Grid>
-                      : <Grid container item justifyContent='space-between'>
+                      : <Grid container item justifyContent={{ xs: 'center', md: 'space-between' }}>
                         {
                           specialistsData.map((cardData) => (
-                            <Grid item key={cardData._id} marginBottom='50px' marginRight='10px'>
+                            <Grid item key={cardData._id} marginBottom='50px' marginRight={{ xs: '0', md: '10px' }}>
                               <DoctorCard cardData={cardData} />
                             </Grid>
                           ))
                         }
                       </Grid>
                     }
-                    <Pagination sx={{ alignSelf: 'flex-end' }} color="highlight" count={totalPages} onChange={(event, pageNumber) => { getAllSpecialists(formInitialValues, pageNumber - 1) }} />
+                    <Pagination sx={{ alignSelf: 'center' }} color="highlight" count={totalPages} onChange={(event, pageNumber) => { getAllSpecialists(formInitialValues, pageNumber - 1) }} />
                   </Grid>
 
                 </>
