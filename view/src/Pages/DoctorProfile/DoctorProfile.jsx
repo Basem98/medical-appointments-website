@@ -13,6 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../../Helper/Authentication";
+import getAvailableAppointments from "../../Network/Doctors/getAvailableAppointments";
 
 const DoctorProfile = () => {
     const doctorData = useSelector((state) => state.userDetails.data);
@@ -21,6 +22,7 @@ const DoctorProfile = () => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const [upcomings, setUpcomings] = useState(null);
+    const [availableAppointments, setAvailableAppointments] = useState();
 
     const navigate = useNavigate();
 
@@ -38,6 +40,16 @@ const DoctorProfile = () => {
                     console.log(error);
                 })
     }, [doctorId]);
+
+    useEffect(() => {
+        getAvailableAppointments()
+            .then((response) => {
+                setAvailableAppointments(response.data.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }, []);
 
     return (
         <>
