@@ -4,6 +4,7 @@ const { getPrevious } = require('./getPrevious.controller');
 const { bookAppointment } = require('./bookAppointment.controller');
 const { editAppointment } = require('./editAppointment.controller');
 const { cancelAppointment } = require('./cancelAppointment.controller');
+const { getAvailable } = require('./getAvailable.controller');
 
 module.exports = {
     addAppointment,
@@ -11,5 +12,6 @@ module.exports = {
     getPrevious,
     bookAppointment,
     editAppointment,
-    cancelAppointment
+    cancelAppointment,
+    getAvailable
 }
