@@ -19,6 +19,7 @@ import EditAppointmentDrawer from "./EditAppointmentDrawer";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { setAvailableAppointments } from "../../Store/Features/Appointments/availableAppointmentsSlice";
 import cancelAppointment from "../../Network/Appointments/CancelAppointment";
+import AppointmentCreationDrawer from "./AppointmentCreationDrawer";
 
 const DoctorProfile = () => {
     const doctorData = useSelector((state) => state.userDetails.data);
@@ -31,6 +32,7 @@ const DoctorProfile = () => {
     const [openEditAppointmentDrawer, setOpenAppointmentDrawer] = useState(false);
     const [selectedAppointment, setSelectedAppointment] = useState();
     const [openDeleteFeedback, setOpenDeleteFeedback] = useState(false);
+    const [openSetAppointmentDrawer, setOpenSetAppointmentDrawer] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -77,6 +79,9 @@ const DoctorProfile = () => {
             .catch((error) => {
                 console.log(error)
             })
+    }
+    const handleSetAppointment = () => {
+        setOpenSetAppointmentDrawer(true);
     }
 
     return (
@@ -192,7 +197,7 @@ const DoctorProfile = () => {
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={1} >
-                                            <IconButton>
+                                            <IconButton onClick={handleSetAppointment}>
                                                 <AddCircleOutlineIcon />
                                             </IconButton>
                                         </Grid>
@@ -274,7 +279,7 @@ const DoctorProfile = () => {
                                                                             },
                                                                             color: theme.palette.error.main
                                                                         }}
-                                                                            onClick={() => {handleDeleteAppointment(appointment._id)}}
+                                                                            onClick={() => { handleDeleteAppointment(appointment._id) }}
                                                                         >Delete</Button>
                                                                     </TableCell>
                                                                 </TableRow>
@@ -297,7 +302,9 @@ const DoctorProfile = () => {
                                             <Typography textAlign='center'>Your timetable is empty!</Typography>
                                         </Grid>
                                         <Grid xs={12} item textAlign="center" marginTop="10px">
-                                            <CustomFormButton variant="contained">Set appointment</CustomFormButton>
+                                            <CustomFormButton variant="contained" onClick={handleSetAppointment}>
+                                                Set appointment
+                                            </CustomFormButton>
                                         </Grid>
                                     </Grid>
                                 : <></>
@@ -311,6 +318,11 @@ const DoctorProfile = () => {
                 setOpenDrawer={setOpenAppointmentDrawer}
                 appointmentDetails={selectedAppointment}
             />
+            <AppointmentCreationDrawer 
+                openDrawer={openSetAppointmentDrawer}
+                setOpenDrawer={setOpenSetAppointmentDrawer}
+            />
+
             <Snackbar
                 open={openDeleteFeedback}
                 autoHideDuration={3000}
