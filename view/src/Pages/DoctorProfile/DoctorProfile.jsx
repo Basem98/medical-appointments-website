@@ -33,6 +33,7 @@ const DoctorProfile = () => {
     const [selectedAppointment, setSelectedAppointment] = useState();
     const [openDeleteFeedback, setOpenDeleteFeedback] = useState(false);
     const [openSetAppointmentDrawer, setOpenSetAppointmentDrawer] = useState(false);
+    const [cantSetAppointment, setCantSetAppointment] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -81,7 +82,13 @@ const DoctorProfile = () => {
             })
     }
     const handleSetAppointment = () => {
-        setOpenSetAppointmentDrawer(true);
+        if (!doctorData.isVerified || !doctorData.isAccepted) {
+            setCantSetAppointment(true)
+        }
+        else {
+            setCantSetAppointment(false)
+            setOpenSetAppointmentDrawer(true);
+        }
     }
 
     return (
@@ -306,6 +313,14 @@ const DoctorProfile = () => {
                                                 Set appointment
                                             </CustomFormButton>
                                         </Grid>
+                                        {
+                                            cantSetAppointment &&
+                                            <Grid item xs={12} marginTop={2}>
+                                                <CustomAlert severity="error">
+                                                    You can't set appointments right now until your account is verified.
+                                                </CustomAlert>
+                                            </Grid>
+                                        }
                                     </Grid>
                                 : <></>
                         }
@@ -318,7 +333,7 @@ const DoctorProfile = () => {
                 setOpenDrawer={setOpenAppointmentDrawer}
                 appointmentDetails={selectedAppointment}
             />
-            <AppointmentCreationDrawer 
+            <AppointmentCreationDrawer
                 openDrawer={openSetAppointmentDrawer}
                 setOpenDrawer={setOpenSetAppointmentDrawer}
             />
