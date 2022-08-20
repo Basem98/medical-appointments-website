@@ -12,6 +12,9 @@ import FaceIcon from '@mui/icons-material/Face';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import KeyIcon from '@mui/icons-material/Key';
+import PeopleIcon from '@mui/icons-material/People';
+
 import { Link, useLocation } from 'react-router-dom';
 import { removeUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 import { useDispatch, useSelector } from 'react-redux';
@@ -88,14 +91,34 @@ export default function NavBarDropDownComponent() {
                             My schedule
                         </MenuItem>
                     </Link>
-                    <Link style={{ textDecoration: "none", color: "#000" }} to={`/${userDetails.role === "User" ? "users" : "doctors"}/${userDetails.data?._id}/settings`}>
+                    {userDetails.role === "User" ?
+                        <Link style={{ textDecoration: "none", color: "#000" }} to={`/users/${userDetails.data?._id}/settings`}>
+                            <MenuItem onClick={handleClose}>
+                                <ListItemIcon>
+                                    <SettingsIcon />
+                                </ListItemIcon>
+                                Settings
+                            </MenuItem>
+                        </Link>
+                        :
+                        <Link style={{ textDecoration: "none", color: "#000" }} to={`/doctors/${userDetails.data?._id}/patients`}>
+                            <MenuItem onClick={handleClose}>
+                                <ListItemIcon>
+                                    <PeopleIcon />
+                                </ListItemIcon>
+                                Patients
+                            </MenuItem>
+                        </Link>
+                    }
+                    <Link style={{ textDecoration: "none", color: "#000" }} to={`/${userDetails.role === "User" ? "users" : "doctors"}/${userDetails.data?._id}/change-password`}>
                         <MenuItem onClick={handleClose}>
                             <ListItemIcon>
-                                <SettingsIcon />
+                                <KeyIcon />
                             </ListItemIcon>
-                            Settings
+                            Password
                         </MenuItem>
                     </Link>
+
                     <MenuItem onClick={handleLogout}>
                         <ListItemIcon>
                             <LogoutIcon />
