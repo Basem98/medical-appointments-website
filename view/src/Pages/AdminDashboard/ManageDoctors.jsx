@@ -21,17 +21,22 @@ export default function ManageDoctors() {
     const [currentDoctorRow, setCurrentDoctorRow] = useState({});
 
     useEffect(() => {
-        getDoctorsData({ type: '', pageNum: paginatePage.pageNum })
+        getDoctorsData({ type: 'all', pageNum: paginatePage.pageNum })
             .then(res => {
-                console.log(res.data.data)
+                console.log('res.data.data: ', res.data.data);
                 setDoctorsData(res.data.data);
             })
             .catch(err => {
-                console.log('erro: ', err)
                 if (err.response.status === 404) {
-                    setPaginatePage({ pageNum: paginatePage.pageNum - 1, nextPage: false });
-                    setAlertStatus({ severity: 'error', msg: 'No pages found!' });
-                    setSnakbarStatus(true);
+                    if (paginatePage.pageNum > 0) {
+                        setPaginatePage({ pageNum: paginatePage.pageNum - 1, nextPage: false });
+                        setAlertStatus({ severity: 'error', msg: 'No pages found!' });
+                        setSnakbarStatus(true);
+                    }
+                    else {
+                        console.log('error at 0 page', paginatePage.pageNum);
+
+                    }
                 }
             })
     }, [paginatePage.pageNum])
