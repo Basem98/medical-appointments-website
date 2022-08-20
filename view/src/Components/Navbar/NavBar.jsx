@@ -173,7 +173,7 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                 >
                   {userDetails?.loggedIn ?
                     (<Link
-                      to={`/users/${userDetails.data?._id}/appointments`}
+                      to={`/${userDetails.role === "User" ? "users" : "doctors"}/${userDetails.data?._id}/appointments`}
                       style={{
                         color: color ? color : theme.palette.text.primary,
                         textDecoration: "none",
