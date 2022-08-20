@@ -113,7 +113,7 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
 
                                 <AppointmentDetail
                                     detail={<Link
-                                        href="#"
+                                        href={`/doctors/${appointmentDetails?.doctor._id}/patients`}
                                         sx={{
                                             color: theme.palette.highlight.main
                                         }}>
