@@ -190,10 +190,10 @@ const AppointmentsTable = ({ appointments, role }) => {
                                             </CardContent>
                                         </Grid>
                                         <Grid container width="25%" justifyContent='center'>
-                                            <Grid item xs={10} marginTop='10px'>
+                                            <Grid item xs={8} md={10} marginTop='10px'>
                                                 <AppointmentStatus state={appointment.state} />
                                             </Grid>
-                                            <Grid item xs={10}>
+                                            <Grid item xs={12} md={10}>
                                                 <CardActions>
                                                     <Button
                                                         sx={{
