@@ -1,4 +1,4 @@
-import { Grid, Typography, List, ListItem, ListItemIcon, ListItemText, Rating, Divider, CircularProgress } from '@mui/material';
+import { Grid, Typography, List, ListItem, ListItemIcon, ListItemText, Rating, Divider, CircularProgress, FormHelperText } from '@mui/material';
 import CustomFormButton from '../../Components/CustomFormButton/CustomFormButton';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import EmailIcon from '@mui/icons-material/Email';
@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import BookingDrawer from '../../Components/BookingDrawer/BookingDrawer';
 import getDoctor from '../../Network/Doctors/getDocotor';
+import rateDoctor from '../../Network/Doctors/rateDoctor';
 
 function DoctorDetails() {
     const theme = useTheme();
@@ -18,6 +19,8 @@ function DoctorDetails() {
     const [openBookingDrawer, setOpenBookingDrawer] = useState(false);
     let storeData = useSelector(store => store.specialists.specialists.find(doctor => doctor._id === id));
     const [doctorDetails, setDoctorDetails] = useState(storeData ? { ...storeData } : {});
+    const currUser = useSelector(store => store.userDetails);
+    const [ratingLabel, setRatingLabel] = useState('');
 
     useEffect(() => {
         if (!storeData) {
@@ -34,6 +37,17 @@ function DoctorDetails() {
             setDoctorDetails({ ...sortedDetails });
         }
     }, []);
+
+    const calculateRating = (newRating, id) => {
+        rateDoctor(newRating, id)
+            .then(res => {
+                const updatedDoctorDetails = { ...doctorDetails };
+                updatedDoctorDetails.rating = res.data.rating;
+                updatedDoctorDetails.raters += updatedDoctorDetails.raters;
+                setDoctorDetails({ ...updatedDoctorDetails });
+            })
+            .catch(err => { console.log(err) })
+    }
 
     return (
         <>
@@ -79,10 +93,19 @@ function DoctorDetails() {
                                             <Grid
                                                 sx={{
                                                     display: "flex",
-                                                    justifyContent: 'center'
+                                                    flexDirection: 'column',
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center'
                                                 }}
                                             >
-                                                <Rating value={parseFloat(doctorDetails.rating)} precision={.5} size="large" readOnly />
+                                                <Rating value={parseFloat(doctorDetails.rating)} precision={.5} size="large"
+                                                    readOnly={currUser?.role !== 'User'}
+                                                    onChangeActive={(event, currRating) => setRatingLabel(`${currRating}`)}
+                                                    onChange={(event, newRating) => calculateRating(newRating, doctorDetails._id)} />
+                                                    {ratingLabel > 0 && <FormHelperText sx={{color: theme.palette.highlight.main, fontWeight: 'bold', fontSize:14}}>{ratingLabel}</FormHelperText>}
+                                            </Grid>
+                                            <Grid container item justifyContent='center'>
+                                                <FormHelperText sx={{color: theme.palette.text.primary, fontWeight: 'bold', fontSize:14}}>{parseFloat(doctorDetails.rating).toFixed(2)}</FormHelperText>
                                             </Grid>
                                             <Typography sx={{
                                                 ...theme.typography.modalSmallText,
@@ -181,7 +204,7 @@ function DoctorDetails() {
                                             </Typography>
                                             <List>
                                                 {doctorDetails.certifications.map((item, index) => (
-                                                    <Grid item key ={item.issueDate+index}>
+                                                    <Grid item key={item.issueDate + index}>
                                                         <ListItem style={{
                                                             ...theme.typography.largerButtonText,
                                                             color: theme.palette.text.primary,
@@ -298,7 +321,7 @@ function DoctorDetails() {
                                         borderRadius: "10px"
                                     }}>
                                     {doctorDetails.clinics.map((item, index) =>
-                                        <Map key={item.geoLocation.latitude+item.geoLocation.longitude} centerCoordinates={{ lat: parseFloat(item.geoLocation.latitude), lng: parseFloat(item.geoLocation.longitude) }} />)}
+                                        <Map key={item.geoLocation.latitude + item.geoLocation.longitude} centerCoordinates={{ lat: parseFloat(item.geoLocation.latitude), lng: parseFloat(item.geoLocation.longitude) }} />)}
 
                                 </Grid>
 
@@ -382,7 +405,7 @@ function DoctorDetails() {
                                                 Cash
                                             </Typography>
                                         </Grid>
-                                       { doctorDetails.appointments  && doctorDetails.appointments.length > 0 && <Grid
+                                        {doctorDetails.appointments && doctorDetails.appointments.length > 0 && <Grid
                                             item
                                             sx={{
                                                 backgroundColor: "white",
@@ -415,7 +438,7 @@ function DoctorDetails() {
                                                 {doctorDetails.appointments ? doctorDetails.appointments[0].time.duration : '-'} mins
                                             </Typography>
                                         </Grid>}
-                                        { doctorDetails.appointments && doctorDetails.appointments.length > 0 && <Grid
+                                        {doctorDetails.appointments && doctorDetails.appointments.length > 0 && <Grid
                                             item
                                             sx={{
                                                 backgroundColor: "white",

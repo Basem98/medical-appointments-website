@@ -45,7 +45,7 @@ function Specialists() {
 
   const [specialistsData, setSpecialistsData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(2);
+  const [totalPages, setTotalPages] = useState(1);
   const [serverResponse, setServerResponse] = useState({ success: false, msg: '' });
 
   useEffect(() => {
@@ -78,8 +78,9 @@ function Specialists() {
         setServerResponse({ ...serverResponse, success: true });
         setSpecialistsData(res.data.doctors);
         setCurrentPage(newPageNumber);
-        if (totalPages === currentPage)
+        if(res.data.doctors.length === 6) {
           setTotalPages(totalPages + 1);
+        }
         dispatch(setSpecialists({
           specialists: res.data.doctors
         }))
