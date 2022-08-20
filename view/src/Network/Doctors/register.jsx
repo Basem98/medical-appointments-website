@@ -1,4 +1,5 @@
 import axiosClient from '../axiosClient';
+import getGeoloaction from '../Map/getGeolocatoin';
 
 /**
  * @description
@@ -21,6 +22,12 @@ const submitDoctorApplication = async (doctorData) => {
     const formData = new FormData();
     formData.append('images', doctorData.profilePicture);
     formData.append('images', doctorData.professionalLicense);
+    /* Get the geolocation from the clinic's address */
+    const geolocation = await getGeoloaction(body.clinics[0].address);
+    if (geolocation) {
+      body.clinics[0].geoLocation.longitude = geolocation.data.results[0].geometry.location.lng
+      body.clinics[0].geoLocation.latitude = geolocation.data.results[0].geometry.location.lat;
+    }
     /* Make the sign up request to register the doctor's data */
     return axiosClient.post(`${baseDoctorsRoute}`, body, { headers }).then(async response => {
       /* Make the upload request to upload the images with a content type of 'multipart/form-data' */
