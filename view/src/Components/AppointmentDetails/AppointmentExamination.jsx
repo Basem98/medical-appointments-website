@@ -23,6 +23,7 @@ import writePrescription from "../../Network/Doctors/writePrescription";
 import { prescriptionAndDiagnosisValidation } from "../../Helper/ValidationSchema";
 import { useDispatch, useSelector } from "react-redux";
 import { setUpcomingAppointments } from "../../Store/Features/Appointments/upcomingAppointmentsSlice";
+import { setPreviousAppointments } from "../../Store/Features/Appointments/previousAppointmentsSlice";
 const AppointmentExamination = ({ appointmentDetails, role, setOpenDrawer }) => {
     const intialValues = {
         diagnosis: '',
@@ -38,7 +39,8 @@ const AppointmentExamination = ({ appointmentDetails, role, setOpenDrawer }) => 
     const [appointmentId, setAppointmentId] = useState();
     const [open, setOpen] = useState(false);
     const [showAddPrescription, setShowAddPrescription] = useState(true);
-    const upcomingAppointments = useSelector((state) => state.upcomingAppointments.data)
+    const upcomingAppointments = useSelector((state) => state.upcomingAppointments.data);
+    const previousAppointments = useSelector((state) => state.previousAppointments.data);
     const handleClick = (id) => {
         setAppointmentId(id)
         setShowForm(!showForm);
@@ -57,6 +59,14 @@ const AppointmentExamination = ({ appointmentDetails, role, setOpenDrawer }) => 
                 }, 5000)
                 dispatch(setUpcomingAppointments({
                     upcomingAppointments: upcomingAppointments.map((appointment) => {
+                        if (appointment._id === appointmentId) {
+                            appointment = { ...appointment, ...data }
+                        }
+                        return appointment;
+                    })
+                }))
+                dispatch(setPreviousAppointments({
+                    previousAppointements: previousAppointments.map((appointment) => {
                         if (appointment._id === appointmentId) {
                             appointment = { ...appointment, ...data }
                         }
