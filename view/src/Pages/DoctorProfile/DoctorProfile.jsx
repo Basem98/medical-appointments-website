@@ -107,7 +107,8 @@ const DoctorProfile = () => {
                             width: {
                                 'xs': '100%',
                                 'md': '90%'
-                            }
+                            },
+                            marginBottom: '10px'
                         }}
                     >
 

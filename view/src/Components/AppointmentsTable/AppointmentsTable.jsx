@@ -147,6 +147,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                 container
                 spacing={6}
                 marginTop={2}
+                marginBottom={2}
                 justifyContent="center"
             >
                 {
