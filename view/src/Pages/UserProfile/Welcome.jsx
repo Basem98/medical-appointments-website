@@ -50,6 +50,7 @@ const Welcome = ({ userData }) => {
                                                 <Typography>You don't have any upcoming appointments.</Typography>
                                                 <Grid item xs={10} marginTop={4}>
                                                     <Link
+                                                        style={{ textDecoration: "none" }}
                                                         to="/specialists"
                                                     >
                                                         <CustomFormButton variant="contained">
