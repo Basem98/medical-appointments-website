@@ -19,7 +19,7 @@ const UserProfile = () => {
 
     const navigate = useNavigate();
 
-    const [userData, setUserData] = useState({});
+    const [userData, setUserData] = useState(null);
     const [resendVerificationFeedback, setResendVerificationFeedback] = useState(false);
     const dispatch = useDispatch();
 
@@ -60,7 +60,8 @@ const UserProfile = () => {
                         }}
                     >
                         {
-                            !userData.isVerified && !resendVerificationFeedback ?
+                            userData &&
+                            !userData?.isVerified && !resendVerificationFeedback ?
                                 <Grid item xs={11} md={9} sx={{ marginTop: '10px' }}>
                                     <CustomAlert severity="warning">
                                         Your profile is not verified yet!
@@ -86,7 +87,7 @@ const UserProfile = () => {
                                     </Grid> : <></>
 
                         }
-                        <Grid item xs={12} md={9}>
+                        <Grid item xs={12} md={9} marginBottom={2}>
                             <Welcome
                                 userData={userData}
                             />
