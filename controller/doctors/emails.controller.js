@@ -15,7 +15,7 @@ async function sendMail(req, res, next) {
       text: req.emailText
     }
     emailTransporter.sendMail(emailBody);
-    res.status(200).json({ message: 'An email has been sent to the user\'s email' });
+    res.status(200).json({ message: 'An email has been sent to the user\'s email', id: req.body.id });
   } catch (err) {
     err.statusCode = 500;
     next(err);

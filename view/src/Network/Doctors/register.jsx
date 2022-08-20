@@ -23,9 +23,8 @@ const submitDoctorApplication = async (doctorData) => {
     formData.append('images', doctorData.professionalLicense);
     /* Make the sign up request to register the doctor's data */
     return axiosClient.post(`${baseDoctorsRoute}`, body, { headers }).then(async response => {
-      if (response.status == 201)
-        /* Make the upload request to upload the images with a content type of 'multipart/form-data' */
-        await axiosClient.post(`${baseDoctorsRoute}/upload/images`, formData, { params: { id: response.data.id }, headers: { 'Content-Type': 'multipart/form-data' } });
+      /* Make the upload request to upload the images with a content type of 'multipart/form-data' */
+      await axiosClient.post(`${baseDoctorsRoute}/upload/images`, formData, { params: { id: response.data.id }, headers: { 'Content-Type': 'multipart/form-data' } });
       return response;
     })
   } catch (err) {
