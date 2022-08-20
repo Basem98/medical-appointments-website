@@ -89,7 +89,7 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                                             height: '200px',
                                             objectFit: 'contain'
                                         }}
-                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSleborUKlDqo2xbo3qSyXDV1Fs8B-4M9v6og&usqp=CAU"
+                                        src={appointmentDetails?.doctor.profilePicture}
                                     />
                                 </Grid>
                                 <Grid container item xs={6} paddingLeft="inherit">
