@@ -5,6 +5,7 @@ import {
     Box,
     useTheme,
     Link,
+    Rating,
 }
     from "@mui/material";
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
@@ -17,9 +18,13 @@ import PersonIcon from '@mui/icons-material/Person';
 import moment from "moment";
 import AppointmentExamination from "./AppointmentExamination";
 import AppointmentCancellation from "./AppointmentCancellation";
+import { useState } from "react";
+import CustomAlert from "../CustomAlert/CustomAlert";
 
 const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawer }) => {
     const theme = useTheme();
+    const [rateValue, setRateValue] = useState(0);
+    const [ratingSent, setRatingSent] = useState(false);
     const AppointmentDetail = (props) => {
         return (
 
@@ -242,6 +247,31 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                         />
                     </Grid>
 
+                    {
+                        role === 'user' && appointmentDetails?.state === 'finished' && !ratingSent &&
+                        <Grid item>
+                            <Typography>How was your experience with Dr.{appointmentDetails?.doctor.firstName}?</Typography>
+                            <Rating
+                                name="rate-doctor"
+                                value={rateValue}
+                                onChange={(event, newValue) => {
+                                    console.log(newValue);
+                                    setRatingSent(true);
+                                    setRateValue(newValue)
+                                }}
+                                size="large"
+                            />
+                        </Grid>
+                    }
+
+                    {
+                        role === 'user' && appointmentDetails?.state === 'finished' && ratingSent &&
+                        <Grid item>
+                            <CustomAlert severity="success">
+                                Your rating is sent. Thank you!
+                            </CustomAlert>
+                        </Grid>
+                    }
                 </Grid>
             </Drawer>
         </>
