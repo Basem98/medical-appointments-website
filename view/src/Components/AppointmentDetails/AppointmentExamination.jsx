@@ -226,6 +226,10 @@ const AppointmentExamination = ({ appointmentDetails, role, setOpenDrawer }) => 
                     <CustomFormButton
                         variant="contained"
                         onClick={() => handleClick(appointmentDetails._id)}
+                        sx={{
+                            marginLeft: 2,
+                            marginTop: 2
+                        }}
                     >
                         Add prescription and diagnosis
                     </CustomFormButton>
@@ -233,7 +237,8 @@ const AppointmentExamination = ({ appointmentDetails, role, setOpenDrawer }) => 
                         showForm &&
                         <Grid
                             sx={{
-                                marginTop: '10px'
+                                marginLeft: 2,
+                                marginTop: 2
                             }}
                         >
                             <Formik
