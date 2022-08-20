@@ -20,6 +20,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { setAvailableAppointments } from "../../Store/Features/Appointments/availableAppointmentsSlice";
 import cancelAppointment from "../../Network/Appointments/CancelAppointment";
 import AppointmentCreationDrawer from "./AppointmentCreationDrawer";
+import resendVerification from "../../Network/Base/resendVerification";
 
 const DoctorProfile = () => {
     const doctorData = useSelector((state) => state.userDetails.data);
@@ -34,6 +35,7 @@ const DoctorProfile = () => {
     const [openDeleteFeedback, setOpenDeleteFeedback] = useState(false);
     const [openSetAppointmentDrawer, setOpenSetAppointmentDrawer] = useState(false);
     const [cantSetAppointment, setCantSetAppointment] = useState(false);
+    const [resendVerificationFeedback, setResendVerificationFeedback] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -91,6 +93,16 @@ const DoctorProfile = () => {
         }
     }
 
+    const handleResendVerification = () => {
+        resendVerification(doctorId, 'Doctor')
+            .then(() => {
+                setResendVerificationFeedback(true);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
     return (
         <>
 
@@ -113,7 +125,7 @@ const DoctorProfile = () => {
                     >
 
                         {
-                            !doctorData?.isVerified && (
+                            !doctorData?.isVerified && !resendVerificationFeedback ? (
                                 <Grid
                                     item
                                     xs={11}
@@ -123,11 +135,28 @@ const DoctorProfile = () => {
                                     <CustomAlert severity="warning">
                                         Your profile is not verified yet!
                                         Please check your email to verify.
+                                        <Grid>
+                                            <Button xs={{ color: 'red' }} onClick={handleResendVerification}>
+                                                Resend verification
+                                            </Button>
+                                        </Grid>
                                     </CustomAlert>
 
                                 </Grid>
 
-                            )
+                            ) : resendVerificationFeedback ? (
+                                <Grid
+                                    item
+                                    xs={11}
+                                    md={9}
+                                    sx={{ marginTop: '10px' }}
+                                >
+                                    <CustomAlert severity="info">
+                                        Verification email resent! Please checkout your email.
+                                    </CustomAlert>
+
+                                </Grid>
+                            ) : <></>
                         }
                         {
                             !doctorData?.isAccepted && (

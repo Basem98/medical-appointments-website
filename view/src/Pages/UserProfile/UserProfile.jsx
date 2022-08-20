@@ -9,6 +9,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authenticate } from "../../Helper/Authentication";
+import resendVerification from "../../Network/Base/resendVerification";
+import Button from "@mui/material/Button";
+
 const UserProfile = () => {
 
     const userId = useSelector((state) => state.userDetails.data?._id);
@@ -16,10 +19,11 @@ const UserProfile = () => {
 
     const navigate = useNavigate();
 
-    const [userData, setUserData] = useState({});
+    const [userData, setUserData] = useState(null);
+    const [resendVerificationFeedback, setResendVerificationFeedback] = useState(false);
     const dispatch = useDispatch();
 
-   authenticate('User', navigate, dispatch);
+    authenticate('User', navigate, dispatch);
 
     useEffect(() => {
         userId &&
@@ -29,6 +33,16 @@ const UserProfile = () => {
                 })
                 .catch((error) => console.log(error));
     }, [userId]);
+
+    const handleResendVerification = () => {
+        resendVerification(userId, 'User')
+            .then(() => {
+                setResendVerificationFeedback(true);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
 
     return (
         <>
@@ -46,17 +60,34 @@ const UserProfile = () => {
                         }}
                     >
                         {
-                            !userData.isVerified &&
-                            <Grid item xs={11} md={9} sx={{ marginTop: '10px' }}>
-                                <CustomAlert
-                                    severity="warning"
-                                >
-                                    Your profile is not verified yet!
-                                    Please check your email to verify.
-                                </CustomAlert>
-                            </Grid>
+                            userData &&
+                            !userData?.isVerified && !resendVerificationFeedback ?
+                                <Grid item xs={11} md={9} sx={{ marginTop: '10px' }}>
+                                    <CustomAlert severity="warning">
+                                        Your profile is not verified yet!
+                                        Please check your email to verify.
+                                        <Grid>
+                                            <Button xs={{ color: 'red' }} onClick={handleResendVerification}>
+                                                Resend verification
+                                            </Button>
+                                        </Grid>
+                                    </CustomAlert>
+                                </Grid>
+                                : resendVerificationFeedback ?
+                                    <Grid
+                                        item
+                                        xs={11}
+                                        md={9}
+                                        sx={{ marginTop: '10px' }}
+                                    >
+                                        <CustomAlert severity="info">
+                                            Verification email resent! Please checkout your email.
+                                        </CustomAlert>
+
+                                    </Grid> : <></>
+
                         }
-                        <Grid item xs={12} md={9}>
+                        <Grid item xs={12} md={9} marginBottom={2}>
                             <Welcome
                                 userData={userData}
                             />
