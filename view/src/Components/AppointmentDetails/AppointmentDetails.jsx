@@ -20,11 +20,24 @@ import AppointmentExamination from "./AppointmentExamination";
 import AppointmentCancellation from "./AppointmentCancellation";
 import { useState } from "react";
 import CustomAlert from "../CustomAlert/CustomAlert";
+import rateDoctor from "../../Network/Doctors/rateDoctor";
 
 const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawer }) => {
     const theme = useTheme();
     const [rateValue, setRateValue] = useState(0);
     const [ratingSent, setRatingSent] = useState(false);
+
+    const handleRateDoctor = (value) => {
+        setRateValue(value);
+        const doctorId = appointmentDetails?.doctor._id;
+        rateDoctor(value, doctorId)
+            .then(() => {
+                setRatingSent(true);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
     const AppointmentDetail = (props) => {
         return (
 
@@ -254,11 +267,7 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                             <Rating
                                 name="rate-doctor"
                                 value={rateValue}
-                                onChange={(event, newValue) => {
-                                    console.log(newValue);
-                                    setRatingSent(true);
-                                    setRateValue(newValue)
-                                }}
+                                onChange={(event, newValue) => { handleRateDoctor(newValue) }}
                                 size="large"
                             />
                         </Grid>
