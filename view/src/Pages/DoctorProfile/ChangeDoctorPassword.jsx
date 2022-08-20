@@ -49,7 +49,7 @@ const ChangePassword = () => {
     return (
         <>
             {
-                role === 'Dcotor' ?
+                role === 'Doctor' ?
                     <Grid
                         container
                         justifyContent="center"
