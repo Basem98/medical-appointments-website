@@ -5,7 +5,6 @@ const formatBufferUsingExt = (file) => dUri.format(file.originalname, file.buffe
 
 const bufferFileToString = (req, res, next) => {
   try {
-    console.log(req);
     if (req.file) {
       req.file = formatBufferUsingExt(req.file).content;
     } else if (req.files.length > 0) {

@@ -29,8 +29,8 @@ function Specialists() {
     dateFromDay: "",
     dateToMonth: "",
     dateToDay: "",
-    priceFrom: "",
-    priceTo: "",
+    feesFrom: "",
+    feesTo: "",
   };
   const [formInitialValues, setFormInitialValues] = useState({
     specialization: "",
@@ -39,8 +39,8 @@ function Specialists() {
     dateFromDay: "",
     dateToMonth: "",
     dateToDay: "",
-    priceFrom: "",
-    priceTo: "",
+    feesFrom: "",
+    feesTo: "",
   })
 
   const [specialistsData, setSpecialistsData] = useState([]);
@@ -114,12 +114,12 @@ function Specialists() {
         errors.dateFromToMonth = "Dates should be chronological";
       }
     }
-    if (isNaN(values.priceFrom) || parseInt(values.priceFrom) < 0 || isNaN(values.priceTo) || parseInt(values.priceTo) < 0) {
-      errors.priceFromTo = "ُEnter valid numbers";
+    if (isNaN(values.feesFrom) || parseInt(values.feesFrom) < 0 || isNaN(values.feesTo) || parseInt(values.feesTo) < 0) {
+      errors.feesFromTo = "ُEnter valid numbers";
     }
-    if (parseInt(values.priceFrom) > 0 && parseInt(values.priceTo) > 0) {
-      if (parseInt(values.priceFrom) >= parseInt(values.priceTo)) {
-        errors.priceFromTo = "Enter a valid range";
+    if (parseInt(values.feesFrom) > 0 && parseInt(values.feesTo) > 0) {
+      if (parseInt(values.feesFrom) >= parseInt(values.feesTo)) {
+        errors.feesFromTo = "Enter a valid range";
       }
     }
 
@@ -348,7 +348,7 @@ function Specialists() {
                             {/* <Typography variant="h6">From</Typography> */}
                             <InputField
                               label="From"
-                              name="priceFrom"
+                              name="feesFrom"
                               placeholder="0EGP"
                               sx={{ padding: 0 }}
                             />
@@ -356,16 +356,16 @@ function Specialists() {
                           <Grid item xs={5}>
                             <InputField
                               label="Up To"
-                              name="priceTo"
+                              name="feesTo"
                               placeholder="2000EGP"
                               sx={{ padding: 0 }}
                             />
                           </Grid>
                         </Grid>
-                        {formik.errors.priceFromTo &&
+                        {formik.errors.feesFromTo &&
                           <Grid xs={12}>
                             <FormHelperText sx={{ color: "red" }}>
-                              {formik.errors.priceFromTo}
+                              {formik.errors.feesFromTo}
                             </FormHelperText>
                           </Grid>
                         }
@@ -384,7 +384,7 @@ function Specialists() {
                           sx={{
                             fontSize: theme.typography.body1.fontSize,
                           }}
-                          onClick={() => { formik.resetForm({ values: filterInitialValues }) }}
+                          onClick={() => { formik.resetForm({ values: filterInitialValues }); setFormInitialValues({...filterInitialValues}) }}
                         >
                           Clear
                         </CustomFormButton>

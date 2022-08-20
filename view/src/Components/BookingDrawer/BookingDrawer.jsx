@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 import bookAppointment from '../../Network/Users/bookAppointment';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserDetails } from '../../Store/Features/UserDetails/userDetailsSlice';
+import resendVerification from '../../Network/Base/resendVerification';
 
 const BookingDrawer = ({ openDrawer, setOpenDrawer, appointments, doctorDetails, setDoctorDetails }) => {
   const theme = useTheme();
@@ -48,6 +49,11 @@ const BookingDrawer = ({ openDrawer, setOpenDrawer, appointments, doctorDetails,
           data: authRes.data.data,
           email: authRes.data.data.email
         }));
+
+        if (!authRes.data.data.isVerified) {
+          throw new Error(`You have to verify your account before you can book an appointment`);
+        }
+
         bookAppointment(values)
           .then(res => {
             setFormSubmitted(false);
@@ -79,7 +85,22 @@ const BookingDrawer = ({ openDrawer, setOpenDrawer, appointments, doctorDetails,
       })
       .catch(err => {
         setFormSubmitted(false);
-        setServerResponse({ success: false, msg: 'unauthorized' });
+        if (err.response?.status === 401)
+          setServerResponse({ success: false, msg: 'unauthorized' });
+        else setServerResponse({ success: false, msg: 'notverified' });
+      })
+  }
+
+  const verifyEmail = (id, role) => {
+    setFormSubmitted(true);
+    resendVerification(id, role)
+      .then(res => {
+        setFormSubmitted(false);
+        setServerResponse({ success: true, msg: `A verification email has been sent to this email: ${currUser.data.email}` });
+      })
+      .catch(err => {
+        setFormSubmitted(false);
+        setServerResponse({ success: false, msg: 'Something went wrong. Please try again later.' });
       })
   }
 
@@ -184,9 +205,19 @@ const BookingDrawer = ({ openDrawer, setOpenDrawer, appointments, doctorDetails,
                             </div>
                           </div>
                         </CustomAlert>
-                        : <CustomAlert severity={serverResponse.success ? 'success' : 'error'} onClose={() => setServerResponse({ success: false, msg: '' })}>
-                          <div>{serverResponse.msg}</div>
-                        </CustomAlert>
+                        : serverResponse.msg === 'notverified' ?
+                          <CustomAlert severity={serverResponse.success ? 'success' : 'error'} onClose={() => setServerResponse({ success: false, msg: '' })}>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>You have to verify your account to be able to book an appointment
+                              <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start' }}>
+                                <CustomFormButton variant='contained' onClick={() => verifyEmail(currUser.data._id, currUser.role)}>
+                                  Verify
+                                </CustomFormButton>
+                              </div>
+                            </div>
+                          </CustomAlert>
+                          : <CustomAlert severity={serverResponse.success ? 'success' : 'error'} onClose={() => setServerResponse({ success: false, msg: '' })}>
+                            <div>{serverResponse.msg}</div>
+                          </CustomAlert>
                     }
                   </Grid>
                 }
