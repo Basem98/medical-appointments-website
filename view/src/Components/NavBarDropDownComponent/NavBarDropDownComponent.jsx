@@ -12,9 +12,9 @@ import FaceIcon from '@mui/icons-material/Face';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { removeUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 export default function NavBarDropDownComponent() {
@@ -35,7 +35,7 @@ export default function NavBarDropDownComponent() {
     const theme = useTheme()
     const location = useLocation();
     const dispatch = useDispatch();
-
+    const userDetails = useSelector(state => state.userDetails);
 
     return (
         <Grid container justifyContent={'flex-start'}>
@@ -72,24 +72,30 @@ export default function NavBarDropDownComponent() {
                     TransitionComponent={Fade}
 
                 >
-                    <MenuItem onClick={handleClose}>
-                        <ListItemIcon>
-                            <FaceIcon />
-                        </ListItemIcon>
-                        Profile
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>
-                        <ListItemIcon>
-                            <CalendarMonthIcon />
-                        </ListItemIcon>
-                        My schedule
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>
-                        <ListItemIcon>
-                            <SettingsIcon />
-                        </ListItemIcon>
-                        Settings
-                    </MenuItem>
+                    <Link style={{ textDecoration: "none", color: "#000" }} to={`/${userDetails.role === "User" ? "users" : "doctors"}/${userDetails.data?._id}/profile`}>
+                        <MenuItem onClick={handleClose}>
+                            <ListItemIcon>
+                                <FaceIcon />
+                            </ListItemIcon>
+                            Profile
+                        </MenuItem>
+                    </Link>
+                    <Link style={{ textDecoration: "none", color: "#000" }} to={`/${userDetails.role === "User" ? "users" : "doctors"}/${userDetails.data?._id}/appointments`}>
+                        <MenuItem onClick={handleClose}>
+                            <ListItemIcon>
+                                <CalendarMonthIcon />
+                            </ListItemIcon>
+                            My schedule
+                        </MenuItem>
+                    </Link>
+                    <Link style={{ textDecoration: "none", color: "#000" }} to={`/${userDetails.role === "User" ? "users" : "doctors"}/${userDetails.data?._id}/settings`}>
+                        <MenuItem onClick={handleClose}>
+                            <ListItemIcon>
+                                <SettingsIcon />
+                            </ListItemIcon>
+                            Settings
+                        </MenuItem>
+                    </Link>
                     <MenuItem onClick={handleLogout}>
                         <ListItemIcon>
                             <LogoutIcon />
@@ -97,7 +103,7 @@ export default function NavBarDropDownComponent() {
                         Log out
                     </MenuItem>
                 </Menu>
-            </Grid>
-        </Grid>
+            </Grid >
+        </Grid >
     );
 }
