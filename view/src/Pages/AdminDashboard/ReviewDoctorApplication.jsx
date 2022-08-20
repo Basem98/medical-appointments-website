@@ -59,13 +59,15 @@ export default function ReviewDoctorApplication({ open, handleDrawerClose, curre
                             </TableHead>
                             <TableBody>
 
-                                <StyledTableRow key={currentDoctorRow?._id}>
-                                    <StyledTableCell>{`${currentDoctorRow?.firstName} ${currentDoctorRow?.lastName}`}</StyledTableCell>
-                                    <StyledTableCell>{currentDoctorRow?.email}</StyledTableCell>
-                                    <StyledTableCell>{currentDoctorRow?.phoneNumber}</StyledTableCell>
-                                    <StyledTableCell>{currentDoctorRow?.isVerified ? "Yes" : "No"}</StyledTableCell>
-                                    {/* {currentDoctorRow && <StyledTableCell>{currentDoctorRow?.education[0].degree}</StyledTableCell>} */}
-                                </StyledTableRow>
+                                {Object.keys(currentDoctorRow).length &&
+                                    <StyledTableRow key={currentDoctorRow?._id}>
+                                        <StyledTableCell>{`${currentDoctorRow?.firstName} ${currentDoctorRow?.lastName}`}</StyledTableCell>
+                                        <StyledTableCell>{currentDoctorRow?.email}</StyledTableCell>
+                                        <StyledTableCell>{currentDoctorRow?.phoneNumber}</StyledTableCell>
+                                        <StyledTableCell>{currentDoctorRow?.isVerified ? "Yes" : "No"}</StyledTableCell>
+                                        <StyledTableCell>{currentDoctorRow?.education[0]?.degree}</StyledTableCell>
+                                    </StyledTableRow>
+                                }
                             </TableBody>
                         </Table>
                     </TableContainer>
@@ -74,8 +76,8 @@ export default function ReviewDoctorApplication({ open, handleDrawerClose, curre
                     <Grid item md={6} >
                         <Typography variant="h5" sx={{ mb: 2 }}>Professional License:</Typography>
                         <img
-                            // src={currentDoctorRow.professionalLicense} 
-                            src={licenceImg}
+                            src={currentDoctorRow.professionalLicense}
+                            // src={licenceImg}
                             alt="professional license"
                             style={{ borderRadius: "5%", maxWidth: "80%", border: "3px solid grey" }}
                         />
