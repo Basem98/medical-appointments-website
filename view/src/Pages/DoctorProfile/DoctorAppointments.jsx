@@ -4,17 +4,18 @@ import { useState } from "react";
 import ContentToggler from "../../Components/ContentToggler/ContentToggler";
 import getUpcomings from "../../Network/Doctors/getUpcomings";
 import getPrevious from "../../Network/Doctors/getPrevious";
-import checkAuthentication from "../../Network/Base/checkAuthentication";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 import { useNavigate } from "react-router-dom";
+import { authenticate } from "../../Helper/Authentication";
+import { setUpcomingAppointments } from "../../Store/Features/Appointments/upcomingAppointmentsSlice";
+import { setPreviousAppointments } from "../../Store/Features/Appointments/previousAppointmentsSlice";
 
 const Appointments = () => {
     const titles = ["Upcoming Appointments", "Previous Appointments"];
     const doctorId = useSelector((state) => state.userDetails.data?._id);
     const role = useSelector((state) => state.userDetails.role);
-    const [upcomingAppointments, setUpcomingAppointments] = useState(null);
-    const [previousAppointments, setPreviousAppointments] = useState(null);
+    const upcomingAppointments = useSelector((state) => state.upcomingAppointments.data);
+    const previousAppointments = useSelector((state) => state.previousAppointments.data);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -24,29 +25,15 @@ const Appointments = () => {
         previousAppointments
     ];
 
-    useEffect(() => {
-        checkAuthentication()
-            .then((response) => {
-                dispatch(setUserDetails({
-                    role: response.data.role,
-                    data: response.data.data,
-                    email: response.data.data.email
-                }))
-                if (response.data.role !== 'Doctor') {
-                    navigate('/');
-                }
-            })
-            .catch((error) => {
-                navigate('/');
-            })
-    }, []);
+    authenticate('Doctor', navigate, dispatch);
 
     useEffect(() => {
         doctorId &&
             getUpcomings(doctorId)
                 .then((response) => {
-                    console.log(response);
-                    setUpcomingAppointments(response.data.message);
+                    dispatch(setUpcomingAppointments({
+                        upcomingAppointments: response.data.message
+                    }))
                 })
                 .catch((error) => {
                     console.log(error);
@@ -57,8 +44,9 @@ const Appointments = () => {
         doctorId &&
             getPrevious(doctorId)
                 .then((response) => {
-                    console.log(response);
-                    setPreviousAppointments(response.data.message);
+                    dispatch(setPreviousAppointments({
+                        previousAppointements: response.data.message
+                    }))
                 })
                 .catch((error) => {
                     console.log(error);

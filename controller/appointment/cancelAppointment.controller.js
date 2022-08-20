@@ -5,7 +5,7 @@ const cancelAppointment = async (req, res, next) => {
         const appointment = await Appointment.findById(req.params.id);
         appointment.state = 'canceled';
         await appointment.save();
-        return res.state(204).json({message: 'Appointment cancelled successfully'});
+        return res.status(204).json({message: 'Appointment cancelled successfully'});
     } catch (error) {
         error.statusCode = 500;
         next(error);

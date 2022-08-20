@@ -50,7 +50,8 @@ const Welcome = ({ userData }) => {
                                                 <Typography>You don't have any upcoming appointments.</Typography>
                                                 <Grid item xs={10} marginTop={4}>
                                                     <Link
-                                                        to="/"
+                                                        style={{ textDecoration: "none" }}
+                                                        to="/specialists"
                                                     >
                                                         <CustomFormButton variant="contained">
                                                             Book Now!
@@ -63,7 +64,7 @@ const Welcome = ({ userData }) => {
                                                 <Typography>You have {upcomingAppointments?.length} upcoming appointment(s).</Typography>
                                                 <Grid item xs={10} marginTop={4}>
                                                     <Link
-                                                        to="/users/appoinmtments"
+                                                        to={`/users/${userData?._id}/appointments`}
                                                     >
                                                         <CustomFormButton variant="contained">
                                                             Show Appointments

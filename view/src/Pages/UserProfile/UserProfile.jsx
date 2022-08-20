@@ -7,9 +7,8 @@ import Grid from "@mui/material/Grid";
 import Welcome from "./Welcome";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import checkAuthentication from "../../Network/Base/checkAuthentication";
-import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 import { useNavigate } from "react-router-dom";
+import { authenticate } from "../../Helper/Authentication";
 const UserProfile = () => {
 
     const userId = useSelector((state) => state.userDetails.data?._id);
@@ -20,22 +19,7 @@ const UserProfile = () => {
     const [userData, setUserData] = useState({});
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        checkAuthentication()
-            .then((response) => {
-                dispatch(setUserDetails({
-                    role: response.data.role,
-                    data: response.data.data,
-                    email: response.data.data.email
-                }))
-                if (response.data.role !== 'User') {
-                    navigate('/');
-                }
-            })
-            .catch((error) => {
-                navigate('/');
-            })
-    }, []);
+   authenticate('User', navigate, dispatch);
 
     useEffect(() => {
         userId &&

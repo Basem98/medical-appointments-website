@@ -35,7 +35,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                                     cursor: 'pointer'
                                 }
                             }}
-                            href='#'
+                            href={`/specialists/details/${appointment?.doctor._id}`}
                         >Dr. {appointment?.doctor.firstName} {appointment?.doctor.lastName}
                         </Link>
                     </Typography>
@@ -54,7 +54,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                                         cursor: 'pointer'
                                     }
                                 }}
-                                href='#'
+                                href={`/doctors/${appointment?.doctor._id}/patients`}
                             >Mr. {appointment?.user.firstName} {appointment?.user.lastName}
                             </Link>
                         </Typography>
@@ -72,7 +72,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                                             cursor: 'pointer'
                                         }
                                     }}
-                                    href='#'
+                                    href={`/doctors/${appointment?.doctor._id}/patients`}
                                 >Dr. {appointment?.doctor.firstName} {appointment?.doctor.lastName}
                                 </Link>
                                 <> Examines </>
@@ -147,6 +147,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                 container
                 spacing={6}
                 marginTop={2}
+                marginBottom={2}
                 justifyContent="center"
             >
                 {

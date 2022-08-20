@@ -59,6 +59,12 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                         width: { 'md': '50vw', 'xs': '90vw' }
                     }
                 }}
+                BackdropProps={{
+                    sx: {
+                        backgroundColor: 'rgba(0,0,0,0.2)'
+                    }
+                }}
+
             >
                 <Grid container justifyContent="flex-start" padding={2} spacing={2}>
 
@@ -83,7 +89,7 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                                             height: '200px',
                                             objectFit: 'contain'
                                         }}
-                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSleborUKlDqo2xbo3qSyXDV1Fs8B-4M9v6og&usqp=CAU"
+                                        src={appointmentDetails?.doctor.profilePicture}
                                     />
                                 </Grid>
                                 <Grid container item xs={6} paddingLeft="inherit">
@@ -107,7 +113,7 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
 
                                 <AppointmentDetail
                                     detail={<Link
-                                        href="#"
+                                        href={`/doctors/${appointmentDetails?.doctor._id}/patients`}
                                         sx={{
                                             color: theme.palette.highlight.main
                                         }}>
@@ -219,17 +225,21 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                                 : <></>
                     }
 
-                    <Grid item>
-                        <AppointmentExamination
-                            appointmentDetails={appointmentDetails}
-                            role={role}
-                        />
-                    </Grid>
+                    <AppointmentExamination
+                        appointmentDetails={appointmentDetails}
+                        role={role}
+                        setOpenDrawer={setOpenDrawer}
+                    />
 
                     <Grid
                         item
                     >
-                        <AppointmentCancellation role={role} state={appointmentDetails?.state} appointmentId={appointmentDetails?._id}/>
+                        <AppointmentCancellation
+                            role={role}
+                            state={appointmentDetails?.state}
+                            appointmentId={appointmentDetails?._id}
+                            setOpenDrawer={setOpenDrawer}
+                        />
                     </Grid>
 
                 </Grid>

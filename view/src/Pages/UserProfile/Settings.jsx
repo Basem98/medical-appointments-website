@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { Grid } from "@mui/material";
 import InputField from '../../Components/InputField/InputField'
 import { Formik, Form } from "formik";
@@ -11,8 +11,7 @@ import CustomAlert from "../../Components/CustomAlert/CustomAlert";
 import updateData from "../../Network/Users/updateData";
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
-import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
-import checkAuthentication from "../../Network/Base/checkAuthentication";
+import { authenticate } from "../../Helper/Authentication";
 
 const Settings = () => {
     const userId = useSelector((state) => state.userDetails.data?._id);
@@ -38,22 +37,7 @@ const Settings = () => {
         });
     }
 
-    useEffect(() => {
-        checkAuthentication()
-            .then((response) => {
-                dispatch(setUserDetails({
-                    role: response.data.role,
-                    data: response.data.data,
-                    email: response.data.data.email
-                }))
-                if (response.data.role !== 'User') {
-                    navigate('/');
-                }
-            })
-            .catch((error) => {
-                navigate('/');
-            })
-    }, []);
+    authenticate('User', navigate, dispatch);
 
     const handleSubmit = (e) => {
         const formValues = formRef.current.values;

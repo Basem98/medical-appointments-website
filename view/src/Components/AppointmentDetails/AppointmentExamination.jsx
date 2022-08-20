@@ -8,7 +8,9 @@ import {
     Grid,
     Typography,
     useTheme,
-    IconButton
+    IconButton,
+    Snackbar,
+    Alert
 } from "@mui/material";
 import MedicationIcon from '@mui/icons-material/Medication';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
@@ -19,7 +21,10 @@ import InputField from "../InputField/InputField";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import writePrescription from "../../Network/Doctors/writePrescription";
 import { prescriptionAndDiagnosisValidation } from "../../Helper/ValidationSchema";
-const AppointmentExamination = ({ appointmentDetails, role }) => {
+import { useDispatch, useSelector } from "react-redux";
+import { setUpcomingAppointments } from "../../Store/Features/Appointments/upcomingAppointmentsSlice";
+import { setPreviousAppointments } from "../../Store/Features/Appointments/previousAppointmentsSlice";
+const AppointmentExamination = ({ appointmentDetails, role, setOpenDrawer }) => {
     const intialValues = {
         diagnosis: '',
         prescription: [{
@@ -28,9 +33,14 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
         }]
     }
     const theme = useTheme();
+    const dispatch = useDispatch();
     const [showForm, setShowForm] = useState(false);
     const [drugList, setDrugList] = useState([]);
     const [appointmentId, setAppointmentId] = useState();
+    const [open, setOpen] = useState(false);
+    const [showAddPrescription, setShowAddPrescription] = useState(true);
+    const upcomingAppointments = useSelector((state) => state.upcomingAppointments.data);
+    const previousAppointments = useSelector((state) => state.previousAppointments.data);
     const handleClick = (id) => {
         setAppointmentId(id)
         setShowForm(!showForm);
@@ -42,8 +52,27 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
         }
         writePrescription(appointmentId, data)
             .then((response) => {
-                console.log('Done')
-                console.log(response)
+                setShowAddPrescription(false);
+                setOpen(true);
+                setTimeout(() => {
+                    setOpenDrawer(false)
+                }, 5000)
+                dispatch(setUpcomingAppointments({
+                    upcomingAppointments: upcomingAppointments.map((appointment) => {
+                        if (appointment._id === appointmentId) {
+                            appointment = { ...appointment, ...data }
+                        }
+                        return appointment;
+                    })
+                }))
+                dispatch(setPreviousAppointments({
+                    previousAppointements: previousAppointments.map((appointment) => {
+                        if (appointment._id === appointmentId) {
+                            appointment = { ...appointment, ...data }
+                        }
+                        return appointment;
+                    })
+                }))
             })
             .catch((error) => {
                 console.log(error)
@@ -121,20 +150,18 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
         appointmentDetails?.info?.diagnosis &&
             appointmentDetails?.info?.prescription?.length > 0 ?
             <>
-                <Grid container>
-                    <Grid item xs={10}>
-                        <AppointmentDetail
-                            detail={appointmentDetails?.info.diagnosis}
-                        >
-                            <MonitorHeartIcon
-                                fontSize="medium"
-                                sx={{
-                                    color: theme.palette.highlight.main,
-                                    marginRight: 3
-                                }}
-                            />
-                        </AppointmentDetail>
-                    </Grid>
+                <Grid item xs={12}>
+                    <AppointmentDetail
+                        detail={appointmentDetails?.info.diagnosis}
+                    >
+                        <MonitorHeartIcon
+                            fontSize="medium"
+                            sx={{
+                                color: theme.palette.highlight.main,
+                                marginRight: 3
+                            }}
+                        />
+                    </AppointmentDetail>
                 </Grid>
                 <Grid
                     container
@@ -184,10 +211,10 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
                             <TableBody>
                                 {
 
-                                    appointmentDetails?.info?.prescription.map((drug) => {
+                                    appointmentDetails?.info?.prescription.map((drug, index) => {
                                         return (
                                             <TableRow
-                                                key={drug.drugName}
+                                                key={index}
                                             >
                                                 <TableCell component="th">
                                                     {drug.drugName}
@@ -204,11 +231,15 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
                     </TableContainer>
                 </Grid>
             </>
-            : role === 'doctor' ?
+            : (role === 'doctor' && appointmentDetails?.state === 'booked' && showAddPrescription) ?
                 <>
                     <CustomFormButton
                         variant="contained"
                         onClick={() => handleClick(appointmentDetails._id)}
+                        sx={{
+                            marginLeft: 2,
+                            marginTop: 2
+                        }}
                     >
                         Add prescription and diagnosis
                     </CustomFormButton>
@@ -216,7 +247,8 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
                         showForm &&
                         <Grid
                             sx={{
-                                marginTop: '10px'
+                                marginLeft: 2,
+                                marginTop: 2
                             }}
                         >
                             <Formik
@@ -332,8 +364,21 @@ const AppointmentExamination = ({ appointmentDetails, role }) => {
                             </Formik>
                         </Grid>
                     }
-                </>
-                : <></>
+
+                </> :
+                <Grid>
+                    <Snackbar
+                        open={open}
+                        autoHideDuration={6000}
+                    >
+                        <Alert
+                            severity="success"
+                            sx={{ width: '100%' }}
+                        >
+                            Diagnosis and prescription added successfully! Now appointment is finished.
+                        </Alert>
+                    </Snackbar>
+                </Grid>
     );
 }
 

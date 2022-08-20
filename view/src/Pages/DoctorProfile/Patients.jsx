@@ -3,8 +3,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import getPatients from "../../Network/Doctors/getPatients";
 import { setDoctorPatients } from "../../Store/Features/DoctorPatients/doctorPatientsSlice";
-import checkAuthentication from "../../Network/Base/checkAuthentication";
-import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 import {
     TableContainer,
     Table,
@@ -18,6 +16,7 @@ import {
 
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { authenticate } from "../../Helper/Authentication";
 const Patients = () => {
     const theme = useTheme();
     const dispatch = useDispatch();
@@ -26,22 +25,8 @@ const Patients = () => {
     const patients = useSelector((state) => state.doctorPatients.patients);
     const role = useSelector((state) => state.userDetails.role);
 
-    useEffect(() => {
-        checkAuthentication()
-            .then((response) => {
-                dispatch(setUserDetails({
-                    role: response.data.role,
-                    data: response.data.data,
-                    email: response.data.data.email
-                }))
-                if (response.data.role !== 'Doctor') {
-                    navigate('/');
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-    }, []);
+    authenticate('Doctor', navigate, dispatch);
+
     useEffect(() => {
         doctorId &&
             getPatients(doctorId)

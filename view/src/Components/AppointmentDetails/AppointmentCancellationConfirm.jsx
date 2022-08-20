@@ -1,16 +1,29 @@
 import { Grid, Typography, useTheme } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import cancelAppointment from "../../Network/Appointments/CancelAppointment";
+import { setUpcomingAppointments } from "../../Store/Features/Appointments/upcomingAppointmentsSlice";
 import CustomFormButton from "../CustomFormButton/CustomFormButton";
 
-const AppointmentCancellationConfirm = ({ handleCancellation, appointmentId }) => {
+const AppointmentCancellationConfirm = ({ handleCancellation, appointmentId, setShowCancel, setOpenDrawer, setOpen }) => {
     const theme = useTheme();
+    const dispatch = useDispatch();
+    const upcomingAppointments = useSelector((state) => state.upcomingAppointments.data);
     const confirmCancellation = () => {
-        const data = {
-            state: 'canceled'
-        }
-        cancelAppointment(appointmentId, data)
+        cancelAppointment(appointmentId)
             .then((response) => {
-                window.location.reload();
+                dispatch(setUpcomingAppointments({
+                    upcomingAppointments: upcomingAppointments.map((appointment) => {
+                        if(appointment._id === appointmentId) {
+                            appointment = {...appointment, state: 'canceled'}
+                        }
+                        return appointment;
+                    })
+                }))
+                setShowCancel(false);
+                setOpen(true);
+                setTimeout(() => {
+                    setOpenDrawer(false)
+                }, 5000);
             })
             .catch((error) => {
                 console.log(error);

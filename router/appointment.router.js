@@ -17,8 +17,11 @@ appointmentRouter.route('/upcomings/:id')
 appointmentRouter.route('/previous/:id')
     .get(generalAuthenticationMiddleware, appointmentController.getPrevious);
 
+appointmentRouter.route('/available')
+    .get(protectDoctorsRoute, appointmentController.getAvailable);
+    
 appointmentRouter.put('/:id', protectDoctorsRoute, appointmentController.editAppointment);
 
-appointmentRouter.put('/:id/cancel', generalAuthenticationMiddleware ,appointmentController.cancelAppointment);
+appointmentRouter.put('/:id/cancel', generalAuthenticationMiddleware, appointmentController.cancelAppointment);
 
 module.exports = appointmentRouter;
