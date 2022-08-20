@@ -151,6 +151,10 @@ const schema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    raters: {
+        type: Number,
+        default: 0
+    },
     profilePicture: {
         type: String,
         required: true

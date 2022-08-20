@@ -6,6 +6,8 @@ const login = require('./signin.controller');
 const getTopRated = require('./topRated.controller');
 const changeDoctorPassword = require('./changeDoctorPassword.controller');
 const getPatients = require('./getPatients.controller');
+const calculateRating = require('./rate.controller');
+
 module.exports = {
   signUp,
   login,
@@ -14,5 +16,6 @@ module.exports = {
   getDoctorsByPage,
   getTopRated,
   changeDoctorPassword,
-  getPatients
+  getPatients,
+  calculateRating
 }

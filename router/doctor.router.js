@@ -2,7 +2,7 @@ const express = require('express');
 const doctorRouter = express.Router();
 const { validateUserData } = require('../middleware/doctor/signup.middleware');
 const validationResult = require('../middleware/user/validation.middleware');
-const { signUp, login, getDoctorById, uploadImages, getDoctorsByPage, getTopRated, changeDoctorPassword, getPatients } = require('../controller/doctors/main.controller');
+const { signUp, login, getDoctorById, uploadImages, getDoctorsByPage, getTopRated, changeDoctorPassword, getPatients, calculateRating } = require('../controller/doctors/main.controller');
 const { generateVerificationToken, genSignUpEmailBody } = require('../middleware/verification.middleware');
 const { isAlreadyInDb } = require('../middleware/doctor/exists.middleware');
 const multerUpload = require('../middleware/multer.middleware');
@@ -10,7 +10,7 @@ const bufferFileToString = require('../middleware/bufToString.middleware');
 const { isEmailAlreadyInDb, isPhoneAlreadyInDb } = require('../controller/doctors/exists.controller');
 const { sendMail } = require('../controller/doctors/emails.controller');
 const protectDoctorsRoute = require('../middleware/doctor/auth.middleware');
-
+const userAuthMiddleware = require('../middleware/user/authorization.middleware');
 
 /* ---------- An endpoint to register new doctors ---------- */
 doctorRouter.post('/', validateUserData(), validationResult, isAlreadyInDb, signUp, generateVerificationToken, genSignUpEmailBody, sendMail);
@@ -32,6 +32,9 @@ doctorRouter.get('/all', getDoctorsByPage);
 
 /* ---------- An endpoint to sign in doctors ---------- */
 doctorRouter.post('/login', login);
+
+/* ---------- An endpoint to give a rating to a doctor ---------- */
+doctorRouter.put('/:id/rate', userAuthMiddleware, calculateRating);
 
 /* ---------- An endpoint to get a specific doctor document by its id ---------- */
 doctorRouter.route('/:id').get(getDoctorById);
