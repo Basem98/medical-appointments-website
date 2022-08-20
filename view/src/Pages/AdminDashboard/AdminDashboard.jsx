@@ -1,20 +1,18 @@
 import { useEffect } from "react";
-import { Outlet } from "react-router-dom";
-// import NotFound from "../notFound";
+import { Outlet, useNavigate } from "react-router-dom";
+import { authenticate } from "../../Helper/Authentication";
 import Sidebar from "./Sidebar";
 import { Grid, useTheme } from "@mui/material";
+import { useDispatch } from "react-redux";
 
 const AdminDashboard = ({ setDisplayNavFooter }) => {
   setDisplayNavFooter(false);
-
   const theme = useTheme();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // handleNavbarStyle({
-    //   backgroundColor: theme.palette.highlight.main,
-    //   position: "static",
-    //   color: "white",
-    // });
+    authenticate("Admin", navigate, dispatch, "/admin");
   }, [])
 
 
