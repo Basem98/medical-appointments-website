@@ -10,7 +10,6 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import licenceImg from '../../../src/Assets/Images/okasha.jpg'
 
 export default function ReviewDoctorApplication({ open, handleDrawerClose, currentDoctorRow, handleAcceptDoctor, handleRejectDoctor }) {
-    console.log('currentDoctorRow: ', currentDoctorRow)
 
     const DrawerHeader = styled('div')(({ theme }) => ({
         display: 'flex',
@@ -73,27 +72,57 @@ export default function ReviewDoctorApplication({ open, handleDrawerClose, curre
                     </TableContainer>
                 </Grid>
                 <Grid item xs={11} container justifyContent="space-between">
-                    <Grid item md={6} >
+                    <Grid item md={5} >
                         <Typography variant="h5" sx={{ mb: 2 }}>Professional License:</Typography>
                         <img
                             src={currentDoctorRow.professionalLicense}
                             // src={licenceImg}
                             alt="professional license"
-                            style={{ borderRadius: "5%", maxWidth: "80%", border: "3px solid grey" }}
+                            style={{ borderRadius: "5%", maxWidth: "70%", border: "3px solid grey" }}
                         />
                     </Grid>
-                    <Grid item md={6} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "space-between" }}>
-                        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "space-between" }}>
-                            <Typography variant="h5">Experience:</Typography>
-                            {currentDoctorRow?.experiences?.map((exp, index) => (<Box>
-                                {/* <span style={{ display: "inline" }}>&rarr;Exprience::</span> */}
-                                <ul style={{ listStyleType: "none", margin: 0, padding: 0, display: "inline", marginBottom: "10px", border: "3px solid #fff" }}>
-                                    <li>{`${exp.title} at ${exp.workplace}`}</li>
-                                    <li>{`From: ${exp.startDate.slice(0, 10)} to: ${!exp.isCurrentlyWorking ? exp.endDate.slice(0, 10) : 'now'}`}</li>
-                                    <li>{`Location: ${exp.location.city}, ${exp.location.country}`}</li>
-                                </ul>
-                            </Box>))}
+                    <Grid item md={7} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "space-between" }}>
+                        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+
+                            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "space-between" }}>
+                                <Typography variant="h5">Experience:</Typography>
+                                {currentDoctorRow?.experiences?.map((exp, index) => (<Box>
+                                    {/* <span style={{ display: "inline" }}>&rarr;Exprience::</span> */}
+                                    <ul style={{ listStyleType: "none", margin: 0, padding: 0, display: "inline", marginBottom: "10px", border: "3px solid #fff" }}>
+                                        <li>{`${exp.title} at ${exp.workplace}`}</li>
+                                        <li>{`From: ${exp.startDate.slice(0, 10)} to: ${!exp.isCurrentlyWorking ? exp.endDate.slice(0, 10) : 'now'}`}</li>
+                                        <li>{`Location: ${exp.location.city}, ${exp.location.country}`}</li>
+                                    </ul>
+                                </Box>))}
+                            </Box>
+                            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "space-between" }}>
+                                <Typography variant="h5">Clinics:</Typography>
+                                {currentDoctorRow?.clinics?.map((clinic, index) => (<Box>
+                                    {/* <span style={{ display: "inline" }}>&rarr;Exprience::</span> */}
+                                    <ul style={{ listStyleType: "none", margin: 0, padding: 0, display: "inline", marginBottom: "10px", border: "3px solid #fff" }}>
+                                        <li>{`Name: ${clinic.name}`}</li>
+                                        <li>{`Mobile: ${clinic.phone.mobile}`}</li>
+                                        <li>{`Location: ${clinic.address.city}, ${clinic.address.country}`}</li>
+                                    </ul>
+                                </Box>))}
+                            </Box>
+                            {currentDoctorRow?.certifications?.length ?
+                                (<Box sx={{ display: "flex", flexDirection: "column", alignItems: "space-between" }}>
+                                    <Typography variant="h5">Certificates:</Typography>
+                                    {currentDoctorRow?.certifications?.map((cert, index) => (<Box>
+                                        {/* <span style={{ display: "inline" }}>&rarr;Exprience::</span> */}
+                                        <ul style={{ listStyleType: "none", margin: 0, padding: 0, display: "inline", marginBottom: "10px", border: "3px solid #fff" }}>
+                                            <li>{`Title: ${cert.title}`}</li>
+                                            <li>{`Granter: ${cert.granter}`}</li>
+                                            <li>{`Issue Date: ${cert.issueDate.slice(0, 10)}`}</li>
+                                        </ul>
+                                    </Box>))}
+                                </Box>) :
+                                ("")
+                            }
+
                         </Box>
+
                         <Box sx={{ p: 5, display: "flex", justifyContent: "start" }}>
                             {!currentDoctorRow?.isAccepted ?
                                 <Button variant="contained" color="success" sx={{ mr: 7, px: 3, py: 1 }} onClick={() => handleAcceptDoctor(currentDoctorRow?._id)}>Accept</Button>
