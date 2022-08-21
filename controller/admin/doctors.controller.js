@@ -12,7 +12,8 @@ const getAllDoctors = async (req, res, next) => {
       },
       {
         $sort: {
-          rating: -1
+          rating: -1,
+          _id: 1
         }
       },
       {

@@ -44,7 +44,7 @@ function Specialists() {
   })
 
   const [specialistsData, setSpecialistsData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [serverResponse, setServerResponse] = useState({ success: false, msg: '' });
 
@@ -77,10 +77,11 @@ function Specialists() {
       .then((res) => {
         setServerResponse({ ...serverResponse, success: true });
         setSpecialistsData(res.data.doctors);
-        setCurrentPage(newPageNumber);
-        if(res.data.doctors.length === 6) {
+        console.log(totalPages, newPageNumber, currentPage)
+        if(res.data.doctors.length === 6 && totalPages - newPageNumber === 1) {
           setTotalPages(totalPages + 1);
         }
+        setCurrentPage(newPageNumber);
         dispatch(setSpecialists({
           specialists: res.data.doctors
         }))

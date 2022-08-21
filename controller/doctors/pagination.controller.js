@@ -44,7 +44,7 @@ const getDoctorsByPage = async (req, res, next) => {
       ...filteringStage,
       // 4. Sort the documents descendingly by the rating field
       {
-        $sort: { rating: -1 }
+        $sort: { rating: -1, _id: 1 }
       },
       // 5. Set the offset to the product of the page number and the limit
       {

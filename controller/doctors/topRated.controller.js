@@ -8,7 +8,11 @@ const getTopRated = async (req, res, next) => {
         $project: { password: 0 }
       },
       {
-        $sort: { rating: -1 }
+
+        $match: { isAccepted: true, isVerified: true }
+      },
+      {
+        $sort: { rating: -1, _id: 1 }
       },
       {
         $limit: 3

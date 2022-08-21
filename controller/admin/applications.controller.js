@@ -14,7 +14,7 @@ const getDoctorApplications = async (req, res, next) => {
         $project: { password: 0 }
       },
       {
-        $sort: { rating: 1 }
+        $sort: { rating: 1, _id: 1 }
       },
       {
         $skip: page * limit

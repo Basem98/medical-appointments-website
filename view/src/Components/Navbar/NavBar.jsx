@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   AppBar,
   IconButton,
@@ -12,21 +12,42 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useTheme } from "@emotion/react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LogoSvg from '../../Assets/Images/logo.svg';
 import NavBarDropDownComponent from "../NavBarDropDownComponent/NavBarDropDownComponent";
 import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
+import checkAuthentication from "../../Network/Base/checkAuthentication";
+import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 
 const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginForm }) => {
   const theme = useTheme();
   const isTabletMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const [showMenue, setShowMenu] = useState(false);
+  const dispatch = useDispatch();
 
   const handleOpen = () => {
     openLoginForm();
   };
 
   const userDetails = useSelector((state) => state.userDetails);
+  const [loggedIn, setLoggedIn] = useState(userDetails.loggedIn);
+
+  useEffect(() => {
+    if (!loggedIn) {
+      checkAuthentication()
+        .then((response) => {
+          dispatch(setUserDetails({
+            role: response.data.role,
+            data: response.data.data,
+            email: response.data.data.email
+          }));
+          setLoggedIn(true);
+        })
+        .catch(err => {
+          setLoggedIn(false);
+        })
+    }
+  }, []);
   return (
     <>
       <AppBar
@@ -68,17 +89,14 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                       container
                       direction="column"
                       alignItems="center"
-                      // justifyContent="space-between"
                       spacing="5"
                       sx={{
                         position: "absolute",
                         top: "70px",
                         background: "white",
-                        // width: "fit-content",
                         height: "200px",
                         borderRadius: "16px",
                         py: 5,
-                        // pt: 5,
                       }}
                     >
                       <Grid item>
@@ -122,10 +140,7 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                 )}
                 <IconButton
                   size="large"
-                  // edge="start"
                   color="inherit"
-                  // aria-label="menu"
-                  // sx={{ mr: 2 }}
                   onClick={(e) => {
                     console.log(showMenue, e.currentTarget);
                     setShowMenu(!showMenue);
@@ -166,13 +181,52 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                     Contact Us
                   </Link>
                 </Grid>
-                <Grid
-                  item
-                  md={2}
-                  sx={{ display: "flex", justifyContent: "center" }}
-                >
-                  {userDetails?.loggedIn ?
-                    (<Link
+                {
+                  !loggedIn &&
+                  <Grid
+                    item
+                    md={2}
+                    sx={{ display: "flex", justifyContent: "center" }}
+                  >
+                    <Link
+                      to="/about"
+                      style={{
+                        color: color ? color : theme.palette.text.primary,
+                        textDecoration: "none",
+                        display: "flex"
+                      }}
+                    >
+                      About
+                    </Link>
+                  </Grid>
+                }
+                {
+                  !loggedIn &&
+                  <Grid
+                    item
+                    md={2}
+                    sx={{ display: "flex", justifyContent: "center" }}
+                  ><Link
+                    to="#"
+                    style={{
+                      color: color ? color : theme.palette.text.primary,
+                      textDecoration: "none",
+                    }}
+                    onClick={() => handleOpen()}
+                  >
+                      Sign In
+                    </Link>
+                  </Grid>
+                }
+                {
+                  loggedIn &&
+                  <Grid
+                    item
+                    md={2}
+                    sx={{ display: "flex", justifyContent: "center" }}
+                  >
+
+                    <Link
                       to={`/${userDetails.role === "User" ? "users" : "doctors"}/${userDetails.data?._id}/appointments`}
                       style={{
                         color: color ? color : theme.palette.text.primary,
@@ -183,39 +237,19 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                       <Badge color="success" badgeContent={userDetails.data?.appointments?.length}>
                         <AccessAlarmsIcon fontSize="large" sx={{ margingTop: "0" }} />
                       </Badge>
-                    </Link>)
-                    :
-                    (<Link
-                      to="/about"
-                      style={{
-                        color: color ? color : theme.palette.text.primary,
-                        textDecoration: "none",
-                        display: "flex"
-                      }}
-                    >
-                      About
-                    </Link>)
-                  }
-                </Grid>
-                <Grid
-                  item
-                  md={2}
-                  sx={{ display: "flex", justifyContent: "center" }}
-                >
-                  {userDetails?.loggedIn ?
-                    (<NavBarDropDownComponent />)
-                    : (<Link
-                      to="#"
-                      style={{
-                        color: color ? color : theme.palette.text.primary,
-                        textDecoration: "none",
-                      }}
-                      onClick={() => handleOpen()}
-                    >
-                      Sign In
-                    </Link>)
-                  }
-                </Grid>
+                    </Link>
+                  </Grid>
+                }
+                {
+                  loggedIn &&
+                  <Grid
+                    item
+                    md={2}
+                    sx={{ display: "flex", justifyContent: "center" }}
+                  >
+                    <NavBarDropDownComponent />
+                  </Grid>
+                }
               </>
             )}
           </Grid>
