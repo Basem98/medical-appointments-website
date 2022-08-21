@@ -62,6 +62,7 @@ const ChangePassword = () => {
                         justifyContent="center"
                         flexGrow='1'
                         alignItems='center'
+                        backgroundColor='whitesmoke'
                     >
                         <Grid
                             item

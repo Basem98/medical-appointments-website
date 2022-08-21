@@ -60,6 +60,7 @@ const Settings = () => {
                         justifyContent="center"
                         alignItems="center"
                         flexGrow="1"
+                        backgroundColor="whitesmoke"
                     >
                         <Grid
                             item
