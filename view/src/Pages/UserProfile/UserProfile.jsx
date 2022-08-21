@@ -51,12 +51,13 @@ const UserProfile = () => {
                     <Grid
                         container
                         spacing={2}
-                        justifyContent='flex-end'
+                        justifyContent='center'
                         sx={{
                             width: {
                                 'xs': '100%',
                                 'md': '90%'
-                            }
+                            },
+                            margin: '0 auto'
                         }}
                     >
                         {
