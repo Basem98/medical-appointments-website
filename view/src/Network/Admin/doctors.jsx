@@ -18,7 +18,7 @@ export const acceptDoctor = (doctorId) => {
 }
 
 export const rejectDoctor = (doctorId) => {
-    let path = '/admins/doctor/delete/' + doctorId;
+    let path = '/admins/doctors/delete/' + doctorId;
 
     return axiosClient.delete(path);
 }
