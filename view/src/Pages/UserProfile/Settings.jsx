@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Grid } from "@mui/material";
 import InputField from '../../Components/InputField/InputField'
 import { Formik, Form } from "formik";
@@ -37,7 +37,7 @@ const Settings = () => {
         });
     }
 
-    authenticate('User', navigate, dispatch);
+    useEffect(() => { authenticate('User', navigate, dispatch) }, []);
 
     const handleSubmit = (e) => {
         const formValues = formRef.current.values;
