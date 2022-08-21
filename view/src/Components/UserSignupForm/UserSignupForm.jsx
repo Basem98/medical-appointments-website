@@ -21,7 +21,7 @@ export default function UserSignupForm() {
     const [showConfirmPassword, setShowConfirmPassword] = useState('password');
     const [isDuplicated, setIsDuplicated] = useState(false);
     const [duplicationErrorsArray, setDuplicationErrorsArray] = useState([]);
-
+    const [signUpSuccessfully, setSignUpSuccessfully] = useState(false);
     const handleDuplicationError = () => {
         return duplicationErrorsArray.map((errorMessage, index) => {
             return (
@@ -47,7 +47,9 @@ export default function UserSignupForm() {
             password: formValues.password
         };
         submitUserData(userData)
-            .then((response) => console.log(response))
+            .then((response) => {
+                setSignUpSuccessfully(true);
+            })
             .catch((error) => {
                 setIsDuplicated(true);
                 let errorMessagesArray = JSON.parse(error.response.data.error);
@@ -64,6 +66,16 @@ export default function UserSignupForm() {
                 {
                     isDuplicated &&
                     handleDuplicationError()
+                }
+            </Grid>
+            <Grid item xs={10} sx={{ margin: '0 auto' }}>
+                {
+                    signUpSuccessfully &&
+                    <CustomAlert
+                        severity="success"
+                    >
+                        Signed up successfully! Please check your email to verify your account.
+                    </CustomAlert>
                 }
             </Grid>
             <Formik
