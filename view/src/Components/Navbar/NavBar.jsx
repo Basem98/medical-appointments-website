@@ -18,6 +18,7 @@ import NavBarDropDownComponent from "../NavBarDropDownComponent/NavBarDropDownCo
 import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
 import checkAuthentication from "../../Network/Base/checkAuthentication";
 import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
+import getUpcomings from "../../Network/Users/getUpcomings";
 
 const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginForm }) => {
   const theme = useTheme();
@@ -30,6 +31,8 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
   };
 
   const userDetails = useSelector((state) => state.userDetails);
+  const [availableAppointments, setAvailableAppointments] = useState(0);
+
   useEffect(() => {
     checkAuthentication()
       .then((response) => {
@@ -37,7 +40,12 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
           role: response.data.role,
           data: response.data.data,
           email: response.data.data.email
-        }))
+        }));
+        getUpcomings(response.data.data._id)
+          .then(res => {
+            setAvailableAppointments(res.data.message.length);
+          })
+          .catch(err => { setAvailableAppointments(0) })
       })
       .catch(err => { console.log(err) });
   }, []);
@@ -258,7 +266,7 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                         marginRight: '20px'
                       }}
                     >
-                      <Badge color="success" badgeContent={userDetails.data?.appointments?.length}>
+                      <Badge color="success" badgeContent={availableAppointments}>
                         <AccessAlarmsIcon fontSize="large" sx={{ margingTop: "0" }} />
                       </Badge>
                     </Link>
