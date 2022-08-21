@@ -22,6 +22,29 @@ async function sendMail(req, res, next) {
   }
 }
 
+async function sendUserEmail(req, res, next) {
+  try {
+    const emailBody = {
+      from: `${envConfig.EMAIL.USER}@${envConfig.EMAIL.AT}`,
+      to: 'basem.mostafa98@hotmail.com',
+      subject: req.body.subject,
+      text: `
+An email from ${req.body.username},
+${req.body.emailText}
+
+
+Sender email: ${req.body.email}
+`
+    }
+    emailTransporter.sendMail(emailBody);
+    res.status(200).json({ message: 'An email has been sent to our customer support email'});
+  } catch (err) {
+    err.statusCode = 500;
+    next(err);
+  }
+}
+
 module.exports = {
-  sendMail
+  sendMail,
+  sendUserEmail
 }
