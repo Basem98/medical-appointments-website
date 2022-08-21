@@ -35,8 +35,8 @@ const AppointmentsTable = ({ appointments, role }) => {
                                     cursor: 'pointer'
                                 }
                             }}
-                            href={`/specialists/details/${appointment?.doctor._id}`}
-                        >Dr. {appointment?.doctor.firstName} {appointment?.doctor.lastName}
+                            href={`/specialists/details/${appointment?.doctor?._id}`}
+                        >Dr. {appointment?.doctor?.firstName} {appointment?.doctor?.lastName}
                         </Link>
                     </Typography>
                 </>)
@@ -54,8 +54,8 @@ const AppointmentsTable = ({ appointments, role }) => {
                                         cursor: 'pointer'
                                     }
                                 }}
-                                href={`/doctors/${appointment?.doctor._id}/patients`}
-                            >Mr. {appointment?.user.firstName} {appointment?.user.lastName}
+                                href={`/doctors/${appointment?.doctor?._id}/patients`}
+                            >Mr. {appointment?.user?.firstName} {appointment?.user?.lastName}
                             </Link>
                         </Typography>
                     </>)
@@ -72,8 +72,8 @@ const AppointmentsTable = ({ appointments, role }) => {
                                             cursor: 'pointer'
                                         }
                                     }}
-                                    href={`/doctors/${appointment?.doctor._id}/patients`}
-                                >Dr. {appointment?.doctor.firstName} {appointment?.doctor.lastName}
+                                    href={`/doctors/${appointment?.doctor?._id}/patients`}
+                                >Dr. {appointment?.doctor?.firstName} {appointment?.doctor?.lastName}
                                 </Link>
                                 <> Examines </>
                                 <Link
@@ -84,7 +84,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                                         }
                                     }}
                                     href='#'
-                                >Mr. {appointment?.user.firstName} {appointment?.user.lastName}
+                                >Mr. {appointment?.user?.firstName} {appointment?.user?.lastName}
                                 </Link>
                             </Typography>
                         </>)
