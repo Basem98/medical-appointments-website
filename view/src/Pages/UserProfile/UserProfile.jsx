@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { authenticate } from "../../Helper/Authentication";
 import resendVerification from "../../Network/Base/resendVerification";
 import Button from "@mui/material/Button";
+import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 
 const UserProfile = () => {
 
@@ -19,17 +20,23 @@ const UserProfile = () => {
 
     const navigate = useNavigate();
 
-    const [userData, setUserData] = useState(null);
+    const userData = useSelector((state) => state.userDetails.data);
+    const userDetails = useSelector((state) => state.userDetails);
     const [resendVerificationFeedback, setResendVerificationFeedback] = useState(false);
     const dispatch = useDispatch();
 
-    authenticate('User', navigate, dispatch);
+    useEffect(() => {
+        authenticate('User', navigate, dispatch);
+    }, []);
 
     useEffect(() => {
         userId &&
             loginUser(userId)
                 .then((response) => {
-                    setUserData(response.data);
+                    dispatch(setUserDetails({
+                        ...userDetails,
+                        data: response.data
+                    }))
                 })
                 .catch((error) => console.log(error));
     }, [userId]);
@@ -62,7 +69,7 @@ const UserProfile = () => {
                     >
                         {
                             userData &&
-                            !userData?.isVerified && !resendVerificationFeedback ?
+                                !userData?.isVerified && !resendVerificationFeedback ?
                                 <Grid item xs={11} md={9} sx={{ marginTop: '10px' }}>
                                     <CustomAlert severity="warning">
                                         Your profile is not verified yet!
