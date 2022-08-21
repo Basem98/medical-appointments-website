@@ -21,7 +21,7 @@ export default function ManageDoctors() {
     const [currentDoctorRow, setCurrentDoctorRow] = useState({});
 
     useEffect(() => {
-        getDoctorsData({ type: 'all', pageNum: paginatePage.pageNum })
+        getDoctorsData({ type: '', pageNum: paginatePage.pageNum })
             .then(res => {
                 console.log('res.data.data: ', res.data.data);
                 setDoctorsData(res.data.data);
