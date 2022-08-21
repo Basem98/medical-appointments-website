@@ -55,7 +55,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                                     }
                                 }}
                                 href={`/doctors/${appointment?.doctor?._id}/patients`}
-                            >Mr. {appointment?.user?.firstName} {appointment?.user?.lastName}
+                            >{appointment?.user?.firstName} {appointment?.user?.lastName}
                             </Link>
                         </Typography>
                     </>)
@@ -84,7 +84,7 @@ const AppointmentsTable = ({ appointments, role }) => {
                                         }
                                     }}
                                     href='#'
-                                >Mr. {appointment?.user?.firstName} {appointment?.user?.lastName}
+                                >{appointment?.user?.firstName} {appointment?.user?.lastName}
                                 </Link>
                             </Typography>
                         </>)

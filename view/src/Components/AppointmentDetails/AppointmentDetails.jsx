@@ -135,7 +135,7 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                                         sx={{
                                             color: theme.palette.highlight.main
                                         }}>
-                                        Mr. {appointmentDetails?.user.firstName} {appointmentDetails?.user.lastName}
+                                        {appointmentDetails?.user.firstName} {appointmentDetails?.user.lastName}
                                     </Link>}
                                 >
                                     <PersonIcon
