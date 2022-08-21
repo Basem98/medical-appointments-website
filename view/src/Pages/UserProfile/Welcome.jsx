@@ -1,38 +1,29 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { CardContent, CircularProgress, Typography, useTheme } from "@mui/material";
 import React from "react";
 import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton";
 import InfoCard from "../../Components/InfoCard/InfoCard";
 import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import getUpcomings from "../../Network/Doctors/getUpcomings";
+import { setUpcomingAppointments } from "../../Store/Features/Appointments/upcomingAppointmentsSlice";
 
 const Welcome = ({ userData }) => {
     const theme = useTheme();
-    const isUpcomingAppointment = (index) => {
-        let currentDate = new Date();
-        let now = {
-            year: currentDate.getUTCFullYear(),
-            month: (currentDate.getUTCMonth() + 1),
-            day: currentDate.getUTCDate(),
-            hour: currentDate.getUTCHours(),
-            minute: currentDate.getUTCMinutes()
-        }
-        let appointmentDate = {
-            year: parseInt(userData?.appointments?.[index]?.date?.split('-')[0]),
-            month: parseInt(userData?.appointments?.[index]?.date?.split('-')[1]),
-            day: parseInt(userData?.appointments?.[index]?.date?.split('-')[2]),
-            hour: parseInt(userData?.appointments?.[index]?.time?.hour),
-            minute: parseInt(userData.appointments?.[index]?.time?.minute)
-        }
-        if (appointmentDate) {
-            for (let property in appointmentDate) {
-                return now[property] > appointmentDate[property] ? false : true;
-            }
-        }
-    }
-    const upcomingAppointments = userData?.appointments?.filter((_, index) => {
-        return isUpcomingAppointment(index);
-    });
-    console.log(upcomingAppointments)
+    const dispatch = useDispatch();
+    const upcomingAppointments = useSelector((state) => state.upcomingAppointments.data);
+    const userId = useSelector((state) => state.userDetails?.data?._id);
+    useEffect(() => {
+        getUpcomings(userId)
+            .then((response) => {
+                dispatch((setUpcomingAppointments({
+                    upcomingAppointments: response.data.message
+                })));
+            })
+            .catch((error) => { console.log(error) })
+    }, [userId])
     return (
         <>
             <Grid>
@@ -65,7 +56,7 @@ const Welcome = ({ userData }) => {
                                                 <Grid item xs={10} marginTop={4}>
                                                     <Link
                                                         to={`/users/${userData?._id}/appointments`}
-                                                        style={{textDecoration: 'none'}}
+                                                        style={{ textDecoration: 'none' }}
                                                     >
                                                         <CustomFormButton variant="contained">
                                                             Show Appointments
