@@ -79,21 +79,46 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                   <>
                     <Grid
                       item
-                      xs={8}
                       container
                       direction="column"
                       alignItems="center"
-                      spacing="5"
+                      justifyContent='space-around'
+                      // spacing="25"
                       sx={{
                         position: "absolute",
                         top: "70px",
                         background: "white",
-                        height: "200px",
+                        minHeight: "200px",
                         borderRadius: "10px",
-                        py: 5,
+                        paddingY: '20px',
+                        maxWidth: '250px',
                         boxShadow: theme.shadows[5]
                       }}
                     >
+                      {
+                        userDetails?.loggedIn && <Grid container item justifyContent='space-evenly' alignItems='center'>
+                          {
+                            <Grid container item justifyContent='center' alignItems='center'>
+                              <Link
+                                to={`/${userDetails.role === "User" ? "users" : "doctors"}/${userDetails.data?._id}/appointments`}
+                                style={{
+                                  color: color ? color : theme.palette.text.primary,
+                                  textDecoration: "none",
+                                  display: "flex",
+                                  marginRight: '20px'
+                                }}
+                              >
+                                <Badge color="success" badgeContent={userDetails.data?.appointments?.length}>
+                                  <AccessAlarmsIcon fontSize="large" sx={{ margingTop: "0" }} />
+                                </Badge>
+                              </Link>
+                              <Grid item>
+                                <NavBarDropDownComponent />
+                              </Grid>
+                            </Grid>
+                          }
+                        </Grid>
+                      }
                       <Grid item>
                         <Link
                           to="/specialists"
@@ -116,32 +141,31 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                           Contact Us
                         </Link>
                       </Grid>
+                      <Grid item>
+                        <Link
+                          to="/about"
+                          style={{
+                            color: color ? color : theme.palette.text.primary,
+                            textDecoration: "none",
+                          }}
+                        >
+                          About US
+                        </Link>
+                      </Grid>
                       {
-                        !userDetails.loggedIn && <>
-                          <Grid item>
-                            <Link
-                              to="/about"
-                              style={{
-                                color: color ? color : theme.palette.text.primary,
-                                textDecoration: "none",
-                              }}
-                            >
-                              About US
-                            </Link>
-                          </Grid>
-                          <Grid item>
-                            <Link
-                              to="#"
-                              style={{
-                                color: color ? color : theme.palette.text.primary,
-                                textDecoration: "none",
-                              }}
-                              onClick={() => handleOpen()}
-                            >
-                              Sign In
-                            </Link>
-                          </Grid>
-                        </>
+                        !userDetails?.loggedIn &&
+                        <Grid item>
+                          <Link
+                            to="#"
+                            style={{
+                              color: color ? color : theme.palette.text.primary,
+                              textDecoration: "none",
+                            }}
+                            onClick={() => handleOpen()}
+                          >
+                            Sign In
+                          </Link>
+                        </Grid>
                       }
                     </Grid>
                   </>
@@ -193,40 +217,24 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                   md={2}
                   sx={{ display: "flex", justifyContent: "center" }}
                 >
-                  {userDetails?.loggedIn ?
-                    (<Link
-                      to={`/${userDetails.role === "User" ? "users" : "doctors"}/${userDetails.data?._id}/appointments`}
-                      style={{
-                        color: color ? color : theme.palette.text.primary,
-                        textDecoration: "none",
-                        display: "flex"
-                      }}
-                    >
-                      <Badge color="success" badgeContent={userDetails.data?.appointments?.length}>
-                        <AccessAlarmsIcon fontSize="large" sx={{ margingTop: "0" }} />
-                      </Badge>
-                    </Link>)
-                    :
-                    (<Link
-                      to="/about"
-                      style={{
-                        color: color ? color : theme.palette.text.primary,
-                        textDecoration: "none",
-                        display: "flex"
-                      }}
-                    >
-                      About
-                    </Link>)
-                  }
+                  <Link
+                    to="/about"
+                    style={{
+                      color: color ? color : theme.palette.text.primary,
+                      textDecoration: "none",
+                      display: "flex"
+                    }}
+                  >
+                    About
+                  </Link>
                 </Grid>
-                <Grid
-                  item
-                  md={2}
-                  sx={{ display: "flex", justifyContent: "center" }}
-                >
-                  {userDetails?.loggedIn ?
-                    (<NavBarDropDownComponent />)
-                    : (<Link
+                {!userDetails?.loggedIn &&
+                  <Grid
+                    item
+                    md={2}
+                    sx={{ display: "flex", justifyContent: "center" }}
+                  >
+                    <Link
                       to="#"
                       style={{
                         color: color ? color : theme.palette.text.primary,
@@ -235,9 +243,30 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                       onClick={() => handleOpen()}
                     >
                       Sign In
-                    </Link>)
-                  }
-                </Grid>
+                    </Link>
+                  </Grid>
+                }
+                {
+                  userDetails?.loggedIn &&
+                  <Grid container item md={2} justifyContent='center' alignItems='center'>
+                    <Link
+                      to={`/${userDetails.role === "User" ? "users" : "doctors"}/${userDetails.data?._id}/appointments`}
+                      style={{
+                        color: color ? color : theme.palette.text.primary,
+                        textDecoration: "none",
+                        display: "flex",
+                        marginRight: '20px'
+                      }}
+                    >
+                      <Badge color="success" badgeContent={userDetails.data?.appointments?.length}>
+                        <AccessAlarmsIcon fontSize="large" sx={{ margingTop: "0" }} />
+                      </Badge>
+                    </Link>
+                    <Grid item>
+                      <NavBarDropDownComponent />
+                    </Grid>
+                  </Grid>
+                }
               </>
             )}
           </Grid>

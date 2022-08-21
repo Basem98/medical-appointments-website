@@ -48,7 +48,9 @@ export default function NavBarDropDownComponent() {
         <Grid container justifyContent={'flex-start'}>
             <AccountCircle
                 fontSize="large"
-                sx={{ color: location.pathname === '/' ? theme.palette.highlight.main : theme.palette.heroNavbarBg.main }}
+                sx={{ color: location.pathname === '/' ? theme.palette.highlight.main : theme.palette.text.primary }}
+                onClick={handleMenu}
+                cursor='pointer'
             />
             <Grid item alignItems={'center'}>
                 <IconButton
@@ -58,7 +60,7 @@ export default function NavBarDropDownComponent() {
                     aria-haspopup="true"
                     onClick={handleMenu}
                     color="inherit"
-                    sx={{ padding: 0, paddingTop: "6px", color: location.pathname === "/" ? theme.palette.highlight.main : theme.palette.heroNavbarBg.main }}
+                    sx={{ padding: 0, paddingTop: "6px", color: location.pathname === "/" ? theme.palette.highlight.main : theme.palette.text.primary }}
                 >
                     <ArrowDropDownIcon />
                 </IconButton>
