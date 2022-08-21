@@ -64,7 +64,7 @@ const AppointmentCreationDrawer = ({ openDrawer, setOpenDrawer }) => {
         if (res.status === 201) {
           setFormSubmitted(false);
           setServerResponse({ success: true, msg: `Your appointment on ${res.data.data.date.split('T')[0]} has been added to our systems.` })
-          dispatch(setAvailableAppointments({ availableAppointments:  [...availableAppointments, { date: res.data.data.date, time: res.data.data.time }]}));
+          dispatch(setAvailableAppointments({ availableAppointments:  [...availableAppointments, res.data.data]}));
         }
       })
       .catch(err => {
