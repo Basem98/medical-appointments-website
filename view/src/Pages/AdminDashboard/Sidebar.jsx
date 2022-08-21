@@ -9,6 +9,7 @@ import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 
 const Sidebar = () => {
   const theme = useTheme();
@@ -38,7 +39,7 @@ const Sidebar = () => {
               }}
             >
               <AnalyticsIcon fontSize={isMobile ? "large" : "medium"} />
-              <span style={{ display: isMobile ? 'none' : 'inline' }}>
+              <span style={{ marginLeft: "7px", display: isMobile ? 'none' : 'inline' }}>
                 Statisitcs
               </span>
             </NavLink>
@@ -53,8 +54,8 @@ const Sidebar = () => {
                 display: "flex", alignItems: "center",
               }}
             >
-              <FlakyIcon fontSize={isMobile ? "large" : "medium"} />
-              <span style={{ display: isMobile ? 'none' : 'inline' }}>
+              <SupervisedUserCircleIcon fontSize={isMobile ? "large" : "medium"} />
+              <span style={{ marginLeft: "7px", display: isMobile ? 'none' : 'inline' }}>
                 Manage Doctors
               </span>
             </NavLink>
@@ -70,7 +71,7 @@ const Sidebar = () => {
               }}
             >
               <FlakyIcon fontSize={isMobile ? "large" : "medium"} />
-              <span style={{ display: isMobile ? 'none' : 'inline' }}>
+              <span style={{ marginLeft: "7px", display: isMobile ? 'none' : 'inline' }}>
                 Manage Applications
               </span>
             </NavLink>
@@ -88,7 +89,7 @@ const Sidebar = () => {
               }}
             >
               <ManageAccountsIcon fontSize={isMobile ? "large" : "medium"} />
-              <span style={{ display: isMobile ? 'none' : 'inline' }}>
+              <span style={{ marginLeft: "7px", display: isMobile ? 'none' : 'inline' }}>
                 Manage Users
               </span>
             </NavLink>
@@ -105,7 +106,7 @@ const Sidebar = () => {
               }}
             >
               <HistoryIcon fontSize={isMobile ? "large" : "medium"} />
-              <span style={{ display: isMobile ? 'none' : 'inline' }}>
+              <span style={{ marginLeft: "7px", display: isMobile ? 'none' : 'inline' }}>
                 Appointments
               </span>
             </NavLink>
@@ -122,7 +123,7 @@ const Sidebar = () => {
               }}
             >
               <TableRowsIcon fontSize={isMobile ? "large" : "medium"} />
-              <span style={{ display: isMobile ? 'none' : 'inline' }}>
+              <span style={{ marginLeft: "7px", display: isMobile ? 'none' : 'inline' }}>
                 Logs Details
               </span>
             </NavLink>
