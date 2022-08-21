@@ -15,7 +15,7 @@ import submitUserData from '../../Network/Base/login';
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 import RoleToggler from '../RoleToggler/RoleToggler';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const UserSignInForm = ({ open, handleClose }) => {
     const dispatch = useDispatch()
@@ -23,6 +23,7 @@ const UserSignInForm = ({ open, handleClose }) => {
     const [role, setRole] = useState('User');
     const [serverResponse, setServerResponse] = useState({ success: false, msg: '' });
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const navigate = useNavigate();
     const handleRoleChange = (newRole, setRoleValue) => {
         setRole(newRole);
         setRoleValue('role', newRole);
@@ -49,17 +50,15 @@ const UserSignInForm = ({ open, handleClose }) => {
         setFormSubmitted(true);
         submitUserData(values)
             .then((res) => {
-                setServerResponse({ success: true, msg: res.data.message });
+                setServerResponse({ success: true, msg: `${res.data.message}. This form will close automatically in 1 second...` });
                 dispatch(setUserDetails({
                     email: values.email,
                     token: res.data.token,
                     role: res.data.role,
                     data: res.data.data
                 }));
+                setTimeout(() => {handleClose(false)}, 1000);
                 return res;
-            })
-            .then((res) => {
-                if (res.status === 200) handleClose();
             })
             .catch(err => {
                 if (err.response.status === 404 || err.response.status === 400) {

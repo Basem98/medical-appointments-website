@@ -88,7 +88,7 @@ function App() {
       >
         {
           modalOptions.form === 'UserLoginForm' ?
-            <UserLoginForm />
+            <UserLoginForm handleClose={(showModal) => setModalOptions({ ...modalOptions, showModal: showModal })}/>
             : modalOptions.form === 'UserSignupForm' ?
               <UserSignupForm />
               : modalOptions.form === 'DoctorSignupForm' ?
