@@ -10,15 +10,19 @@ import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutl
 import CustomAlert from "../../Components/CustomAlert/CustomAlert";
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import ReviewDoctorApplication from './ReviewDoctorApplication';
 
-export default function ManageDoctors() {
+export default function ManageApplications() {
     const [doctorsData, setDoctorsData] = useState([]);
     const [paginatePage, setPaginatePage] = useState({ pageNum: 0, nextPage: true });
     const [snakbarStatus, setSnakbarStatus] = useState(false);
     const [alertStatus, setAlertStatus] = useState({ severity: '', msg: '' });
+    const [noDataAlertStatus, setNoDataAlertStatus] = useState({ severity: '', msg: '' });
+    const [open, setOpen] = useState(false);
+    const [currentDoctorRow, setCurrentDoctorRow] = useState({});
 
     useEffect(() => {
-        getDoctorsData({ type: 'all', pageNum: paginatePage.pageNum })
+        getDoctorsData({ type: '', pageNum: paginatePage.pageNum })
             .then(res => {
                 setDoctorsData(res.data.data);
             })
@@ -28,6 +32,10 @@ export default function ManageDoctors() {
                         setPaginatePage({ pageNum: paginatePage.pageNum - 1, nextPage: false });
                         setAlertStatus({ severity: 'error', msg: 'No pages found!' });
                         setSnakbarStatus(true);
+                    }
+                    else {
+                        console.log('here no data found')
+                        setNoDataAlertStatus({ severity: 'error', msg: 'No pages found!' });
                     }
                 }
             })
@@ -41,17 +49,43 @@ export default function ManageDoctors() {
         if (paginatePage.pageNum > 0) setPaginatePage({ nextPage: true, pageNum: paginatePage.pageNum - 1 });
     }
 
-    const handleDeleteDoctor = (doctorId) => {
+    const handleDrawerOpen = (doctorRow) => {
+        setOpen(true);
+        setCurrentDoctorRow(doctorRow);
+    };
+
+    const handleDrawerClose = () => {
+        setOpen(false);
+    };
+
+    const handleAcceptDoctor = (doctorId) => {
+        acceptDoctor(doctorId)
+            .then(res => {
+                if (res.status === 204) {
+                    setDoctorsData(doctorsData.filter(doctor => doctor._id !== doctorId));
+                    setAlertStatus({ severity: 'success', msg: 'Doctor Application Accepted' });
+                    setSnakbarStatus(true);
+                    handleDrawerClose();
+                }
+            })
+            .catch(err => {
+                setAlertStatus({ severity: 'error', msg: 'Could not Accept Application!' });
+                setSnakbarStatus(true);
+            })
+    }
+
+    const handleRejectDoctor = (doctorId) => {
         rejectDoctor(doctorId)
             .then(res => {
                 if (res.status === 204) {
                     setDoctorsData(doctorsData.filter(doctor => doctor._id !== doctorId));
-                    setAlertStatus({ severity: 'success', msg: 'Doctor Deleted' });
+                    setAlertStatus({ severity: 'success', msg: 'Doctor Application Rejected' });
                     setSnakbarStatus(true);
+                    handleDrawerClose();
                 }
             })
             .catch(err => {
-                setAlertStatus({ severity: 'error', msg: 'Could not delete!' });
+                setAlertStatus({ severity: 'error', msg: 'Could not Reject Application!' });
                 setSnakbarStatus(true);
             })
 
@@ -71,7 +105,6 @@ export default function ManageDoctors() {
                                             <StyledTableCell>E-mail</StyledTableCell>
                                             <StyledTableCell>Phone No.</StyledTableCell>
                                             <StyledTableCell>Education</StyledTableCell>
-                                            <StyledTableCell>No. of Appointments</StyledTableCell>
                                             {/* <StyledTableCell>Verified</StyledTableCell> */}
                                             <StyledTableCell>Details</StyledTableCell>
                                         </TableRow>
@@ -84,8 +117,7 @@ export default function ManageDoctors() {
                                                 <StyledTableCell>{doctorRow.phoneNumber}</StyledTableCell>
                                                 {/* <StyledTableCell>{doctorRow.isVerified ? "Yes" : "No"}</StyledTableCell> */}
                                                 <StyledTableCell>{doctorRow.education[0].degree}</StyledTableCell>
-                                                <StyledTableCell>{doctorRow.appointments.length}</StyledTableCell>
-                                                <StyledTableCell><Button variant="contained" color="error" onClick={() => handleDeleteDoctor(doctorRow._id)}>Delete</Button></StyledTableCell>
+                                                <StyledTableCell><Button variant="contained" onClick={() => { handleDrawerOpen(doctorRow) }}>More details</Button></StyledTableCell>
                                                 {/* <StyledTableCell><Button variant="contained" onClick={(function (doctorRow) { let data = doctorRow; return (() => { let data = doctorRow; handleDrawerOpen(data) }) })(doctorRow)}>More details</Button></StyledTableCell> */}
 
                                             </StyledTableRow>
@@ -119,11 +151,31 @@ export default function ManageDoctors() {
                         </Snackbar>
                     </>
                 ) : (
-                    <Box sx={{ display: "flex", justifyContent: "center" }}>
-                        <CircularProgress color='highlight' sx={{ marginY: '10px' }} />
-                    </Box>
+                    !noDataAlertStatus.severity ?
+                        <Box sx={{ display: "flex", justifyContent: "center" }}>
+                            <CircularProgress color='highlight' sx={{ marginY: '10px' }} />
+                        </Box>
+                        :
+                        <CustomAlert
+                            severity={noDataAlertStatus.severity}
+                            action={
+                                <IconButton
+                                    aria-label="close"
+                                    color="inherit"
+                                    size="small"
+                                    onClick={() => {
+                                        setNoDataAlertStatus({ severity: '', msg: '' });
+                                    }}
+                                >
+                                    <CloseIcon fontSize="inherit" />
+                                </IconButton>
+                            }
+                        >
+                            {noDataAlertStatus.msg}
+                        </CustomAlert>
                 )
                 }
+                <ReviewDoctorApplication open={open} handleDrawerClose={handleDrawerClose} currentDoctorRow={currentDoctorRow} handleAcceptDoctor={handleAcceptDoctor} handleRejectDoctor={handleRejectDoctor} />
             </Grid >
         </>
 

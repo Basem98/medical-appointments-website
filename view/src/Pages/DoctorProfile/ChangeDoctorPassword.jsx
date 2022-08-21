@@ -25,7 +25,7 @@ const ChangePassword = () => {
     const [showCurrentPassword, setShowCurrentPassword] = useState('password');
     const [showNewPassword, setShowNewPassword] = useState('password');
     const [showConfirmNewPassword, setShowConfirmNewPassword] = useState('password');
-
+    const [passwordChanged, setPasswordChanged] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -40,10 +40,16 @@ const ChangePassword = () => {
         };
         changePassword(doctorId, data)
             .then((response) => {
-                navigate('/doctors/:id/profile', { replace: true });
+                setPasswordChanged(true);
+                setTimeout(() => {
+                    setPasswordChanged(false);
+                }, 4000)
             })
             .catch((error) => {
                 setWrongPassword(true);
+                setTimeout(() => {
+                    setWrongPassword(false);
+                }, 4000)
             })
     }
     return (
@@ -60,6 +66,14 @@ const ChangePassword = () => {
                                 severity="error"
                             >
                                 Wrong password! Make sure to enter the correct password.
+                            </CustomAlert>
+                        }
+                        {
+                            passwordChanged &&
+                            <CustomAlert
+                                severity="success"
+                            >
+                                Password changed successfully!
                             </CustomAlert>
                         }
                         <Grid

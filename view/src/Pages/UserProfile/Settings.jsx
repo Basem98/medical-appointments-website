@@ -6,12 +6,12 @@ import { Formik, Form } from "formik";
 import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton";
 import PersonIcon from '@mui/icons-material/Person';
 import PhoneIcon from '@mui/icons-material/Phone';
-import { personalFormStepValidation } from "../../Helper/ValidationSchema";
 import CustomAlert from "../../Components/CustomAlert/CustomAlert";
 import updateData from "../../Network/Users/updateData";
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../../Helper/Authentication";
+import * as Yup from "yup";
 
 const Settings = () => {
     const userId = useSelector((state) => state.userDetails.data?._id);
@@ -22,22 +22,11 @@ const Settings = () => {
     const dispatch = useDispatch();
 
     const [isDuplicated, setIsDuplicated] = useState(false);
-    const [duplicationErrorsArray, setDuplicationErrorsArray] = useState([]);
+    const [dataUpdated, setDataUpdated] = useState(false);
 
-    const handleDuplicationError = () => {
-        return duplicationErrorsArray.map((errorMessage, index) => {
-            return (
-                <CustomAlert
-                    severity="error"
-                    key={index}
-                >
-                    {errorMessage}
-                </CustomAlert>
-            );
-        });
-    }
-
-    useEffect(() => { authenticate('User', navigate, dispatch) }, []);
+    useEffect(() => {
+        authenticate('User', navigate, dispatch);
+    }, [])
 
     const handleSubmit = (e) => {
         const formValues = formRef.current.values;
@@ -48,17 +37,17 @@ const Settings = () => {
         };
         updateData(userId, userData)
             .then((response) => {
-                handleRedirect();
+                setDataUpdated(true);
+                setTimeout(() => {
+                    setDataUpdated(false);
+                }, 3000);
             })
             .catch((error) => {
                 setIsDuplicated(true);
-                let errorMessagesArray = JSON.parse(error.response.data.error);
-                setDuplicationErrorsArray(errorMessagesArray);
+                setTimeout(() => {
+                    setIsDuplicated(false);
+                }, 3000);
             })
-    }
-
-    const handleRedirect = () => {
-        navigate("/users/:id/profile", { replace: true })
     }
     return (
 
@@ -69,10 +58,22 @@ const Settings = () => {
                         container
                         justifyContent="center"
                     >
-                        <Grid item xs={10} sx={{ margin: '0 auto' }}>
+                        <Grid item xs={8} sx={{ margin: '0 auto' }}>
                             {
                                 isDuplicated &&
-                                handleDuplicationError()
+                                <Grid item>
+                                    <CustomAlert severity="error">
+                                        Phone number is already registered for another user!
+                                    </CustomAlert>
+                                </Grid>
+                            }
+                            {
+                                dataUpdated &&
+                                <Grid item>
+                                    <CustomAlert severity="success">
+                                        Your data is updated successfully!
+                                    </CustomAlert>
+                                </Grid>
                             }
                         </Grid>
                         <Grid
@@ -84,7 +85,13 @@ const Settings = () => {
                                     lastName: userData.lastName,
                                     phoneNumber: userData.phoneNumber,
                                 }}
-                                validationSchema={personalFormStepValidation}
+                                validationSchema={
+                                    Yup.object({
+                                        firstName: Yup.string().required('This field is required').matches(/[a-z]{2,50}/g, { message: 'Your first name must be between 2 and 50 alphabet letters' }),
+                                        lastName: Yup.string().required('This field is required').matches(/[a-z]{2,50}/g, { message: 'Your last name must be between 2 and 50 alphabet letters' }),
+                                        phoneNumber: Yup.string().required("This field is required").matches(/^01[0125][0-9]{8}$/g, { message: 'You must type a valid Egyptian number' }),
+                                    })
+                                }
                                 innerRef={formRef}
                                 onSubmit={handleSubmit}
                             >
