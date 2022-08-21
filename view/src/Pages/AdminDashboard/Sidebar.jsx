@@ -61,6 +61,23 @@ const Sidebar = () => {
           </li>
           <li style={{ marginBottom: "15px", float: isMobile ? "left" : "" }}>
             <NavLink
+              to="/dashboard/manageapplications"
+              style={{
+                color: "white",
+                textDecoration: "none",
+                paddingLeft: "5px",
+                display: "flex", alignItems: "center",
+              }}
+            >
+              <FlakyIcon fontSize={isMobile ? "large" : "medium"} />
+              <span style={{ display: isMobile ? 'none' : 'inline' }}>
+                Manage Applications
+              </span>
+            </NavLink>
+          </li>
+
+          <li style={{ marginBottom: "15px", float: isMobile ? "left" : "" }}>
+            <NavLink
               to="/dashboard/manageusers"
               style={{
                 color: "white",
@@ -90,7 +107,6 @@ const Sidebar = () => {
               <HistoryIcon fontSize={isMobile ? "large" : "medium"} />
               <span style={{ display: isMobile ? 'none' : 'inline' }}>
                 Appointments
-
               </span>
             </NavLink>
           </li>
