@@ -74,7 +74,7 @@ const AppointmentDetails = ({ appointmentDetails, role, openDrawer, setOpenDrawe
                 onClose={() => { setOpenDrawer(!openDrawer) }}
                 PaperProps={{
                     sx: {
-                        width: { 'md': '50vw', 'xs': '90vw' }
+                        width: { 'lg': '35vw', 'md': '50vw', 'sm': '70vw', 'xs': '90vw' },
                     }
                 }}
                 BackdropProps={{
