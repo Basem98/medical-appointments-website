@@ -313,7 +313,7 @@ function DoctorDetails() {
                                     </Typography>
                                 </Grid>
 
-                                <Grid container item xs={12} lg={6} style={{ border: "5px solid white", }} justifyContent='flex-start'
+                                <Grid container item xs={12} sm={10} md={6} lg={5} style={{ border: "5px solid white", }} justifyContent='flex-start'
                                     sx={{
                                         flexDirection: 'column',
                                         marginY: "25px",

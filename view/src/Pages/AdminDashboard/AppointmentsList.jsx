@@ -20,7 +20,7 @@ export default function AppointmentsList() {
     useEffect(() => {
         getAppointmentsData({ type: 'all', pageNum: paginatePage.pageNum })
             .then(res => {
-                console.log('res.data.data: ', res)
+                console.log('res.data.data: ', res.data.data)
                 setAppointmentsData(res.data.data);
             })
             .catch(err => {
@@ -70,19 +70,19 @@ export default function AppointmentsList() {
                                     <StyledTableCell>Duration</StyledTableCell>
                                     <StyledTableCell>State</StyledTableCell>
                                     <StyledTableCell>Doctor</StyledTableCell>
-                                    <StyledTableCell>User</StyledTableCell>
+                                    {/* <StyledTableCell>User</StyledTableCell> */}
                                     <StyledTableCell>Delete</StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {appointmentsData.length && appointmentsData.map(appointmentRow => (
-                                    <StyledTableRow key={appointmentRow._id}>
-                                        <StyledTableCell>{appointmentRow.date.slice(0, 10)}</StyledTableCell>
-                                        <StyledTableCell>{`${appointmentRow.time.hour} : ${appointmentRow.time.minute}`}</StyledTableCell>
-                                        <StyledTableCell>{`${appointmentRow.time.duration} minutes`}</StyledTableCell>
-                                        <StyledTableCell>{appointmentRow.state}</StyledTableCell>
-                                        <StyledTableCell>{`${appointmentRow.doctor.firstName} ${appointmentRow.doctor.lastName}`}</StyledTableCell>
-                                        <StyledTableCell>{appointmentRow.user ? (`${appointmentRow.user.firstName} ${appointmentRow.user.lastName}`) : ('Not Booked')}</StyledTableCell>
+                                    <StyledTableRow key={appointmentRow?._id}>
+                                        <StyledTableCell>{appointmentRow?.date.slice(0, 10)}</StyledTableCell>
+                                        <StyledTableCell>{`${appointmentRow?.time.hour} : ${appointmentRow?.time.minute}`}</StyledTableCell>
+                                        <StyledTableCell>{`${appointmentRow?.time.duration} minutes`}</StyledTableCell>
+                                        <StyledTableCell>{appointmentRow?.state}</StyledTableCell>
+                                        <StyledTableCell>{`${appointmentRow?.doctor?.firstName} ${appointmentRow?.doctor?.lastName}`}</StyledTableCell>
+                                        {/* <StyledTableCell>{appointmentRow?.user ? (`${appointmentRow?.user.firstName} ${appointmentRow?.user.lastName}`) : ('Not Booked')}</StyledTableCell> */}
                                         <StyledTableCell><Button variant="contained" color="error" onClick={() => handleDeleteAppointment(appointmentRow._id)}>Delete</Button></StyledTableCell>
                                     </StyledTableRow>
                                 ))}

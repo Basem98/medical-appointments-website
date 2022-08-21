@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink, useNavigate, } from "react-router-dom";
-import { useTheme, useMediaQuery, Typography, Button } from "@mui/material"
+import { useTheme, useMediaQuery, Typography, Button, Grid } from "@mui/material"
 import AnalyticsIcon from "@mui/icons-material/Analytics"
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'; import HistoryIcon from '@mui/icons-material/History';
 import TableRowsIcon from '@mui/icons-material/TableRows';
@@ -25,103 +25,124 @@ const Sidebar = () => {
 
   return (
     <>
-      <ul style={{ listStyleType: "none", margin: "30px 0", padding: 0 }}>
-        <li style={{ marginBottom: "15px", float: isMobile ? "left" : "" }}>
-          <NavLink
-            to="/dashboard/statistics"
-            style={{
-              color: "white",
-              textDecoration: "none",
-              paddingLeft: "5px",
-              display: "flex", alignItems: "center",
-            }}
-          >
-            <AnalyticsIcon fontSize={isMobile ? "large" : "medium"} />
-            <span style={{ display: isMobile ? 'none' : 'inline' }}>
-              Statisitcs
-            </span>
-          </NavLink>
-        </li>
-        <li style={{ marginBottom: "15px", float: isMobile ? "left" : "" }}>
-          <NavLink
-            to="/dashboard/managedoctors"
-            style={{
-              color: "white",
-              textDecoration: "none",
-              paddingLeft: "5px",
-              display: "flex", alignItems: "center",
-            }}
-          >
-            <FlakyIcon fontSize={isMobile ? "large" : "medium"} />
-            <span style={{ display: isMobile ? 'none' : 'inline' }}>
-              Manage Doctors
-            </span>
-          </NavLink>
-        </li>
-        <li style={{ marginBottom: "15px", float: isMobile ? "left" : "" }}>
-          <NavLink
-            to="/dashboard/manageusers"
-            style={{
-              color: "white",
-              textDecoration: "none",
-              paddingLeft: "5px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <ManageAccountsIcon fontSize={isMobile ? "large" : "medium"} />
-            <span style={{ display: isMobile ? 'none' : 'inline' }}>
-              Manage Users
-            </span>
-          </NavLink>
-        </li>
-        <li style={{ marginBottom: "15px", float: isMobile ? "left" : "" }}>
-          <NavLink
-            to="/dashboard/appointments"
-            style={{
-              color: "white",
-              textDecoration: "none",
-              paddingLeft: "5px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <HistoryIcon fontSize={isMobile ? "large" : "medium"} />
-            <span style={{ display: isMobile ? 'none' : 'inline' }}>
-              Appointments
+      <Grid item md={12} xs={6} sx={{ display: "flex", alignItems: isMobile ? "center" : "flex-start", justifyContent: "center" }}>
+        <ul style={{ listStyleType: "none", margin: "30px 0", padding: 0 }}>
+          <li style={{ marginBottom: "15px", float: isMobile ? "left" : "" }}>
+            <NavLink
+              to="/dashboard/statistics"
+              style={{
+                color: "white",
+                textDecoration: "none",
+                paddingLeft: "5px",
+                display: "flex", alignItems: "center",
+              }}
+            >
+              <AnalyticsIcon fontSize={isMobile ? "large" : "medium"} />
+              <span style={{ display: isMobile ? 'none' : 'inline' }}>
+                Statisitcs
+              </span>
+            </NavLink>
+          </li>
+          <li style={{ marginBottom: "15px", float: isMobile ? "left" : "" }}>
+            <NavLink
+              to="/dashboard/managedoctors"
+              style={{
+                color: "white",
+                textDecoration: "none",
+                paddingLeft: "5px",
+                display: "flex", alignItems: "center",
+              }}
+            >
+              <FlakyIcon fontSize={isMobile ? "large" : "medium"} />
+              <span style={{ display: isMobile ? 'none' : 'inline' }}>
+                Manage Doctors
+              </span>
+            </NavLink>
+          </li>
+          <li style={{ marginBottom: "15px", float: isMobile ? "left" : "" }}>
+            <NavLink
+              to="/dashboard/manageapplications"
+              style={{
+                color: "white",
+                textDecoration: "none",
+                paddingLeft: "5px",
+                display: "flex", alignItems: "center",
+              }}
+            >
+              <FlakyIcon fontSize={isMobile ? "large" : "medium"} />
+              <span style={{ display: isMobile ? 'none' : 'inline' }}>
+                Manage Applications
+              </span>
+            </NavLink>
+          </li>
 
-            </span>
-          </NavLink>
-        </li>
-        <li style={{ marginBottom: "15px", float: isMobile ? "left" : "" }}>
-          <NavLink
-            to="/dashboard/logs"
-            style={{
-              color: "white",
-              textDecoration: "none",
-              paddingLeft: "5px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <TableRowsIcon fontSize={isMobile ? "large" : "medium"} />
-            <span style={{ display: isMobile ? 'none' : 'inline' }}>
-              Logs Details
-            </span>
-          </NavLink>
-        </li>
-      </ul>
-      {userDetails.loggedIn &&
-        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", px: 1 }}>
-          <AccountCircle
-            fontSize="large"
-            sx={{ color: theme.palette.heroNavbarBg.main, mr: 1 }}
-          />
-          <Box>
-            <Typography variant="h6" fontSize="small">@{userDetails.data.username}</Typography>
-            <Button onClick={handleLogout} variant="text" size="small">Logout</Button>
-          </Box>
-        </Box >}
+          <li style={{ marginBottom: "15px", float: isMobile ? "left" : "" }}>
+            <NavLink
+              to="/dashboard/manageusers"
+              style={{
+                color: "white",
+                textDecoration: "none",
+                paddingLeft: "5px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <ManageAccountsIcon fontSize={isMobile ? "large" : "medium"} />
+              <span style={{ display: isMobile ? 'none' : 'inline' }}>
+                Manage Users
+              </span>
+            </NavLink>
+          </li>
+          <li style={{ marginBottom: "15px", float: isMobile ? "left" : "" }}>
+            <NavLink
+              to="/dashboard/appointments"
+              style={{
+                color: "white",
+                textDecoration: "none",
+                paddingLeft: "5px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <HistoryIcon fontSize={isMobile ? "large" : "medium"} />
+              <span style={{ display: isMobile ? 'none' : 'inline' }}>
+                Appointments
+              </span>
+            </NavLink>
+          </li>
+          <li style={{ marginBottom: "15px", float: isMobile ? "left" : "" }}>
+            <NavLink
+              to="/dashboard/logs"
+              style={{
+                color: "white",
+                textDecoration: "none",
+                paddingLeft: "5px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <TableRowsIcon fontSize={isMobile ? "large" : "medium"} />
+              <span style={{ display: isMobile ? 'none' : 'inline' }}>
+                Logs Details
+              </span>
+            </NavLink>
+          </li>
+        </ul>
+      </Grid>
+      <Grid item md={12} xs={4} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+        {userDetails.loggedIn &&
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <AccountCircle
+              fontSize="large"
+              sx={{ color: theme.palette.heroNavbarBg.main, mr: 1 }}
+            />
+            <Box>
+              <Typography variant="h6" fontSize="small">@{userDetails.data.username}</Typography>
+              <Button onClick={handleLogout} variant="text" size="small">Logout</Button>
+            </Box>
+          </Box >}
+      </Grid>
+
     </>
   );
 };

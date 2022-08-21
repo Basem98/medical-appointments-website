@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Grid } from "@mui/material";
 import InputField from '../../Components/InputField/InputField'
 import { Formik, Form } from "formik";
@@ -11,7 +11,6 @@ import updateData from "../../Network/Users/updateData";
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../../Helper/Authentication";
-import { useEffect } from "react";
 import * as Yup from "yup";
 
 const Settings = () => {

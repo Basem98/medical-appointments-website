@@ -187,6 +187,7 @@ const DoctorProfile = () => {
                                                     <Grid item xs={10} marginTop={4}>
                                                         <Link
                                                             to={`/doctors/${doctorData?._id}/appointments`}
+                                                            style={{textDecoration: 'none'}}
                                                         >
                                                             <CustomFormButton variant="contained">
                                                                 Show Appointments

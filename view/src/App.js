@@ -34,6 +34,7 @@ import DoctorSignupForm from "./Components/DoctorSignUpForm/DoctorSignUpForm";
 import VerificationForm from "./Components/VerificationForm/VerificationForm";
 import ContactUs from "./Pages/ContactUs/ContactUs";
 import AboutUs from "./Pages/AboutUs/AboutUs"
+import ManageApplications from './Pages/AdminDashboard/ManageApplications';
 
 const errMsg = "Oops! Looks like the page you're looking for couldn't be found.";
 const verificationMsg = "Congratulations! Your email has been verified successfully! You can now sign into your account."
@@ -165,6 +166,7 @@ function App() {
         <Route path="/admin" element={<AdminSignInForm setDisplayNavFooter={setDisplayNavFooter} />} />
         <Route path="/dashboard" element={<AdminDashboard setDisplayNavFooter={setDisplayNavFooter} />}>
           <Route path="/dashboard/statistics" element={<Statistics />} />
+          <Route path="/dashboard/manageapplications" element={<ManageApplications />} />
           <Route path="/dashboard/managedoctors" element={<ManageDoctors />} />
           <Route path="/dashboard/manageusers" element={<ManageUsers />} />
           <Route path="/dashboard/appointments" element={<AppointmentsList />} />

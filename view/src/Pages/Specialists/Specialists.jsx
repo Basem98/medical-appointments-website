@@ -68,16 +68,18 @@ function Specialists() {
   }, [location.state])
 
 
-  const getAllSpecialists = (values, newPageNumber = 0) => {
+  const getAllSpecialists = (values, newPageNumber) => {
     let filteredValues = { ...values }
     for (let prop in filteredValues) {
       if (filteredValues[prop] === "") delete filteredValues[prop]
+    }
+    if (!newPageNumber || isNaN(newPageNumber)) {
+      newPageNumber = 0;
     }
     getAllDoctorsData({ ...filteredValues, pageNum: newPageNumber })
       .then((res) => {
         setServerResponse({ ...serverResponse, success: true });
         setSpecialistsData(res.data.doctors);
-        console.log(totalPages, newPageNumber, currentPage)
         if(res.data.doctors.length === 6 && totalPages - newPageNumber === 1) {
           setTotalPages(totalPages + 1);
         }
