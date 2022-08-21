@@ -18,6 +18,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import { Link, useLocation } from 'react-router-dom';
 import { removeUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 import { useDispatch, useSelector } from 'react-redux';
+import logout from '../../Network/Base/logout';
 
 
 export default function NavBarDropDownComponent() {
@@ -32,7 +33,10 @@ export default function NavBarDropDownComponent() {
     };
 
     const handleLogout = () => {
-        dispatch(removeUserDetails())
+        dispatch(removeUserDetails());
+        logout()
+            .then(res => { })
+            .catch(err => { })
     }
 
     const theme = useTheme()

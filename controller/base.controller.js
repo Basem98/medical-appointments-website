@@ -38,8 +38,8 @@ async function verifyToken(req, res, next) {
 function logout(req, res, next) {
   try {
     res
-      .clearCookie('accessToken')
-      .clearCookie('role')
+      .cookie('accessToken', null)
+      .cookie('role', null)
       .status(200)
       .json({ message: 'Signed out successfully' });
   } catch (err) {
