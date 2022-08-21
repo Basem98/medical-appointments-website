@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import { Formik, Form } from "formik";
-import { Grid } from "@mui/material";
+import { Grid, useTheme } from "@mui/material";
 import InputField from "../../Components/InputField/InputField";
 import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton";
 import * as Yup from "yup";
@@ -25,6 +25,7 @@ const ChangePassword = () => {
     const [showNewPassword, setShowNewPassword] = useState('password');
     const [showConfirmNewPassword, setShowConfirmNewPassword] = useState('password');
     const [passwordChanged, setPasswordChanged] = useState(false);
+    const theme = useTheme();
 
     const formRef = useRef(null);
     const navigate = useNavigate();
@@ -58,23 +59,9 @@ const ChangePassword = () => {
                     <Grid
                         container
                         justifyContent="center"
+                        flexGrow='1'
+                        alignItems='center'
                     >
-                        {
-                            wrongPassword &&
-                            <CustomAlert
-                                severity="error"
-                            >
-                                Wrong password! Make sure to enter the correct password.
-                            </CustomAlert>
-                        }
-                        {
-                            passwordChanged &&
-                            <CustomAlert
-                                severity="success"
-                            >
-                                Password changed successfully!
-                            </CustomAlert>
-                        }
                         <Grid
                             item
                         >
@@ -100,6 +87,11 @@ const ChangePassword = () => {
                                                 <Grid item xs={10} sx={{ marginTop: '25px' }}>
                                                     <InputField label='Password' name='currentPassword' placeholder='Current Password'
                                                         type={showCurrentPassword}
+                                                        sx={{
+                                                            borderBottom: `1px solid ${theme.palette.highlight.main}`,
+                                                            borderRadius: '12px',
+                                                            marginBottom: '20px'
+                                                        }}
                                                     >
                                                         <VpnKeyIcon></VpnKeyIcon>
                                                         {showCurrentPassword === 'password' ?
@@ -111,6 +103,11 @@ const ChangePassword = () => {
                                                 <Grid item xs={10} sx={{ marginTop: '25px' }}>
                                                     <InputField label='Password' name='newPassword' placeholder='New Password'
                                                         type={showNewPassword}
+                                                        sx={{
+                                                            borderBottom: `1px solid ${theme.palette.highlight.main}`,
+                                                            borderRadius: '12px',
+                                                            marginBottom: '20px'
+                                                        }}
                                                     >
                                                         <VpnKeyIcon></VpnKeyIcon>
                                                         {showNewPassword === 'password' ?
@@ -122,6 +119,11 @@ const ChangePassword = () => {
                                                 <Grid item xs={10} sx={{ marginTop: '25px' }}>
                                                     <InputField label='Confirm Password' name='confirmNewPassword' placeholder='Confirm New Password'
                                                         type={showConfirmNewPassword}
+                                                        sx={{
+                                                            borderBottom: `1px solid ${theme.palette.highlight.main}`,
+                                                            borderRadius: '12px',
+                                                            marginBottom: '20px'
+                                                        }}
                                                     >
                                                         <VpnKeyIcon></VpnKeyIcon>
                                                         {showConfirmNewPassword === 'password' ?
@@ -139,6 +141,22 @@ const ChangePassword = () => {
                                 }
 
                             </Formik>
+                            {
+                                wrongPassword &&
+                                <CustomAlert
+                                    severity="error"
+                                >
+                                    Wrong password! Make sure to enter the correct password.
+                                </CustomAlert>
+                            }
+                            {
+                                passwordChanged &&
+                                <CustomAlert
+                                    severity="success"
+                                >
+                                    Password changed successfully!
+                                </CustomAlert>
+                            }
                         </Grid>
                     </Grid>
                     :

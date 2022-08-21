@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
-import { Grid } from "@mui/material";
+import { Grid, useTheme } from "@mui/material";
 import InputField from '../../Components/InputField/InputField'
 import { Formik, Form } from "formik";
 import CustomFormButton from "../../Components/CustomFormButton/CustomFormButton";
@@ -23,6 +23,7 @@ const Settings = () => {
 
     const [isDuplicated, setIsDuplicated] = useState(false);
     const [dataUpdated, setDataUpdated] = useState(false);
+    const theme = useTheme();
 
     useEffect(() => {
         authenticate('User', navigate, dispatch);
@@ -57,27 +58,14 @@ const Settings = () => {
                     <Grid
                         container
                         justifyContent="center"
+                        alignItems="center"
+                        flexGrow="1"
                     >
-                        <Grid item xs={8} sx={{ margin: '0 auto' }}>
-                            {
-                                isDuplicated &&
-                                <Grid item>
-                                    <CustomAlert severity="error">
-                                        Phone number is already registered for another user!
-                                    </CustomAlert>
-                                </Grid>
-                            }
-                            {
-                                dataUpdated &&
-                                <Grid item>
-                                    <CustomAlert severity="success">
-                                        Your data is updated successfully!
-                                    </CustomAlert>
-                                </Grid>
-                            }
-                        </Grid>
                         <Grid
                             item
+                            container
+                            alignItems="center"
+                            justifyContent="center"
                         >
                             <Formik
                                 initialValues={{
@@ -104,17 +92,32 @@ const Settings = () => {
                                                         label='First Name'
                                                         name='firstName'
                                                         placeholder='First Name'
+                                                        sx={{
+                                                            borderBottom: `1px solid ${theme.palette.highlight.main}`,
+                                                            borderRadius: '12px',
+                                                            marginBottom: '20px',
+                                                            marginRight: '5px'
+                                                        }}
                                                     >
                                                         <PersonIcon></PersonIcon>
                                                     </InputField>
                                                 </Grid>
                                                 <Grid item xs={10} md={5} sx={{ marginTop: '25px', ml: '1px' }}>
-                                                    <InputField label='Last Name' name='lastName' placeholder='Last Name' >
+                                                    <InputField label='Last Name' name='lastName' placeholder='Last Name' sx={{
+                                                        borderBottom: `1px solid ${theme.palette.highlight.main}`,
+                                                        borderRadius: '12px',
+                                                        marginBottom: '20px',
+                                                        marginLeft: '5px'
+                                                    }}>
                                                         <PersonIcon></PersonIcon>
                                                     </InputField>
                                                 </Grid>
                                                 <Grid item xs={10} sx={{ marginTop: '25px' }}>
-                                                    <InputField label='Phone Number' name='phoneNumber' placeholder='Phone Number'>
+                                                    <InputField label='Phone Number' name='phoneNumber' placeholder='Phone Number' sx={{
+                                                        borderBottom: `1px solid ${theme.palette.highlight.main}`,
+                                                        borderRadius: '12px',
+                                                        marginBottom: '20px'
+                                                    }}>
                                                         <PhoneIcon></PhoneIcon>
                                                     </InputField>
                                                 </Grid>
@@ -127,6 +130,22 @@ const Settings = () => {
                                 }
 
                             </Formik>
+                            {
+                                isDuplicated &&
+                                <Grid item xs={8} sx={{ margin: '0 auto' }}>
+                                    <CustomAlert severity="error">
+                                        Phone number is already registered for another user!
+                                    </CustomAlert>
+                                </Grid>
+                            }
+                            {
+                                dataUpdated &&
+                                <Grid item xs={8} sx={{ margin: '0 auto' }}>
+                                    <CustomAlert severity="success">
+                                        Your data is updated successfully!
+                                    </CustomAlert>
+                                </Grid>
+                            }
                         </Grid>
                     </Grid>
                     :
