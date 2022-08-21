@@ -56,7 +56,7 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
         elevation={0}
       >
         <Toolbar>
-          <Grid container alignItems="center">
+          <Grid container alignItems="center" position='relative'>
             <Grid item xs={4} md={4}>
               <Link
                 to="/home"
@@ -83,17 +83,15 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                       container
                       direction="column"
                       alignItems="center"
-                      // justifyContent="space-between"
                       spacing="5"
                       sx={{
                         position: "absolute",
                         top: "70px",
                         background: "white",
-                        // width: "fit-content",
                         height: "200px",
-                        borderRadius: "16px",
+                        borderRadius: "10px",
                         py: 5,
-                        // pt: 5,
+                        boxShadow: theme.shadows[5]
                       }}
                     >
                       <Grid item>
@@ -101,7 +99,6 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                           to="/specialists"
                           style={{
                             color: color ? color : theme.palette.text.primary,
-                            fontSize: theme.typography.body1.fontSize,
                             textDecoration: "none",
                           }}
                         >
@@ -110,28 +107,42 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                       </Grid>
                       <Grid item>
                         <Link
-                          to="/about"
+                          to="/contactus"
                           style={{
                             color: color ? color : theme.palette.text.primary,
-                            fontSize: "21px",
                             textDecoration: "none",
                           }}
                         >
-                          About US
+                          Contact Us
                         </Link>
                       </Grid>
-                      <Grid item>
-                        <Link
-                          to="#"
-                          style={{
-                            color: color ? color : theme.palette.text.primary,
-                            fontSize: "21px",
-                            textDecoration: "none",
-                          }}
-                        >
-                          Sign In
-                        </Link>
-                      </Grid>
+                      {
+                        !userDetails.loggedIn && <>
+                          <Grid item>
+                            <Link
+                              to="/about"
+                              style={{
+                                color: color ? color : theme.palette.text.primary,
+                                textDecoration: "none",
+                              }}
+                            >
+                              About US
+                            </Link>
+                          </Grid>
+                          <Grid item>
+                            <Link
+                              to="#"
+                              style={{
+                                color: color ? color : theme.palette.text.primary,
+                                textDecoration: "none",
+                              }}
+                              onClick={() => handleOpen()}
+                            >
+                              Sign In
+                            </Link>
+                          </Grid>
+                        </>
+                      }
                     </Grid>
                   </>
                 )}
