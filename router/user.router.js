@@ -3,7 +3,7 @@ const { sendMail } = require('../controller/doctors/emails.controller');
 const { changePassword } = require('../controller/users/changePassword');
 const userRouter = express.Router();
 const { addUser, getUserById, deleteUserById, loginUser, updateUserById, validateUserData } = require('../controller/users/main.controller');
-const { validateUpdatedPassword } = require('../controller/users/validation.controller');
+const { validateUpdatedPassword, validateUserSettings } = require('../controller/users/validation.controller');
 const authorizationMiddleware = require('../middleware/user/authorization.middleware');
 const checkDuplicate = require('../middleware/user/checkDuplicate.middleware');
 const validationMiddleware = require('../middleware/user/validation.middleware');
@@ -19,7 +19,7 @@ userRouter.route('/login')
 userRouter.route('/:id')
     .get(authorizationMiddleware, getUserById)
     .delete(authorizationMiddleware, deleteUserById)
-    .patch(authorizationMiddleware, validateUserData(), validationMiddleware, updateUserById)
+    .patch(authorizationMiddleware, validateUserSettings(), validationMiddleware, updateUserById)
 
 userRouter.route('/:id/change-password')
     .patch(authorizationMiddleware, validateUpdatedPassword(), validationMiddleware, changePassword)
