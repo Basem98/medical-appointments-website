@@ -155,7 +155,7 @@ function AboutUs() {
                         </Grid>
                         <Grid item xs={12} md={8} sx={{ display: 'flex' }} alignItems={'center'}>
                             <Typography sx={{ fontFamily: "'Lobster', cursive", fontWeight: "normal" }}>
-                                "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus repudiandae laborum voluptate deleniti, aliquid incidunt sequi optio molestiae ullam facilis sint in distinctio nisi! Vero dolorum minima provident distinctio soluta?"
+                                "You get to decide where your time goes. You can either spend it moving forward, or you can spend it putting out fires. You decide. And if you don’t decide, others will decide for you."
                             </Typography>
                         </Grid>
                     </Grid>
@@ -199,7 +199,7 @@ function AboutUs() {
                         </Grid>
                         <Grid item xs={12} md={8} sx={{ display: 'flex' }} alignItems={'center'}>
                             <Typography sx={{ fontFamily: "'Lobster', cursive", fontWeight: "normal" }}>
-                                "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus repudiandae laborum voluptate deleniti, aliquid incidunt sequi optio molestiae ullam facilis sint in distinctio nisi! Vero dolorum minima provident distinctio soluta?"
+                                "All who have accomplished great things have had a great aim, have fixed their gaze on a goal which was high, one which sometimes seemed impossible."
                             </Typography>
                         </Grid>
                     </Grid>
@@ -244,7 +244,7 @@ function AboutUs() {
                         </Grid>
                         <Grid item xs={12} md={8} sx={{ display: 'flex' }} alignItems={'center'}>
                             <Typography sx={{ fontFamily: "'Lobster', cursive", fontWeight: "normal" }}>
-                                "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus repudiandae laborum voluptate deleniti, aliquid incidunt sequi optio molestiae ullam facilis sint in distinctio nisi! Vero dolorum minima provident distinctio soluta?"
+                                "Your time is limited, so don't waste it living someone else's life. Don't be trapped by dogma – which is living with the results of other people's thinking"
                             </Typography>
                         </Grid>
                     </Grid>
@@ -288,7 +288,7 @@ function AboutUs() {
                         </Grid>
                         <Grid item xs={12} md={8} sx={{ display: 'flex' }} alignItems={'center'}>
                             <Typography sx={{ fontFamily: "'Lobster', cursive", fontWeight: "normal" }}>
-                                "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus repudiandae laborum voluptate deleniti, aliquid incidunt sequi optio molestiae ullam facilis sint in distinctio nisi! Vero dolorum minima provident distinctio soluta?"
+                                " if one advances confidently in the direction of his dreams, and endeavors to live the life which he has imagined, he will meet with a success unexpected in common hours."
                             </Typography>
                         </Grid>
                     </Grid>

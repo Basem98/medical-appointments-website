@@ -11,12 +11,16 @@ const getPrevious = (req, res, next) => {
         return res.status(401).send({ message: 'Not Authorized to see this appointment' });
     }
     Appointment.find({
+        user: { "$exists": true },
         "$or": [
             { user: req.params.id },
             { doctor: req.params.id }
         ],
-        date: {"$lt": currentDate},
-        user: {"$exists": true}
+        "$or": [
+            { date: { "$lt": currentDate } },
+            {state: 'finished'}
+
+        ],
     })
         .populate('user')
         .populate('doctor')
