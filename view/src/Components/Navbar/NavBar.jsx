@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   AppBar,
   IconButton,
@@ -12,14 +12,17 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useTheme } from "@emotion/react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LogoSvg from '../../Assets/Images/logo.svg';
 import NavBarDropDownComponent from "../NavBarDropDownComponent/NavBarDropDownComponent";
 import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
+import checkAuthentication from "../../Network/Base/checkAuthentication";
+import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 
 const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginForm }) => {
   const theme = useTheme();
   const isTabletMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const dispatch = useDispatch();
   const [showMenue, setShowMenu] = useState(false);
 
   const handleOpen = () => {
@@ -27,6 +30,18 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
   };
 
   const userDetails = useSelector((state) => state.userDetails);
+  useEffect(() => {
+    checkAuthentication()
+      .then((response) => {
+        dispatch(setUserDetails({
+          role: response.data.role,
+          data: response.data.data,
+          email: response.data.data.email
+        }))
+      })
+      .catch(err => { console.log(err) });
+  }, []);
+
   return (
     <>
       <AppBar
@@ -122,12 +137,8 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                 )}
                 <IconButton
                   size="large"
-                  // edge="start"
                   color="inherit"
-                  // aria-label="menu"
-                  // sx={{ mr: 2 }}
                   onClick={(e) => {
-                    console.log(showMenue, e.currentTarget);
                     setShowMenu(!showMenue);
                   }}
                 >
