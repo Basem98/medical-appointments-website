@@ -18,6 +18,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import { Link, useLocation } from 'react-router-dom';
 import { removeUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 import { useDispatch, useSelector } from 'react-redux';
+import logout from '../../Network/Base/logout';
 
 
 export default function NavBarDropDownComponent() {
@@ -32,7 +33,10 @@ export default function NavBarDropDownComponent() {
     };
 
     const handleLogout = () => {
-        dispatch(removeUserDetails())
+        dispatch(removeUserDetails());
+        logout()
+            .then(res => { })
+            .catch(err => { })
     }
 
     const theme = useTheme()
@@ -44,7 +48,9 @@ export default function NavBarDropDownComponent() {
         <Grid container justifyContent={'flex-start'}>
             <AccountCircle
                 fontSize="large"
-                sx={{ color: location.pathname === '/' ? theme.palette.highlight.main : theme.palette.heroNavbarBg.main }}
+                sx={{ color: location.pathname === '/' ? theme.palette.highlight.main : theme.palette.text.primary }}
+                onClick={handleMenu}
+                cursor='pointer'
             />
             <Grid item alignItems={'center'}>
                 <IconButton
@@ -54,7 +60,7 @@ export default function NavBarDropDownComponent() {
                     aria-haspopup="true"
                     onClick={handleMenu}
                     color="inherit"
-                    sx={{ padding: 0, paddingTop: "6px", color: location.pathname === "/" ? theme.palette.highlight.main : theme.palette.heroNavbarBg.main }}
+                    sx={{ padding: 0, paddingTop: "6px", color: location.pathname === "/" ? theme.palette.highlight.main : theme.palette.text.primary }}
                 >
                     <ArrowDropDownIcon />
                 </IconButton>

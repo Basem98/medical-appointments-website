@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   AppBar,
   IconButton,
@@ -12,14 +12,17 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useTheme } from "@emotion/react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LogoSvg from '../../Assets/Images/logo.svg';
 import NavBarDropDownComponent from "../NavBarDropDownComponent/NavBarDropDownComponent";
 import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
+import checkAuthentication from "../../Network/Base/checkAuthentication";
+import { setUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 
 const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginForm }) => {
   const theme = useTheme();
   const isTabletMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const dispatch = useDispatch();
   const [showMenue, setShowMenu] = useState(false);
 
   const handleOpen = () => {
@@ -27,6 +30,18 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
   };
 
   const userDetails = useSelector((state) => state.userDetails);
+  useEffect(() => {
+    checkAuthentication()
+      .then((response) => {
+        dispatch(setUserDetails({
+          role: response.data.role,
+          data: response.data.data,
+          email: response.data.data.email
+        }))
+      })
+      .catch(err => { console.log(err) });
+  }, []);
+
   return (
     <>
       <AppBar
@@ -41,7 +56,7 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
         elevation={0}
       >
         <Toolbar>
-          <Grid container alignItems="center">
+          <Grid container alignItems="center" position='relative'>
             <Grid item xs={4} md={4}>
               <Link
                 to="/home"
@@ -64,29 +79,51 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                   <>
                     <Grid
                       item
-                      xs={8}
                       container
                       direction="column"
                       alignItems="center"
-                      // justifyContent="space-between"
-                      spacing="5"
+                      justifyContent='space-around'
+                      // spacing="25"
                       sx={{
                         position: "absolute",
                         top: "70px",
                         background: "white",
-                        // width: "fit-content",
-                        height: "200px",
-                        borderRadius: "16px",
-                        py: 5,
-                        // pt: 5,
+                        minHeight: "200px",
+                        borderRadius: "10px",
+                        paddingY: '20px',
+                        maxWidth: '250px',
+                        boxShadow: theme.shadows[5]
                       }}
                     >
+                      {
+                        userDetails?.loggedIn && <Grid container item justifyContent='space-evenly' alignItems='center'>
+                          {
+                            <Grid container item justifyContent='center' alignItems='center'>
+                              <Link
+                                to={`/${userDetails.role === "User" ? "users" : "doctors"}/${userDetails.data?._id}/appointments`}
+                                style={{
+                                  color: color ? color : theme.palette.text.primary,
+                                  textDecoration: "none",
+                                  display: "flex",
+                                  marginRight: '20px'
+                                }}
+                              >
+                                <Badge color="success" badgeContent={userDetails.data?.appointments?.length}>
+                                  <AccessAlarmsIcon fontSize="large" sx={{ margingTop: "0" }} />
+                                </Badge>
+                              </Link>
+                              <Grid item>
+                                <NavBarDropDownComponent />
+                              </Grid>
+                            </Grid>
+                          }
+                        </Grid>
+                      }
                       <Grid item>
                         <Link
                           to="/specialists"
                           style={{
                             color: color ? color : theme.palette.text.primary,
-                            fontSize: theme.typography.body1.fontSize,
                             textDecoration: "none",
                           }}
                         >
@@ -95,39 +132,48 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                       </Grid>
                       <Grid item>
                         <Link
+                          to="/contactus"
+                          style={{
+                            color: color ? color : theme.palette.text.primary,
+                            textDecoration: "none",
+                          }}
+                        >
+                          Contact Us
+                        </Link>
+                      </Grid>
+                      <Grid item>
+                        <Link
                           to="/about"
                           style={{
                             color: color ? color : theme.palette.text.primary,
-                            fontSize: "21px",
                             textDecoration: "none",
                           }}
                         >
                           About US
                         </Link>
                       </Grid>
-                      <Grid item>
-                        <Link
-                          to="#"
-                          style={{
-                            color: color ? color : theme.palette.text.primary,
-                            fontSize: "21px",
-                            textDecoration: "none",
-                          }}
-                        >
-                          Sign In
-                        </Link>
-                      </Grid>
+                      {
+                        !userDetails?.loggedIn &&
+                        <Grid item>
+                          <Link
+                            to="#"
+                            style={{
+                              color: color ? color : theme.palette.text.primary,
+                              textDecoration: "none",
+                            }}
+                            onClick={() => handleOpen()}
+                          >
+                            Sign In
+                          </Link>
+                        </Grid>
+                      }
                     </Grid>
                   </>
                 )}
                 <IconButton
                   size="large"
-                  // edge="start"
                   color="inherit"
-                  // aria-label="menu"
-                  // sx={{ mr: 2 }}
                   onClick={(e) => {
-                    console.log(showMenue, e.currentTarget);
                     setShowMenu(!showMenue);
                   }}
                 >
@@ -171,40 +217,24 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                   md={2}
                   sx={{ display: "flex", justifyContent: "center" }}
                 >
-                  {userDetails?.loggedIn ?
-                    (<Link
-                      to={`/${userDetails.role === "User" ? "users" : "doctors"}/${userDetails.data?._id}/appointments`}
-                      style={{
-                        color: color ? color : theme.palette.text.primary,
-                        textDecoration: "none",
-                        display: "flex"
-                      }}
-                    >
-                      <Badge color="success" badgeContent={userDetails.data?.appointments?.length}>
-                        <AccessAlarmsIcon fontSize="large" sx={{ margingTop: "0" }} />
-                      </Badge>
-                    </Link>)
-                    :
-                    (<Link
-                      to="/about"
-                      style={{
-                        color: color ? color : theme.palette.text.primary,
-                        textDecoration: "none",
-                        display: "flex"
-                      }}
-                    >
-                      About
-                    </Link>)
-                  }
+                  <Link
+                    to="/about"
+                    style={{
+                      color: color ? color : theme.palette.text.primary,
+                      textDecoration: "none",
+                      display: "flex"
+                    }}
+                  >
+                    About
+                  </Link>
                 </Grid>
-                <Grid
-                  item
-                  md={2}
-                  sx={{ display: "flex", justifyContent: "center" }}
-                >
-                  {userDetails?.loggedIn ?
-                    (<NavBarDropDownComponent />)
-                    : (<Link
+                {!userDetails?.loggedIn &&
+                  <Grid
+                    item
+                    md={2}
+                    sx={{ display: "flex", justifyContent: "center" }}
+                  >
+                    <Link
                       to="#"
                       style={{
                         color: color ? color : theme.palette.text.primary,
@@ -213,9 +243,30 @@ const NavBar = ({ backgroundColor, color, position, displayNavFooter, openLoginF
                       onClick={() => handleOpen()}
                     >
                       Sign In
-                    </Link>)
-                  }
-                </Grid>
+                    </Link>
+                  </Grid>
+                }
+                {
+                  userDetails?.loggedIn &&
+                  <Grid container item md={2} justifyContent='center' alignItems='center'>
+                    <Link
+                      to={`/${userDetails.role === "User" ? "users" : "doctors"}/${userDetails.data?._id}/appointments`}
+                      style={{
+                        color: color ? color : theme.palette.text.primary,
+                        textDecoration: "none",
+                        display: "flex",
+                        marginRight: '20px'
+                      }}
+                    >
+                      <Badge color="success" badgeContent={userDetails.data?.appointments?.length}>
+                        <AccessAlarmsIcon fontSize="large" sx={{ margingTop: "0" }} />
+                      </Badge>
+                    </Link>
+                    <Grid item>
+                      <NavBarDropDownComponent />
+                    </Grid>
+                  </Grid>
+                }
               </>
             )}
           </Grid>
