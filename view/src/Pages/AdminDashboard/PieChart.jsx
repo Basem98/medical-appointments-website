@@ -1,17 +1,21 @@
+import { useTheme } from "@mui/material";
+
 const PieChart = ({ chartName, pieData }) => {
   let totalPieData = 0;
   let dashOffsetVal = 0;
-
   let keyIndex = [];
+
+  const theme = useTheme()
+
   let pieColors = [
     // "#03a9f4",
     // "#cddc39",
     // "#ffee58",
     // "#d4ac0d",
-    "#003f5c",
-    "#58508d",
-    "#f1a600",
-    "#1e8449",
+    theme.palette.success.main,
+    theme.palette.warning.main,
+    theme.palette.grey[500],
+    theme.palette.error.main,
     "#2196f3",
     "#ff6361",
     "#bc5090",
@@ -74,7 +78,7 @@ const PieChart = ({ chartName, pieData }) => {
               strokeDashoffset={dashOffsetVal}
             />
 
-            <text x="30%" y="95%" fill="tomato" id="pieText">
+            <text x="30%" y="95%" fill={`${pieColors[indx]}`} id="pieText">
               {`${key[0].toUpperCase() + key.slice(1)}: ${pieData[key]} (${(
                 (pieData[key] / totalPieData) *
                 100
