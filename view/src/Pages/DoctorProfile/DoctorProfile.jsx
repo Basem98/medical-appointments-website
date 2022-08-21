@@ -120,7 +120,8 @@ const DoctorProfile = () => {
                                 'xs': '100%',
                                 'md': '90%'
                             },
-                            marginBottom: '10px'
+                            marginBottom: '10px',
+                            margin: '0 auto'
                         }}
                     >
 
@@ -175,7 +176,7 @@ const DoctorProfile = () => {
 
                         {
                             upcomings ? (
-                                <Grid item>
+                                <Grid item xs={10}>
                                     <InfoCard>
                                         <CardContent>
                                             <Grid container spacing={2}>
