@@ -65,6 +65,7 @@ const Welcome = ({ userData }) => {
                                                 <Grid item xs={10} marginTop={4}>
                                                     <Link
                                                         to={`/users/${userData?._id}/appointments`}
+                                                        style={{textDecoration: 'none'}}
                                                     >
                                                         <CustomFormButton variant="contained">
                                                             Show Appointments
