@@ -69,8 +69,9 @@ const getAppointmentsCostPerDay = async (req, res, next) => {
         $match: {
           date: {
             $gte: dateFrom,
-            $lt: dateTo
-          }
+            $lt: dateTo,
+          },
+          state: 'finished'
         },
       },
       {
