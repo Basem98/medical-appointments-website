@@ -15,7 +15,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import KeyIcon from '@mui/icons-material/Key';
 import PeopleIcon from '@mui/icons-material/People';
 
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { removeUserDetails } from "../../Store/Features/UserDetails/userDetailsSlice";
 import { useDispatch, useSelector } from 'react-redux';
 import logout from '../../Network/Base/logout';
@@ -23,6 +23,7 @@ import logout from '../../Network/Base/logout';
 
 export default function NavBarDropDownComponent() {
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const navigate = useNavigate();
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget)
         console.log(event.currentTarget);;
@@ -35,7 +36,11 @@ export default function NavBarDropDownComponent() {
     const handleLogout = () => {
         dispatch(removeUserDetails());
         logout()
-            .then(res => { })
+            .then(res => {
+                if (res.status === 200) {
+                    navigate('/');
+                }
+            })
             .catch(err => { })
     }
 
