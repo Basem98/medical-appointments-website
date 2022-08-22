@@ -21,13 +21,10 @@ const AdminSignInForm = ({ setDisplayNavFooter }) => {
     setDisplayNavFooter(false);
     const dispatch = useDispatch()
     const [isVisible, setVisibility] = useState(false);
-    // const [role, setRole] = useState('User');
+
     const [serverResponse, setServerResponse] = useState({ success: false, msg: '' });
     const [formSubmitted, setFormSubmitted] = useState(false);
-    // const handleRoleChange = (newRole, setRoleValue) => {
-    //     setRole(newRole);
-    //     setRoleValue('role', newRole);
-    // }
+
     const handlePass = () => {
         if (isVisible) {
             setVisibility(false)
@@ -71,7 +68,7 @@ const AdminSignInForm = ({ setDisplayNavFooter }) => {
     const navigate = useNavigate();
     return (
         <Grid container justifyContent='center' alignItems='center' height="100vh">
-            <Grid item md={4} sm={6} xs={10} container sx={{ background: theme.palette.linearFormBg.main, borderRadius: 20, boxShadow: theme.shadows[5] }} justifyContent='center'>
+            <Grid item md={4} sm={6} xs={10} container sx={{ background: theme.palette.linearFormBg.main, borderRadius: '20px', boxShadow: theme.shadows[5], padding: '30px 0'  }} justifyContent='center'>
                 <Grid item xs={12} justifyContent='center'>
                     <Typography variant='h2' style={{ color: theme.palette.text.primary, textAlign: 'center' }}>Admin</Typography>
                     <Typography variant='h5' style={{ color: theme.palette.text.primary, textAlign: 'center' }}>Log In</Typography>
