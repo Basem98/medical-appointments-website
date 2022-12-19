@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const baseLocalUrl = 'http://localhost:8080/api';
-const baseRemoteUrl = 'https://maw-api.herokuapp.com/api';
+const baseRemoteUrl = 'https://medical-appointments-website-production.up.railway.app/api';
 const axiosClient = axios.create({
   baseURL: baseRemoteUrl,
   withCredentials: true
